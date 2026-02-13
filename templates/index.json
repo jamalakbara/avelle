@@ -9,6 +9,15 @@
  */
 {
   "sections": {
+    "hero_cinematic_new": {
+      "type": "hero-cinematic",
+      "settings": {
+        "heading": "Elevate Your <br> Every Day",
+        "subheading": "Premium essentials for the modern lifestyle.",
+        "button_label": "Shop Collection",
+        "button_link": "shopify://collections/all"
+      }
+    },
     "slideshow_r9R8P9": {
       "type": "slideshow",
       "blocks": {
@@ -628,6 +637,7 @@
     }
   },
   "order": [
+    "hero_cinematic_new",
     "slideshow_r9R8P9",
     "collection_list_LpCEnz",
     "section_NqaeJT",

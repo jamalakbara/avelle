@@ -4965,3 +4965,85 @@ product-recommendations:has([data-has-recommendations='false']) {
     translate: 0px var(--atc-destination, 0px);
   }
 }
+
+/* Awwwards specific styles */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Custom Cursor */
+.custom-cursor {
+    width: 10px;
+    height: 10px;
+    background: var(--color-foreground);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.2s ease;
+    mix-blend-mode: difference;
+    top: 0;
+    left: 0;
+}
+
+.cursor-follower {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--color-foreground);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.1s ease, background 0.2s;
+    mix-blend-mode: difference;
+    top: 0;
+    left: 0;
+}
+
+.custom-cursor.active {
+    transform: scale(0);
+}
+
+.cursor-follower.active {
+    transform: scale(2);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: transparent;
+}
+
+/* Utilities */
+.reveal-text {
+    overflow: hidden; /* For clip-path effect */
+    display: inline-block;
+}
+
+.char {
+    display: inline-block; /* For transform */
+}
+
+/* Hide scrollbar for cleaner look if desired, but keep functionality */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.2);
+    border-radius: 4px;
+}

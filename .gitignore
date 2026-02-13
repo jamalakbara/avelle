@@ -4,3 +4,5 @@ config.yml
 .env
 .shopify-cli
 .git
+references/*
+docs/*
