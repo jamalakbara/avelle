@@ -80,11 +80,11 @@
 
   .cinematic-image {
     width: 100%;
-    height: 120%; /* Taller for parallax */
+    height: 150%; /* Taller for Parallax - Fixed Gap */
     object-fit: cover;
     object-position: center;
     position: absolute;
-    top: -10%; /* Start slightly offset */
+    top: -25%; /* Centered vertically */
     left: 0;
     will-change: transform;
   }
@@ -204,16 +204,20 @@
       const content = item.querySelector('.cinematic-content');
 
       // Parallax for Image
-      gsap.to(image, {
-        y: '20%', // Move down relative to container
-        ease: 'none',
-        scrollTrigger: {
-          trigger: item,
-          start: 'top bottom', // When item top enters viewport
-          end: 'bottom top', // When item bottom leaves viewport
-          scrub: true,
-        },
-      });
+      gsap.fromTo(
+        image,
+        { yPercent: -15 }, // Start slightly shifted up
+        {
+          yPercent: 15, // Move down to +15%
+          ease: 'none',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top bottom', // When item top enters viewport
+            end: 'bottom top', // When item bottom leaves viewport
+            scrub: true,
+          },
+        }
+      );
 
       // Text Reveal
       gsap.to(content, {
