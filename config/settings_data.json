@@ -10,6 +10,7 @@
 {
   "current": {
     "logo": "shopify://shop_images/Avelle_Logo_3.png",
+    "favicon": "shopify://shop_images/Avelle_Logo_Monogram.png",
     "type_body_font": "red_hat_text_n4",
     "type_subheading_font": "newsreader_n2",
     "type_heading_font": "newsreader_n2",
