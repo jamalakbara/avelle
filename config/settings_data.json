@@ -9,6 +9,7 @@
  */
 {
   "current": {
+    "logo": "shopify://shop_images/Avelle_Logo_3.png",
     "type_body_font": "red_hat_text_n4",
     "type_subheading_font": "newsreader_n2",
     "type_heading_font": "newsreader_n2",
@@ -60,6 +61,7 @@
     "variant_swatch_radius": 0,
     "variant_button_radius": 0,
     "variant_button_width": "default-width-buttons",
+    "content_for_index": [],
     "color_schemes": {
       "scheme-1": {
         "settings": {
@@ -97,9 +99,7 @@
           "selected_variant_border_color": "#000000",
           "selected_variant_hover_background_color": "#1a1a1a",
           "selected_variant_hover_text_color": "#ffffff",
-          "selected_variant_hover_border_color": "#1a1a1a",
-          "logo_height": 36,
-          "logo_height_mobile": 28
+          "selected_variant_hover_border_color": "#1a1a1a"
         }
       },
       "scheme-2": {
@@ -138,9 +138,7 @@
           "selected_variant_border_color": "#000000",
           "selected_variant_hover_background_color": "#1a1a1a",
           "selected_variant_hover_text_color": "#ffffff",
-          "selected_variant_hover_border_color": "#1a1a1a",
-          "logo_height": 36,
-          "logo_height_mobile": 28
+          "selected_variant_hover_border_color": "#1a1a1a"
         }
       },
       "scheme-3": {
@@ -179,9 +177,7 @@
           "selected_variant_border_color": "#000000",
           "selected_variant_hover_background_color": "#1a1a1a",
           "selected_variant_hover_text_color": "#ffffff",
-          "selected_variant_hover_border_color": "#1a1a1a",
-          "logo_height": 36,
-          "logo_height_mobile": 28
+          "selected_variant_hover_border_color": "#1a1a1a"
         }
       },
       "scheme-4": {
@@ -220,9 +216,7 @@
           "selected_variant_border_color": "#000000",
           "selected_variant_hover_background_color": "#1a1a1a",
           "selected_variant_hover_text_color": "#ffffff",
-          "selected_variant_hover_border_color": "#1a1a1a",
-          "logo_height": 36,
-          "logo_height_mobile": 28
+          "selected_variant_hover_border_color": "#1a1a1a"
         }
       },
       "scheme-5": {
@@ -261,9 +255,7 @@
           "selected_variant_border_color": "#000000",
           "selected_variant_hover_background_color": "#1a1a1a",
           "selected_variant_hover_text_color": "#ffffff",
-          "selected_variant_hover_border_color": "#1a1a1a",
-          "logo_height": 36,
-          "logo_height_mobile": 28
+          "selected_variant_hover_border_color": "#1a1a1a"
         }
       },
       "scheme-6": {
@@ -302,9 +294,7 @@
           "selected_variant_border_color": "#000000",
           "selected_variant_hover_background_color": "#1a1a1a",
           "selected_variant_hover_text_color": "#ffffff",
-          "selected_variant_hover_border_color": "#1a1a1a",
-          "logo_height": 36,
-          "logo_height_mobile": 28
+          "selected_variant_hover_border_color": "#1a1a1a"
         }
       }
     }

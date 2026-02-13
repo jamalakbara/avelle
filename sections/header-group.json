@@ -20,7 +20,7 @@
           "settings": {
             "hide_logo_on_home_page": false,
             "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-end": 24,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -32,7 +32,7 @@
           "settings": {
             "menu": "main-menu",
             "color_scheme": "",
-            "type_font_primary_size": "var(--font-size--body-sm)",
+            "type_font_primary_size": "1rem",
             "menu_font_style": "inverse",
             "type_font_primary_link": "primary",
             "type_case_primary_link": "uppercase",
@@ -51,10 +51,10 @@
       },
       "settings": {
         "logo_position": "center",
-        "menu_position": "left",
-        "menu_row": "top",
+        "menu_position": "center",
+        "menu_row": "bottom",
         "show_search": true,
-        "search_position": "right",
+        "search_position": "left",
         "search_row": "top",
         "show_country": true,
         "country_selector_style": false,
