@@ -1,0 +1,231 @@
+{% schema %}
+{
+  "name": "Cinematic Collections",
+  "tag": "section",
+  "class": "section-cinematic-collections",
+  "settings": [
+    {
+      "type": "collection_list",
+      "id": "collection_list",
+      "label": "Collections",
+      "limit": 5
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Section Height",
+      "options": [
+        { "value": "50vh", "label": "Small (50vh)" },
+        { "value": "75vh", "label": "Medium (75vh)" },
+        { "value": "100vh", "label": "Full Screen (100vh)" }
+      ],
+      "default": "100vh"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 10,
+      "unit": "%",
+      "label": "Image Overlay Opacity",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cinematic Collections"
+    }
+  ]
+}
+{% endschema %}
+
+{%- style -%}
+  .cinematic-list {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .cinematic-item {
+    position: relative;
+    width: 100%;
+    height: var(--section-height, 100vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .cinematic-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .cinematic-image {
+    width: 100%;
+    height: 120%; /* Taller for parallax */
+    object-fit: cover;
+    object-position: center;
+    position: absolute;
+    top: -10%; /* Start slightly offset */
+    left: 0;
+    will-change: transform;
+  }
+
+  .cinematic-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .cinematic-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: #fff; /* Default to white for cinematic feel */
+    padding: 2rem;
+    max-width: 800px;
+    opacity: 0; /* Hidden initially for animation */
+    transform: translateY(20px);
+  }
+
+  .cinematic-title {
+    font-size: clamp(2.5rem, 6vw, 6rem);
+    text-transform: uppercase;
+    line-height: 0.9;
+    margin-bottom: 2rem;
+    font-weight: 300; /* Editorial feel */
+    letter-spacing: -0.04em;
+  }
+
+  .cinematic-button {
+    display: inline-block;
+    padding: 1.2rem 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 999px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    background: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    backdrop-filter: blur(10px);
+  }
+
+  .cinematic-button:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+    transform: scale(1.05);
+  }
+{%- endstyle -%}
+
+<div
+  class="cinematic-list color-{{ section.settings.color_scheme }}"
+  style="--section-height: {{ section.settings.height }};"
+>
+  {%- for collection in section.settings.collection_list -%}
+    <div class="cinematic-item">
+      <div class="cinematic-image-wrapper">
+        {%- if collection.image != blank -%}
+          {{
+            collection.image
+            | image_url: width: 2000
+            | image_tag:
+              class: 'cinematic-image',
+              loading: 'lazy',
+              sizes: '100vw',
+              widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000'
+          }}
+        {%- else -%}
+          {{ 'collection-1' | placeholder_svg_tag: 'cinematic-image placeholder-svg' }}
+        {%- endif -%}
+      </div>
+
+      <div class="cinematic-overlay" style="opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}"></div>
+
+      <div class="cinematic-content">
+        <h2 class="cinematic-title h1">
+          {{ collection.title | default: 'Collection Title' }}
+        </h2>
+        <a href="{{ collection.url }}" class="cinematic-button"> Explore Collection </a>
+      </div>
+    </div>
+  {%- else -%}
+    {%- for i in (1..3) -%}
+      <div class="cinematic-item">
+        <div class="cinematic-image-wrapper">
+          {{ 'collection-' | append: i | placeholder_svg_tag: 'cinematic-image placeholder-svg' }}
+        </div>
+        <div
+          class="cinematic-overlay"
+          style="opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}"
+        ></div>
+        <div class="cinematic-content">
+          <h2 class="cinematic-title h1">Example Collection {{ i }}</h2>
+          <a href="#" class="cinematic-button">Explore</a>
+        </div>
+      </div>
+    {%- endfor -%}
+  {%- endfor -%}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const items = document.querySelectorAll('.cinematic-item');
+
+    items.forEach((item) => {
+      const image = item.querySelector('.cinematic-image');
+      const content = item.querySelector('.cinematic-content');
+
+      // Parallax for Image
+      gsap.to(image, {
+        y: '20%', // Move down relative to container
+        ease: 'none',
+        scrollTrigger: {
+          trigger: item,
+          start: 'top bottom', // When item top enters viewport
+          end: 'bottom top', // When item bottom leaves viewport
+          scrub: true,
+        },
+      });
+
+      // Text Reveal
+      gsap.to(content, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: item,
+          start: 'top 60%', // When item is 60% into view
+          toggleActions: 'play none none reverse',
+        },
+      });
+    });
+  });
+</script>

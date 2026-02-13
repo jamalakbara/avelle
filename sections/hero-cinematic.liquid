@@ -95,7 +95,7 @@
     </div>
 
     {% if section.settings.button_link != blank %}
-      <div class="hero-cinematic__btn-wrapper reveal-text">
+      <div class="hero-cinematic__btn-wrapper reveal-up">
         <a href="{{ section.settings.button_link }}" class="hero-cinematic__btn magnetic-btn">
           {{ section.settings.button_label }}
         </a>
@@ -198,20 +198,24 @@
 
   .hero-cinematic__btn {
     display: inline-block;
-    padding: 1rem 2.5rem;
-    border: 1px solid #fff;
+    padding: 1.2rem 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 999px;
     color: #fff;
     text-transform: uppercase;
     text-decoration: none;
     letter-spacing: 0.1em;
-    font-size: 0.875rem;
-    transition: all 0.3s ease;
-    background: transparent;
+    font-size: 0.8rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
   }
 
   .hero-cinematic__btn:hover {
     background: #fff;
     color: #000;
+    border-color: #fff;
+    transform: scale(1.05);
   }
 
   .hero-cinematic__scroll {

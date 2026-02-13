@@ -18,6 +18,17 @@
         "button_link": "shopify://collections/all"
       }
     },
+    "cinematic_collections": {
+      "type": "featured-collection-cinematic",
+      "settings": {
+        "collection_list": [
+          "new-arrival",
+          "best-seller"
+        ],
+        "height": "100vh",
+        "color_scheme": "scheme-1"
+      }
+    },
     "slideshow_r9R8P9": {
       "type": "slideshow",
       "blocks": {
@@ -638,6 +649,7 @@
   },
   "order": [
     "hero_cinematic_new",
+    "cinematic_collections",
     "slideshow_r9R8P9",
     "collection_list_LpCEnz",
     "section_NqaeJT",
