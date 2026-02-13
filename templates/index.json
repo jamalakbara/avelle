@@ -12,7 +12,8 @@
     "hero_cinematic_new": {
       "type": "hero-cinematic",
       "settings": {
-        "heading": "Elevate Your <br> Every Day",
+        "image": "shopify://shop_images/Cinematic_Portrait_of_Young_Woman_1.png",
+        "heading": "Elevate Your  Every Day",
         "subheading": "Premium essentials for the modern lifestyle.",
         "button_label": "Shop Collection",
         "button_link": "shopify://collections/all"
@@ -26,7 +27,8 @@
           "best-seller"
         ],
         "height": "100vh",
-        "color_scheme": "scheme-1"
+        "color_scheme": "scheme-1",
+        "overlay_opacity": 30
       }
     },
     "slideshow_r9R8P9": {
