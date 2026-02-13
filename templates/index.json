@@ -23,8 +23,9 @@
       "type": "featured-collection-cinematic",
       "settings": {
         "collection_list": [
-          "new-arrival",
-          "best-seller"
+          "top",
+          "best-seller",
+          "new-arrival"
         ],
         "height": "100vh",
         "color_scheme": "scheme-1",
