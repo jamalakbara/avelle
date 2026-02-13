@@ -98,7 +98,7 @@
                   "type": "menu",
                   "name": "t:names.menu",
                   "settings": {
-                    "menu": "footer",
+                    "menu": "main-menu",
                     "heading": "Shop",
                     "menu_spacing": 12,
                     "show_as_accordion": false,
@@ -119,7 +119,7 @@
                   "type": "menu",
                   "name": "t:names.menu",
                   "settings": {
-                    "menu": "",
+                    "menu": "customer-account-main-menu",
                     "heading": "About us",
                     "menu_spacing": 12,
                     "show_as_accordion": false,
@@ -237,9 +237,9 @@
                     "width": "fill",
                     "custom_width": 100,
                     "inherit_color_scheme": true,
+                    "color_scheme": "",
                     "heading": "",
                     "heading_preset": "h3",
-                    "color_scheme": "",
                     "border_style": "underline",
                     "border_width": 1,
                     "border_radius": 100,
@@ -278,26 +278,6 @@
         "color_scheme": "",
         "padding-block-start": 64,
         "padding-block-end": 0
-      }
-    },
-    "logo_RVGHD7": {
-      "type": "logo",
-      "name": "t:names.logo",
-      "settings": {
-        "inverse": false,
-        "font": "heading",
-        "unit": "percent",
-        "pixel_height": 48,
-        "percent_width": 100,
-        "custom_mobile_size": false,
-        "unit_mobile": "percent",
-        "percent_width_mobile": 100,
-        "pixel_height_mobile": 120,
-        "section_width": "page-width",
-        "alignment_horizontal": "center",
-        "color_scheme": "",
-        "padding-block-start": 72,
-        "padding-block-end": 48
       }
     },
     "utilities": {
@@ -359,7 +339,6 @@
   },
   "order": [
     "footer",
-    "logo_RVGHD7",
     "utilities"
   ]
 }
