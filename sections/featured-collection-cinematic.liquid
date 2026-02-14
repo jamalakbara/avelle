@@ -5,13 +5,6 @@
   "class": "section-cinematic-collections",
   "settings": [
     {
-      "type": "collection_list",
-      "id": "collection_list",
-      "label": "Collections",
-      "limit": 5,
-      "info": "For best results, use collections with 16:9 Landscape images (e.g., 2160 x 1215px). Keep main subject centered."
-    },
-    {
       "type": "select",
       "id": "height",
       "label": "Section Height",
@@ -43,9 +36,46 @@
       "content": "Animation"
     }
   ],
+  "blocks": [
+    {
+      "type": "collection_item",
+      "name": "Collection",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_desktop",
+          "label": "Desktop Image",
+          "info": "Overrides the collection image on desktop. 16:9 Landscape recommended."
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile Image",
+          "info": "Overrides the image on mobile. Portrait recommended."
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Cinematic Collections"
+      "name": "Cinematic Collections",
+      "blocks": [
+        {
+          "type": "collection_item"
+        },
+        {
+          "type": "collection_item"
+        },
+        {
+          "type": "collection_item"
+        }
+      ]
     }
   ]
 }
@@ -147,21 +177,44 @@
   class="cinematic-list color-{{ section.settings.color_scheme }}"
   style="--section-height: {{ section.settings.height }};"
 >
-  {%- for collection in section.settings.collection_list -%}
-    <div class="cinematic-item">
+  {%- for block in section.blocks -%}
+    {%- assign collection = block.settings.collection -%}
+    {%- assign image_desktop = block.settings.image_desktop | default: collection.image -%}
+    {%- assign image_mobile = block.settings.image_mobile -%}
+
+    {%- comment -%} Determine classes for Desktop Image {%- endcomment -%}
+    {%- assign desktop_class = 'cinematic-image' -%}
+    {%- if image_mobile != blank -%}
+      {%- assign desktop_class = desktop_class | append: ' hidden--mobile' -%}
+    {%- endif -%}
+
+    <div class="cinematic-item" {{ block.shopify_attributes }}>
       <div class="cinematic-image-wrapper">
-        {%- if collection.image != blank -%}
+        {%- if image_desktop != blank -%}
           {{
-            collection.image
+            image_desktop
             | image_url: width: 2000
             | image_tag:
-              class: 'cinematic-image',
+              class: desktop_class,
               loading: 'lazy',
               sizes: '100vw',
               widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000'
           }}
         {%- else -%}
-          {{ 'collection-1' | placeholder_svg_tag: 'cinematic-image placeholder-svg' }}
+          {%- assign placeholder_class = desktop_class | append: ' placeholder-svg' -%}
+          {{ 'collection-1' | placeholder_svg_tag: placeholder_class }}
+        {%- endif -%}
+
+        {%- if image_mobile != blank -%}
+          {{
+            image_mobile
+            | image_url: width: 1000
+            | image_tag:
+              class: 'cinematic-image hidden--desktop',
+              loading: 'lazy',
+              sizes: '100vw',
+              widths: '375, 550, 750, 1100'
+          }}
         {%- endif -%}
       </div>
 
@@ -200,24 +253,27 @@
     const items = document.querySelectorAll('.cinematic-item');
 
     items.forEach((item) => {
-      const image = item.querySelector('.cinematic-image');
+      // Select all images (desktop + mobile) within this item
+      const images = item.querySelectorAll('.cinematic-image');
       const content = item.querySelector('.cinematic-content');
 
-      // Parallax for Image
-      gsap.fromTo(
-        image,
-        { yPercent: -15 }, // Start slightly shifted up
-        {
-          yPercent: 15, // Move down to +15%
-          ease: 'none',
-          scrollTrigger: {
-            trigger: item,
-            start: 'top bottom', // When item top enters viewport
-            end: 'bottom top', // When item bottom leaves viewport
-            scrub: true,
-          },
-        }
-      );
+      // Parallax for Images
+      if (images.length > 0) {
+        gsap.fromTo(
+          images,
+          { yPercent: -15 }, // Start slightly shifted up
+          {
+            yPercent: 15, // Move down to +15%
+            ease: 'none',
+            scrollTrigger: {
+              trigger: item,
+              start: 'top bottom', // When item top enters viewport
+              end: 'bottom top', // When item bottom leaves viewport
+              scrub: true,
+            },
+          }
+        );
+      }
 
       // Text Reveal
       gsap.to(content, {
