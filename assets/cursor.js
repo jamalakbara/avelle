@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 10);
 
   // Hover States
-  const links = document.querySelectorAll('a, button, .magnetic-btn');
+  const links = document.querySelectorAll('a, button, .magnetic-btn, .variant-option__button-label, summary');
 
   links.forEach(link => {
     link.addEventListener('mouseenter', () => {
