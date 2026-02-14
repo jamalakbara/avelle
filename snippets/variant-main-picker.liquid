@@ -3,6 +3,7 @@
 
   @param {object} product_resource - The product object.
   @param {object} [block] - The block object
+  @param {object} section - The section object
 {%- enddoc -%}
 
 {% assign block_settings = block.settings %}
@@ -340,10 +341,6 @@
     background: var(--color-foreground) !important;
     color: var(--color-background) !important;
     border-color: var(--color-foreground) !important;
-  }
-
-  .variant-option__button-label:has(:checked):hover {
-    /* transform: scale(1.05) !important; */
   }
 
   /* Legend (option name like "Color", "Size") */
