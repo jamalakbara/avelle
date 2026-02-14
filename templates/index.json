@@ -34,7 +34,8 @@
           "type": "collection_item",
           "settings": {
             "collection": "best-seller",
-            "image_desktop": "shopify://shop_images/Ultra_Realistic_Photo_1.png"
+            "image_desktop": "shopify://shop_images/Ultra_Realistic_Photo_1.png",
+            "image_mobile": "shopify://shop_images/akunpalsu29_httpss.mj.run9O0ECiokKAQ_ultra_realistic_photo_of_w_71c30ac5-07b3-4c78-ae7e-205b167307d8.png"
           }
         },
         "collection_item_QaQHDD": {
