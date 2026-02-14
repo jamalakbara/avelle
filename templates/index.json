@@ -41,7 +41,8 @@
           "type": "collection_item",
           "settings": {
             "collection": "new-arrival",
-            "image_desktop": "shopify://shop_images/Ultra_Realistic_Photo_2.png"
+            "image_desktop": "shopify://shop_images/Ultra_Realistic_Photo_2.png",
+            "image_mobile": "shopify://shop_images/Ultra_Realistic_Photo_7.png"
           }
         }
       },
