@@ -22,12 +22,35 @@
     },
     "cinematic_collections": {
       "type": "featured-collection-cinematic",
+      "blocks": {
+        "collection_item_Fh6THW": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "top",
+            "image_desktop": "shopify://shop_images/Ultra_Realistic_Photo.png"
+          }
+        },
+        "collection_item_xEm3BV": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "best-seller",
+            "image_desktop": "shopify://shop_images/Ultra_Realistic_Photo_1.png"
+          }
+        },
+        "collection_item_QaQHDD": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "new-arrival",
+            "image_desktop": "shopify://shop_images/Ultra_Realistic_Photo_2.png"
+          }
+        }
+      },
+      "block_order": [
+        "collection_item_Fh6THW",
+        "collection_item_xEm3BV",
+        "collection_item_QaQHDD"
+      ],
       "settings": {
-        "collection_list": [
-          "top",
-          "best-seller",
-          "new-arrival"
-        ],
         "height": "100vh",
         "color_scheme": "scheme-1",
         "overlay_opacity": 30
