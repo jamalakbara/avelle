@@ -72,6 +72,12 @@
 
 {%- liquid
   assign sticky_header_type = section.settings.sticky_header_type
+
+  # Disable sticky header on product pages
+  if template.name == 'product'
+    assign sticky_header_type = 'none'
+  endif
+
   assign transparent_header = false
   if template.name == 'index' and section.settings.enable_transparent_header
     assign transparent_header = true

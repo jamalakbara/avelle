@@ -47,6 +47,7 @@
 
   .accordion--dividers .details-content {
     padding-block-end: var(--padding-sm);
+    overflow: visible;
   }
 
   .accordion--caret .icon-plus,
@@ -80,9 +81,9 @@
     display: block;
   }
 
-  /* Refine Borders */
   .accordion--dividers accordion-custom .details {
     border-color: rgba(var(--color-foreground), 0.1) !important; /* Lighter border */
+    padding-bottom: 2px; /* Prevent pixel clipping */
   }
 {% endstylesheet %}
 

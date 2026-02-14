@@ -217,6 +217,13 @@
 
   .variant-picker__form {
     width: 100%;
+    overflow: visible;
+    padding-inline-start: 4px; /* 4px buffer prevents outline clipping */
+  }
+
+  /* Reset default spacing if any */
+  .variant-picker {
+    padding-left: 0 !important;
   }
 
   .variant-picker[data-shopify-visual-preview] {
@@ -232,7 +239,7 @@
     border-radius: var(--style-border-radius-inputs);
     align-items: center;
     margin-top: var(--margin-2xs);
-    overflow: clip;
+    overflow: visible;
   }
 
   .variant-option__select-wrapper:has(.swatch) {
@@ -306,6 +313,15 @@
     backdrop-filter: blur(10px);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
     padding: 0.8rem 1.5rem !important;
+    overflow: visible !important; /* Fix button cutoff */
+  }
+
+  /* Hide ghost pill when not selected */
+  .variant-option__button-label:not(:has(:checked)) .variant-option__button-label__pill {
+    opacity: 0;
+  }
+  .variant-option__button-label:has(:checked) .variant-option__button-label__pill {
+    opacity: 1;
   }
 
   .variant-option__button-label__text {
@@ -317,7 +333,6 @@
     background: var(--color-foreground) !important;
     color: var(--color-background) !important;
     border-color: var(--color-foreground) !important;
-    transform: scale(1.05) !important;
   }
 
   /* Selected State */
@@ -328,7 +343,7 @@
   }
 
   .variant-option__button-label:has(:checked):hover {
-    transform: scale(1.05) !important;
+    /* transform: scale(1.05) !important; */
   }
 
   /* Legend (option name like "Color", "Size") */

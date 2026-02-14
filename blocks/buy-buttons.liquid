@@ -398,7 +398,9 @@
     letter-spacing: 0.1em !important;
     font-weight: 500 !important;
     padding-block: 1.2rem !important; /* Match cinematic padding */
+    padding-block: 1.2rem !important; /* Match cinematic padding */
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    gap: 12px; /* Ensure space between quantity and add to cart */
   }
 
   /* Add to Cart - Cinematic Transparent Style */
@@ -410,12 +412,10 @@
     box-shadow: none !important;
   }
 
-  /* Hover State - Fill and Scale */
   .product-form-buttons .add-to-cart-button:hover {
     background: var(--color-foreground) !important;
     color: var(--color-background) !important;
-    border-color: var(--color-foreground) !important;
-    transform: scale(1.05) !important;
+    transform: none !important; /* Prevent overlap */
   }
 
   /* Buy It Now (Dynamic Checkout) - Matching Style */
@@ -432,7 +432,7 @@
     background: var(--color-foreground) !important;
     color: var(--color-background) !important;
     border-color: var(--color-foreground) !important;
-    transform: scale(1.05) !important;
+    transform: none !important;
   }
 
   /* Hide Buy It Now (Accelerated Checkout) */
