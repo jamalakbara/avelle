@@ -12,7 +12,7 @@
   "name": "Footer",
   "sections": {
     "footer": {
-      "type": "Footer",
+      "type": "footer",
       "blocks": {
         "group_acXtYY": {
           "type": "group",

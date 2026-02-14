@@ -1,0 +1,136 @@
+<style>
+
+/* Juana - Serif / Headings */
+@font-face {
+  font-family: 'Juana';
+  src: url("{{ 'juana-light.otf' | asset_url }}") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Juana';
+  src: url("{{ 'juana-regular.otf' | asset_url }}") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Juana';
+  src: url("{{ 'juana-medium.otf' | asset_url }}") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Juana';
+  src: url("{{ 'juana-semibold.otf' | asset_url }}") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Juana';
+  src: url("{{ 'juana-bold.otf' | asset_url }}") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Poppins - Sans-serif / Body */
+@font-face {
+  font-family: 'Poppins';
+  src: url("{{ 'poppins-light.otf' | asset_url }}") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url("{{ 'poppins-regular.otf' | asset_url }}") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url("{{ 'poppins-medium.otf' | asset_url }}") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url("{{ 'poppins-semibold.otf' | asset_url }}") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url("{{ 'poppins-bold.otf' | asset_url }}") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Override Theme Variables - Using html:root for higher specificity (0-2-0) than :root (0-1-0) */
+html:root {
+  /* Correct double-dash variables used by theme */
+  --font-heading--family: 'Juana', serif !important;
+  --font-body--family: 'Poppins', sans-serif !important;
+  --font-subheading--family: 'Juana', serif !important;
+  --font-accent--family: 'Juana', serif !important;
+
+  /* Legacy single-dash (just in case) */
+  --font-heading-family: 'Juana', serif !important;
+  --font-body-family: 'Poppins', sans-serif !important;
+
+  /* Adjust weights/styles */
+  --font-heading--weight: 400 !important;
+  --font-body--weight: 400 !important;
+  --font-heading-weight: 400 !important;
+  --font-body-weight: 400 !important;
+}
+
+/* Direct overrides for common elements */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: var(--font-body--family);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: var(--font-heading--family);
+}
+
+</style>
