@@ -31,6 +31,41 @@
     "storytelling": "Storytelling",
     "text": "Text"
   },
+  "sections": {
+    "header": {
+      "settings": {
+        "menu": {
+          "label": "Menu"
+        },
+        "logo": {
+          "label": "Logo"
+        },
+        "logo_width": {
+          "label": "Logo width"
+        },
+        "sticky_header_type": {
+          "label": "Sticky header type",
+          "options__1": {
+            "label": "None"
+          },
+          "options__2": {
+            "label": "On scroll up"
+          },
+          "options__3": {
+            "label": "Always"
+          }
+        },
+        "enable_transparent_header": {
+          "label": "Enable transparent header"
+        }
+      }
+    },
+    "all": {
+      "colors": {
+        "label": "Color scheme"
+      }
+    }
+  },
   "content": {
     "visible_if_collection_has_more_products": "Visible if collection has more products than shown",
     "advanced": "Advanced",
