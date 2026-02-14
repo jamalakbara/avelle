@@ -1,4 +1,3 @@
-
 {% liquid
   assign block_settings = block.settings
   assign product = closest.product
@@ -390,9 +389,61 @@
     flex-basis: 51%;
   }
 
-  .product-form-buttons button {
-    width: 100%;
-    padding-block: var(--padding-lg);
+  /* Force Pill Shape and Typography on ALL buttons in the group */
+  .product-form-buttons button,
+  .product-form-buttons .shopify-payment-button__button,
+  .product-form-buttons .add-to-cart-button {
+    border-radius: 999px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    font-weight: 500 !important;
+    padding-block: 1.2rem !important; /* Match cinematic padding */
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  /* Add to Cart - Cinematic Transparent Style */
+  .product-form-buttons .add-to-cart-button {
+    background: rgba(0, 0, 0, 0.05) !important; /* Subtle transparent */
+    color: var(--color-foreground) !important;
+    border: 1px solid rgba(var(--color-foreground-rgb), 0.2) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: none !important;
+  }
+
+  /* Hover State - Fill and Scale */
+  .product-form-buttons .add-to-cart-button:hover {
+    background: var(--color-foreground) !important;
+    color: var(--color-background) !important;
+    border-color: var(--color-foreground) !important;
+    transform: scale(1.05) !important;
+  }
+
+  /* Buy It Now (Dynamic Checkout) - Matching Style */
+  .product-form-buttons .shopify-payment-button__button {
+    background: rgba(0, 0, 0, 0.05) !important;
+    color: var(--color-foreground) !important;
+    border: 1px solid rgba(var(--color-foreground-rgb), 0.2) !important;
+    box-shadow: none !important;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+  }
+
+  .product-form-buttons .shopify-payment-button__button:hover {
+    background: var(--color-foreground) !important;
+    color: var(--color-background) !important;
+    border-color: var(--color-foreground) !important;
+    transform: scale(1.05) !important;
+  }
+
+  /* Hide Buy It Now (Accelerated Checkout) */
+  .product-form-buttons .shopify-payment-button {
+    display: none !important;
+  }
+
+  /* Make Add to Cart button full width */
+  .product-form-buttons .add-to-cart-button {
+    flex: 1 1 100% !important;
+    width: 100% !important;
   }
 
   .quantity-selector {

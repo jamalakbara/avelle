@@ -119,16 +119,14 @@
   assign has_image_drop = sorted_media | has: 'media_type', 'image'
 
   # Determine if we're in single column mode (carousel or grid with one column)
-  assign is_single_column = false
-  if media_presentation == 'carousel' or sorted_media.size == 1 or media_presentation == 'grid' and block_settings.media_columns == 'one'
-    assign is_single_column = true
-  endif
+  assign is_single_column = true
+  # Force single column for cinematic look
+  # if media_presentation == 'carousel' or sorted_media.size == 1 or media_presentation == 'grid' and block_settings.media_columns == 'one'
+  #   assign is_single_column = true
+  # endif
 
   # Check if we need both sizes (for large first image in two-column grid)
   assign needs_both_sizes = false
-  if media_presentation == 'grid' and block_settings.media_columns == 'two' and block_settings.large_first_image
-    assign needs_both_sizes = true
-  endif
 
   # Calculate sizes using utility snippet
   if needs_both_sizes
@@ -337,8 +335,7 @@
       spacing-style
       sticky-content
       {% if media_presentation == 'grid' %}
-        media-gallery--{{ block_settings.media_columns }}-column
-        {% if block_settings.media_columns == "two" and block_settings.large_first_image%}media-gallery--large-first-image{% endif %}
+        media-gallery--one-column
       {% endif %}
       media-gallery--{{ media_presentation }}
       {% if block_settings.slideshow_mobile_controls_style == 'hint' %}

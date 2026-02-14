@@ -133,4 +133,64 @@ h6,
   font-family: var(--font-heading--family);
 }
 
+/* Animation Keyframes */
+@keyframes fade-up-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Product Details Typography & Animations */
+.product-details .text-block h1 {
+  font-family: 'Juana', serif !important;
+  font-size: 3.5rem !important;
+  /* Cinematic size */
+  font-weight: 400;
+  line-height: 1.1;
+  opacity: 0;
+  text-align: left !important;
+  /* Editorial Left Align */
+  animation: fade-up-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.product-details product-price .price {
+  font-family: 'Juana', serif !important;
+  font-size: 1.25rem !important;
+  /* Slightly smaller for hierarchy */
+  font-weight: 300 !important;
+  /* Lighter weight */
+  opacity: 0;
+  text-align: left !important;
+  display: block;
+  /* Ensure it takes full width for alignment */
+  animation: fade-up-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.1s;
+}
+
+/* Editorial Layout Refinements */
+.product-details .product-form__buttons,
+.product-details .text-block {
+  text-align: left !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+/* Modern Button Styling */
+.product-details .button {
+  border-radius: 0 !important;
+  /* Square corners */
+  height: 3.5rem !important;
+  /* Consistent height */
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
 </style>

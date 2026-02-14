@@ -47,10 +47,24 @@
       "label": "t:sections.header.settings.enable_transparent_header.label"
     },
     {
+      "type": "checkbox",
+      "id": "enable_transparent_header_product",
+      "default": false,
+      "label": "Enable transparent header on product page"
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_header-logo"
+    },
+    {
+      "type": "_header-menu"
     }
   ]
 }
@@ -60,6 +74,8 @@
   assign sticky_header_type = section.settings.sticky_header_type
   assign transparent_header = false
   if template.name == 'index' and section.settings.enable_transparent_header
+    assign transparent_header = true
+  elsif template.name == 'product' and section.settings.enable_transparent_header_product
     assign transparent_header = true
   endif
 

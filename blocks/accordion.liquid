@@ -1,5 +1,3 @@
-
-
 {% assign block_settings = block.settings %}
 <div
   class="accordion accordion--{{ block.id }} accordion--{{ block_settings.icon }} border-style spacing-style{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}{% if block_settings.dividers %} accordion--dividers{% endif %}"
@@ -52,19 +50,39 @@
   }
 
   .accordion--caret .icon-plus,
+  .accordion--caret .icon-minus,
   .accordion--plus .icon-caret {
     display: none;
   }
 
   /* because we can't pass apply a specific class on a block based on its parent block setting */
   .accordion .details__header {
-    font-family: var(--summary-font-family);
+    font-family: var(--font-body-family); /* Enforce Body Font (Poppins) */
     font-style: var(--summary-font-style);
-    font-weight: var(--summary-font-weight);
-    font-size: var(--summary-font-size);
+    font-weight: 500; /* Slightly bolder */
+    font-size: 0.9rem; /* Clean size */
+    letter-spacing: 0.05em; /* Editorial spacing */
     line-height: var(--summary-font-line-height);
-    text-transform: var(--summary-font-case);
+    text-transform: uppercase; /* Uppercase for headers */
     min-height: var(--minimum-touch-target);
+  }
+
+  /* Toggle Icons Logic */
+  .accordion--plus .icon-minus {
+    display: none;
+  }
+
+  /* When open, hide plus, show minus */
+  .accordion--plus accordion-custom details[open] .icon-plus {
+    display: none;
+  }
+  .accordion--plus accordion-custom details[open] .icon-minus {
+    display: block;
+  }
+
+  /* Refine Borders */
+  .accordion--dividers accordion-custom .details {
+    border-color: rgba(var(--color-foreground), 0.1) !important; /* Lighter border */
   }
 {% endstylesheet %}
 
@@ -139,7 +157,7 @@
           "label": "t:options.h6"
         }
       ],
-      "default": "h6",
+      "default": "paragraph",
       "info": "t:info.edit_presets_in_theme_settings"
     },
     {

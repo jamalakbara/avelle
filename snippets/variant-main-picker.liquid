@@ -294,4 +294,49 @@
     text-align: right;
     justify-content: right;
   }
+
+  /* Cinematic Variant Picker Styling - Match Add to Cart Button */
+  .variant-option__button-label {
+    border-radius: 999px !important; /* Pill shape */
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    font-weight: 500 !important;
+    background: rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid rgba(var(--color-foreground-rgb), 0.2) !important;
+    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    padding: 0.8rem 1.5rem !important;
+  }
+
+  .variant-option__button-label__text {
+    font-size: 0.875rem !important;
+  }
+
+  /* Hover State - Fill and Scale */
+  .variant-option__button-label:hover {
+    background: var(--color-foreground) !important;
+    color: var(--color-background) !important;
+    border-color: var(--color-foreground) !important;
+    transform: scale(1.05) !important;
+  }
+
+  /* Selected State */
+  .variant-option__button-label:has(:checked) {
+    background: var(--color-foreground) !important;
+    color: var(--color-background) !important;
+    border-color: var(--color-foreground) !important;
+  }
+
+  .variant-option__button-label:has(:checked):hover {
+    transform: scale(1.05) !important;
+  }
+
+  /* Legend (option name like "Color", "Size") */
+  .variant-option legend {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
 {% endstylesheet %}
