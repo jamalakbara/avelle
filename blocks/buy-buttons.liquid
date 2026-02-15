@@ -404,18 +404,19 @@
   }
 
   /* Add to Cart - Cinematic Transparent Style */
+  /* Add to Cart - Cinematic Outline Style */
   .product-form-buttons .add-to-cart-button {
-    background: rgba(0, 0, 0, 0.05) !important; /* Subtle transparent */
+    background: transparent !important;
     color: var(--color-foreground) !important;
-    border: 1px solid rgba(var(--color-foreground-rgb), 0.2) !important;
-    backdrop-filter: blur(10px);
+    border: 1px solid currentColor !important;
     box-shadow: none !important;
   }
 
   .product-form-buttons .add-to-cart-button:hover {
-    background: var(--color-foreground) !important;
-    color: var(--color-background) !important;
-    transform: none !important; /* Prevent overlap */
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    background: transparent !important; /* Keep transparent on hover or maybe fill? brand story doesn't specify fill on hover, just lift */
+    color: var(--color-foreground) !important;
   }
 
   /* Buy It Now (Dynamic Checkout) - Matching Style */

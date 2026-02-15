@@ -309,12 +309,13 @@
     text-transform: uppercase !important;
     letter-spacing: 0.1em !important;
     font-weight: 500 !important;
-    background: rgba(0, 0, 0, 0.05) !important;
-    border: 1px solid rgba(var(--color-foreground-rgb), 0.2) !important;
-    backdrop-filter: blur(10px);
+    background: transparent !important;
+    border: 1px solid currentColor !important;
+    color: var(--color-foreground) !important;
+    cursor: pointer;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
     padding: 0.8rem 1.5rem !important;
-    overflow: visible !important; /* Fix button cutoff */
+    overflow: visible !important;
   }
 
   /* Hide ghost pill when not selected */
@@ -329,14 +330,13 @@
     font-size: 0.875rem !important;
   }
 
-  /* Hover State - Fill and Scale */
+  /* Hover State - Lift and Shadow */
   .variant-option__button-label:hover {
-    background: var(--color-foreground) !important;
-    color: var(--color-background) !important;
-    border-color: var(--color-foreground) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
-  /* Selected State */
+  /* Selected State - Solid Fill */
   .variant-option__button-label:has(:checked) {
     background: var(--color-foreground) !important;
     color: var(--color-background) !important;
