@@ -82,12 +82,17 @@
         menu-drawer
         color-{{ block_settings.color_scheme }}
       "
+      style="
+        {%- render 'menu-font-styles', settings: block_settings, menu_type: 'drawer' %}
+        {%- render 'submenu-font-styles', settings: block_settings, menu_type: 'drawer' %}
+      "
     >
       <button
         class="button close-button menu-drawer__close-button"
         type="button"
         aria-label="{{ 'actions.close' | t }}"
         on:click="/close"
+        style="position: absolute; top: 0; left: 0; z-index: 2147483647; color: black; background: transparent; border: none; display: flex; align-items: center; justify-content: center; padding: var(--padding-lg);"
       >
         <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
           {{- 'icon-close.svg' | inline_asset_content -}}
@@ -95,10 +100,7 @@
       </button>
       <nav
         class="menu-drawer__navigation"
-        style="
-          {%- render 'menu-font-styles', settings: block_settings, menu_type: 'drawer' %}
-          {%- render 'submenu-font-styles', settings: block_settings, menu_type: 'drawer' %}
-        "
+        style="          margin-top: 50px;"
       >
         <ul
           class="menu-drawer__menu has-submenu"
@@ -572,6 +574,25 @@
         class="menu-drawer__utility-links menu-drawer__animated-element"
         style="--menu-drawer-animation-index: {{ linklist.links.size }};"
       >
+        <a
+          href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+          class="menu-drawer__menu-item menu-drawer__menu-item--mainlist focus-inset"
+        >
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 7C8.65685 7 10 5.65685 10 4C10 2.34315 8.65685 1 7 1C5.34315 1 4 2.34315 4 4C4 5.65685 5.34315 7 7 7Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13 13C13 10.2386 10.3137 8 7 8C3.68629 8 1 10.2386 1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="menu-drawer__menu-item-text wrap-text">
+              {%- if customer -%}
+                {{ 'content.account_title' | t }}
+              {%- else -%}
+                {{ 'actions.log_in' | t }}
+              {%- endif -%}
+            </span>
+          </div>
+        </a>
+
         {% liquid
           assign show_language = section.settings.show_language
           if localization.available_languages.size <= 1
@@ -1226,10 +1247,13 @@
   .menu-drawer__utility-links {
     display: flex;
     flex-direction: column;
-    padding: 0;
+    padding-inline: var(--drawer-padding);
     margin-block: auto var(--padding-sm);
-    margin-inline-start: var(--padding-xl);
-    background-color: rgb(var(--color-foreground) 0.03);
+    background-color: transparent;
+  }
+
+  .menu-drawer__utility-links .menu-drawer__menu-item--mainlist {
+    color: var(--menu-top-level-font-color);
   }
 
   .menu-drawer__account {
@@ -1239,12 +1263,13 @@
     text-decoration: none;
     height: 44px;
     font-size: 1.4rem;
-    color: rgb(var(--color-foreground));
+    color: var(--color-foreground);
   }
 
   .menu-drawer__account svg {
     height: var(--icon-size-sm);
     width: var(--icon-size-sm);
+    stroke: currentColor;
   }
 
   .menu-drawer__account shop-user-avatar {
