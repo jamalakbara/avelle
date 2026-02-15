@@ -59,6 +59,12 @@
       "label": "Enable transparent header on collection page"
     },
     {
+      "type": "checkbox",
+      "id": "enable_transparent_header_page",
+      "default": true,
+      "label": "Enable transparent header on pages"
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
@@ -95,7 +101,7 @@
     assign transparent_header = true
   elsif template.name == 'cart'
     assign transparent_header = true
-  elsif template.name == 'page' and template.suffix == 'about-us'
+  elsif template.name == 'page' and section.settings.enable_transparent_header_page
     assign transparent_header = true
   endif
 
