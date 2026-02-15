@@ -58,6 +58,69 @@
   .hidden-swatches__count:hover {
     color: var(--color-foreground-rgb);
   }
+
+  /* Minimalist Circle Swatches & Hover Reveal */
+  label.variant-option__button-label--has-swatch {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 1px solid rgba(var(--color-foreground-rgb), 0.1) !important;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.2s ease, opacity 0.3s ease;
+    overflow: hidden;
+    background: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none !important;
+    font-size: 0 !important; /* Hide any text content */
+  }
+
+  /* Swatch Color/Image */
+  label.variant-option__button-label--has-swatch .swatch,
+  label.variant-option__button-label--has-swatch img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    border-radius: 50% !important;
+    display: block;
+    margin: 0 !important;
+  }
+
+  /* Active/Selected State - Ring Effect */
+  .variant-option__button-label--has-swatch:has(input:checked) {
+    border-color: rgb(var(--color-foreground-rgb));
+    transform: scale(1.1);
+    box-shadow: 0 0 0 1px rgb(var(--color-foreground-rgb));
+  }
+
+  .variant-option__button-label--has-swatch:hover {
+    transform: scale(1.2);
+    border-color: rgba(var(--color-foreground-rgb), 0.5);
+  }
+
+  /* Reveal on Hover Logic */
+  /* Default state: hidden (opacity 0) on collection page */
+  .collection-product-card swatches-variant-picker-component {
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none; /* Prevent interaction when hidden */
+  }
+
+  /* Hover state: visible */
+  .collection-product-card:hover swatches-variant-picker-component {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 {% endstylesheet %}
 
 {% liquid
