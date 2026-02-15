@@ -14,21 +14,7 @@
       "default": "main-menu",
       "label": "t:sections.header.settings.menu.label"
     },
-    {
-      "type": "image_picker",
-      "id": "logo",
-      "label": "t:sections.header.settings.logo.label"
-    },
-    {
-      "type": "range",
-      "id": "logo_width",
-      "min": 50,
-      "max": 300,
-      "step": 10,
-      "default": 100,
-      "unit": "px",
-      "label": "t:sections.header.settings.logo_width.label"
-    },
+
     {
       "type": "select",
       "id": "sticky_header_type",
@@ -39,6 +25,28 @@
       ],
       "default": "always",
       "label": "t:sections.header.settings.sticky_header_type.label"
+    },
+    {
+      "type": "header",
+      "content": "Sticky Header Overrides"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_header_product",
+      "default": false,
+      "label": "Enable sticky header on product page"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_header_collection",
+      "default": false,
+      "label": "Enable sticky header on collection page"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_header_cart",
+      "default": false,
+      "label": "Enable sticky header on cart page"
     },
     {
       "type": "checkbox",
@@ -85,8 +93,14 @@
 {%- liquid
   assign sticky_header_type = section.settings.sticky_header_type
 
-  # Disable sticky header on product, collection, list-collections, and cart pages
-  if template.name == 'product' or template.name == 'collection' or template.name == 'list-collections' or template.name == 'cart'
+  # Disable sticky header on specific pages unless explicitly enabled
+  if template.name == 'product' and section.settings.enable_sticky_header_product == false
+    assign sticky_header_type = 'none'
+  elsif template.name == 'collection' and section.settings.enable_sticky_header_collection == false
+    assign sticky_header_type = 'none'
+  elsif template.name == 'list-collections' and section.settings.enable_sticky_header_collection == false
+    assign sticky_header_type = 'none'
+  elsif template.name == 'cart' and section.settings.enable_sticky_header_cart == false
     assign sticky_header_type = 'none'
   endif
 
@@ -105,8 +119,11 @@
     assign transparent_header = true
   endif
 
-  assign logo = section.settings.logo | default: settings.logo
-  assign logo_width = section.settings.logo_width | default: 100
+  assign logo = settings.logo
+  assign logo_height = settings.logo_height | default: 30
+  assign logo_width = logo_height | times: logo.aspect_ratio | round
+  assign logo_height_mobile = settings.logo_height_mobile | default: 20
+  assign logo_width_mobile = logo_height_mobile | times: logo.aspect_ratio | round
 -%}
 
 {% style %}
@@ -284,6 +301,13 @@
     display: block;
     height: auto;
     object-fit: contain;
+    width: {{ logo_width }}px;
+  }
+
+  @media screen and (max-width: 767px) {
+    .header-logo-image {
+      width: {{ logo_width_mobile }}px;
+    }
   }
 
   .header-logo-text {
@@ -376,7 +400,7 @@
             src="{{ logo | image_url: width: logo_width }}"
             loading="eager"
             width="{{ logo_width }}"
-            height="{{ logo.height }}"
+            height="{{ logo_height }}"
             alt="{{ logo.alt | default: shop.name | escape }}"
             class="header-logo-image"
           >
