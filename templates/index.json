@@ -111,6 +111,7 @@
         "story_panel_1": {
           "type": "story_panel",
           "settings": {
+            "image": "shopify://shop_images/akunpalsu29_Editorial_fashion_photography_of_a_high-end_silk_ma_a0d7a747-1269-4492-b081-41d04c939120.png",
             "subheading": "Chapter 01",
             "heading": "Our Beginning",
             "description": "<p>Born from a passion for timeless design and exceptional quality, every piece tells a story of dedication.</p>",
@@ -123,6 +124,7 @@
         "story_panel_2": {
           "type": "story_panel",
           "settings": {
+            "image": "shopify://shop_images/akunpalsu29_Extreme_macro_close-up_shot_of_hands_working_with_d_010cde0c-6f9b-4903-89fb-4d120252a3c2.png",
             "subheading": "Chapter 02",
             "heading": "Craftsmanship",
             "description": "<p>Every detail meticulously crafted by skilled artisans who pour their heart into each creation.</p>",
