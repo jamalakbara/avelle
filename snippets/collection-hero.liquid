@@ -7,7 +7,7 @@
 {%- endcomment -%}
 
 {% liquid
-  assign collection_title = collection.title | default: 'Products'
+  assign collection_title = title | default: collection.title | default: 'Products'
   assign collection_description = collection.description
   assign products_count = products_count | default: collection.products_count
 

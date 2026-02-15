@@ -79,8 +79,8 @@
 {%- liquid
   assign sticky_header_type = section.settings.sticky_header_type
 
-  # Disable sticky header on product and collection pages
-  if template.name == 'product' or template.name == 'collection'
+  # Disable sticky header on product, collection, and list-collections pages
+  if template.name == 'product' or template.name == 'collection' or template.name == 'list-collections'
     assign sticky_header_type = 'none'
   endif
 
@@ -90,6 +90,8 @@
   elsif template.name == 'product' and section.settings.enable_transparent_header_product
     assign transparent_header = true
   elsif template.name == 'collection' and section.settings.enable_transparent_header_collection
+    assign transparent_header = true
+  elsif template.name == 'list-collections' and section.settings.enable_transparent_header_collection
     assign transparent_header = true
   elsif template.name == 'page' and template.suffix == 'about-us'
     assign transparent_header = true
