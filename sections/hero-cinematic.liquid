@@ -28,10 +28,50 @@
       "default": "Elevate Your Every Day"
     },
     {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 20,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading Font Size (Mobile)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "min": 40,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Font Size (Desktop)",
+      "default": 96
+    },
+    {
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
       "default": "Premium essentials for the modern lifestyle."
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Subheading Font Size (Mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_desktop",
+      "min": 16,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Subheading Font Size (Desktop)",
+      "default": 20
     },
     {
       "type": "text",
@@ -173,7 +213,7 @@
   }
 
   .hero-cinematic__heading {
-    font-size: clamp(3rem, 8vw, 6rem);
+    font-size: clamp({{section.settings.heading_size_mobile}}px, 8vw, {{section.settings.heading_size_desktop}}px);
     font-weight: 800;
     line-height: 1.1;
     margin: 0;
@@ -187,7 +227,11 @@
   }
 
   .hero-cinematic__subheading {
-    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-size: clamp(
+      {{section.settings.subheading_size_mobile}}px,
+      2vw,
+      {{section.settings.subheading_size_desktop}}px
+    );
     font-weight: 300;
     margin: 0;
     opacity: 0.9;
