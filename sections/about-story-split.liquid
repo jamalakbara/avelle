@@ -92,7 +92,7 @@
 
   @media screen and (min-width: 990px) {
     .about-story-split {
-      flex-direction: {{ section.settings.content_position == 'left' ? 'row' : 'row-reverse' }};
+      flex-direction: {% if section.settings.content_position == 'left' %}row{% else %}row-reverse{% endif %};
     }
   }
 
