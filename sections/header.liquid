@@ -91,6 +91,8 @@
     assign transparent_header = true
   elsif template.name == 'collection' and section.settings.enable_transparent_header_collection
     assign transparent_header = true
+  elsif template.name == 'page' and template.suffix == 'about-us'
+    assign transparent_header = true
   endif
 
   assign logo = section.settings.logo | default: settings.logo
