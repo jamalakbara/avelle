@@ -10,17 +10,21 @@
   assign collection_title = collection.title | default: 'Products'
   assign collection_description = collection.description
   assign products_count = products_count | default: collection.products_count
+
+  assign show_description = settings.show_collection_description | default: false
+  assign show_count = settings.show_collection_count | default: false
+  assign heading_size = settings.heading_size | default: 'small'
 %}
 
 <div class="collection-hero" data-collection-hero>
   <div class="collection-hero__inner">
     {%- if collection_title != blank -%}
-      <h1 class="collection-hero__title reveal-text" data-hero-title>
+      <h1 class="collection-hero__title reveal-text collection-hero__title--{{ heading_size }}" data-hero-title>
         {{ collection_title }}
       </h1>
     {%- endif -%}
 
-    {%- if collection_description != blank -%}
+    {%- if show_description and collection_description != blank -%}
       <div class="collection-hero__description reveal-up">
         {{ collection_description }}
       </div>
@@ -28,7 +32,7 @@
 
     <div class="collection-hero__divider" data-hero-divider></div>
 
-    {%- if products_count > 0 -%}
+    {%- if show_count and products_count > 0 -%}
       <p class="collection-hero__count reveal-up">
         {{ products_count }}
         {% if products_count == 1 %}item{% else %}items{% endif %}
@@ -57,12 +61,23 @@
 
   .collection-hero__title {
     font-family: var(--font-heading-family);
-    font-size: clamp(3rem, 8vw, 7rem);
     font-weight: 400;
     letter-spacing: 0.02em;
     line-height: 1.1;
     margin: 0;
     color: rgb(var(--color-foreground));
+  }
+
+  .collection-hero__title--small {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .collection-hero__title--medium {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .collection-hero__title--large {
+    font-size: clamp(3rem, 6vw, 5rem);
   }
 
   .collection-hero__description {
@@ -99,8 +114,16 @@
       padding: clamp(2rem, 6vw, 3rem) var(--page-margin);
     }
 
-    .collection-hero__title {
+    .collection-hero__title--small {
+      font-size: clamp(1.75rem, 8vw, 2.5rem);
+    }
+
+    .collection-hero__title--medium {
       font-size: clamp(2rem, 10vw, 3.5rem);
+    }
+
+    .collection-hero__title--large {
+      font-size: clamp(2.5rem, 12vw, 4rem);
     }
   }
 {% endstylesheet %}

@@ -1,60 +1,67 @@
-{%- comment -%}
-  Collection card styles for tight grid and hover effects
-{%- endcomment -%}
+<style>.collection-wrapper--tight-grid .product-grid {
+  --product-grid-gap-mobile: 4px 4px;
+  --product-grid-gap-desktop: 6px 6px;
+}
 
-{% stylesheet %}
-  .collection-wrapper--tight-grid .product-grid {
-    --product-grid-gap-mobile: 4px 4px;
-    --product-grid-gap-desktop: 6px 6px;
-  }
+.collection-product-card {
+  opacity: 0;
+  transform: translateY(40px);
+}
 
+.collection-product-card.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Product image full coverage fix */
+.collection-product-card .card-gallery {
+  display: block;
+  overflow: hidden;
+}
+
+.collection-product-card .card-gallery img,
+.collection-product-card .product-media-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.collection-product-card .slideshow-component,
+.collection-product-card .product-media-container {
+  display: block;
+  height: 100%;
+}
+
+/* Parallax Fix: Image must be taller than container to allow movement without gaps */
+/* Targeting both potential attributes to be safe */
+.collection-product-card .card-gallery img[data-card-parallax],
+.collection-product-card .card-gallery img[data-parallax] {
+  height: 120% !important;
+  top: -10%;
+  position: relative;
+  object-fit: cover;
+  max-width: none;
+}
+
+/* Ensure no extra spacing between image and product info */
+.collection-product-card .card-gallery .slideshow-component {
+  margin: 0;
+  padding: 0;
+}
+
+.collection-product-card .card-gallery {
+  margin-bottom: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
   .collection-product-card {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-
-  .collection-product-card.is-revealed {
     opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: none;
+    transition: none !important;
   }
+}
 
-  /* Product image full coverage fix */
-  .collection-product-card .card-gallery {
-    display: block;
-    overflow: hidden;
-  }
-
-  .collection-product-card .card-gallery img,
-  .collection-product-card .product-media-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .collection-product-card .slideshow-component,
-  .collection-product-card .product-media-container {
-    display: block;
-    height: 100%;
-  }
-
-  /* Ensure no extra spacing between image and product info */
-  .collection-product-card .card-gallery .slideshow-component {
-    margin: 0;
-    padding: 0;
-  }
-
-  .collection-product-card .card-gallery {
-    margin-bottom: 0;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .collection-product-card {
-      opacity: 1;
-      transform: none;
-      transition: none !important;
-    }
-  }
-{% endstylesheet %}
+</style>

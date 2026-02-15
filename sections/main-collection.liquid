@@ -31,7 +31,11 @@
   {% render 'skip-to-content-link', href: '#ResultsList', text: 'accessibility.skip_to_results_list' %}
 
   {%- comment -%} Collection Hero Banner {%- endcomment -%}
-  {% render 'collection-hero', collection: collection, products_count: collection.products_count %}
+  {% render 'collection-hero',
+    collection: collection,
+    products_count: collection.products_count,
+    settings: section.settings
+  %}
 
   {%- comment -%} Collection Card Styles {%- endcomment -%}
   {% render 'collection-card-styles.css' %}
@@ -169,6 +173,46 @@
       "step": 4,
       "default": 24,
       "visible_if": "{{ section.settings.enable_infinite_scroll == false }}"
+    },
+    {
+      "type": "header",
+      "content": "Collection Hero"
+    },
+    {
+      "type": "paragraph",
+      "content": "Settings for the hero banner."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "label": "Show collection description",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_count",
+      "label": "Show items count",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "small"
     },
     {
       "type": "header",
