@@ -16,6 +16,16 @@
   assign max_featured_items = 4
   assign image_border_radius = block_settings.image_border_radius
 
+  assign drawer_accordion = true
+  if block_settings != blank and block_settings.drawer_accordion == false
+    assign drawer_accordion = false
+  endif
+
+  assign drawer_accordion_expand_first = false
+  if block_settings != blank and block_settings.drawer_accordion_expand_first
+    assign drawer_accordion_expand_first = true
+  endif
+
   if block_settings.menu_style == 'featured_collections'
     assign ratio = block_settings.featured_collections_aspect_ratio
   elsif block_settings.menu_style == 'featured_products'
@@ -104,15 +114,15 @@
               {% assign animation_index = animation_index | plus: 1 %}
               <li
                 style="--menu-drawer-animation-index: {{ animation_index }};"
-                class="{%- if block_settings.drawer_accordion -%}menu-drawer__list-item--deep{%- else -%}menu-drawer__list-item--flat{%- endif -%}{% if block_settings.drawer_dividers %} menu-drawer__list-item--divider{% endif %}"
+                class="{%- if drawer_accordion -%}menu-drawer__list-item--deep{%- else -%}menu-drawer__list-item--flat{%- endif -%}{% if block_settings.drawer_dividers %} menu-drawer__list-item--divider{% endif %}"
               >
-                {% if block_settings.drawer_accordion and link.links != blank %}
+                {% if drawer_accordion and link.links != blank %}
                   {%- comment -%}
                     Accordion for links with children, in menus with fewer than 3 levels of links
                   {%- endcomment -%}
                   {% liquid
                     assign accordion_state = ''
-                    if first_accordion_open == false and block_settings.drawer_accordion_expand_first
+                    if first_accordion_open == false and drawer_accordion_expand_first
                       assign first_accordion_open = true
                       assign accordion_state = 'open-by-default-on-mobile'
                     endif
@@ -173,7 +183,7 @@
                       </ul>
                     </details>
                   </accordion-custom>
-                {% elsif block_settings.drawer_accordion == false and link.links != blank %}
+                {% elsif drawer_accordion == false and link.links != blank %}
                   {%- comment -%}
                     Flat menus for links with children, in menus with fewer than 3 levels of links
                   {%- endcomment -%}
@@ -322,7 +332,7 @@
                               class="
                                 menu-drawer__list-item
                                 {% if childlink.links != blank -%}
-                                  {% if block_settings.drawer_accordion -%} menu-drawer__list-item--deep{% else -%} menu-drawer__list-item--flat{%- endif -%}
+                                  {% if drawer_accordion -%} menu-drawer__list-item--deep{% else -%} menu-drawer__list-item--flat{%- endif -%}
                                 {%- endif -%}
                                 {% if block_settings.drawer_dividers %} menu-drawer__list-item--divider{% endif %}
                               "
@@ -354,12 +364,12 @@
                               {%- else -%}
                                 {% liquid
                                   assign accordion_state = ''
-                                  if first_accordion_open == false and block_settings.drawer_accordion and block_settings.drawer_accordion_expand_first
+                                  if first_accordion_open == false and drawer_accordion and drawer_accordion_expand_first
                                     assign first_accordion_open = true
                                     assign accordion_state = 'open-by-default-on-mobile'
                                   endif
                                 %}
-                                {% if block_settings.drawer_accordion %}
+                                {% if drawer_accordion %}
                                   {%- comment -%}
                                     Accordion for links with children, in menus with 3 levels of links
                                   {%- endcomment -%}
