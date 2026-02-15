@@ -6,6 +6,9 @@
 
 {%- liquid
   assign font_link = settings.type_font_primary_link | default: 'body'
+  if menu_type == 'drawer'
+    assign font_link = 'body'
+  endif
   assign font_style = settings.menu_font_style | default: 'regular'
 %}
 --menu-parent-font-family: var(--font-{{ font_link }}--family); --menu-parent-font-style: var(--font-
