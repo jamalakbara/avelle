@@ -214,21 +214,3 @@
     }
   }
 </style>
-
-<script>
-  // Simple parallax effect
-  if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-    const hero = document.querySelector('.about-hero__bg');
-    if (hero) {
-      window.addEventListener(
-        'scroll',
-        () => {
-          const scrolled = window.pageYOffset;
-          const rate = scrolled * 0.5;
-          hero.style.transform = `translate3d(0, ${rate}px, 0)`;
-        },
-        { passive: true }
-      );
-    }
-  }
-</script>
