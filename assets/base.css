@@ -2637,6 +2637,27 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6)>*:not(.tax-note) {
   text-decoration-thickness: 1.5px;
 }
 
+/* Fix visibility on PDP */
+.product-details .compare-at-price {
+  opacity: 0.7;
+  font-weight: 400;
+  /* Ensure it's not too bold but visible */
+}
+
+/* Align price and compare-at price side-by-side on PDP */
+.product-details product-price [ref="priceContainer"] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.curated-card__price .compare-at-price {
+  text-decoration: line-through;
+  margin-left: 0.5rem;
+  opacity: 0.7;
+}
+
 .card-gallery {
   position: relative;
 }

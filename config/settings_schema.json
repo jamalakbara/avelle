@@ -437,6 +437,46 @@
       },
       {
         "type": "header",
+        "content": "Product Cards"
+      },
+      {
+        "type": "select",
+        "id": "type_size_product_info",
+        "label": "Product Info Size",
+        "options": [
+          {
+            "value": "10",
+            "label": "10px"
+          },
+          {
+            "value": "12",
+            "label": "12px"
+          },
+          {
+            "value": "13",
+            "label": "13px"
+          },
+          {
+            "value": "14",
+            "label": "14px"
+          },
+          {
+            "value": "15",
+            "label": "15px"
+          },
+          {
+            "value": "16",
+            "label": "16px"
+          },
+          {
+            "value": "18",
+            "label": "18px"
+          }
+        ],
+        "default": "14"
+      },
+      {
+        "type": "header",
         "content": "t:options.h1"
       },
       {
