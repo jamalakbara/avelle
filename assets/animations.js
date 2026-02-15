@@ -30,6 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Global Reveal Animations
     initRevealAnimations();
+
+    // 4. Collection-Specific Animations
+    initCollectionAnimations();
 });
 
 function initRevealAnimations() {
@@ -98,6 +101,121 @@ function initRevealAnimations() {
                 trigger: bg.parentElement, // Trigger based on section
                 start: "top top", // Start when section top is at viewport top
                 end: "bottom top",
+                scrub: true
+            }
+        });
+    });
+}
+
+/**
+ * Collection-Specific Animations
+ */
+function initCollectionAnimations() {
+    initCollectionHeroAnimation();
+    initCollectionGridStagger();
+    initMagneticCards();
+    initCardParallax();
+}
+
+/**
+ * Collection Hero Banner Animation
+ */
+function initCollectionHeroAnimation() {
+    const hero = document.querySelector('[data-collection-hero]');
+    if (!hero) return;
+
+    // Mark hero as visible for CSS transitions
+    gsap.to(hero, {
+        scrollTrigger: {
+            trigger: hero,
+            start: 'top 80%',
+            onEnter: () => hero.classList.add('is-visible'),
+            once: true
+        }
+    });
+}
+
+/**
+ * Staggered Product Grid Reveal
+ */
+function initCollectionGridStagger() {
+    const cards = document.querySelectorAll('.collection-product-card');
+    if (cards.length === 0) return;
+
+    cards.forEach((card, index) => {
+        gsap.to(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: 'top 85%',
+                onEnter: () => {
+                    setTimeout(() => {
+                        card.classList.add('is-revealed');
+                    }, index * 50); // Stagger by 50ms per card
+                },
+                once: true
+            }
+        });
+    });
+}
+
+/**
+ * Magnetic Cursor Effect for Product Cards
+ * Cards subtly follow cursor movement
+ */
+function initMagneticCards() {
+    // Only run on devices with hover capability and no motion preference
+    if (!window.matchMedia('(hover: hover)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const cards = document.querySelectorAll('.collection-product-card[data-magnetic]');
+
+    cards.forEach(card => {
+        const strength = 20; // Maximum movement in pixels
+
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            const moveX = (x / rect.width) * strength;
+            const moveY = (y / rect.height) * strength;
+
+            gsap.to(card, {
+                x: moveX,
+                y: moveY,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        });
+
+        card.addEventListener('mouseleave', () => {
+            gsap.to(card, {
+                x: 0,
+                y: 0,
+                duration: 0.5,
+                ease: 'elastic.out(1, 0.5)'
+            });
+        });
+    });
+}
+
+/**
+ * Parallax Effect Inside Product Cards
+ * Product images move subtly within their containers on scroll
+ */
+function initCardParallax() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const images = document.querySelectorAll('.collection-product-card__image[data-card-parallax]');
+
+    images.forEach(img => {
+        gsap.to(img, {
+            yPercent: -8,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: img.closest('.collection-product-card'),
+                start: 'top bottom',
+                end: 'bottom top',
                 scrub: true
             }
         });

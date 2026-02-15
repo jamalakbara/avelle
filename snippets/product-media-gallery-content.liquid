@@ -103,9 +103,13 @@
   if selected_variant_media
     assign sorted_media = sorted_media | concat: selected_product.media | where: 'id', selected_variant_media.id
 
+    assign selected_variant = selected_product.selected_or_first_available_variant
+
     for media in selected_product.media
       if block_settings.hide_variants and variant_images contains media.src and sorted_media.size > 0
-        continue
+        unless media.variants contains selected_variant
+          continue
+        endunless
       endif
 
       if media.id != selected_variant_media.id
@@ -132,14 +136,14 @@
   if needs_both_sizes
     # Calculate sizes for single column (first image)
     capture sizes_single
-      render 'util-product-media-sizes-attr', block: block, section: section, settings: settings, is_first_image: true, is_single_column: true, needs_both_sizes: true
+      render 'util-product-media-sizes-attr', block_settings: block_settings, section: section, settings: settings, is_first_image: true, is_single_column: true, needs_both_sizes: true
     endcapture
     assign sizes_single = sizes_single | strip
   endif
 
   # Calculate sizes value for regular grid/carousel items
   capture sizes
-    render 'util-product-media-sizes-attr', block: block, section: section, settings: settings, is_first_image: false, is_single_column: is_single_column, needs_both_sizes: needs_both_sizes
+    render 'util-product-media-sizes-attr', block_settings: block_settings, section: section, settings: settings, is_first_image: false, is_single_column: is_single_column, needs_both_sizes: needs_both_sizes
   endcapture
   assign sizes = sizes | strip
 

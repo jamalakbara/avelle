@@ -65,10 +65,11 @@
   >
 {%- endif -%}
 <product-card
-  class="product-card"
+  class="product-card collection-product-card"
   data-product-id="{{ product.id }}"
   id="product-card-{{ block.id }}"
   data-product-transition="{{ settings.transition_to_main_product }}"
+  data-magnetic
   {{ block.shopify_attributes }}
   {% if onboarding %}
     data-placeholder="true"

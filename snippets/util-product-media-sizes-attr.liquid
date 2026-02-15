@@ -1,7 +1,8 @@
 {%- doc -%}
   Calculate the sizes attribute for product media images in the product media gallery.
 
-  @param {object} block - Block object containing media gallery settings
+  @param {object} [block] - Block object containing media gallery settings
+  @param {object} [block_settings] - Block settings object
   @param {object} section - Section object containing layout settings
   @param {object} settings - Theme settings object containing page width configuration
   @param {boolean} [is_first_image] - Whether this is the first image (for large_first_image mode)
@@ -17,7 +18,7 @@
 {%- enddoc -%}
 
 {%- liquid
-  assign block_settings = block.settings
+  assign block_settings = block_settings | default: block.settings
   # Constants
   assign page_margin = '40px'
   # Section gap divided by 2 (used for single column layouts)

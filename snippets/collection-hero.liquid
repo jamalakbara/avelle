@@ -1,0 +1,106 @@
+{%- comment -%}
+  Collection Hero Banner
+  A cinematic, centered hero section for collection pages with animated title reveal
+
+  @param {object} collection - The collection object
+  @param {number} products_count - Total number of products in collection
+{%- endcomment -%}
+
+{% liquid
+  assign collection_title = collection.title | default: 'Products'
+  assign collection_description = collection.description
+  assign products_count = products_count | default: collection.products_count
+%}
+
+<div class="collection-hero" data-collection-hero>
+  <div class="collection-hero__inner">
+    {%- if collection_title != blank -%}
+      <h1 class="collection-hero__title reveal-text" data-hero-title>
+        {{ collection_title }}
+      </h1>
+    {%- endif -%}
+
+    {%- if collection_description != blank -%}
+      <div class="collection-hero__description reveal-up">
+        {{ collection_description }}
+      </div>
+    {%- endif -%}
+
+    <div class="collection-hero__divider" data-hero-divider></div>
+
+    {%- if products_count > 0 -%}
+      <p class="collection-hero__count reveal-up">
+        {{ products_count }}
+        {% if products_count == 1 %}item{% else %}items{% endif %}
+      </p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .collection-hero {
+    width: 100%;
+    padding: clamp(3rem, 8vw, 6rem) var(--page-margin);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .collection-hero__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--padding-lg);
+  }
+
+  .collection-hero__title {
+    font-family: var(--font-heading-family);
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    margin: 0;
+    color: rgb(var(--color-foreground));
+  }
+
+  .collection-hero__description {
+    font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+    max-width: 600px;
+    color: rgba(var(--color-foreground), 0.7);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .collection-hero__divider {
+    width: 0;
+    height: 1px;
+    background: rgba(var(--color-foreground), 0.2);
+    transition: width 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+    transition-delay: 0.4s;
+  }
+
+  [data-collection-hero].is-visible .collection-hero__divider {
+    width: 120px;
+  }
+
+  .collection-hero__count {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+    color: rgba(var(--color-foreground), 0.6);
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .collection-hero {
+      padding: clamp(2rem, 6vw, 3rem) var(--page-margin);
+    }
+
+    .collection-hero__title {
+      font-size: clamp(2rem, 10vw, 3.5rem);
+    }
+  }
+{% endstylesheet %}
