@@ -1,0 +1,119 @@
+{
+  "sections": {
+    "about_hero": {
+      "type": "about-hero-cinematic",
+      "settings": {
+        "image": "shopify://shop_images/about-hero-desktop.jpg",
+        "mobile_image": "shopify://shop_images/about-hero-mobile.jpg",
+        "heading": "Our Story",
+        "subheading": "Crafting timeless pieces for the modern individual"
+      }
+    },
+    "about_story": {
+      "type": "about-story-split",
+      "settings": {
+        "content_position": "left",
+        "heading": "Simple but Significant",
+        "body_text": "<p>Every piece is created to last beyond the season. We bring you the essentials for the modern wardrobe.</p><p>Our commitment to quality and timeless design ensures that each item becomes a cherished part of your collection.</p>",
+        "image": "shopify://shop_images/about-story.jpg",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "about_gallery": {
+      "type": "about-gallery-grid",
+      "blocks": {
+        "gallery_1": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/gallery-1.jpg"
+          }
+        },
+        "gallery_2": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/gallery-2.jpg"
+          }
+        },
+        "gallery_3": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/gallery-3.jpg"
+          }
+        },
+        "gallery_4": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/gallery-4.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "gallery_1",
+        "gallery_2",
+        "gallery_3",
+        "gallery_4"
+      ],
+      "settings": {
+        "layout_style": "bento",
+        "hover_effect": "zoom",
+        "spacing": 16
+      }
+    },
+    "about_values": {
+      "type": "about-values-cards",
+      "blocks": {
+        "value_1": {
+          "type": "value_card",
+          "settings": {
+            "icon": "quality",
+            "heading": "Premium Quality",
+            "description": "Carefully selected materials and meticulous craftsmanship in every piece."
+          }
+        },
+        "value_2": {
+          "type": "value_card",
+          "settings": {
+            "icon": "timeless",
+            "heading": "Timeless Design",
+            "description": "Classic styles that transcend trends and seasons."
+          }
+        },
+        "value_3": {
+          "type": "value_card",
+          "settings": {
+            "icon": "sustainable",
+            "heading": "Sustainable",
+            "description": "Committed to ethical production and environmental responsibility."
+          }
+        }
+      },
+      "block_order": [
+        "value_1",
+        "value_2",
+        "value_3"
+      ],
+      "settings": {
+        "section_heading": "Our Values",
+        "card_style": "glass",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "about_cta": {
+      "type": "about-cta-cinematic",
+      "settings": {
+        "image": "shopify://shop_images/about-cta.jpg",
+        "heading": "Discover The Collection",
+        "button_label": "Shop Now",
+        "button_link": "shopify://collections/all",
+        "overlay_opacity": 40
+      }
+    }
+  },
+  "order": [
+    "about_hero",
+    "about_story",
+    "about_gallery",
+    "about_values",
+    "about_cta"
+  ]
+}

@@ -1,0 +1,234 @@
+{% schema %}
+{
+  "name": "About Hero - Cinematic",
+  "tag": "section",
+  "class": "section-about-hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop Image",
+      "info": "Recommended: 16:9 Landscape (e.g., 2880 x 1620px)"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Background Video (Optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image",
+      "info": "Recommended: 9:16 Portrait (e.g., 1080 x 1920px)"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Story"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Crafting timeless pieces for the modern individual"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 10,
+      "unit": "%",
+      "label": "Overlay Opacity",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Hero - Cinematic"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="about-hero-cinematic">
+  {% comment %} Background Media with Parallax {% endcomment %}
+  <div class="about-hero__bg" data-parallax-hero>
+    {% if section.settings.video != blank %}
+      {{
+        section.settings.video
+        | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: 'about-hero__media'
+      }}
+    {% elsif section.settings.mobile_image != blank %}
+      <picture class="about-hero__media">
+        <source media="(max-width: 767px)" srcset="{{ section.settings.mobile_image | image_url: width: 800 }}">
+        <source media="(min-width: 768px)" srcset="{{ section.settings.image | image_url: width: 3000 }}">
+        {{
+          section.settings.image
+          | image_url: width: 3000
+          | image_tag: class: 'about-hero__media-img', loading: 'eager'
+        }}
+      </picture>
+    {% elsif section.settings.image != blank %}
+      {{ section.settings.image | image_url: width: 3000 | image_tag: class: 'about-hero__media', loading: 'eager' }}
+    {% else %}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'about-hero__media placeholder' }}
+    {% endif %}
+  </div>
+
+  <div class="about-hero__overlay" style="opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}"></div>
+
+  {% comment %} Content {% endcomment %}
+  <div class="about-hero__content">
+    <h1 class="about-hero__heading reveal-text">
+      {{ section.settings.heading }}
+    </h1>
+
+    <div class="about-hero__subheading-wrapper reveal-text">
+      <p class="about-hero__subheading">
+        {{ section.settings.subheading }}
+      </p>
+    </div>
+  </div>
+
+  {% comment %} Scroll Indicator {% endcomment %}
+  <div class="about-hero__scroll">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M7 13L12 18L17 13" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12 6L12 13" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>
+
+<style>
+  .about-hero-cinematic {
+    position: relative;
+    height: 100vh;
+    height: 100svh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+
+  .about-hero__bg {
+    position: absolute;
+    top: -15%;
+    left: 0;
+    width: 100%;
+    height: 130%;
+    z-index: 0;
+  }
+
+  .about-hero__media,
+  .about-hero__bg picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-hero__bg picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .about-hero__content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 900px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .about-hero__heading {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+
+  .about-hero__subheading-wrapper {
+    margin: 0;
+  }
+
+  .about-hero__subheading {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: 300;
+    margin: 0;
+    opacity: 0.9;
+    color: #fff;
+    max-width: 600px;
+  }
+
+  .about-hero__scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    animation: bounce 2s infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    40% {
+      transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+      transform: translateX(-50%) translateY(-5px);
+    }
+  }
+
+  /* Parallax effect on scroll */
+  @media (prefers-reduced-motion: no-preference) {
+    .about-hero__bg {
+      will-change: transform;
+    }
+  }
+</style>
+
+<script>
+  // Simple parallax effect
+  if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    const hero = document.querySelector('.about-hero__bg');
+    if (hero) {
+      window.addEventListener(
+        'scroll',
+        () => {
+          const scrolled = window.pageYOffset;
+          const rate = scrolled * 0.5;
+          hero.style.transform = `translate3d(0, ${rate}px, 0)`;
+        },
+        { passive: true }
+      );
+    }
+  }
+</script>

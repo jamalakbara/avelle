@@ -1,0 +1,250 @@
+{% schema %}
+{
+  "name": "About Story - Split",
+  "tag": "section",
+  "class": "section-about-story",
+  "settings": [
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content Position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Philosophy"
+    },
+    {
+      "type": "richtext",
+      "id": "body_text",
+      "label": "Body Text",
+      "default": "<p>Every piece is created to last beyond the season. We bring you the essentials for the modern wardrobe.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Background Video (Optional)"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 60,
+      "step": 10,
+      "unit": "%",
+      "label": "Media Overlay Opacity",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Story - Split"
+    }
+  ]
+}
+{% endschema %}
+
+{%- style -%}
+  .about-story-split {
+    display: flex;
+    flex-direction: column;
+    min-height: 75vh;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .about-story-split {
+      flex-direction: {{ section.settings.content_position == 'left' ? 'row' : 'row-reverse' }};
+    }
+  }
+
+  .about-story__content-wrapper,
+  .about-story__media-wrapper {
+    flex: 1 1 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-story__content-wrapper {
+    padding: 4rem 2rem;
+    background: var(--color-background);
+  }
+
+  @media screen and (min-width: 990px) {
+    .about-story__content-wrapper {
+      padding: 6rem 4rem;
+    }
+  }
+
+  .about-story__content {
+    max-width: 600px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .about-story__content.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .about-story__heading {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 1.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  .about-story__body {
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    line-height: 1.8;
+    font-weight: 300;
+    opacity: 0.9;
+  }
+
+  .about-story__body p {
+    margin: 0 0 1.5rem 0;
+  }
+
+  .about-story__body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .about-story__media-wrapper {
+    position: relative;
+    overflow: hidden;
+    min-height: 500px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .about-story__media-wrapper {
+      min-height: auto;
+    }
+  }
+
+  .about-story__media {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+
+  .about-story__media-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Hover effect on media */
+  @media (hover: hover) {
+    .about-story__media-wrapper:hover .about-story__media {
+      transform: scale(1.05);
+    }
+  }
+{%- endstyle -%}
+
+<div class="about-story-split color-{{ section.settings.color_scheme }}">
+  <div class="about-story__content-wrapper">
+    <div class="about-story__content" data-scroll-reveal>
+      <h2 class="about-story__heading">
+        {{ section.settings.heading }}
+      </h2>
+      <div class="about-story__body rte">
+        {{ section.settings.body_text }}
+      </div>
+    </div>
+  </div>
+
+  <div class="about-story__media-wrapper">
+    {% if section.settings.video != blank %}
+      {{
+        section.settings.video
+        | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: 'about-story__media'
+      }}
+    {% elsif section.settings.image != blank %}
+      {{ section.settings.image | image_url: width: 2000 | image_tag: class: 'about-story__media', loading: 'lazy' }}
+    {% else %}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'about-story__media placeholder' }}
+    {% endif %}
+    <div
+      class="about-story__media-overlay"
+      style="opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}"
+    ></div>
+  </div>
+</div>
+
+<script>
+  // Scroll reveal animation
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '0px 0px -100px 0px',
+      }
+    );
+
+    document.querySelectorAll('[data-scroll-reveal]').forEach((el) => {
+      observer.observe(el);
+    });
+  } else {
+    // Fallback for browsers without IntersectionObserver
+    document.querySelectorAll('[data-scroll-reveal]').forEach((el) => {
+      el.classList.add('is-visible');
+    });
+  }
+</script>
