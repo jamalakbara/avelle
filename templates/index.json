@@ -104,12 +104,63 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "brand_story_cinematic": {
+      "type": "brand-story-cinematic",
+      "blocks": {
+        "story_panel_1": {
+          "type": "story_panel",
+          "settings": {
+            "subheading": "Chapter 01",
+            "heading": "Our Beginning",
+            "description": "<p>Born from a passion for timeless design and exceptional quality, every piece tells a story of dedication.</p>",
+            "overlay_opacity": 40,
+            "text_position": "center",
+            "text_color": "light"
+          }
+        },
+        "story_panel_2": {
+          "type": "story_panel",
+          "settings": {
+            "subheading": "Chapter 02",
+            "heading": "Craftsmanship",
+            "description": "<p>Every detail meticulously crafted by skilled artisans who pour their heart into each creation.</p>",
+            "overlay_opacity": 40,
+            "text_position": "center",
+            "text_color": "light"
+          }
+        },
+        "story_panel_3": {
+          "type": "story_panel",
+          "settings": {
+            "subheading": "Chapter 03",
+            "heading": "Your Story",
+            "description": "<p>Designed to become part of your everyday moments, elevating the ordinary into extraordinary.</p>",
+            "button_label": "Explore Collection",
+            "button_link": "shopify://collections/all",
+            "overlay_opacity": 40,
+            "text_position": "center",
+            "text_color": "light"
+          }
+        }
+      },
+      "block_order": [
+        "story_panel_1",
+        "story_panel_2",
+        "story_panel_3"
+      ],
+      "settings": {
+        "show_progress": true,
+        "progress_style": "dots",
+        "color_scheme": "scheme-1"
+      }
     }
   },
   "order": [
     "hero_cinematic_new",
     "cinematic_collections",
     "split_hero_cinematic",
-    "curated_products_cinematic"
+    "curated_products_cinematic",
+    "brand_story_cinematic"
   ]
 }
