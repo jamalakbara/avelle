@@ -4072,6 +4072,16 @@ slideshow-slide {
   &[aria-hidden='true'] {
     cursor: pointer;
   }
+  
+  /* Smooth transitions for product card images */
+  .card-gallery & {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+  
+  /* Ensure smooth opacity transitions for images within slides */
+  .card-gallery & img {
+    transition: opacity 0.3s ease-in-out;
+  }
 }
 
 slideshow-slide .slide__image-container--rounded {
