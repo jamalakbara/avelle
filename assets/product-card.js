@@ -263,7 +263,7 @@ export class ProductCard extends Component {
         slide.hidden = slide.getAttribute('slide-id') !== selectedImageId;
       }
 
-      slideshow.select({ id: selectedImageId }, undefined, { animate: false });
+      slideshow.select({ id: selectedImageId }, undefined, { animate: true });
     }
   }
 
@@ -305,7 +305,7 @@ export class ProductCard extends Component {
     if (!slideshow) return;
 
     this.resetVariant.cancel();
-    slideshow.select({ id }, undefined, { animate: false });
+    slideshow.select({ id }, undefined, { animate: true });
   }
 
   /**
@@ -322,9 +322,9 @@ export class ProductCard extends Component {
     this.resetVariant.cancel();
 
     if (this.#previousSlideIndex != null && this.#previousSlideIndex > 0) {
-      slideshow.select(this.#previousSlideIndex, undefined, { animate: false });
+      slideshow.select(this.#previousSlideIndex, undefined, { animate: true });
     } else {
-      slideshow.next(undefined, { animate: false });
+      slideshow.next(undefined, { animate: true });
       setTimeout(() => this.#preloadNextPreviewImage());
     }
   }
@@ -340,7 +340,7 @@ export class ProductCard extends Component {
 
     if (!this.variantPicker) {
       if (!slideshow) return;
-      slideshow.previous(undefined, { animate: false });
+      slideshow.previous(undefined, { animate: true });
     } else {
       this.#resetVariant();
     }
@@ -358,7 +358,7 @@ export class ProductCard extends Component {
     if (this.variantPicker?.selectedOption) {
       const id = this.variantPicker.selectedOption.dataset.optionMediaId;
       if (id) {
-        slideshow.select({ id }, undefined, { animate: false });
+        slideshow.select({ id }, undefined, { animate: true });
         return;
       }
     }
@@ -367,12 +367,12 @@ export class ProductCard extends Component {
     const initialSlide = slideshow.initialSlide;
     const slideId = initialSlide?.getAttribute('slide-id');
     if (initialSlide && slideshow.slides?.includes(initialSlide) && slideId) {
-      slideshow.select({ id: slideId }, undefined, { animate: false });
+      slideshow.select({ id: slideId }, undefined, { animate: true });
       return;
     }
 
     // No valid initial slide or selected variant - go to previous
-    slideshow.previous(undefined, { animate: false });
+    slideshow.previous(undefined, { animate: true });
   };
 
   /**
