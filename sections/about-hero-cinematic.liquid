@@ -115,12 +115,13 @@
   }
 
   .about-hero__bg {
-    position: absolute;
-    top: -15%;
+    position: fixed;
+    top: 0;
     left: 0;
     width: 100%;
-    height: 130%;
+    height: 100vh;
     z-index: 0;
+    will-change: transform;
   }
 
   .about-hero__media,
@@ -129,6 +130,8 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .about-hero__bg picture img {
@@ -206,44 +209,4 @@
       transform: translateX(-50%) translateY(-5px);
     }
   }
-
-  /* Parallax effect on scroll */
-  @media (prefers-reduced-motion: no-preference) {
-    .about-hero__bg {
-      will-change: transform;
-    }
-  }
 </style>
-
-<script>
-  // Optimized parallax effect with requestAnimationFrame
-  if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-    const hero = document.querySelector('.about-hero__bg');
-    if (hero) {
-      let ticking = false;
-      let lastScrollY = 0;
-
-      const updateParallax = () => {
-        const rate = lastScrollY * 0.5;
-        hero.style.transform = `translate3d(0, ${rate}px, 0)`;
-        ticking = false;
-      };
-
-      const requestTick = () => {
-        if (!ticking) {
-          requestAnimationFrame(updateParallax);
-          ticking = true;
-        }
-      };
-
-      window.addEventListener(
-        'scroll',
-        () => {
-          lastScrollY = window.pageYOffset;
-          requestTick();
-        },
-        { passive: true }
-      );
-    }
-  }
-</script>
