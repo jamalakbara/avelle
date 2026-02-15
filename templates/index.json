@@ -137,6 +137,7 @@
         "story_panel_3": {
           "type": "story_panel",
           "settings": {
+            "image": "shopify://shop_images/akunpalsu29_A_chic_woman_walking_through_a_sun-drenched_minimal_50e69825-1f41-4382-aff3-92709a84514b.png",
             "subheading": "Chapter 03",
             "heading": "Your Story",
             "description": "<p>Designed to become part of your everyday moments, elevating the ordinary into extraordinary.</p>",
