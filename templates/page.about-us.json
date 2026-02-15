@@ -12,10 +12,10 @@
     "about_hero": {
       "type": "about-hero-cinematic",
       "settings": {
-        "image": "shopify://shop_images/about-hero-desktop.jpg",
-        "mobile_image": "shopify://shop_images/about-hero-mobile.jpg",
+        "image": "shopify://shop_images/akunpalsu29_Editorial_fashion_photography_of_a_high-end_silk_ma_a0d7a747-1269-4492-b081-41d04c939120.png",
         "heading": "Our Story",
-        "subheading": "Crafting timeless pieces for the modern individual"
+        "subheading": "Crafting timeless pieces for the modern individual",
+        "overlay_opacity": 40
       }
     },
     "about_story": {
@@ -24,8 +24,11 @@
         "content_position": "left",
         "heading": "Simple but Significant",
         "body_text": "<p>Every piece is created to last beyond the season. We bring you the essentials for the modern wardrobe.</p><p>Our commitment to quality and timeless design ensures that each item becomes a cherished part of your collection.</p>",
-        "image": "shopify://shop_images/about-story.jpg",
-        "color_scheme": "scheme-1"
+        "image": "shopify://shop_images/akunpalsu29_Extreme_macro_close-up_shot_of_hands_working_with_d_010cde0c-6f9b-4903-89fb-4d120252a3c2.png",
+        "color_scheme": "scheme-1",
+        "overlay_opacity": 20,
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "about_gallery": {
@@ -34,25 +37,25 @@
         "gallery_1": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/gallery-1.jpg"
+            "image": "shopify://shop_images/Ultra_Realistic_Photo.png"
           }
         },
         "gallery_2": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/gallery-2.jpg"
+            "image": "shopify://shop_images/Ultra_Realistic_Photo_1.png"
           }
         },
         "gallery_3": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/gallery-3.jpg"
+            "image": "shopify://shop_images/Ultra_Realistic_Photo_2.png"
           }
         },
         "gallery_4": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/gallery-4.jpg"
+            "image": "shopify://shop_images/Cinematic_Portrait_of_Young_Woman_1.png"
           }
         }
       },
@@ -65,7 +68,9 @@
       "settings": {
         "layout_style": "bento",
         "hover_effect": "zoom",
-        "spacing": 16
+        "spacing": 16,
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
     "about_values": {
@@ -104,17 +109,20 @@
       "settings": {
         "section_heading": "Our Values",
         "card_style": "glass",
-        "color_scheme": "scheme-1"
+        "color_scheme": "scheme-1",
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
     "about_cta": {
       "type": "about-cta-cinematic",
       "settings": {
-        "image": "shopify://shop_images/about-cta.jpg",
+        "image": "shopify://shop_images/akunpalsu29_A_chic_woman_walking_through_a_sun-drenched_minimal_50e69825-1f41-4382-aff3-92709a84514b.png",
         "heading": "Discover The Collection",
         "button_label": "Shop Now",
         "button_link": "shopify://collections/all",
-        "overlay_opacity": 40
+        "overlay_opacity": 40,
+        "height": "50vh"
       }
     }
   },

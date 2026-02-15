@@ -14,7 +14,13 @@
     "header_section": {
       "type": "header",
       "settings": {
-        "enable_transparent_header_product": true
+        "menu": "main-menu",
+        "logo_width": 100,
+        "sticky_header_type": "always",
+        "enable_transparent_header": true,
+        "enable_transparent_header_product": true,
+        "enable_transparent_header_collection": true,
+        "color_scheme": ""
       }
     }
   },
