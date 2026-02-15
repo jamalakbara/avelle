@@ -1000,7 +1000,7 @@
 
   .menu-drawer__list-item--flat .menu-drawer__menu--childlist {
     width: 100%;
-    padding-inline: 0;
+    padding-inline-start: var(--padding-lg);
   }
 
   .menu-drawer-container[open] .menu-drawer__animated-element {
@@ -1065,6 +1065,8 @@
     line-height: var(--menu-child-font-line-height);
     text-transform: var(--menu-child-font-case);
     color: var(--menu-child-font-color);
+    opacity: 0.75;
+    font-weight: normal;
 
     &:hover {
       color: var(--menu-child-font-color);
@@ -1096,7 +1098,7 @@
 
   .menu-drawer__menu-item {
     display: flex;
-    padding: var(--padding-2xs) 0;
+    padding: var(--padding-sm) 0;
     position: relative;
     text-decoration: none;
     justify-content: space-between;
