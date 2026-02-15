@@ -201,7 +201,11 @@
             | image_tag: class: 'about-gallery__image', loading: 'lazy'
           }}
         {%- else -%}
-          {{ 'lifestyle-' | append: forloop.index | placeholder_svg_tag: 'about-gallery__image placeholder' }}
+          {%- assign placeholder_index = forloop.index | modulo: 2 -%}
+          {%- if placeholder_index == 0 -%}
+            {%- assign placeholder_index = 2 -%}
+          {%- endif -%}
+          {{ 'lifestyle-' | append: placeholder_index | placeholder_svg_tag: 'about-gallery__image placeholder' }}
         {%- endif -%}
         <div class="about-gallery__overlay"></div>
       </div>
