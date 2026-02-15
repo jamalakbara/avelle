@@ -216,16 +216,31 @@
 </style>
 
 <script>
-  // Simple parallax effect
+  // Optimized parallax effect with requestAnimationFrame
   if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
     const hero = document.querySelector('.about-hero__bg');
     if (hero) {
+      let ticking = false;
+      let lastScrollY = 0;
+
+      const updateParallax = () => {
+        const rate = lastScrollY * 0.5;
+        hero.style.transform = `translate3d(0, ${rate}px, 0)`;
+        ticking = false;
+      };
+
+      const requestTick = () => {
+        if (!ticking) {
+          requestAnimationFrame(updateParallax);
+          ticking = true;
+        }
+      };
+
       window.addEventListener(
         'scroll',
         () => {
-          const scrolled = window.pageYOffset;
-          const rate = scrolled * 0.5;
-          hero.style.transform = `translate3d(0, ${rate}px, 0)`;
+          lastScrollY = window.pageYOffset;
+          requestTick();
         },
         { passive: true }
       );
