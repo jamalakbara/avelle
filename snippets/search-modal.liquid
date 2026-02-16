@@ -149,13 +149,13 @@
     padding: 0;
     border: none;
     background-color: var(--color-background);
-    height: 80vh; /* 80% of screen height */
-    max-height: 80vh;
-    width: auto;
+    height: 100%;
+    max-height: 100%;
+    width: 100%;
     max-width: none;
     overflow: hidden;
-    border-radius: 24px 24px 0 0; /* Rounded top corners only */
-    box-shadow: 0 4px 24px rgb(0 0 0 / 0.15); /* Enhanced shadow for floating effect */
+    border-radius: 0;
+    box-shadow: none;
 
     @media screen and (min-width: 750px) {
       left: var(--search-modal-gap);
@@ -168,6 +168,10 @@
 
     @media screen and (max-width: 749px) {
       padding: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      border-radius: 20px 20px 0 0;
     }
   }
 
@@ -189,6 +193,7 @@
 
   .search-modal__content[open] {
     display: flex;
+    flex-direction: column;
   }
 
   .search-modal__content :is(.predictive-search-dropdown, .predictive-search-form__content-wrapper) {
@@ -229,7 +234,9 @@
     --resource-card-corner-radius: var(--product-corner-radius);
 
     display: flex;
+    flex-direction: column;
     width: 100%;
+    height: 100%;
     position: relative;
     margin-inline: auto;
     align-items: center;
@@ -266,6 +273,9 @@
   .predictive-search-form {
     position: relative;
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     align-self: flex-start;
   }
 
@@ -273,6 +283,8 @@
   .predictive-search-form__content {
     max-height: none !important;
     overflow-y: auto;
+    flex-grow: 1;
+    height: 100%;
     background-color: var(--color-background);
 
     /* Firefox */
@@ -285,8 +297,11 @@
   }
 
   .predictive-search-form__content-wrapper {
-    position: absolute;
-    top: 100%;
+    position: relative;
+    top: 0;
+    flex-grow: 1;
+    height: 100%;
+    overflow: hidden;
     width: 100%;
     left: 0;
     z-index: var(--layer-raised);
@@ -296,7 +311,6 @@
     transition: box-shadow var(--animation-speed) var(--animation-easing);
     transform: translateZ(0);
     will-change: transform, opacity;
-    overflow: hidden;
 
     @media screen and (max-width: 749px) {
       border-radius: 0;
