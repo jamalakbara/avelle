@@ -6,3 +6,5 @@ config.yml
 .git
 references/*
 docs/*
+package-lock.json
+package.json

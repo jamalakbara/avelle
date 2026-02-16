@@ -50,6 +50,12 @@
     },
     {
       "type": "checkbox",
+      "id": "enable_sticky_header_search",
+      "default": false,
+      "label": "Enable sticky header on search page"
+    },
+    {
+      "type": "checkbox",
       "id": "enable_transparent_header",
       "default": true,
       "label": "t:sections.header.settings.enable_transparent_header.label"
@@ -71,6 +77,12 @@
       "id": "enable_transparent_header_page",
       "default": true,
       "label": "Enable transparent header on pages"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_transparent_header_search",
+      "default": true,
+      "label": "Enable transparent header on search page"
     },
     {
       "type": "color_scheme",
@@ -102,6 +114,8 @@
     assign sticky_header_type = 'none'
   elsif template.name == 'cart' and section.settings.enable_sticky_header_cart == false
     assign sticky_header_type = 'none'
+  elsif template.name == 'search' and section.settings.enable_sticky_header_search == false
+    assign sticky_header_type = 'none'
   endif
 
   assign transparent_header = false
@@ -116,6 +130,8 @@
   elsif template.name == 'cart'
     assign transparent_header = true
   elsif template.name == 'page' and section.settings.enable_transparent_header_page
+    assign transparent_header = true
+  elsif template.name == 'search' and section.settings.enable_transparent_header_search
     assign transparent_header = true
   endif
 
