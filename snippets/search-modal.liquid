@@ -269,8 +269,9 @@
     align-self: flex-start;
   }
 
+  .search-modal__content .predictive-search-form__content,
   .predictive-search-form__content {
-    max-height: 50dvh;
+    max-height: none !important;
     overflow-y: auto;
     background-color: var(--color-background);
 
@@ -302,7 +303,7 @@
     }
 
     @media screen and (min-width: 750px) {
-      max-height: var(--modal-max-height);
+      max-height: none;
     }
   }
 
