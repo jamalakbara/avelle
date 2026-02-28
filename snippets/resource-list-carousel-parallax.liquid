@@ -1,0 +1,228 @@
+{%- doc -%}
+  Renders a carousel of predictive search results cards with horizontal image parallax
+
+  @param {object} slides - An array of HTML for the slides to display in the carousel
+  @param {object} settings - The block or sections settings from the parent block/section.
+  @param {string} [slide_width_max] - The maximum width of the slides in the carousel.
+
+  @example
+  {% render 'resource-list-carousel-parallax', slides: slides, settings: block.settings %}
+{%- enddoc -%}
+
+{% liquid
+  if settings.section_width == 'page-width'
+    assign gutter_style = '--gutter-slide-width: var(--util-page-margin-offset);'
+  else
+    assign gutter_style = '--gutter-slide-width: 0px;'
+  endif
+%}
+
+{% capture slides_html %}
+  {% for item in slides limit: slides.size %}
+    {% render 'slideshow-slide'
+      index : forloop.index0,
+      children : item,
+      class : 'resource-list__slide parallax-card'
+    %}
+  {% endfor %}
+{% endcapture %}
+
+<div class="parallax-carousel-container" style="position: relative;">
+  <div
+    class="resource-list__carousel parallax-carousel-wrapper cursor-none"
+    style="{{ gutter_style }} --slide-width-max: {{ slide_width_max | default: '450px' }}; overflow-x: auto; scroll-snap-type: x mandatory; display: flex; gap: var(--resource-list-column-gap-desktop, 16px); padding-inline: var(--util-page-margin-offset, 2rem); scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; cursor: none;"
+    data-parallax-carousel
+  >
+    {{ slides_html }}
+  </div>
+
+  <div class="parallax-drag-cursor" data-drag-cursor>
+    <span>Drag</span>
+  </div>
+</div>
+
+<style>
+  .parallax-carousel-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .parallax-card {
+    scroll-snap-align: start;
+    flex: 0 0 calc(var(--slide-width-max) + 0px);
+    max-width: var(--slide-width-max);
+    width: 80vw;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--product-corner-radius, 8px);
+    cursor: none;
+  }
+
+  .parallax-card .card-gallery img,
+  .parallax-card .product-media-container img,
+  .parallax-card .slideshow-slide img {
+    /* Scale it up slightly so we have room to translate it horizontally */
+    transform: scale(1.1);
+    transform-origin: center;
+    will-change: transform;
+    transition: transform 0.1s linear; /* Smooth micro-stutters during native scroll */
+  }
+
+  /* Hover Reveals: Add to Cart slides up from bottom */
+  .parallax-card .product-badges,
+  .parallax-card .quick-add-wrapper {
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .parallax-card .quick-add-wrapper {
+    position: absolute;
+    bottom: var(--padding-sm);
+    left: var(--padding-sm);
+    right: var(--padding-sm);
+    opacity: 0;
+    transform: translateY(20px);
+    z-index: 10;
+  }
+
+  .parallax-card:hover .quick-add-wrapper {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Custom Cursor Styles */
+  .parallax-carousel-container {
+    cursor: none;
+  }
+  .parallax-carousel-container * {
+    cursor: none !important;
+  }
+
+  .parallax-drag-cursor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    mix-blend-mode: difference;
+  }
+
+  .parallax-carousel-container:hover .parallax-drag-cursor {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // We only initialize this if GSAP and ScrollTrigger are available.
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+    const containers = document.querySelectorAll('.parallax-carousel-container');
+
+    containers.forEach((container) => {
+      // Prevent double initialization if multiple snippets render the same script
+      if (container.dataset.parallaxInitialized) return;
+      container.dataset.parallaxInitialized = 'true';
+
+      const wrapper = container.querySelector('.parallax-carousel-wrapper');
+      const cursor = container.querySelector('[data-drag-cursor]');
+
+      if (!wrapper) return;
+
+      // Custom Cursor Logic
+      if (cursor) {
+        let mouseX = 0,
+          mouseY = 0;
+        let cursorX = 0,
+          cursorY = 0;
+
+        container.addEventListener('mousemove', (e) => {
+          const rect = container.getBoundingClientRect();
+          mouseX = e.clientX - rect.left;
+          mouseY = e.clientY - rect.top;
+        });
+
+        // Use GSAP ticker for smooth cursor follow
+        gsap.ticker.add(() => {
+          // Linear interpolation for buttery smoothness
+          cursorX += (mouseX - cursorX) * 0.15;
+          cursorY += (mouseY - cursorY) * 0.15;
+
+          gsap.set(cursor, {
+            left: cursorX,
+            top: cursorY,
+          });
+        });
+      }
+
+      const cards = container.querySelectorAll('.parallax-card');
+
+      cards.forEach((card) => {
+        const image = card.querySelector('img');
+
+        // Image Parallax (Horizontal)
+        if (image) {
+          gsap.to(image, {
+            x: '20%', // Move the image horizontally
+            ease: 'none',
+            scrollTrigger: {
+              trigger: card,
+              scroller: wrapper,
+              horizontal: true,
+              start: 'left right', // When the left of the card hits the right of the scroller
+              end: 'right left', // When the right of the card hits the left of the scroller
+              scrub: true,
+            },
+          });
+        }
+
+        // Card Focus Effect (Scale & Dimming)
+        gsap.fromTo(
+          card,
+          { scale: 0.9, opacity: 0.6 },
+          {
+            scale: 1,
+            opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: card,
+              scroller: wrapper,
+              horizontal: true,
+              start: 'left 80%', // Start focusing when entering viewport
+              end: 'center center',
+              scrub: true,
+            },
+          }
+        );
+
+        gsap.to(card, {
+          scale: 0.9,
+          opacity: 0.6,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: card,
+            scroller: wrapper,
+            horizontal: true,
+            start: 'center center',
+            end: 'right 20%', // Lose focus as it exits viewport
+            scrub: true,
+          },
+        });
+      });
+    });
+  });
+</script>

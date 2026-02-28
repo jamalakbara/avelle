@@ -18,6 +18,19 @@ document.addEventListener("DOMContentLoaded", () => {
     mouseX = e.clientX;
     mouseY = e.clientY;
 
+    let isHiddenContainer = false;
+    if (e.target && e.target.closest) {
+      isHiddenContainer = e.target.closest('.cursor-none, .parallax-carousel-container, [data-parallax-carousel]');
+    }
+
+    if (isHiddenContainer) {
+      cursor.style.display = 'none';
+      follower.style.display = 'none';
+    } else {
+      cursor.style.display = 'block';
+      follower.style.display = 'block';
+    }
+
     // Instant movement for the small dot
     cursor.style.left = mouseX - 5 + 'px';
     cursor.style.top = mouseY - 5 + 'px';

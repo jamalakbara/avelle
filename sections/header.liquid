@@ -236,14 +236,14 @@
     min-width: 44px; /* Sufficient for a circle/pill */
     padding: 0 4px; /* Reduced padding, text margin handles spacing */
     border-radius: 9999px;
-    background-color: var(--color-white);
-    color: var(--color-burgundy-100);
+    background-color: transparent;
+    color: inherit;
     border: none;
     cursor: pointer;
     overflow: hidden;
     /* Remove fixed max-width on parent, animate children instead or allow auto growth */
     transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
     text-decoration: none;
   }
 
@@ -272,10 +272,10 @@
     height: 16px;
   }
 
-  /* Force burgundy color on icons */
+  /* Inherit text color for icons */
   .btn-header-pill .icon-wrapper svg path,
   .btn-header-pill .icon-wrapper svg circle {
-    stroke: #5d0f17 !important;
+    stroke: currentColor !important;
   }
 
   .btn-header-pill .text {
@@ -319,6 +319,7 @@
     height: auto;
     object-fit: contain;
     width: {{ logo_width }}px;
+    filter: brightness(0) invert(1);
   }
 
   @media screen and (max-width: 767px) {
@@ -332,6 +333,7 @@
     font-size: 24px;
     font-weight: bold;
     letter-spacing: 0.05em;
+    color: var(--color-white);
   }
 
   /* Right: Actions */

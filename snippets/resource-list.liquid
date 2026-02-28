@@ -119,10 +119,8 @@
       {% render 'bento-grid', items: list_items_array %}
 
     {% when 'carousel' %}
-      {% render 'resource-list-carousel',
-        ref: carousel_ref,
+      {% render 'resource-list-carousel-parallax',
         slides: list_items_array,
-        slide_count: slide_count,
         settings: settings,
         slide_width_max: slide_width_max
       %}
@@ -162,13 +160,8 @@
       --mobile-card-size: {{ settings.mobile_card_size | default: '60cqw' }};
     "
   >
-    {% liquid
-      assign carousel_ref_mobile = carousel_ref | append: 'Mobile'
-    %}
-    {% render 'resource-list-carousel',
-      ref: carousel_ref_mobile,
+    {% render 'resource-list-carousel-parallax',
       slides: list_items_array,
-      slide_count: slide_count,
       settings: settings,
       slide_width_max: slide_width_max
     %}
