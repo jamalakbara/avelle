@@ -1,0 +1,287 @@
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+<style>
+  /* Awwwards-Worthy Cinematic Collection Grid Styles */
+  .cinematic-collection-grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
+    gap: {{ section.settings.gap }}px;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  @media (max-width: 768px) {
+    .cinematic-collection-grid {
+      grid-template-columns: repeat({{ section.settings.mobile_columns }}, 1fr);
+    }
+  }
+
+  .cinematic-collection-card {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    aspect-ratio: 4/5;
+    border-radius: var(--card-corner-radius, 0px);
+  }
+
+  .cinematic-collection-card__image-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .cinematic-collection-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Darkening Wash */
+  .cinematic-collection-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }});
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Hover States */
+  .cinematic-collection-card:hover .cinematic-collection-card__image {
+    transform: scale(1.06);
+  }
+
+  .cinematic-collection-card:hover::after {
+    opacity: 1;
+  }
+
+  /* Editorial Typography */
+  .cinematic-collection-card__content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .cinematic-collection-card__title {
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    color: #ffffff;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    text-align: center;
+  }
+
+  /* Reveal Label */
+  .cinematic-collection-card__reveal {
+    font-family: var(--font-body--family);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-top: 15px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cinematic-collection-card:hover .cinematic-collection-card__title {
+    transform: translateY(-8px);
+  }
+
+  .cinematic-collection-card:hover .cinematic-collection-card__reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<div
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  {% if section.settings.heading != blank %}
+    <div class="section-header text-center" style="margin-bottom: 2rem;">
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+    </div>
+  {% endif %}
+
+  <div class="cinematic-collection-grid">
+    {% for block in section.blocks %}
+      {%- assign collection = collections[block.settings.collection] -%}
+
+      <a href="{{ collection.url | default: '#' }}" class="cinematic-collection-card" {{ block.shopify_attributes }}>
+        <div class="cinematic-collection-card__image-wrapper">
+          {% if block.settings.image != blank %}
+            {{
+              block.settings.image
+              | image_url: width: 1500
+              | image_tag: class: 'cinematic-collection-card__image', loading: 'lazy'
+            }}
+          {% elsif collection.image != blank %}
+            {{
+              collection.image
+              | image_url: width: 1500
+              | image_tag: class: 'cinematic-collection-card__image', loading: 'lazy'
+            }}
+          {% else %}
+            {% capture current %}{% cycle 1, 2, 3, 4 %}{% endcapture %}
+            {{
+              'collection-apparel-'
+              | append: current
+              | placeholder_svg_tag: 'cinematic-collection-card__image placeholder-svg'
+            }}
+          {% endif %}
+        </div>
+
+        <div class="cinematic-collection-card__content">
+          <h3 class="cinematic-collection-card__title">
+            {% if block.settings.title != blank %}
+              {{ block.settings.title }}
+            {% else %}
+              {{ collection.title | default: 'Collection' }}
+            {% endif %}
+          </h3>
+          <span class="cinematic-collection-card__reveal">Shop Collection ↗</span>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection List Cinematic",
+  "class": "section-collection-list-cinematic",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Curated Collections"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section Width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "Page Width"
+        },
+        {
+          "value": "full-width",
+          "label": "Full Width"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns (Desktop)",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "mobile_columns",
+      "label": "Columns (Mobile)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Grid Gap",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Hover Reveal Darkening",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom Title",
+          "info": "Overrides the default collection name."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Image",
+          "info": "Overrides the default collection featured image."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cinematic Collection Grid",
+      "blocks": [{ "type": "collection" }, { "type": "collection" }, { "type": "collection" }]
+    }
+  ]
+}
+{% endschema %}

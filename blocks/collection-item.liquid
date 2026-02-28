@@ -1,0 +1,28 @@
+{% comment %}
+  A specific block designed to be used in collection lists to allow
+  selecting a collection alongside a custom override image.
+{% endcomment %}
+
+{% schema %}
+{
+  "name": "Collection Item",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image",
+      "label": "Custom Image",
+      "info": "Overrides the default collection image. Leave empty to use collection image."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Item"
+    }
+  ]
+}
+{% endschema %}
