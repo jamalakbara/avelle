@@ -1,5 +1,3 @@
-
-
 {% liquid
   if section.settings.collection_list != blank
     assign section_collections = section.settings.collection_list
@@ -16,6 +14,96 @@
 %}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+<style>
+  /* Awwwards-Worthy Cinematic Collection Grid Styles */
+  .section-resource-list .collection-card {
+    overflow: hidden;
+    position: relative;
+    border-radius: var(--card-corner-radius, 0px); /* Respect theme settings if any */
+  }
+
+  /* 1. Image Scale & Darkening Wash (Magnetic Effect) */
+  .section-resource-list .collection-card .collection-card__image .image-block__image {
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .section-resource-list .collection-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35); /* Elegant dark wash */
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .section-resource-list .collection-card:hover .collection-card__image .image-block__image {
+    transform: scale(1.06) !important;
+  }
+
+  .section-resource-list .collection-card:hover::after {
+    opacity: 1;
+  }
+
+  /* 2. Editorial Typography & Reveal */
+  .section-resource-list .collection-card__content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2; /* Above the wash */
+    pointer-events: none; /* Let clicks pass through to card link */
+  }
+
+  .section-resource-list .collection-card__content .text-block {
+    text-align: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background: transparent !important; /* Remove default white tag background */
+    width: 100%;
+  }
+
+  .section-resource-list .collection-card__content .text-block p {
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    color: #ffffff !important;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* The "Shop Collection" Reveal */
+  .section-resource-list .collection-card__content::after {
+    content: 'Shop Collection ↗';
+    display: block;
+    font-family: var(--font-body--family);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-top: 15px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .section-resource-list .collection-card:hover .text-block p {
+    transform: translateY(-8px);
+  }
+
+  .section-resource-list .collection-card:hover .collection-card__content::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
 
 <div
   class="
