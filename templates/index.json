@@ -338,6 +338,7 @@
         "story_panel_2",
         "story_panel_3"
       ],
+      "disabled": true,
       "settings": {
         "section_height": 600,
         "section_spacing": 0,
