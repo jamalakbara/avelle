@@ -24,6 +24,13 @@
         "button_link": "shopify://collections/all"
       }
     },
+    "cinematic_carousel_section": {
+      "type": "carousel-cinematic",
+      "settings": {
+        "collection": "new-arrivals",
+        "heading": "New Arrivals"
+      }
+    },
     "cinematic_collections": {
       "type": "featured-collection-cinematic",
       "blocks": {
@@ -60,6 +67,7 @@
         "collection_item_xEm3BV",
         "collection_item_QaQHDD"
       ],
+      "disabled": true,
       "settings": {
         "height": "100vh",
         "image_ratio": "full",
@@ -170,19 +178,12 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
-    },
-    "cinematic_carousel_section": {
-      "type": "carousel-cinematic",
-      "settings": {
-        "collection": "new-arrivals",
-        "heading": "New Arrivals"
-      }
     }
   },
   "order": [
     "hero_cinematic_new",
-    "cinematic_collections",
     "cinematic_carousel_section",
+    "cinematic_collections",
     "split_hero_cinematic",
     "curated_products_cinematic",
     "brand_story_cinematic"
