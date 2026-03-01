@@ -1,0 +1,731 @@
+{% schema %}
+{
+  "name": "Cinematic Carousel Hero",
+  "tag": "section",
+  "class": "section-hero-carousel-cinematic",
+  "settings": [
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay Speed",
+      "default": 5
+    },
+    {
+      "type": "select",
+      "id": "section_height_desktop",
+      "label": "Section Height (Desktop)",
+      "options": [
+        { "value": "50vh", "label": "Small" },
+        { "value": "85vh", "label": "Medium" },
+        { "value": "100vh", "label": "Full Screen" }
+      ],
+      "default": "100vh"
+    },
+    {
+      "type": "select",
+      "id": "section_height_mobile",
+      "label": "Section Height (Mobile)",
+      "options": [
+        { "value": "50vh", "label": "Small" },
+        { "value": "85vh", "label": "Medium" },
+        { "value": "100vh", "label": "Full Screen (100svh)" }
+      ],
+      "default": "100vh"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 20,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading Font Size (Mobile)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "min": 40,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Font Size (Desktop)",
+      "default": 96
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop Image",
+          "info": "Recommended: 16:9 Landscape (e.g., 2880 x 1620px)"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Background Video (Optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image",
+          "info": "Recommended: 9:16 Portrait (e.g., 1080 x 1920px)"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Elevate Your Every Day"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Premium essentials for the modern lifestyle."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Shop Collection"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "select",
+          "id": "text_color",
+          "label": "Text Color Theme",
+          "options": [
+            { "value": "light", "label": "Light" },
+            { "value": "dark", "label": "Dark" }
+          ],
+          "default": "light"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "label": "Overlay Opacity",
+          "default": 30
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cinematic Carousel Hero",
+      "blocks": [{ "type": "slide" }, { "type": "slide" }, { "type": "slide" }]
+    }
+  ]
+}
+{% endschema %}
+
+<div
+  class="hc-carousel"
+  data-autoplay-speed="{{ section.settings.autoplay_speed | times: 1000 }}"
+  id="hc-carousel-{{ section.id }}"
+  style="
+    --hc-height-desktop: {{ section.settings.section_height_desktop }};
+    --hc-height-mobile: {% if section.settings.section_height_mobile == '100vh' %}100svh{% else %}{{ section.settings.section_height_mobile }}{% endif %};
+  "
+>
+  <div class="hc-slides">
+    {% for block in section.blocks %}
+      <div class="hc-slide" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+        {% comment %} Background Media {% endcomment %}
+        <div class="hc-bg-wrapper">
+          <div class="hc-bg">
+            {% if block.settings.video != blank %}
+              {{
+                block.settings.video
+                | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: 'hc-media'
+              }}
+            {% elsif block.settings.mobile_image != blank %}
+              <picture class="hc-media-picture">
+                <source media="(max-width: 767px)" srcset="{{ block.settings.mobile_image | image_url: width: 800 }}">
+                <source media="(min-width: 768px)" srcset="{{ block.settings.image | image_url: width: 3000 }}">
+                {{ block.settings.image | image_url: width: 3000 | image_tag: class: 'hc-media', loading: 'eager' }}
+              </picture>
+            {% elsif block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 3000 | image_tag: class: 'hc-media', loading: 'eager' }}
+            {% else %}
+              {{ 'lifestyle-' | append: forloop.index | placeholder_svg_tag: 'hc-media placeholder' }}
+            {% endif %}
+          </div>
+        </div>
+
+        {% comment %} Overlay {% endcomment %}
+        <div
+          class="hc-overlay"
+          style="background: rgba(0,0,0,{{ block.settings.overlay_opacity | divided_by: 100.0 }});"
+        ></div>
+
+        {% comment %} Content {% endcomment %}
+        <div class="hc-content hc-theme-{{ block.settings.text_color }}">
+          <div class="hc-content-inner">
+            <h2 class="hc-heading">
+              <span class="hc-line-wrapper"
+                ><span class="hc-line">{{ block.settings.heading }}</span></span
+              >
+            </h2>
+
+            <div class="hc-subheading-wrapper">
+              <p class="hc-subheading">
+                {{ block.settings.subheading }}
+              </p>
+            </div>
+
+            {% if block.settings.button_link != blank %}
+              <div class="hc-btn-wrapper">
+                <a href="{{ block.settings.button_link }}" class="hc-btn magnetic-btn">
+                  {{ block.settings.button_label }}
+                </a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% comment %} UI: Progress Indicator & Hit Areas {% endcomment %}
+  {% if section.blocks.size > 1 %}
+    <div class="hc-ui">
+      <div class="hc-progress">
+        <span class="hc-current">01</span>
+        <div class="hc-progress-track">
+          <div class="hc-progress-fill"></div>
+        </div>
+        <span class="hc-total">0{{ section.blocks.size }}</span>
+      </div>
+    </div>
+
+    <!-- Navigation Hit Areas -->
+    <div class="hc-hit-prev" data-dir="prev"></div>
+    <div class="hc-hit-next" data-dir="next"></div>
+
+    <!-- Custom Cursor -->
+    <div class="hc-cursor">
+      <span class="hc-cursor-text">NEXT</span>
+    </div>
+  {% endif %}
+</div>
+
+<style>
+  :root {
+    --hc-heading-mobile: {{ section.settings.heading_size_mobile }}px;
+    --hc-heading-desktop: {{ section.settings.heading_size_desktop }}px;
+  }
+
+  /* Carousel Base */
+  .hc-carousel {
+    position: relative;
+    width: 100%;
+    height: var(--hc-height-desktop);
+    overflow: hidden;
+    background: #000;
+  }
+
+  .hc-slides {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hc-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: inset(0 0 0 100%);
+    z-index: 1;
+    visibility: hidden;
+    pointer-events: none; /* Let clicks pass through the slide container */
+  }
+
+  .hc-slide:first-child {
+    clip-path: inset(0 0 0 0);
+    z-index: 10; /* Must be higher than hit areas (z-index 5) */
+    visibility: visible;
+  }
+
+  /* Background & Media */
+  .hc-bg-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .hc-bg {
+    width: 100%;
+    height: 100%;
+    transform-origin: center;
+  }
+
+  .hc-media,
+  .hc-media-picture,
+  .hc-media-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hc-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* Content Overlay */
+  .hc-content {
+    position: absolute;
+    inset: 0;
+    z-index: 3; /* Below hit areas (5) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; /* Let clicks pass through to hit areas */
+    padding: 0 20px;
+  }
+
+  .hc-content-inner {
+    text-align: center;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  /* Theme Colors */
+  .hc-theme-light {
+    color: #fff;
+  }
+  .hc-theme-dark {
+    color: #000;
+  }
+
+  /* Typography */
+  .hc-heading {
+    font-size: clamp(var(--hc-heading-mobile), 8vw, var(--hc-heading-desktop));
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: inherit;
+  }
+
+  .hc-line-wrapper {
+    display: block;
+    overflow: hidden;
+  }
+
+  .hc-line {
+    display: block;
+    transform: translateY(100%); /* Initial state for GSAP */
+    opacity: 0;
+  }
+
+  .hc-subheading-wrapper {
+    overflow: hidden;
+    margin: 0;
+  }
+
+  .hc-subheading {
+    font-size: clamp(16px, 2vw, 20px);
+    font-weight: 300;
+    margin: 0;
+    opacity: 0; /* Initial state for GSAP */
+    transform: translateY(100%);
+    color: inherit;
+  }
+
+  /* Buttons */
+  .hc-btn-wrapper {
+    margin-top: 1rem;
+    pointer-events: auto; /* Catch clicks for the button */
+    position: relative;
+    z-index: 20; /* Sit ABOVE hit-areas (5) */
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  .hc-btn {
+    display: inline-block;
+    padding: 1.2rem 3rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    color: inherit;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    background: transparent;
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+  }
+
+  .hc-theme-light .hc-btn {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .hc-theme-light .hc-btn:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+    transform: scale(1.05);
+  }
+
+  .hc-theme-dark .hc-btn {
+    border-color: rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .hc-theme-dark .hc-btn:hover {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+    transform: scale(1.05);
+  }
+
+  /* Progress Bar UI */
+  .hc-ui {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    mix-blend-mode: difference;
+    pointer-events: none;
+  }
+
+  .hc-progress {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: monospace, sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+  }
+
+  .hc-progress-track {
+    width: 150px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hc-progress-fill {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+
+  /* Hit Areas */
+  .hc-hit-prev,
+  .hc-hit-next {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    z-index: 5; /* Lower than active slide (10) */
+    cursor: none;
+    pointer-events: auto; /* Catch navigation clicks */
+  }
+  .hc-hit-prev { left: 0; }
+  .hc-hit-next { right: 0; }
+
+  /* Custom Cursor */
+  .hc-carousel {
+    cursor: none;
+  }
+  .hc-carousel:has(.hc-btn:hover) .hc-cursor {
+    opacity: 0 !important;
+  }
+
+  .hc-cursor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+    transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    mix-blend-mode: exclusion;
+    will-change: transform, left, top;
+  }
+
+  @media (max-width: 768px) {
+    .hc-carousel { height: var(--hc-height-mobile); }
+    .hc-cursor { display: none; }
+    .hc-hit-prev, .hc-hit-next { cursor: auto; }
+    .hc-ui { mix-blend-mode: normal; bottom: 2rem; }
+    .hc-progress-track { background: rgba(255,255,255,0.4); }
+    .hc-btn-wrapper { pointer-events: auto; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof gsap === 'undefined') {
+      console.warn('GSAP is required for Cinematic Carousel Hero');
+      return;
+    }
+
+    class CinematicCarousel {
+      constructor(el) {
+        this.el = el;
+        this.slides = el.querySelectorAll('.hc-slide');
+        if (this.slides.length < 2) {
+          // If only 1 slide, just reveal text and exit
+          if (this.slides.length === 1) this.revealText(0);
+          return;
+        }
+
+        this.total = this.slides.length;
+        this.currentIndex = 0;
+        this.autoplaySpeed = parseInt(el.dataset.autoplaySpeed) || 5000;
+
+        this.progressFill = el.querySelector('.hc-progress-fill');
+        this.currentText = el.querySelector('.hc-current');
+
+        this.isAnimating = false;
+
+        this.cursor = el.querySelector('.hc-cursor');
+        this.cursorText = el.querySelector('.hc-cursor-text');
+        this.hitPrev = el.querySelector('.hc-hit-prev');
+        this.hitNext = el.querySelector('.hc-hit-next');
+
+        // Hide initial clips except first
+        gsap.set(this.slides, { visibility: 'visible', zIndex: 1 });
+        gsap.set(this.slides[0], { zIndex: 10 });
+
+        this.init();
+      }
+
+      init() {
+        // Initial text reveal for first slide
+        this.revealText(0);
+
+        // Start Autoplay
+        this.startAutoplay();
+
+        // Navigation Events
+        if (this.hitPrev && this.hitNext) {
+          this.hitPrev.addEventListener('click', () => this.navigate('prev'));
+          this.hitNext.addEventListener('click', () => this.navigate('next'));
+        }
+
+        // Custom Cursor Logic
+        if (this.cursor) {
+          let cursorX = 0,
+            cursorY = 0;
+          let mouseX = window.innerWidth / 2;
+          let mouseY = window.innerHeight / 2;
+
+          this.el.addEventListener('mousemove', (e) => {
+            const rect = this.el.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+          });
+
+          gsap.ticker.add(() => {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            gsap.set(this.cursor, { x: cursorX, y: cursorY });
+          });
+
+          if (this.hitPrev) {
+            this.hitPrev.addEventListener('mouseenter', () => {
+              if (this.cursorText) this.cursorText.innerText = 'PREV';
+              gsap.to(this.cursorText, { opacity: 1, duration: 0.2 });
+            });
+          }
+          if (this.hitNext) {
+            this.hitNext.addEventListener('mouseenter', () => {
+              if (this.cursorText) this.cursorText.innerText = 'NEXT';
+              gsap.to(this.cursorText, { opacity: 1, duration: 0.2 });
+            });
+          }
+
+          this.el.addEventListener('mouseenter', () => {
+            gsap.to(this.cursor, { opacity: 1, duration: 0.3 });
+            // GSAP scale is tricky with transform on cursor, we animate width/height or via scale on inner element.
+            // Using a simple opacity fade for the wrapper is safer performance-wise.
+          });
+          this.el.addEventListener('mouseleave', () => {
+            gsap.to(this.cursor, { opacity: 0, duration: 0.3 });
+          });
+        }
+      }
+
+      revealText(index) {
+        const slide = this.slides[index];
+        const line = slide.querySelector('.hc-line');
+        const sub = slide.querySelector('.hc-subheading');
+        const btn = slide.querySelector('.hc-btn-wrapper');
+
+        // Reset state before animating
+        gsap.set([line, sub, btn], { y: 100, opacity: 0 });
+
+        gsap.to([line, sub, btn], {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          stagger: 0.15,
+          ease: 'power4.out',
+          delay: 0.4, // wait for clip path to be partially revealed
+        });
+      }
+
+      hideText(index) {
+        const slide = this.slides[index];
+        const line = slide.querySelector('.hc-line');
+        const sub = slide.querySelector('.hc-subheading');
+        const btn = slide.querySelector('.hc-btn-wrapper');
+
+        gsap.to([line, sub, btn], {
+          y: -50,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power3.in',
+        });
+      }
+
+      startAutoplay() {
+        if (!this.progressFill) return;
+
+        gsap.killTweensOf(this.progressFill);
+        gsap.set(this.progressFill, { scaleX: 0 });
+
+        gsap.to(this.progressFill, {
+          scaleX: 1,
+          duration: this.autoplaySpeed / 1000,
+          ease: 'linear',
+          onComplete: () => this.navigate('next'),
+        });
+      }
+
+      navigate(dir) {
+        if (this.isAnimating) return;
+        this.isAnimating = true;
+
+        if (this.progressFill) {
+          gsap.killTweensOf(this.progressFill);
+          gsap.set(this.progressFill, { scaleX: 0 });
+        }
+
+        const nextIndex =
+          dir === 'next' ? (this.currentIndex + 1) % this.total : (this.currentIndex - 1 + this.total) % this.total;
+
+        const currentSlide = this.slides[this.currentIndex];
+        const nextSlide = this.slides[nextIndex];
+
+        const currentBg = currentSlide.querySelector('.hc-bg');
+        const nextBg = nextSlide.querySelector('.hc-bg');
+
+        // Stack management
+        gsap.set(this.slides, { zIndex: 1 });
+        gsap.set(currentSlide, { zIndex: 9 });
+        gsap.set(nextSlide, { zIndex: 10 });
+
+        // Determine clip-path direction
+        // 'next' sweeps from right to left (starts with 100% clipped from left)
+        const startClip = dir === 'next' ? 'inset(0% 0% 0% 100%)' : 'inset(0% 100% 0% 0%)';
+        const endClip = 'inset(0% 0% 0% 0%)';
+
+        // Prepare next slide
+        gsap.set(nextSlide, { clipPath: startClip });
+        gsap.set(nextBg, { scale: 1.15 });
+
+        // Hide current text
+        this.hideText(this.currentIndex);
+
+        // Animate Clip Path
+        gsap.to(nextSlide, {
+          clipPath: endClip,
+          duration: 1.4,
+          ease: 'expo.inOut',
+        });
+
+        // Animate incoming background scale
+        gsap.to(nextBg, {
+          scale: 1,
+          duration: 1.4,
+          ease: 'expo.inOut',
+        });
+
+        // Animate outgoing background scale
+        gsap.to(currentBg, {
+          scale: 0.9,
+          duration: 1.4,
+          ease: 'expo.inOut',
+        });
+
+        // Reveal incoming text
+        this.revealText(nextIndex);
+
+        // Clean up and restart
+        setTimeout(() => {
+          this.currentIndex = nextIndex;
+          if (this.currentText) this.currentText.innerText = `0${nextIndex + 1}`;
+
+          // Reset old slide
+          gsap.set(currentSlide, { clipPath: 'inset(0 0 0 100%)' });
+          gsap.set(currentBg, { scale: 1 });
+
+          this.isAnimating = false;
+          this.startAutoplay();
+        }, 1400); // Wait for transition to finish
+      }
+    }
+
+    document.querySelectorAll('.hc-carousel').forEach((el) => new CinematicCarousel(el));
+  });
+</script>

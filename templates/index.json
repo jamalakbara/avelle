@@ -9,6 +9,44 @@
  */
 {
   "sections": {
+    "hero_carousel_cinematic": {
+      "type": "hero-carousel-cinematic",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Cinematic_Portrait_of_Young_Woman_3.png",
+            "heading": "Elevate Your Every Day",
+            "subheading": "Premium essentials for the modern lifestyle.",
+            "button_label": "Shop Collection",
+            "button_link": "shopify://collections/all",
+            "text_color": "light",
+            "overlay_opacity": 30
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Ultra_Realistic_Photo_7.png",
+            "heading": "Timeless Elegance",
+            "subheading": "Discover our new arrivals.",
+            "button_label": "Explore",
+            "button_link": "shopify://collections/new-arrivals",
+            "text_color": "light",
+            "overlay_opacity": 30
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2"
+      ],
+      "settings": {
+        "autoplay_speed": 5,
+        "heading_size_mobile": 48,
+        "heading_size_desktop": 96
+      }
+    },
     "hero_cinematic_new": {
       "type": "hero-cinematic",
       "settings": {
@@ -227,6 +265,7 @@
     }
   },
   "order": [
+    "hero_carousel_cinematic",
     "hero_cinematic_new",
     "cinematic_carousel_section",
     "cinematic_collection_grid",
