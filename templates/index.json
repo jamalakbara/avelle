@@ -51,6 +51,7 @@
     },
     "hero_cinematic_new": {
       "type": "hero-cinematic",
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/Cinematic_Portrait_of_Young_Woman_3.png",
         "mobile_image": "shopify://shop_images/Cinematic_Portrait_of_Young_Woman_2.png",
