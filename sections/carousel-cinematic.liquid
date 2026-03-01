@@ -225,10 +225,10 @@
   }
 
   /* Custom Cursor Styles */
-  .parallax-carousel-container {
+  .parallax-carousel-wrapper {
     cursor: none;
   }
-  .parallax-carousel-container * {
+  .parallax-carousel-wrapper * {
     cursor: none !important;
   }
 
@@ -244,28 +244,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
     pointer-events: none;
     z-index: 100;
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.5);
-    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease,
-      color 0.3s ease;
-    mix-blend-mode: difference;
-  }
-
-  .parallax-carousel-container:hover .parallax-drag-cursor {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  .parallax-drag-cursor.is-dragging {
-    transform: translate(-50%, -50%) scale(0.7);
-    background: rgba(255, 255, 255, 1);
-    color: #000;
+    mix-blend-mode: exclusion;
+    will-change: transform;
   }
 
   /* Make the text change or icon appear when dragging if desired */
@@ -296,25 +283,47 @@
         let cursorX = 0,
           cursorY = 0;
 
-        container.addEventListener('mousemove', (e) => {
+        // Take over transform control via GSAP
+        gsap.set(cursor, { xPercent: -50, yPercent: -50, scale: 0.5 });
+
+        // Track mouse ONLY over the wrapper, but relative to the container for absolute positioning
+        wrapper.addEventListener('mousemove', (e) => {
           const rect = container.getBoundingClientRect();
           mouseX = e.clientX - rect.left;
           mouseY = e.clientY - rect.top;
         });
 
+        wrapper.addEventListener('mouseenter', (e) => {
+          // Snap instantly to actual mouse location to prevent "flying in from 0,0" delay!
+          const rect = container.getBoundingClientRect();
+          mouseX = e.clientX - rect.left;
+          mouseY = e.clientY - rect.top;
+          cursorX = mouseX;
+          cursorY = mouseY;
+          gsap.set(cursor, { x: cursorX, y: cursorY });
+
+          gsap.to(cursor, { opacity: 1, scale: 0.5, duration: 0.3 });
+        });
+
+        wrapper.addEventListener('mouseleave', () => {
+          gsap.to(cursor, { opacity: 0, scale: 0.5, duration: 0.3 });
+        });
+
         // Add drag state for cursor
         wrapper.addEventListener('mousedown', () => {
           cursor.classList.add('is-dragging');
+          gsap.to(cursor, { scale: 0.4, background: 'rgba(255, 255, 255, 1)', duration: 0.2 });
         });
 
         window.addEventListener('mouseup', () => {
           cursor.classList.remove('is-dragging');
+          gsap.to(cursor, { scale: 0.5, background: 'rgba(255, 255, 255, 0.9)', duration: 0.2 });
         });
 
         gsap.ticker.add(() => {
           cursorX += (mouseX - cursorX) * 0.15;
           cursorY += (mouseY - cursorY) * 0.15;
-          gsap.set(cursor, { left: cursorX, top: cursorY });
+          gsap.set(cursor, { x: cursorX, y: cursorY });
         });
       }
 

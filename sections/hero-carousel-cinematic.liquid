@@ -495,10 +495,8 @@
     pointer-events: none;
     z-index: 100;
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.5);
-    transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
     mix-blend-mode: exclusion;
-    will-change: transform, left, top;
+    will-change: transform;
   }
 
   @media (max-width: 768px) {
@@ -566,8 +564,11 @@
         if (this.cursor) {
           let cursorX = 0,
             cursorY = 0;
-          let mouseX = window.innerWidth / 2;
-          let mouseY = window.innerHeight / 2;
+          let mouseX = 0,
+            mouseY = 0;
+
+          // Set initial GSAP state (takes over transform matrix)
+          gsap.set(this.cursor, { xPercent: -50, yPercent: -50, scale: 0.5 });
 
           this.el.addEventListener('mousemove', (e) => {
             const rect = this.el.getBoundingClientRect();
@@ -594,13 +595,20 @@
             });
           }
 
-          this.el.addEventListener('mouseenter', () => {
-            gsap.to(this.cursor, { opacity: 1, duration: 0.3 });
-            // GSAP scale is tricky with transform on cursor, we animate width/height or via scale on inner element.
-            // Using a simple opacity fade for the wrapper is safer performance-wise.
+          this.el.addEventListener('mouseenter', (e) => {
+            // Snapping to exact position instantly on enter to prevent "flying in from 0,0" delay!
+            const rect = this.el.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+            cursorX = mouseX;
+            cursorY = mouseY;
+            gsap.set(this.cursor, { x: cursorX, y: cursorY });
+
+            gsap.to(this.cursor, { opacity: 1, scale: 0.5, duration: 0.3 });
           });
+
           this.el.addEventListener('mouseleave', () => {
-            gsap.to(this.cursor, { opacity: 0, duration: 0.3 });
+            gsap.to(this.cursor, { opacity: 0, scale: 0.5, duration: 0.3 });
           });
         }
       }
