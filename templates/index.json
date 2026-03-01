@@ -43,6 +43,8 @@
       ],
       "settings": {
         "autoplay_speed": 5,
+        "section_height_desktop": "85vh",
+        "section_height_mobile": "85vh",
         "heading_size_mobile": 48,
         "heading_size_desktop": 96
       }
@@ -185,6 +187,7 @@
         "split_new_arrivals",
         "split_bestsellers"
       ],
+      "disabled": true,
       "settings": {
         "height": "75vh",
         "color_scheme": "scheme-1"
