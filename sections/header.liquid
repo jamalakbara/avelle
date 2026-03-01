@@ -75,13 +75,13 @@
     {
       "type": "checkbox",
       "id": "enable_transparent_header_page",
-      "default": true,
+      "default": false,
       "label": "Enable transparent header on pages"
     },
     {
       "type": "checkbox",
       "id": "enable_transparent_header_search",
-      "default": true,
+      "default": false,
       "label": "Enable transparent header on search page"
     },
     {
@@ -163,10 +163,10 @@
   .header-custom {
     --color-burgundy-100: #5d0f17;
     --color-off-white: #f2f0ed;
-    --color-white: #fff;
+    --color-white: #ffffff;
     --color-dark-burgundy: #300000;
-    --header-bg-color: var(--color-off-white);
-    --header-text-color: var(--color-burgundy-100);
+    --header-bg-color: var(--color-white);
+    --header-text-color: #000000;
 
     --header-scrolled-bg: {{ section.settings.scrolled_bg_color }};
     --header-scrolled-text: {{ section.settings.scrolled_text_color }};
