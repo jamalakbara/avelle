@@ -193,7 +193,7 @@
     position: relative;
     z-index: 100;
     width: 100%;
-    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease, top 0.3s ease;
     background-color: var(--header-bg-color);
     color: var(--header-text-color);
     will-change: transform; /* Hint for smoother animation */
@@ -213,11 +213,14 @@
 
   .header-custom.header-wrapper.is-transparent {
     position: absolute;
-    top: 0;
+    /* Fallback to 0, dynamically populated by JS to calculate precise offset of siblings like announcement bar */
+    top: var(--announcement-bar-height, 0px);
     left: 0;
+    right: 0;
     background: transparent;
     color: var(--color-white);
     border-bottom: none;
+    transform: none !important; /* Force prevent any negative translations from JS */
   }
 
   .header-custom.header-wrapper.is-scrolled {
@@ -235,14 +238,15 @@
   }
 
   /* When transparent and on-scroll-up/always, we need absolute/fixed depending on scrolled state */
-  .header-custom.header-wrapper.is-transparent {
-    position: absolute;
-  }
-
   /* OVERRIDES for sticky behavior */
   .header-custom.header-wrapper.is-scrolled[data-sticky-type='on-scroll-up'],
   .header-custom.header-wrapper.is-scrolled[data-sticky-type='always']  {
      position: fixed;
+     top: 0 !important; /* Reset any top offsets when it becomes a sticky block */
+  }
+
+  .header-custom.header-wrapper.is-hidden {
+     transform: translateY(-100%);
   }
 
   .header-inner {
@@ -648,6 +652,22 @@
     const header = document.getElementById('site-header');
     if (!header) return;
 
+    // Dynamically calculate the offset needed for transparent heading
+    const setHeaderOffset = () => {
+        const headerGroup = document.getElementById('header-group');
+        if (headerGroup) {
+            let offsetHeight = 0;
+            const headerSection = header.closest('.shopify-section') || header;
+            for (let child of headerGroup.children) {
+                if (child === headerSection) break;
+                offsetHeight += child.offsetHeight;
+            }
+            document.documentElement.style.setProperty('--announcement-bar-height', `${offsetHeight}px`);
+        }
+    };
+    setHeaderOffset();
+    window.addEventListener('resize', setHeaderOffset);
+
     // Sticky header logic
     const stickyType = header.dataset.stickyType;
     let lastScrollY = window.scrollY;
@@ -664,32 +684,29 @@
             header.classList.add('is-scrolled');
         } else {
             header.classList.remove('is-scrolled');
-            // If we are at the top and transparent, ensure we don't accidentally hide it
-            if (isInitiallyTransparent && currentScrollY === 0) {
-               header.style.transform = 'translateY(0)';
-            }
         }
 
         const isScrollingDown = currentScrollY > lastScrollY;
         const scrollDifference = Math.abs(currentScrollY - lastScrollY);
 
-        // Sticky Logic - Hide/Show on scroll
+        // Sticky Logic - Hide/Show on scroll via class instead of inline transform
+        // This is much safer and respects CSS specificity like !important rules
         if (stickyType === 'on-scroll-up') {
-             // Only hide if we've scrolled down a decent amount past the solid trigger
-             // AND the scroll difference is tangible (to avoid micro-jitters)
              if (isScrollingDown && currentScrollY > 150 && scrollDifference > 5) {
-                 header.style.transform = 'translateY(-100%)';
+                 header.classList.add('is-hidden');
              } else if (!isScrollingDown && scrollDifference > 5) {
-                 // Scrolling UP -> Show
-                 header.style.transform = 'translateY(0)';
+                 header.classList.remove('is-hidden');
              }
         } else if (stickyType === 'always') {
-             header.style.transform = 'translateY(0)';
+             header.classList.remove('is-hidden');
         }
 
         lastScrollY = currentScrollY;
         ticking = false;
     };
+
+    // Run once on load to ensure initial state is correct
+    updateHeader();
 
     const handleScroll = () => {
         if (!ticking) {
