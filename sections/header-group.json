@@ -15,12 +15,19 @@
       "type": "header",
       "settings": {
         "menu": "main-menu",
-        "logo_width": 100,
         "sticky_header_type": "on-scroll-up",
+        "enable_sticky_header_product": false,
+        "enable_sticky_header_collection": false,
+        "enable_sticky_header_cart": false,
+        "enable_sticky_header_search": false,
         "enable_transparent_header": true,
-        "enable_transparent_header_product": true,
-        "enable_transparent_header_collection": true,
-        "color_scheme": ""
+        "enable_transparent_header_product": false,
+        "enable_transparent_header_collection": false,
+        "enable_transparent_header_page": false,
+        "enable_transparent_header_search": false,
+        "color_scheme": "",
+        "scrolled_bg_color": "#ffffff",
+        "scrolled_text_color": "#000000"
       }
     }
   },
