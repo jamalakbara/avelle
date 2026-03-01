@@ -67,7 +67,7 @@
                 "vertical_alignment_flex_direction_column": "center",
                 "gap": 12,
                 "width": "custom",
-                "custom_width": 50,
+                "custom_width": 60,
                 "width_mobile": "fill",
                 "custom_width_mobile": 100,
                 "height": "fit",
@@ -139,10 +139,9 @@
                 "menu_HFzgCj": {
                   "type": "menu",
                   "name": "t:names.menu",
-                  "disabled": true,
                   "settings": {
-                    "menu": "",
-                    "heading": "Connect",
+                    "menu": "main-menu",
+                    "heading": "Customer Care",
                     "menu_spacing": 12,
                     "show_as_accordion": false,
                     "accordion_icon": "caret",
