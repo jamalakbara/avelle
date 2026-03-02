@@ -420,25 +420,39 @@
   }
 
   /* Buy It Now (Dynamic Checkout) - Matching Style */
+  .product-form-buttons .shopify-payment-button,
+  .product-form-buttons shopify-accelerated-checkout {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+    display: flex;
+    align-items: stretch;
+  }
+
   .product-form-buttons .shopify-payment-button__button {
-    background: rgba(0, 0, 0, 0.05) !important;
-    color: var(--color-foreground) !important;
-    border: 1px solid rgba(var(--color-foreground-rgb), 0.2) !important;
+    background: var(--color-foreground) !important;
+    color: var(--color-background) !important;
+    border: 1px solid var(--color-foreground) !important;
     box-shadow: none !important;
-    backdrop-filter: blur(10px);
-    overflow: hidden;
+    width: 100% !important;
+    padding-block: 1.2rem !important;
+    padding-inline: 2rem !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: normal !important;
+    box-sizing: border-box !important;
+    min-height: unset !important;
+    max-height: unset !important;
+    height: auto !important;
   }
 
   .product-form-buttons .shopify-payment-button__button:hover {
     background: var(--color-foreground) !important;
     color: var(--color-background) !important;
     border-color: var(--color-foreground) !important;
-    transform: none !important;
-  }
-
-  /* Hide Buy It Now (Accelerated Checkout) */
-  .product-form-buttons .shopify-payment-button {
-    display: none !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
   }
 
   /* Make Add to Cart button full width */
