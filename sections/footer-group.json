@@ -164,9 +164,30 @@
                 "menu_HFzgCj"
               ]
             },
+            "social_links_EXqpjp": {
+              "type": "social-links",
+              "name": "t:names.social_media_links",
+              "settings": {
+                "facebook_url": "",
+                "instagram_url": "https://www.instagram.com/withavelle",
+                "youtube_url": "",
+                "tiktok_url": "https://www.tiktok.com/@withavelle",
+                "twitter_url": "",
+                "threads_url": "",
+                "linkedin_url": "",
+                "bluesky_url": "",
+                "snapchat_url": "",
+                "pinterest_url": "",
+                "tumblr_url": "",
+                "vimeo_url": "",
+                "custom_url": ""
+              },
+              "blocks": {}
+            },
             "group_gz8NPq": {
               "type": "group",
               "name": "t:names.email_signup",
+              "disabled": true,
               "settings": {
                 "content_direction": "column",
                 "vertical_on_mobile": true,
@@ -265,6 +286,7 @@
           },
           "block_order": [
             "group_MTNPDR",
+            "social_links_EXqpjp",
             "group_gz8NPq"
           ]
         }
