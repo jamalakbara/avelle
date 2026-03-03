@@ -1,17 +1,50 @@
 <div
   class="elegant-page color-{{ section.settings.color_scheme }}"
-  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+  style="padding-bottom: {{ section.settings.padding_bottom }}px;"
 >
-  <div class="page-width">
-    <div class="elegant-page-hero" style="text-align: {{ section.settings.text_alignment }}; margin-bottom: 4rem;">
-      <h1
-        class="elegant-page-hero__heading"
-        style="margin: 0; font-family: var(--font-heading--family); font-weight: var(--font-heading--weight); font-style: var(--font-heading--style); font-size: clamp(3rem, 5vw, 5.5rem); letter-spacing: -0.02em; line-height: 1.1;"
-      >
-        {{ page.title | escape }}
-      </h1>
-    </div>
+  {% if section.settings.hero_image != blank %}
+    <div
+      class="elegant-page-hero-image-wrapper"
+      style="position: relative; width: 100%; height: {{ section.settings.hero_height }}; overflow: hidden; margin-bottom: {{ section.settings.padding_top }}px;"
+    >
+      <div
+        class="elegant-page-hero-image parallax-bg"
+        style="position: absolute; top: -15%; left: 0; width: 100%; height: 130%; background-image: url('{{ section.settings.hero_image | image_url: width: 2000 }}'); background-size: cover; background-position: center;"
+      ></div>
+      <div
+        class="elegant-page-hero-overlay"
+        style="position: absolute; inset: 0; background-color: #000; opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"
+      ></div>
 
+      <div
+        class="page-width"
+        style="position: relative; height: 100%; display: flex; align-items: {% if section.settings.text_alignment == 'center' %}center{% else %}flex-end{% endif %}; justify-content: {% if section.settings.text_alignment == 'center' %}center{% else %}flex-start{% endif %}; padding-bottom: {% if section.settings.text_alignment == 'center' %}0{% else %}4rem{% endif %}; z-index: 2;"
+      >
+        <h1
+          class="elegant-page-hero__heading has-image"
+          style="margin: 0; font-family: var(--font-heading--family); font-weight: var(--font-heading--weight); font-style: var(--font-heading--style); font-size: clamp(3.5rem, 6vw, 7rem); letter-spacing: -0.02em; line-height: 1.1; color: #fff; text-align: {{ section.settings.text_alignment }};"
+        >
+          {{ page.title | escape }}
+        </h1>
+      </div>
+    </div>
+  {% else %}
+    <div class="page-width">
+      <div
+        class="elegant-page-hero text-only"
+        style="text-align: {{ section.settings.text_alignment }}; padding-top: {{ section.settings.padding_top }}px; margin-bottom: 4rem;"
+      >
+        <h1
+          class="elegant-page-hero__heading"
+          style="margin: 0; font-family: var(--font-heading--family); font-weight: var(--font-heading--weight); font-style: var(--font-heading--style); font-size: clamp(3rem, 5vw, 5.5rem); letter-spacing: -0.02em; line-height: 1.1;"
+        >
+          {{ page.title | escape }}
+        </h1>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="page-width">
     <div
       class="elegant-page-content"
       style="max-width: 75ch; margin: 0 auto; font-family: var(--font-body--family); font-size: 1.125rem; line-height: 1.6; color: rgb(var(--color-foreground-rgb) / 0.9);"
@@ -55,14 +88,37 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', (event) => {
-    if (typeof gsap !== 'undefined') {
-      gsap.fromTo('.elegant-page-hero', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' });
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
 
+      // Hero Text Animation
+      gsap.fromTo(
+        '.elegant-page-hero__heading',
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }
+      );
+
+      // Editor Content Animation
       gsap.fromTo(
         '.elegant-page-content',
         { y: 30, opacity: 0 },
         { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out', delay: 0.2 }
       );
+
+      // Parallax Image Animation (If image exists)
+      const parallaxBg = document.querySelector('.parallax-bg');
+      if (parallaxBg) {
+        gsap.to(parallaxBg, {
+          yPercent: 15,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.elegant-page-hero-image-wrapper',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      }
     }
   });
 </script>
@@ -78,6 +134,37 @@
       "default": "scheme-1"
     },
     {
+      "type": "header",
+      "content": "Hero Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image (Optional)",
+      "info": "If an image is provided, it will create a full-width parallax banner. If empty, it will display a minimal text hero."
+    },
+    {
+      "type": "select",
+      "id": "hero_height",
+      "label": "Hero Height (If Image is Used)",
+      "options": [
+        { "value": "50vh", "label": "Small" },
+        { "value": "70vh", "label": "Medium" },
+        { "value": "100vh", "label": "Full Screen" }
+      ],
+      "default": "70vh"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Image Overlay Opacity",
+      "default": 30
+    },
+    {
       "type": "select",
       "id": "text_alignment",
       "label": "Heading Alignment",
@@ -88,13 +175,17 @@
       "default": "center"
     },
     {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
       "type": "range",
       "id": "padding_top",
       "min": 0,
       "max": 160,
       "step": 4,
       "unit": "px",
-      "label": "Padding Top",
+      "label": "Space Below Hero / Padding Top",
       "default": 100
     },
     {
@@ -106,6 +197,11 @@
       "unit": "px",
       "label": "Padding Bottom",
       "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "Elegant Page"
     }
   ]
 }
