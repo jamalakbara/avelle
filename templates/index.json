@@ -28,7 +28,8 @@
         "slide_2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Ultra_Realistic_Photo_7.png",
+            "image": "shopify://shop_images/banner_2.png",
+            "mobile_image": "shopify://shop_images/banner_2_mobile.png",
             "heading": "Timeless Elegance",
             "subheading": "Discover our new arrivals.",
             "button_label": "Explore",
