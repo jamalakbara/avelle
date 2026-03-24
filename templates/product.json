@@ -18,7 +18,7 @@
           "settings": {
             "media_presentation": "grid",
             "media_columns": "one",
-            "image_gap": 0,
+            "image_gap": 16,
             "large_first_image": false,
             "icons_style": "arrow",
             "slideshow_controls_style": "counter",
@@ -116,31 +116,6 @@
               },
               "blocks": {}
             },
-            "text_Description": {
-              "type": "text",
-              "settings": {
-                "text": "{{ closest.product.description }}",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "custom",
-                "font": "var(--font-secondary--family)",
-                "font_size": "1.125rem",
-                "line_height": "1.6",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 12,
-                "padding-block-end": 12,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
             "variant_picker_R3rGDr": {
               "type": "variant-picker",
               "settings": {
@@ -208,6 +183,45 @@
                 "padding-inline-end": 0
               },
               "blocks": {
+                "accordion_row_desc": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Description",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_Description": {
+                      "type": "text",
+                      "settings": {
+                        "text": "{{ closest.product.description }}",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "custom",
+                        "font": "var(--font-secondary--family)",
+                        "font_size": "1rem",
+                        "line_height": "1.6",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 12,
+                        "padding-block-end": 12,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_Description"
+                  ]
+                },
                 "accordion_row_iJM37V": {
                   "type": "_accordion-row",
                   "settings": {
@@ -226,8 +240,8 @@
                         "alignment": "left",
                         "type_preset": "custom",
                         "font": "var(--font-secondary--family)",
-                        "font_size": "var(--font-size--body-lg)",
-                        "line_height": "normal",
+                        "font_size": "1rem",
+                        "line_height": "1.6",
                         "letter_spacing": "normal",
                         "case": "none",
                         "wrap": "pretty",
@@ -265,8 +279,8 @@
                         "alignment": "left",
                         "type_preset": "custom",
                         "font": "var(--font-secondary--family)",
-                        "font_size": "var(--font-size--body-lg)",
-                        "line_height": "normal",
+                        "font_size": "1rem",
+                        "line_height": "1.6",
                         "letter_spacing": "normal",
                         "case": "none",
                         "wrap": "pretty",
@@ -288,6 +302,7 @@
                 }
               },
               "block_order": [
+                "accordion_row_desc",
                 "accordion_row_iJM37V",
                 "accordion_row_pLFDcD"
               ]
@@ -296,7 +311,6 @@
           "block_order": [
             "text_9WaLn7",
             "price_a7krng",
-            "text_Description",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
             "accordion_NKWPiW"

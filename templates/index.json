@@ -9,6 +9,10 @@
  */
 {
   "sections": {
+    "marquee_elegant": {
+      "type": "marquee-elegant",
+      "settings": {}
+    },
     "hero_carousel_cinematic": {
       "type": "hero-carousel-cinematic",
       "blocks": {
@@ -272,6 +276,7 @@
   },
   "order": [
     "hero_carousel_cinematic",
+    "marquee_elegant",
     "hero_cinematic_new",
     "cinematic_carousel_section",
     "cinematic_collection_grid",

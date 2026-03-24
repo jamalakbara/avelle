@@ -311,11 +311,19 @@
     font-weight: 500 !important;
     background: transparent !important;
     border: 1px solid currentColor !important;
+    box-shadow: none !important; /* Prevent double-drawing borders */
     color: var(--color-foreground) !important;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
     padding: 0.8rem 1.5rem !important;
     overflow: visible !important;
+  }
+
+  /* Kill base theme ghost borders that cause double-lining fuzziness */
+  .variant-option__button-label::after,
+  .variant-option__button-label::before {
+    display: none !important;
+    box-shadow: none !important;
   }
 
   /* Hide ghost pill when not selected */

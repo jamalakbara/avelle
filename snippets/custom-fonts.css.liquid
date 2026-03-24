@@ -1,41 +1,41 @@
 <style>
 
-/* Juana - Serif / Headings */
+/* Zodiak - Serif / Headings */
 @font-face {
-  font-family: 'Juana';
-  src: url("{{ 'juana-light.otf' | asset_url }}") format("opentype");
+  font-family: 'Zodiak';
+  src: url("{{ 'Zodiak-Light.woff2' | asset_url }}") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Juana';
-  src: url("{{ 'juana-regular.otf' | asset_url }}") format("opentype");
+  font-family: 'Zodiak';
+  src: url("{{ 'Zodiak-Regular.woff2' | asset_url }}") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Juana';
-  src: url("{{ 'juana-medium.otf' | asset_url }}") format("opentype");
+  font-family: 'Zodiak';
+  src: url("{{ 'Zodiak-Regular.woff2' | asset_url }}") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Juana';
-  src: url("{{ 'juana-semibold.otf' | asset_url }}") format("opentype");
+  font-family: 'Zodiak';
+  src: url("{{ 'Zodiak-Bold.woff2' | asset_url }}") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Juana';
-  src: url("{{ 'juana-bold.otf' | asset_url }}") format("opentype");
+  font-family: 'Zodiak';
+  src: url("{{ 'Zodiak-Bold.woff2' | asset_url }}") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -85,13 +85,13 @@
 /* Override Theme Variables - Using html:root for higher specificity (0-2-0) than :root (0-1-0) */
 html:root {
   /* Correct double-dash variables used by theme */
-  --font-heading--family: 'Juana', serif !important;
+  --font-heading--family: 'Zodiak', serif !important;
   --font-body--family: 'Poppins', sans-serif !important;
-  --font-subheading--family: 'Juana', serif !important;
-  --font-accent--family: 'Juana', serif !important;
+  --font-subheading--family: 'Zodiak', serif !important;
+  --font-accent--family: 'Zodiak', serif !important;
 
   /* Legacy single-dash (just in case) */
-  --font-heading-family: 'Juana', serif !important;
+  --font-heading-family: 'Zodiak', serif !important;
   --font-body-family: 'Poppins', sans-serif !important;
 
   /* Adjust weights/styles */
@@ -99,6 +99,38 @@ html:root {
   --font-body--weight: 400 !important;
   --font-heading-weight: 400 !important;
   --font-body-weight: 400 !important;
+
+  /* Fix blurry/jagged pill borders (sub-pixel rendering issue) */
+  --variant-pills-border-width: 1px !important;
+  --buttons-border-width: 1px !important;
+  --inputs-border-width: 1px !important;
+}
+
+/* Fix jagged variant pill borders directly by overriding box-shadow and ::after elements */
+.product-form__input input[type='radio'] + label,
+variant-picker input[type='radio'] + label,
+fieldset.product-form__input label,
+.product-form__input label {
+  border: 1px solid rgba(0,0,0,0.2) !important;
+  box-shadow: none !important;
+}
+
+.product-form__input input[type='radio']:checked + label,
+variant-picker input[type='radio']:checked + label {
+  border-color: rgba(0,0,0,1) !important;
+  box-shadow: none !important;
+}
+
+/* Dawn themes usually use ::after or ::before for the border/focus ring. We must hide them if they are causing anti-aliasing issues */
+.product-form__input input[type='radio'] + label::after,
+.product-form__input input[type='radio'] + label::before,
+variant-picker input[type='radio'] + label::after,
+variant-picker input[type='radio'] + label::before,
+.product-form__input label::after,
+.product-form__input label::before {
+  display: none !important;
+  content: none !important;
+  box-shadow: none !important;
 }
 
 /* Direct overrides for common elements */
@@ -148,9 +180,9 @@ h6,
 
 /* Product Details Typography & Animations */
 .product-details .text-block h1 {
-  font-family: 'Juana', serif !important;
-  font-size: 3.5rem !important;
-  /* Cinematic size */
+  font-family: 'Zodiak', serif !important;
+  font-size: 2.5rem !important;
+  /* Cinematic size, slightly reduced */
   font-weight: 400;
   line-height: 1.1;
   opacity: 0;
@@ -159,8 +191,29 @@ h6,
   animation: fade-up-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Accordion Titles - elegant serif */
+.accordion summary,
+.accordion__title,
+.product-details .accordion summary {
+  font-family: 'Zodiak', serif !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+  font-size: 1.25rem;
+}
+
+/* Variant Labels - soften uppercase */
+variant-picker legend,
+.product-form__input .form__label,
+.product-form__input legend {
+  font-weight: 400 !important;
+  letter-spacing: 0.1em;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
 .product-details product-price .price {
-  font-family: 'Juana', serif !important;
+  font-family: 'Zodiak', serif !important;
   font-size: 1.25rem !important;
   /* Slightly smaller for hierarchy */
   font-weight: 300 !important;

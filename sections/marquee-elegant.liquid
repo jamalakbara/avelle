@@ -1,0 +1,210 @@
+<div class="marquee-elegant section-{{ section.id }}-padding" style="--marquee-bg: {{ section.settings.bg_color }}; --marquee-text: {{ section.settings.text_color }}; --marquee-speed: {{ section.settings.speed }}s;">
+  <div class="marquee-elegant__inner">
+    <div class="marquee-elegant__part">
+      {%- for i in (1..10) -%}
+        <div class="marquee-elegant__item">
+          <span class="marquee-elegant__text {% if section.settings.outline %}marquee-elegant__text--outline{% endif %}">{{ section.settings.text }}</span>
+          {%- if section.settings.separator != blank -%}
+            <span class="marquee-elegant__separator">{{ section.settings.separator }}</span>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+    <div class="marquee-elegant__part">
+      {%- for i in (1..10) -%}
+        <div class="marquee-elegant__item">
+          <span class="marquee-elegant__text {% if section.settings.outline %}marquee-elegant__text--outline{% endif %}">{{ section.settings.text }}</span>
+          {%- if section.settings.separator != blank -%}
+            <span class="marquee-elegant__separator">{{ section.settings.separator }}</span>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .marquee-elegant {
+    background-color: var(--marquee-bg);
+    color: var(--marquee-text);
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    border-top: {{ section.settings.border_thickness }}px solid {{ section.settings.border_color }};
+    border-bottom: {{ section.settings.border_thickness }}px solid {{ section.settings.border_color }};
+  }
+
+  .marquee-elegant__inner {
+    display: flex;
+    width: max-content;
+    animation: marquee-elegant-scroll var(--marquee-speed) linear infinite;
+  }
+  
+  .marquee-elegant:hover .marquee-elegant__inner {
+    animation-play-state: paused;
+  }
+
+  .marquee-elegant__part {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .marquee-elegant__item {
+    display: flex;
+    align-items: center;
+    padding: 0;
+  }
+
+  .marquee-elegant__text {
+    font-size: {{ section.settings.text_size }}px;
+    font-family: var(--font-heading-family);
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: normal;
+    letter-spacing: 0.05em;
+  }
+
+  .marquee-elegant__text--outline {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--marquee-text);
+  }
+
+  .marquee-elegant__separator {
+    font-size: {{ section.settings.text_size | divided_by: 2 }}px;
+    margin: 0 4rem;
+    opacity: 0.6;
+    font-family: var(--font-heading-family);
+  }
+
+  @keyframes marquee-elegant-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .marquee-elegant__text {
+      font-size: {{ section.settings.text_size_mobile }}px;
+    }
+    .marquee-elegant__separator {
+      font-size: {{ section.settings.text_size_mobile | divided_by: 2 }}px;
+      margin: 0 2rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Elegant Marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Marquee Text",
+      "default": "ELEVATE YOUR EVERY DAY"
+    },
+    {
+      "type": "text",
+      "id": "separator",
+      "label": "Separator (e.g. ✦ or •)",
+      "default": "✦"
+    },
+    {
+      "type": "checkbox",
+      "id": "outline",
+      "label": "Use outline style text",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Text Size (Desktop)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Text Size (Mobile)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "s",
+      "label": "Scroll Speed",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "transparent"
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border Thickness",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Elegant Marquee",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}
