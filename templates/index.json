@@ -9,10 +9,6 @@
  */
 {
   "sections": {
-    "marquee_elegant": {
-      "type": "marquee-elegant",
-      "settings": {}
-    },
     "hero_carousel_cinematic": {
       "type": "hero-carousel-cinematic",
       "blocks": {
@@ -55,6 +51,23 @@
         "heading_size_desktop": 96
       }
     },
+    "marquee_elegant": {
+      "type": "marquee-elegant",
+      "settings": {
+        "text": "ELEVATE YOUR EVERY DAY",
+        "separator": "✦",
+        "outline": false,
+        "text_size": 48,
+        "text_size_mobile": 24,
+        "speed": 20,
+        "bg_color": "#121212",
+        "text_color": "#ffffff",
+        "border_color": "rgba(0,0,0,0)",
+        "border_thickness": 0,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
     "hero_cinematic_new": {
       "type": "hero-cinematic",
       "disabled": true,
@@ -86,7 +99,7 @@
           "settings": {
             "collection": "new-arrival",
             "title": "",
-            "image": "shopify://shop_images/Ultra_Realistic_Photo_7.png"
+            "image": "shopify://shop_images/14.png"
           }
         },
         "block_2": {
@@ -94,7 +107,7 @@
           "settings": {
             "collection": "best-seller",
             "title": "",
-            "image": "shopify://shop_images/akunpalsu29_httpss.mj.run9O0ECiokKAQ_ultra_realistic_photo_of_w_71c30ac5-07b3-4c78-ae7e-205b167307d8.png"
+            "image": "shopify://shop_images/9_1.png"
           }
         },
         "block_3": {
@@ -102,7 +115,7 @@
           "settings": {
             "collection": "top",
             "title": "",
-            "image": "shopify://shop_images/Ultra_Realistic_Photo_8.png"
+            "image": "shopify://shop_images/16.png"
           }
         }
       },
@@ -206,10 +219,10 @@
         "subheading": "The Selection",
         "heading": "OUR PICKS",
         "product_list": [
-          "abby-ribbon",
-          "jolane-skirt",
-          "layla-satin-pants",
-          "nara-top"
+          "avelle-aliya-top-atasan-minimalist-vest-panjang-wanita",
+          "avelle-candice-lace-sleeveless-bow-top",
+          "avelle-blair-skort-korean-mini-skort-rok-celana-wanita",
+          "avelle-christy-top-korean-tweed-vest-wanita"
         ],
         "color_scheme": "scheme-1",
         "padding_top": 36,
