@@ -635,8 +635,33 @@
       </script>
     {%- endif -%}
   </media-gallery>
-{% endif %}
 
+  <!-- Awwwards Custom Drag Cursor -->
+  <div class="awwwards-drag-cursor" id="AwwwardsDragCursor">DRAG</div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cursor = document.getElementById('AwwwardsDragCursor');
+      const gallery = document.querySelector('.media-gallery--carousel');
+      
+      if (cursor && gallery) {
+        gallery.addEventListener('mouseenter', () => {
+          cursor.classList.add('is-active');
+        });
+        gallery.addEventListener('mouseleave', () => {
+          cursor.classList.remove('is-active', 'is-dragging');
+        });
+        
+        gallery.addEventListener('mousemove', (e) => {
+          cursor.style.left = e.clientX + 'px';
+          cursor.style.top = e.clientY + 'px';
+        });
+
+        gallery.addEventListener('mousedown', () => cursor.classList.add('is-dragging'));
+        gallery.addEventListener('mouseup', () => cursor.classList.remove('is-dragging'));
+      }
+    });
+  </script>
+{% endif %}
 {% stylesheet %}
   .dialog-zoomed-gallery__dialog {
     background-color: var(--color-background);

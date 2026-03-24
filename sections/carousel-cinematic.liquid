@@ -279,6 +279,10 @@
   .parallax-carousel-wrapper * {
     cursor: none !important;
   }
+  .parallax-carousel-wrapper img,
+  .parallax-carousel-wrapper a {
+    -webkit-user-drag: none;
+  }
 
   .parallax-drag-cursor {
     position: absolute;
@@ -334,11 +338,25 @@
         // Take over transform control via GSAP
         gsap.set(cursor, { xPercent: -50, yPercent: -50, scale: 0.5 });
 
+        let isDown = false;
+        let isDragged = false;
+        let startX;
+        let scrollLeft;
+
         // Track mouse ONLY over the wrapper, but relative to the container for absolute positioning
         wrapper.addEventListener('mousemove', (e) => {
           const rect = container.getBoundingClientRect();
           mouseX = e.clientX - rect.left;
           mouseY = e.clientY - rect.top;
+
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - wrapper.offsetLeft;
+          const walk = (x - startX) * 2;
+          if (Math.abs(walk) > 5) {
+            isDragged = true;
+          }
+          wrapper.scrollLeft = scrollLeft - walk;
         });
 
         wrapper.addEventListener('mouseenter', (e) => {
@@ -354,18 +372,38 @@
         });
 
         wrapper.addEventListener('mouseleave', () => {
+          isDown = false;
+          wrapper.style.scrollSnapType = 'x mandatory';
+          wrapper.style.userSelect = 'auto';
           gsap.to(cursor, { opacity: 0, scale: 0.5, duration: 0.3 });
         });
 
         // Add drag state for cursor
-        wrapper.addEventListener('mousedown', () => {
+        wrapper.addEventListener('mousedown', (e) => {
+          isDown = true;
+          isDragged = false;
+          wrapper.style.scrollSnapType = 'none';
+          wrapper.style.userSelect = 'none';
+          startX = e.pageX - wrapper.offsetLeft;
+          scrollLeft = wrapper.scrollLeft;
+
           cursor.classList.add('is-dragging');
           gsap.to(cursor, { scale: 0.4, background: 'rgba(255, 255, 255, 1)', duration: 0.2 });
         });
 
         window.addEventListener('mouseup', () => {
+          isDown = false;
+          wrapper.style.scrollSnapType = 'x mandatory';
+          wrapper.style.userSelect = 'auto';
           cursor.classList.remove('is-dragging');
           gsap.to(cursor, { scale: 0.5, background: 'rgba(255, 255, 255, 0.9)', duration: 0.2 });
+        });
+
+        wrapper.addEventListener('click', (e) => {
+          if (isDragged) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
         });
 
         gsap.ticker.add(() => {
