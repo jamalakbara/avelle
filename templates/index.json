@@ -15,7 +15,8 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Cinematic_Portrait_of_Young_Woman_3.png",
+            "image": "shopify://shop_images/banner_1.png",
+            "mobile_image": "shopify://shop_images/13.png",
             "heading": "Elevate Your Every Day",
             "subheading": "Premium essentials for the modern lifestyle.",
             "button_label": "Shop Collection",
