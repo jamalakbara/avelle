@@ -392,15 +392,26 @@
   /* Force Pill Shape and Typography on ALL buttons in the group */
   .product-form-buttons button,
   .product-form-buttons .shopify-payment-button__button,
+  .product-form-buttons .shopify-payment-button__button--unbranded,
   .product-form-buttons .add-to-cart-button {
     border-radius: 999px !important;
     text-transform: uppercase !important;
     letter-spacing: 0.1em !important;
+    font-size: 0.875rem !important;
     font-weight: 500 !important;
-    padding-block: 1.2rem !important; /* Match cinematic padding */
-    padding-block: 1.2rem !important; /* Match cinematic padding */
+    font-family: var(--font-body--family) !important;
+    
+    /* Use exact strict height to guarantee pixel-perfect alignment */
+    height: var(--height-buy-buttons, 52px) !important;
+    min-height: var(--height-buy-buttons, 52px) !important;
+    padding-block: 0 !important; 
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
     gap: 12px; /* Ensure space between quantity and add to cart */
+    
+    /* Flex centering prevents height-pushing from line-height differences */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   /* Add to Cart - Cinematic Transparent Style */
@@ -428,23 +439,18 @@
     align-items: stretch;
   }
 
-  .product-form-buttons .shopify-payment-button__button {
+  .product-form-buttons .shopify-payment-button__button,
+  .product-form-buttons .shopify-payment-button__button--unbranded {
     background: var(--color-foreground) !important;
     color: var(--color-background) !important;
     border: 1px solid var(--color-foreground) !important;
     box-shadow: none !important;
     width: 100% !important;
-    padding-block: 1.2rem !important;
     padding-inline: 2rem !important;
     margin: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
     line-height: normal !important;
     box-sizing: border-box !important;
-    min-height: unset !important;
     max-height: unset !important;
-    height: auto !important;
   }
 
   .product-form-buttons .shopify-payment-button__button:hover {
@@ -461,10 +467,15 @@
     width: 100% !important;
   }
 
-  .quantity-selector {
+  .quantity-selector,
+  .quantity-selector .quantity,
+  quantity-input.quantity,
+  .product-form__quantity .quantity {
     flex-grow: 0;
     flex-shrink: 0;
-    height: var(--height-buy-buttons);
+    height: var(--height-buy-buttons, 52px) !important;
+    min-height: var(--height-buy-buttons, 52px) !important;
+    box-sizing: border-box !important;
   }
 
   .quantity-label {

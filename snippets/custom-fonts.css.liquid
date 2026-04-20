@@ -213,11 +213,14 @@ variant-picker legend,
 }
 
 .product-details product-price .price {
-  font-family: 'Zodiak', serif !important;
-  font-size: 1.25rem !important;
-  /* Slightly smaller for hierarchy */
-  font-weight: 300 !important;
-  /* Lighter weight */
+  font-family: var(--font-body--family) !important;
+  font-size: 1.1rem !important;
+  /* Clean modern size */
+  font-weight: 400 !important;
+  /* Balance with text */
+  letter-spacing: 0.05em;
+  /* Premium letter spacing for functional numbers */
+  font-variant-numeric: tabular-nums;
   opacity: 0;
   text-align: left !important;
   display: block;
@@ -234,16 +237,14 @@ variant-picker legend,
   align-items: flex-start !important;
 }
 
-/* Modern Button Styling */
-.product-details .button {
-  border-radius: 0 !important;
-  /* Square corners */
-  height: 3.5rem !important;
-  /* Consistent height */
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.875rem;
-  font-weight: 500;
+/* Ensure typography matches across all Buy buttons */
+.shopify-payment-button__button,
+.shopify-payment-button__button--unbranded {
+  font-family: var(--font-body--family) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
 }
 
 /* ==========================================================================

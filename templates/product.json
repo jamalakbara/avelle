@@ -225,40 +225,28 @@
                 "accordion_row_iJM37V": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Care",
+                    "heading": "Shipping/Returns",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
                   },
                   "blocks": {
-                    "text_VdG98J": {
-                      "type": "text",
+                    "page_VdG98J": {
+                      "type": "page",
                       "settings": {
-                        "text": "<p>To maintain the beauty and integrity of your purchase, we recommend treating it with care. Simple maintenance practices, such as gentle washing and proper storage, can effectively preserve the longevity of your favorites. We encourage you to refer to the care instructions included with each item, designed to help you keep your purchase in top condition.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-secondary--family)",
-                        "font_size": "1rem",
-                        "line_height": "1.6",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "",
+                        "page": "shipping-returns",
+                        "show_title": false,
+                        "inherit_color_scheme": true,
                         "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
                         "padding-block-start": 12,
                         "padding-block-end": 0,
                         "padding-inline-start": 0,
                         "padding-inline-end": 0
-                      },
-                      "blocks": {}
+                      }
                     }
                   },
                   "block_order": [
-                    "text_VdG98J"
+                    "page_VdG98J"
                   ]
                 },
                 "accordion_row_pLFDcD": {

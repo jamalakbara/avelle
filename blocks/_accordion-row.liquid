@@ -45,6 +45,20 @@
     height: auto;
     margin-inline-end: var(--margin-xs);
   }
+
+  /* Make sure every body of the accordion section uses the same font styles and is not bold */
+  .details-content .rte,
+  .details-content p,
+  .details-content .custom-typography {
+    font-family: var(--font-secondary--family) !important;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    font-weight: 300 !important;
+  }
+
+  .details-content * {
+    font-weight: 300 !important;
+  }
 {% endstylesheet %}
 
 {% schema %}
