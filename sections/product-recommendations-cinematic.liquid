@@ -93,16 +93,17 @@
   .curated-products__subheading {
     font-size: 0.9rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em;
     opacity: 0.7;
     margin-bottom: 0.5rem;
     display: block;
   }
 
   .curated-products__heading {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: 1.25rem;
     text-transform: uppercase;
-    font-weight: 300;
+    font-weight: 400;
+    letter-spacing: 0.15em;
     margin: 0;
     line-height: 1.1;
   }
@@ -126,60 +127,6 @@
     }
   }
 
-  /* Product Card */
-  .curated-card {
-    position: relative;
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    width: 100%;
-    margin-bottom: 2rem;
-  }
-
-  .curated-card__image-wrapper {
-    position: relative;
-    width: 100%;
-    /* Aspect ratio 2:3 for vertical elegance */
-    padding-bottom: 140%;
-    margin-bottom: 1.5rem;
-    overflow: hidden;
-    background: #f4f4f4;
-  }
-
-  .curated-card__image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  /* Hover Effects */
-  @media screen and (min-width: 768px) {
-    .curated-card:hover .curated-card__image {
-      transform: scale(1.05);
-    }
-  }
-
-  .curated-card__info {
-    text-align: center;
-  }
-
-  .curated-card__title {
-    font-size: var(--font-size--product_info);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin: 0 0 0.25rem 0;
-    font-weight: 500;
-  }
-
-  .curated-card__price {
-    font-size: var(--font-size--product_info);
-    opacity: 0.7;
-  }
-
   /* Asymmetric Offsets (Desktop Only) */
   @media screen and (min-width: 768px) {
     /*
@@ -189,16 +136,9 @@
       - Item 3: Starts standard
       - Item 4: Starts lower
     */
-    .curated-card:nth-child(even) {
+    .curated-products__grid .curated-card:nth-child(even) {
       margin-top: 15vh; /* Initial structural offset */
     }
-  }
-
-  /* Custom Cursor Area is handled globally by theme or section specific if needed.
-     For now, we use simple CSS cursor.
-  */
-  .curated-card__image-wrapper {
-    cursor: pointer;
   }
 {%- endstyle -%}
 
@@ -232,29 +172,7 @@
 
         <div class="curated-products__grid">
           {%- for product in recommendations.products -%}
-            <a href="{{ product.url }}" class="curated-card" data-curated-card>
-              <div class="curated-card__image-wrapper">
-                {%- if product.featured_media -%}
-                  {{
-                    product.featured_media
-                    | image_url: width: 1000
-                    | image_tag: class: 'curated-card__image', loading: 'lazy', widths: '375, 550, 750, 1100'
-                  }}
-                {%- else -%}
-                  {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'curated-card__image placeholder-svg' }}
-                {%- endif -%}
-              </div>
-              <div class="curated-card__info">
-                <h3 class="curated-card__title">{{ product.title }}</h3>
-                <div class="curated-card__price">
-                  {% if product.available == false %}
-                    <span class="badge-sold-out">Sold Out</span>
-                  {% else %}
-                    {{ product.price | money }}
-                  {% endif %}
-                </div>
-              </div>
-            </a>
+            {% render 'curated-card', product: product, index: forloop.index %}
           {%- endfor -%}
         </div>
       {% endif %}
@@ -271,32 +189,7 @@
     </div>
     <div class="curated-products__grid">
       {%- for product in collections[fallback_collection].products limit: limit -%}
-        <a href="{{ product.url }}" class="curated-card" data-curated-card>
-          <div class="curated-card__image-wrapper">
-            {%- if product.featured_media -%}
-              {{
-                product.featured_media
-                | image_url: width: 1000
-                | image_tag: class: 'curated-card__image', loading: 'lazy', widths: '375, 550, 750, 1100'
-              }}
-            {%- else -%}
-              {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'curated-card__image placeholder-svg' }}
-            {%- endif -%}
-          </div>
-          <div class="curated-card__info">
-            <h3 class="curated-card__title">{{ product.title }}</h3>
-            <div class="curated-card__price">
-              {% if product.available == false %}
-                <span class="badge-sold-out">Sold Out</span>
-              {% else %}
-                {{ product.price | money }}
-                {% if product.compare_at_price > product.price %}
-                  <span class="compare-at-price">{{ product.compare_at_price | money }}</span>
-                {% endif %}
-              {% endif %}
-            </div>
-          </div>
-        </a>
+        {% render 'curated-card', product: product, index: forloop.index %}
       {%- endfor -%}
     </div>
   {%- endif -%}

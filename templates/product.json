@@ -324,7 +324,7 @@
         "subheading": "You Might Also Like",
         "heading": "Recommended For You",
         "text_alignment": "center",
-        "products_alignment": "center",
+        "products_alignment": "left",
         "recommendation_type": "related",
         "max_products": 4,
         "color_scheme": "scheme-1",

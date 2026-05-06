@@ -206,6 +206,12 @@
   {% comment %} UI: Progress Indicator & Hit Areas {% endcomment %}
   {% if section.blocks.size > 1 %}
     <div class="hc-ui">
+      <button class="hc-nav-btn hc-nav-prev" aria-label="Previous slide">
+        <svg width="40" height="12" viewBox="0 0 40 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <line x1="40" y1="6" x2="1" y2="6" stroke="currentColor" stroke-width="1.5"/>
+          <polyline points="8,1 1,6 8,11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+      </button>
       <div class="hc-progress">
         <span class="hc-current">01</span>
         <div class="hc-progress-track">
@@ -213,16 +219,17 @@
         </div>
         <span class="hc-total">0{{ section.blocks.size }}</span>
       </div>
+      <button class="hc-nav-btn hc-nav-next" aria-label="Next slide">
+        <svg width="40" height="12" viewBox="0 0 40 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <line x1="0" y1="6" x2="39" y2="6" stroke="currentColor" stroke-width="1.5"/>
+          <polyline points="32,1 39,6 32,11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
 
     <!-- Navigation Hit Areas -->
     <div class="hc-hit-prev" data-dir="prev"></div>
     <div class="hc-hit-next" data-dir="next"></div>
-
-    <!-- Custom Cursor -->
-    <div class="hc-cursor">
-      <span class="hc-cursor-text">NEXT</span>
-    </div>
   {% endif %}
 </div>
 
@@ -239,6 +246,7 @@
     height: var(--hc-height-desktop);
     overflow: hidden;
     background: #000;
+    cursor: pointer;
   }
 
   .hc-slides {
@@ -415,14 +423,42 @@
   .hc-ui {
     position: absolute;
     bottom: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    padding: 0 3rem;
     z-index: 10;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     color: #fff;
     mix-blend-mode: difference;
     pointer-events: none;
+  }
+
+  .hc-nav-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    cursor: pointer;
+    pointer-events: auto;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hc-nav-prev:hover {
+    opacity: 1;
+    transform: translateX(-4px);
+  }
+
+  .hc-nav-next:hover {
+    opacity: 1;
+    transform: translateX(4px);
   }
 
   .hc-progress {
@@ -461,49 +497,16 @@
     top: 0;
     height: 100%;
     width: 50%;
-    z-index: 5; /* Lower than active slide (10) */
-    cursor: none;
-    pointer-events: auto; /* Catch navigation clicks */
+    z-index: 5;
+    pointer-events: auto;
   }
-  .hc-hit-prev { left: 0; }
-  .hc-hit-next { right: 0; }
-
-  /* Custom Cursor */
-  .hc-carousel {
-    cursor: none;
-  }
-  .hc-carousel:has(.hc-btn:hover) .hc-cursor {
-    opacity: 0 !important;
-  }
-
-  .hc-cursor {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    pointer-events: none;
-    z-index: 100;
-    opacity: 0;
-    mix-blend-mode: exclusion;
-    will-change: transform;
-  }
+  .hc-hit-prev { left: 0; cursor: pointer; }
+  .hc-hit-next { right: 0; cursor: pointer; }
 
   @media (max-width: 768px) {
     .hc-carousel { height: var(--hc-height-mobile); }
-    .hc-cursor { display: none; }
     .hc-hit-prev, .hc-hit-next { cursor: auto; }
-    .hc-ui { mix-blend-mode: normal; bottom: 2rem; }
+    .hc-ui { mix-blend-mode: normal; bottom: 2rem; padding: 0 1.5rem; }
     .hc-progress-track { background: rgba(255,255,255,0.4); }
     .hc-btn-wrapper { pointer-events: auto; }
   }
@@ -535,10 +538,10 @@
 
         this.isAnimating = false;
 
-        this.cursor = el.querySelector('.hc-cursor');
-        this.cursorText = el.querySelector('.hc-cursor-text');
         this.hitPrev = el.querySelector('.hc-hit-prev');
         this.hitNext = el.querySelector('.hc-hit-next');
+        this.navPrev = el.querySelector('.hc-nav-prev');
+        this.navNext = el.querySelector('.hc-nav-next');
 
         // Hide initial clips except first
         gsap.set(this.slides, { visibility: 'visible', zIndex: 1 });
@@ -559,58 +562,8 @@
           this.hitPrev.addEventListener('click', () => this.navigate('prev'));
           this.hitNext.addEventListener('click', () => this.navigate('next'));
         }
-
-        // Custom Cursor Logic
-        if (this.cursor) {
-          let cursorX = 0,
-            cursorY = 0;
-          let mouseX = 0,
-            mouseY = 0;
-
-          // Set initial GSAP state (takes over transform matrix)
-          gsap.set(this.cursor, { xPercent: -50, yPercent: -50, scale: 0.5 });
-
-          this.el.addEventListener('mousemove', (e) => {
-            const rect = this.el.getBoundingClientRect();
-            mouseX = e.clientX - rect.left;
-            mouseY = e.clientY - rect.top;
-          });
-
-          gsap.ticker.add(() => {
-            cursorX += (mouseX - cursorX) * 0.15;
-            cursorY += (mouseY - cursorY) * 0.15;
-            gsap.set(this.cursor, { x: cursorX, y: cursorY });
-          });
-
-          if (this.hitPrev) {
-            this.hitPrev.addEventListener('mouseenter', () => {
-              if (this.cursorText) this.cursorText.innerText = 'PREV';
-              gsap.to(this.cursorText, { opacity: 1, duration: 0.2 });
-            });
-          }
-          if (this.hitNext) {
-            this.hitNext.addEventListener('mouseenter', () => {
-              if (this.cursorText) this.cursorText.innerText = 'NEXT';
-              gsap.to(this.cursorText, { opacity: 1, duration: 0.2 });
-            });
-          }
-
-          this.el.addEventListener('mouseenter', (e) => {
-            // Snapping to exact position instantly on enter to prevent "flying in from 0,0" delay!
-            const rect = this.el.getBoundingClientRect();
-            mouseX = e.clientX - rect.left;
-            mouseY = e.clientY - rect.top;
-            cursorX = mouseX;
-            cursorY = mouseY;
-            gsap.set(this.cursor, { x: cursorX, y: cursorY });
-
-            gsap.to(this.cursor, { opacity: 1, scale: 0.5, duration: 0.3 });
-          });
-
-          this.el.addEventListener('mouseleave', () => {
-            gsap.to(this.cursor, { opacity: 0, scale: 0.5, duration: 0.3 });
-          });
-        }
+        if (this.navPrev) this.navPrev.addEventListener('click', () => this.navigate('prev'));
+        if (this.navNext) this.navNext.addEventListener('click', () => this.navigate('next'));
       }
 
       revealText(index) {

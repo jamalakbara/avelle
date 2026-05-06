@@ -31,7 +31,7 @@
   style="position: relative; padding: 64px 0; background: var(--color-background); display: block;"
 >
   <div style="padding: 0 var(--util-page-margin-offset, 2rem); margin-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-end;">
-    <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; margin: 0; text-transform: uppercase;">
+    <h2 style="font-size: 1.25rem; font-weight: 400; letter-spacing: 0.15em; margin: 0; text-transform: uppercase;">
       {{ section.settings.heading }}
     </h2>
     {% if collection != blank %}
@@ -40,8 +40,8 @@
   </div>
 
   <div
-    class="parallax-carousel-wrapper cursor-none"
-    style="--slide-width-max: {{ slide_width_max }}; overflow-x: auto; scroll-snap-type: x mandatory; display: flex; gap: 8px; padding-inline: var(--util-page-margin-offset, 2rem); scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; cursor: none;"
+    class="parallax-carousel-wrapper"
+    style="--slide-width-max: {{ slide_width_max }}; overflow-x: auto; scroll-snap-type: x mandatory; display: flex; gap: 8px; padding-inline: var(--util-page-margin-offset, 2rem); scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch;"
     data-parallax-carousel
   >
     {% if collection != blank and collection.products_count > 0 %}
@@ -105,7 +105,7 @@
             </div>
           </div>
           <a href="{{ product.url }}" class="curated-card__info-link" style="text-decoration: none; color: inherit;">
-            <div class="curated-card__info" style="padding-top: 16px;">
+            <div class="curated-card__info" style="padding-top: 8px;">
               <h3 class="curated-card__title">{{ product.title }}</h3>
               <div class="curated-card__price">
                 {% if product.available == false %}
@@ -137,10 +137,9 @@
     {% endif %}
   </div>
 
-  <div class="parallax-drag-cursor" data-drag-cursor>
-    <span>Drag</span>
-  </div>
 </avelle-carousel-section>
+
+{{ 'curated-card.css' | asset_url | stylesheet_tag }}
 
 <style>
   .parallax-carousel-wrapper::-webkit-scrollbar {
@@ -155,7 +154,6 @@
     position: relative;
     overflow: hidden;
     border-radius: 0;
-    cursor: none;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -181,19 +179,6 @@
   .curated-card__info {
     text-align: center;
     padding-bottom: 20px; /* Prevent text from being clipped by overflow: hidden when translateY is active */
-  }
-
-  .curated-card__title {
-    font-size: var(--font-size--product_info);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin: 0 0 0.25rem 0;
-    font-weight: 500;
-  }
-
-  .curated-card__price {
-    font-size: var(--font-size--product_info);
-    opacity: 0.7;
   }
 
   /* Custom Hover Reveals for Add to Cart */
@@ -249,9 +234,10 @@
   .parallax-carousel-wrapper .parallax-card .quick-add-wrapper.product-form-buttons .add-to-cart-button {
     border-radius: 999px !important; /* Pill shape */
     text-transform: uppercase !important;
-    letter-spacing: 0.1em !important;
+    letter-spacing: 0.15em !important;
+    font-size: 0.5625rem !important;
     font-weight: 500 !important;
-    padding-block: 1.2rem !important;
+    padding-block: 0.75rem !important;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
     background: transparent !important; /* Transparent fill */
     color: #fff !important; /* White foreground over images */
@@ -272,51 +258,23 @@
     color: #000 !important; /* Black text on hover */
   }
 
-  /* Custom Cursor Styles */
   .parallax-carousel-wrapper {
-    cursor: none;
+    cursor: grab;
+  }
+  .parallax-carousel-wrapper:active {
+    cursor: grabbing;
   }
   .parallax-carousel-wrapper * {
-    cursor: none !important;
+    cursor: inherit;
   }
   .parallax-carousel-wrapper img,
   .parallax-carousel-wrapper a {
     -webkit-user-drag: none;
   }
-
-  .parallax-drag-cursor {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    pointer-events: none;
-    z-index: 100;
-    opacity: 0;
-    mix-blend-mode: exclusion;
-    will-change: transform;
-  }
-
-  /* Make the text change or icon appear when dragging if desired */
-  .parallax-drag-cursor.is-dragging span {
-    font-size: 12px;
-  }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-
     const containers = document.querySelectorAll('.parallax-carousel-container');
 
     containers.forEach((container) => {
@@ -325,93 +283,52 @@
       container.dataset.parallaxInitialized = 'true';
 
       const wrapper = container.querySelector('.parallax-carousel-wrapper');
-      const cursor = container.querySelector('[data-drag-cursor]');
 
       if (!wrapper) return;
 
-      if (cursor) {
-        let mouseX = 0,
-          mouseY = 0;
-        let cursorX = 0,
-          cursorY = 0;
+      let isDown = false;
+      let isDragged = false;
+      let startX;
+      let scrollLeft;
 
-        // Take over transform control via GSAP
-        gsap.set(cursor, { xPercent: -50, yPercent: -50, scale: 0.5 });
+      wrapper.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - wrapper.offsetLeft;
+        const walk = (x - startX) * 2;
+        if (Math.abs(walk) > 5) {
+          isDragged = true;
+        }
+        wrapper.scrollLeft = scrollLeft - walk;
+      });
 
-        let isDown = false;
-        let isDragged = false;
-        let startX;
-        let scrollLeft;
+      wrapper.addEventListener('mouseleave', () => {
+        isDown = false;
+        wrapper.style.scrollSnapType = 'x mandatory';
+        wrapper.style.userSelect = 'auto';
+      });
 
-        // Track mouse ONLY over the wrapper, but relative to the container for absolute positioning
-        wrapper.addEventListener('mousemove', (e) => {
-          const rect = container.getBoundingClientRect();
-          mouseX = e.clientX - rect.left;
-          mouseY = e.clientY - rect.top;
+      wrapper.addEventListener('mousedown', (e) => {
+        isDown = true;
+        isDragged = false;
+        wrapper.style.scrollSnapType = 'none';
+        wrapper.style.userSelect = 'none';
+        startX = e.pageX - wrapper.offsetLeft;
+        scrollLeft = wrapper.scrollLeft;
+      });
 
-          if (!isDown) return;
+      window.addEventListener('mouseup', () => {
+        isDown = false;
+        wrapper.style.scrollSnapType = 'x mandatory';
+        wrapper.style.userSelect = 'auto';
+      });
+
+      wrapper.addEventListener('click', (e) => {
+        if (isDragged) {
           e.preventDefault();
-          const x = e.pageX - wrapper.offsetLeft;
-          const walk = (x - startX) * 2;
-          if (Math.abs(walk) > 5) {
-            isDragged = true;
-          }
-          wrapper.scrollLeft = scrollLeft - walk;
-        });
-
-        wrapper.addEventListener('mouseenter', (e) => {
-          // Snap instantly to actual mouse location to prevent "flying in from 0,0" delay!
-          const rect = container.getBoundingClientRect();
-          mouseX = e.clientX - rect.left;
-          mouseY = e.clientY - rect.top;
-          cursorX = mouseX;
-          cursorY = mouseY;
-          gsap.set(cursor, { x: cursorX, y: cursorY });
-
-          gsap.to(cursor, { opacity: 1, scale: 0.5, duration: 0.3 });
-        });
-
-        wrapper.addEventListener('mouseleave', () => {
-          isDown = false;
-          wrapper.style.scrollSnapType = 'x mandatory';
-          wrapper.style.userSelect = 'auto';
-          gsap.to(cursor, { opacity: 0, scale: 0.5, duration: 0.3 });
-        });
-
-        // Add drag state for cursor
-        wrapper.addEventListener('mousedown', (e) => {
-          isDown = true;
-          isDragged = false;
-          wrapper.style.scrollSnapType = 'none';
-          wrapper.style.userSelect = 'none';
-          startX = e.pageX - wrapper.offsetLeft;
-          scrollLeft = wrapper.scrollLeft;
-
-          cursor.classList.add('is-dragging');
-          gsap.to(cursor, { scale: 0.4, background: 'rgba(255, 255, 255, 1)', duration: 0.2 });
-        });
-
-        window.addEventListener('mouseup', () => {
-          isDown = false;
-          wrapper.style.scrollSnapType = 'x mandatory';
-          wrapper.style.userSelect = 'auto';
-          cursor.classList.remove('is-dragging');
-          gsap.to(cursor, { scale: 0.5, background: 'rgba(255, 255, 255, 0.9)', duration: 0.2 });
-        });
-
-        wrapper.addEventListener('click', (e) => {
-          if (isDragged) {
-            e.preventDefault();
-            e.stopPropagation();
-          }
-        });
-
-        gsap.ticker.add(() => {
-          cursorX += (mouseX - cursorX) * 0.15;
-          cursorY += (mouseY - cursorY) * 0.15;
-          gsap.set(cursor, { x: cursorX, y: cursorY });
-        });
-      }
+          e.stopPropagation();
+        }
+      });
 
       const cards = container.querySelectorAll('.parallax-card');
 

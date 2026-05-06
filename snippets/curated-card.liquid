@@ -1,0 +1,51 @@
+{% comment %}
+  Renders a curated product card.
+  
+  Accepts:
+  - product: {Object} Product Liquid object
+  - index: {Number} Optional. Index for placeholder image
+  - text_alignment: {String} Optional. Text alignment (left, center, right)
+  
+  Usage:
+  {% render 'curated-card', product: product, index: forloop.index, text_alignment: section.settings.text_alignment %}
+{% endcomment %}
+
+{{ 'curated-card.css' | asset_url | stylesheet_tag }}
+
+<a href="{{ product.url }}" class="curated-card" data-curated-card>
+  <div class="curated-card__image-wrapper">
+    {%- if product and product != blank and product.featured_media -%}
+      {{
+        product.featured_media
+        | image_url: width: 1000
+        | image_tag: class: 'curated-card__image', loading: 'lazy', widths: '375, 550, 750, 1100'
+      }}
+    {%- else -%}
+      {% assign placeholder_index = index | default: 1 %}
+      {{ 'product-' | append: placeholder_index | placeholder_svg_tag: 'curated-card__image placeholder-svg' }}
+    {%- endif -%}
+  </div>
+  <div class="curated-card__info" {% if text_alignment %}style="text-align: {{ text_alignment }};"{% endif %}>
+    <h3 class="curated-card__title">
+      {% if product and product != blank %}
+        {{ product.title }}
+      {% else %}
+        Example Product {{ index | default: 1 }}
+      {% endif %}
+    </h3>
+    <div class="curated-card__price">
+      {% if product and product != blank %}
+        {% if product.available == false %}
+          <span class="badge-sold-out">Sold Out</span>
+        {% else %}
+          {{ product.price | money }}
+          {% if product.compare_at_price > product.price %}
+            <span class="compare-at-price">{{ product.compare_at_price | money }}</span>
+          {% endif %}
+        {% endif %}
+      {% else %}
+        From $99.00
+      {% endif %}
+    </div>
+  </div>
+</a>

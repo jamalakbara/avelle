@@ -47,8 +47,8 @@
         "autoplay_speed": 5,
         "section_height_desktop": "85vh",
         "section_height_mobile": "85vh",
-        "heading_size_mobile": 48,
-        "heading_size_desktop": 96
+        "heading_size_mobile": 32,
+        "heading_size_desktop": 60
       }
     },
     "marquee_elegant": {
@@ -57,8 +57,8 @@
         "text": "ELEVATE YOUR EVERY DAY",
         "separator": "✦",
         "outline": false,
-        "text_size": 48,
-        "text_size_mobile": 24,
+        "text_size": 12,
+        "text_size_mobile": 12,
         "speed": 20,
         "bg_color": "#121212",
         "text_color": "#ffffff",
