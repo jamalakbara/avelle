@@ -54,12 +54,12 @@
     "marquee_elegant": {
       "type": "marquee-elegant",
       "settings": {
-        "text": "ELEVATE YOUR EVERY DAY",
+        "text": "Free Shipping Across Indonesia for Orders Above 600k – Join our Loyalty Club today!",
         "separator": "✦",
         "outline": false,
         "text_size": 12,
         "text_size_mobile": 12,
-        "speed": 20,
+        "speed": 50,
         "bg_color": "#121212",
         "text_color": "#ffffff",
         "border_color": "rgba(0,0,0,0)",
