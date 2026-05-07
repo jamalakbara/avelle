@@ -249,30 +249,46 @@
         "ugc_video_item_TPQwBd": {
           "type": "ugc_video_item",
           "settings": {
+            "thumbnail_image": "shopify://shop_images/Ultra_Realistic_Photo_8.png",
+            "video": "shopify://files/videos/Full Body Fashion Editorial.mp4",
+            "handle": "temp",
+            "product_list": [
+              "faye-pants",
+              "emma-top",
+              "emily-skort",
+              "avelle-dylan-pants-celana-panjang-hw-kulot-wanita-basic-cullotte-highwaist-wide-leg-pants",
+              "christy-top",
+              "candice-top"
+            ]
+          }
+        },
+        "ugc_video_item_YUjBX8": {
+          "type": "ugc_video_item",
+          "settings": {
+            "thumbnail_image": "shopify://shop_images/akunpalsu29_httpss.mj.run9O0ECiokKAQ_ultra_realistic_photo_of_w_71c30ac5-07b3-4c78-ae7e-205b167307d8.png",
+            "video": "shopify://files/videos/Full Body Fashion Editorial.mp4",
             "handle": "",
             "product_list": []
           }
         },
-        "ugc_video_item_XXjGVm": {
+        "ugc_video_item_UqGrXU": {
           "type": "ugc_video_item",
           "settings": {
+            "thumbnail_image": "shopify://shop_images/banner_2_mobile.png",
+            "video": "shopify://files/videos/The Soft Wind Moving Hair.mp4",
             "handle": "",
-            "product_list": []
-          }
-        },
-        "ugc_video_item_tWtyP9": {
-          "type": "ugc_video_item",
-          "settings": {
-            "handle": "",
-            "product_list": []
+            "product_list": [
+              "emma-top",
+              "emily-skort"
+            ]
           }
         }
       },
       "block_order": [
         "ugc_video_item_BR6dyA",
         "ugc_video_item_TPQwBd",
-        "ugc_video_item_XXjGVm",
-        "ugc_video_item_tWtyP9"
+        "ugc_video_item_YUjBX8",
+        "ugc_video_item_UqGrXU"
       ],
       "name": "Shoppable Video Gallery",
       "settings": {
