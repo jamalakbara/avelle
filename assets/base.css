@@ -388,6 +388,14 @@ p:empty {
   flex: 1;
 }
 
+.content-for-layout > .shopify-section + .shopify-section {
+  margin-top: 2rem;
+}
+
+.content-for-layout > .shopify-section:first-child + .shopify-section {
+  margin-top: 0;
+}
+
 /* Set up page widths & margins */
 .page-width-wide,
 .page-width-normal,
@@ -1740,11 +1748,66 @@ media-gallery.media-gallery--grid .media-gallery__grid .product-media-container 
   width: 100%;
   height: 100%;
   z-index: var(--layer-flat);
-  cursor: zoom-in;
+  cursor: pointer;
   background-color: transparent;
 
   &:hover {
     background-color: transparent;
+  }
+}
+
+/* ── Awwwards PDP carousel ──────────────────────────────────────── */
+
+/* Counter: strip pill, pure editorial text */
+.media-gallery--carousel .slideshow-controls__counter {
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-radius: 0;
+  padding: 0;
+  margin-inline: 0;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-foreground);
+  mix-blend-mode: normal;
+}
+
+.media-gallery--carousel .slideshow-controls__counter .slash {
+  padding-inline: 0.5em;
+  opacity: 0.3;
+}
+
+/* ── Editorial vertical stack gallery ──────────────────────────── */
+.media-gallery--grid .product-media-container {
+  overflow: hidden;
+}
+
+.media-gallery--grid .product-media-container img {
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.media-gallery--grid .product-media-container:hover img {
+  transform: scale(1.04);
+}
+
+@supports (animation-timeline: view()) {
+  .media-gallery--grid .product-media-container {
+    animation: editorial-image-enter linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 28%;
+  }
+}
+
+@keyframes editorial-image-enter {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
   }
 }
 
@@ -4288,6 +4351,12 @@ slideshow-arrows .slideshow-control.slideshow-control--style-none {
 
 .media-gallery--carousel slideshow-arrows .slideshow-control {
   padding-inline: 0 var(--padding-md);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.media-gallery--carousel:hover slideshow-arrows .slideshow-control,
+.media-gallery--carousel:focus-within slideshow-arrows .slideshow-control {
   opacity: 1;
 }
 

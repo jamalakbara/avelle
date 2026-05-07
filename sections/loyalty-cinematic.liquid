@@ -1,0 +1,289 @@
+{% comment %} Loyalty Club Banner — horizontal banner with dot-grid texture and scroll reveal {% endcomment %}
+
+<style>
+  .loyalty-cinematic {
+    position: relative;
+    overflow: hidden;
+    background-color: {{ section.settings.background_color }};
+  }
+
+  .loyalty-cinematic__dot-texture {
+    position: absolute;
+    inset: 0 0 0 50%;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.13) 1px, transparent 1px);
+    background-size: 22px 22px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .loyalty-cinematic__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 3rem 6rem;
+  }
+
+  .loyalty-cinematic__text {
+    flex: 1 1 0;
+    min-width: 0;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .loyalty-cinematic__text.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .loyalty-cinematic__heading {
+    font-family: var(--font-heading-family, var(--font-body-family));
+    font-size: clamp(1.1rem, 1.4vw, 1.4rem);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: {{ section.settings.text_color }};
+    margin: 0 0 1.2rem;
+    line-height: 1.2;
+  }
+
+  .loyalty-cinematic__description {
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    color: {{ section.settings.text_color }};
+    line-height: 1.75;
+    margin: 0;
+    max-width: 52ch;
+  }
+
+  .loyalty-cinematic__description strong {
+    font-weight: 700;
+    color: {{ section.settings.text_color }};
+  }
+
+  .loyalty-cinematic__description p {
+    margin: 0 0 0.8rem;
+  }
+
+  .loyalty-cinematic__description p:last-child {
+    margin-bottom: 0;
+  }
+
+  .loyalty-cinematic__cta {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.4rem;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s 0.15s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .loyalty-cinematic__cta.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .loyalty-cinematic__btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 2.8rem;
+    border: 1.5px solid {{ section.settings.text_color }};
+    border-radius: 999px;
+    background: transparent;
+    color: {{ section.settings.text_color }};
+    font-family: var(--font-body-family);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .loyalty-cinematic__btn-primary:hover {
+    background-color: {{ section.settings.text_color }};
+    color: {{ section.settings.background_color }};
+    transform: translateY(-2px);
+  }
+
+  .loyalty-cinematic__btn-secondary {
+    display: inline-block;
+    font-family: var(--font-body-family);
+    font-size: 0.88rem;
+    color: {{ section.settings.text_color }};
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 2px;
+    letter-spacing: 0.04em;
+    transition: opacity 0.3s ease;
+  }
+
+  .loyalty-cinematic__btn-secondary::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: {{ section.settings.text_color }};
+    transform-origin: left center;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .loyalty-cinematic__btn-secondary:hover::after {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+
+  .loyalty-cinematic__btn-secondary:hover {
+    opacity: 0.7;
+  }
+
+  @media screen and (max-width: 768px) {
+    .loyalty-cinematic__inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2.5rem;
+      padding: 2.5rem 2rem;
+    }
+
+    .loyalty-cinematic__dot-texture {
+      inset: 50% 0 0 0;
+    }
+
+    .loyalty-cinematic__cta {
+      align-items: flex-start;
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .loyalty-cinematic__inner {
+      padding: 2rem 1.5rem;
+    }
+  }
+</style>
+
+<section class="loyalty-cinematic" id="loyalty-cinematic-{{ section.id }}">
+  <div class="loyalty-cinematic__dot-texture" aria-hidden="true"></div>
+
+  <div class="loyalty-cinematic__inner">
+    <div class="loyalty-cinematic__text" data-loyalty-animate>
+      {%- if section.settings.heading != blank -%}
+        <h2 class="loyalty-cinematic__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <div class="loyalty-cinematic__description">{{ section.settings.description }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="loyalty-cinematic__cta" data-loyalty-animate-cta>
+      {%- if section.settings.button_label != blank -%}
+        <a
+          href="{{ section.settings.button_link | default: '#' }}"
+          class="loyalty-cinematic__btn-primary"
+        >
+          {{ section.settings.button_label | escape }}
+        </a>
+      {%- endif -%}
+      <a href="#smile-home" class="loyalty-cinematic__btn-secondary">
+        {{ section.settings.join_label | default: 'Join Now' | escape }}
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var section = document.getElementById('loyalty-cinematic-{{ section.id }}');
+    if (!section || !window.IntersectionObserver) {
+      section && section.querySelectorAll('[data-loyalty-animate], [data-loyalty-animate-cta]').forEach(function (el) {
+        el.classList.add('is-visible');
+      });
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          section.querySelector('[data-loyalty-animate]').classList.add('is-visible');
+          section.querySelector('[data-loyalty-animate-cta]').classList.add('is-visible');
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+
+    observer.observe(section);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Loyalty Club",
+  "tag": "section",
+  "class": "section-loyalty-cinematic",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "AVELLE LOYALTY CLUB"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Unlock rewards as you move with Avelle.<br>Earn <strong>points</strong> from every purchase and redeem them for <strong>exclusive rewards, priority access, and perks</strong>.</p><p>Get started and join now!</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "LEARN MORE"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "join_label",
+      "label": "\"Join Now\" label",
+      "default": "Join Now"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#7D6953"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text \/ button color",
+      "default": "#EDE4D9"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Loyalty Club"
+    }
+  ]
+}
+{% endschema %}

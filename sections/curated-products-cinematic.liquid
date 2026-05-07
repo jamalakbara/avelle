@@ -76,62 +76,6 @@
     }
   }
 
-  .curated-products__header {
-    text-align: center;
-    margin-bottom: 4rem;
-    padding: 0 2rem;
-  }
-
-  .curated-products__subheading {
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    opacity: 0.7;
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-
-  .curated-products__heading {
-    font-size: 1.25rem;
-    text-transform: uppercase;
-    font-weight: 400;
-    letter-spacing: 0.15em;
-    margin: 0;
-    line-height: 1.1;
-  }
-
-  /* Grid Layout */
-  .curated-products__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
-    gap: 1rem;
-    padding: 0 1rem;
-    max-width: 1600px;
-    margin: 0 auto;
-  }
-
-  @media screen and (min-width: 768px) {
-    .curated-products__grid {
-      grid-template-columns: repeat(4, 1fr); /* 4 columns on desktop */
-      gap: 2vw;
-      padding: 0 4vw;
-      align-items: start; /* Allow items to slide vertically independently */
-    }
-  }
-
-  /* Asymmetric Offsets (Desktop Only) */
-  @media screen and (min-width: 768px) {
-    /*
-      Concept:
-      - Item 1: Starts standard
-      - Item 2: Starts lower (margin-top)
-      - Item 3: Starts standard
-      - Item 4: Starts lower
-    */
-    .curated-products__grid .curated-card:nth-child(even) {
-      margin-top: 15vh; /* Initial structural offset */
-    }
-  }
 {%- endstyle -%}
 
 <div class="color-{{ section.settings.color_scheme }} section-curated-products">
