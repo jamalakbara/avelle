@@ -92,12 +92,17 @@
           >
             <span class="social-icons__icon-label">{{ platform | capitalize }}</span>
             {% if render_icon %}
+              {% if platform == 'shopee' %}
+                {% assign icon_viewbox = '0 0 109.59 122.88' %}
+              {% else %}
+                {% assign icon_viewbox = '0 0 20 20' %}
+              {% endif %}
               <svg
                 class="social-icons__icon icon-default"
                 aria-hidden="true"
                 focusable="false"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
+                viewBox="{{ icon_viewbox }}"
               >
                 {%- render 'icon', icon: platform -%}
               </svg>
