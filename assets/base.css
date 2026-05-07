@@ -388,11 +388,11 @@ p:empty {
   flex: 1;
 }
 
-.content-for-layout > .shopify-section + .shopify-section {
+.content-for-layout>.shopify-section+.shopify-section {
   margin-top: 2rem;
 }
 
-.content-for-layout > .shopify-section:first-child + .shopify-section {
+.content-for-layout>.shopify-section:first-child+.shopify-section {
   margin-top: 0;
 }
 
@@ -1805,6 +1805,7 @@ media-gallery.media-gallery--grid .media-gallery__grid .product-media-container 
     opacity: 0;
     translate: 0 24px;
   }
+
   to {
     opacity: 1;
     translate: 0 0;

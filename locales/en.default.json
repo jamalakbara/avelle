@@ -355,5 +355,11 @@
       "default_title": "Default Title",
       "sticky_add_to_cart": "Quick add to cart bar"
     }
+  },
+  "sections": {
+    "shoppable_video_gallery": {
+      "shop_the_look": "Shop the Look",
+      "modal_label": "Shop the Look"
+    }
   }
 }

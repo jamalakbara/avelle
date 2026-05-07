@@ -139,7 +139,7 @@
     border-radius: 12px;
     overflow: hidden;
     max-width: min(90vw, 960px);
-    max-height: min(90dvh, 680px);
+    height: min(90dvh, 680px);
     width: 100%;
   }
 
@@ -192,9 +192,11 @@
   }
 
   .ugc-modal__inner {
+    position: absolute;
+    inset: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 100%;
+    overflow: hidden;
   }
 
   .ugc-modal__video-pane {
@@ -211,6 +213,7 @@
   }
 
   .ugc-modal__product-pane {
+    min-height: 0;
     display: flex;
     flex-direction: column;
     padding: 28px 20px 20px;
@@ -344,7 +347,6 @@
   @media screen and (max-width: 749px) {
     .ugc-modal {
       max-width: 100dvw;
-      max-height: 100dvh;
       width: 100dvw;
       height: 100dvh;
       border-radius: 0;
@@ -360,6 +362,12 @@
       background: rgba(255, 255, 255, 0.8);
       border-color: rgba(0, 0, 0, 0.15);
     }
+  }
+
+  /* ── Hide custom cursor while modal open ── */
+  body.ugc-modal-open .custom-cursor,
+  body.ugc-modal-open .cursor-follower {
+    display: none !important;
   }
 
   /* ── View transition hero ── */

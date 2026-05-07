@@ -337,5 +337,11 @@
       "success_moderated": "Komentar diposting, menunggu moderasi",
       "success": "Komentar diposting"
     }
+  },
+  "sections": {
+    "shoppable_video_gallery": {
+      "shop_the_look": "Belanja Koleksi Ini",
+      "modal_label": "Belanja Koleksi Ini"
+    }
   }
 }

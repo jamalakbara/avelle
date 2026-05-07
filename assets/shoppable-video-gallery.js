@@ -7,7 +7,7 @@ class ShoppableVideoGallery extends DialogComponent {
     super.connectedCallback();
     this.#initScrollReveal();
     this.addEventListener('click', this.#handleAtcClick);
-    this.addEventListener(DialogCloseEvent.eventName, this.#stopVideo);
+    this.addEventListener(DialogCloseEvent.eventName, this.#onDialogClose);
   }
 
   disconnectedCallback() {
@@ -15,11 +15,25 @@ class ShoppableVideoGallery extends DialogComponent {
     this.#io?.disconnect();
     this.#stopVideo();
     this.removeEventListener('click', this.#handleAtcClick);
-    this.removeEventListener(DialogCloseEvent.eventName, this.#stopVideo);
+    this.removeEventListener(DialogCloseEvent.eventName, this.#onDialogClose);
+    document.removeEventListener('wheel', this.#redirectWheel);
   }
 
   /** @type {IntersectionObserver|undefined} */
   #io;
+
+  #onDialogClose = () => {
+    this.#stopVideo();
+    document.removeEventListener('wheel', this.#redirectWheel);
+    document.body.classList.remove('ugc-modal-open');
+  };
+
+  #redirectWheel = (event) => {
+    const products = this.querySelector('.ugc-modal__products');
+    if (!products) return;
+    event.preventDefault();
+    products.scrollTop += event.deltaY;
+  };
 
   #initScrollReveal() {
     const cards = [...this.querySelectorAll('.ugc-card')];
@@ -113,6 +127,8 @@ class ShoppableVideoGallery extends DialogComponent {
     const { blockId, videoSrc } = /** @type {HTMLElement} */ (card).dataset;
     this.#loadProducts(blockId);
     this.#loadVideo(videoSrc);
+    document.addEventListener('wheel', this.#redirectWheel, { passive: false });
+    document.body.classList.add('ugc-modal-open');
 
     if (supportsViewTransitions() && !prefersReducedMotion()) {
       const thumb = card.querySelector('.ugc-card__thumbnail');
