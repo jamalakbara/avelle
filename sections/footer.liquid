@@ -52,7 +52,13 @@
     content-visibility: auto;
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--footer-gap);
+    gap: max(24px, var(--footer-gap));
+  }
+
+  @media screen and (max-width: 749px) {
+    .footer-content {
+      gap: max(36px, calc(var(--footer-gap) * 1.5));
+    }
   }
 
   @media screen and (min-width: 750px) and (max-width: 989px) {
