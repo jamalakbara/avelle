@@ -13,6 +13,8 @@
       "type": "main-page-elegant",
       "settings": {
         "color_scheme": "scheme-1",
+        "hero_height": "70vh",
+        "overlay_opacity": 30,
         "text_alignment": "center",
         "padding_top": 120,
         "padding_bottom": 60
