@@ -18,7 +18,7 @@
             "text": "<h1>{{ closest.page.title }}</h1>",
             "width": "100%",
             "max_width": "normal",
-            "alignment": "left",
+            "alignment": "center",
             "type_preset": "h1",
             "font": "var(--font-heading--family)",
             "font_size": "",
@@ -41,8 +41,8 @@
       "settings": {
         "gap": 0,
         "color_scheme": "scheme-1",
-        "padding-block-start": 48,
-        "padding-block-end": 0
+        "padding-block-start": 60,
+        "padding-block-end": 40
       }
     },
     "faq": {
