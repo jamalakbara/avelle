@@ -42,7 +42,7 @@
         "heading": {
           "type": "text",
           "settings": {
-            "text": "Sizing & Fit",
+            "text": "<p>Sizing & Fit</p>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "left",
@@ -93,7 +93,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "Our models typically wear size S as a reference. For the most accurate fit, please refer to the measurements listed on each product page.",
+                    "text": "<p>Our models typically wear size S as a reference. For the most accurate fit, please refer to the measurements listed on each product page.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -129,7 +129,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "We recommend measuring your bust and waist, then comparing with our size chart to find your most comfortable and flattering fit.",
+                    "text": "<p>We recommend measuring your bust and waist, then comparing with our size chart to find your most comfortable and flattering fit.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -165,7 +165,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "Absolutely. Our team is happy to assist you in finding your best fit. Feel free to reach out to us anytime.",
+                    "text": "<p>Absolutely. Our team is happy to assist you in finding your best fit. Feel free to reach out to us anytime.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -201,7 +201,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "Each piece is designed to reflect the look shown. However, the fit may vary depending on individual body proportions.",
+                    "text": "<p>Each piece is designed to reflect the look shown. However, the fit may vary depending on individual body proportions.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -263,7 +263,7 @@
         "heading": {
           "type": "text",
           "settings": {
-            "text": "Product",
+            "text": "<p>Product</p>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "left",
@@ -314,7 +314,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "We use carefully selected fabrics that are lightweight, breathable, and designed to elevate your everyday look.",
+                    "text": "<p>We use carefully selected fabrics that are lightweight, breathable, and designed to elevate your everyday look.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -350,7 +350,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "We recommend following the care instructions on each product's label. Most pieces are best washed in cold water on a gentle cycle.",
+                    "text": "<p>We recommend following the care instructions on each product's label. Most pieces are best washed in cold water on a gentle cycle.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -386,7 +386,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "We do our best to represent our products accurately. However, slight color variations may occur due to different screen settings.",
+                    "text": "<p>We do our best to represent our products accurately. However, slight color variations may occur due to different screen settings.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -448,7 +448,7 @@
         "heading": {
           "type": "text",
           "settings": {
-            "text": "Orders",
+            "text": "<p>Orders</p>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "left",
@@ -499,7 +499,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "Simply browse our collection, select your preferred size, and click Add to Cart. Follow the checkout steps to complete your purchase.",
+                    "text": "<p>Simply browse our collection, select your preferred size, and click Add to Cart. Follow the checkout steps to complete your purchase.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -535,7 +535,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "Orders can be modified or cancelled within 1 hour of placement. Please contact us immediately via WhatsApp or email.",
+                    "text": "<p>Orders can be modified or cancelled within 1 hour of placement. Please contact us immediately via WhatsApp or email.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -571,7 +571,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "Once your order is shipped, you will receive a tracking number via email. You can use this to track your delivery status.",
+                    "text": "<p>Once your order is shipped, you will receive a tracking number via email. You can use this to track your delivery status.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -633,7 +633,7 @@
         "heading": {
           "type": "text",
           "settings": {
-            "text": "Payment",
+            "text": "<p>Payment</p>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "left",
@@ -684,7 +684,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "We accept all major credit/debit cards, bank transfers, and various e-wallets including GoPay, OVO, and DANA.",
+                    "text": "<p>We accept all major credit/debit cards, bank transfers, and various e-wallets including GoPay, OVO, and DANA.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -720,7 +720,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "Yes, our store uses secure SSL encryption to protect all your personal and payment information.",
+                    "text": "<p>Yes, our store uses secure SSL encryption to protect all your personal and payment information.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -756,7 +756,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "For bank transfers, payment is usually confirmed within 1–2 business hours after we receive your transfer confirmation.",
+                    "text": "<p>For bank transfers, payment is usually confirmed within 1-2 business hours after we receive your transfer confirmation.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -818,7 +818,7 @@
         "heading": {
           "type": "text",
           "settings": {
-            "text": "Shipping",
+            "text": "<p>Shipping</p>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "left",
@@ -869,7 +869,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "We currently ship to all regions across Indonesia. International shipping is available upon request.",
+                    "text": "<p>We currently ship to all regions across Indonesia. International shipping is available upon request.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -905,7 +905,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "Domestic delivery typically takes 2–5 business days depending on your location. Express shipping options are available at checkout.",
+                    "text": "<p>Domestic delivery typically takes 2-5 business days depending on your location. Express shipping options are available at checkout.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -941,7 +941,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "Shipping rates are calculated at checkout based on your delivery address and chosen shipping method.",
+                    "text": "<p>Shipping rates are calculated at checkout based on your delivery address and chosen shipping method.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -1003,7 +1003,7 @@
         "heading": {
           "type": "text",
           "settings": {
-            "text": "Returns & Exchanges",
+            "text": "<p>Returns & Exchanges</p>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "left",
@@ -1054,7 +1054,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "We accept returns within 7 days of delivery for items in their original condition, unworn and with tags attached.",
+                    "text": "<p>We accept returns within 7 days of delivery for items in their original condition, unworn and with tags attached.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -1090,7 +1090,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "Contact our customer service team via WhatsApp or email with your order number and reason for return. We will guide you through the process.",
+                    "text": "<p>Contact our customer service team via WhatsApp or email with your order number and reason for return. We will guide you through the process.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -1126,7 +1126,7 @@
                 "text": {
                   "type": "text",
                   "settings": {
-                    "text": "Refunds are processed within 3–5 business days after we receive and inspect the returned item.",
+                    "text": "<p>Refunds are processed within 3-5 business days after we receive and inspect the returned item.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
