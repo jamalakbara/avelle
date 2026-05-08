@@ -68,22 +68,6 @@
         "padding_bottom": 16
       }
     },
-    "hero_cinematic_new": {
-      "type": "hero-cinematic",
-      "disabled": true,
-      "settings": {
-        "image": "shopify://shop_images/Cinematic_Portrait_of_Young_Woman_3.png",
-        "mobile_image": "shopify://shop_images/Cinematic_Portrait_of_Young_Woman_2.png",
-        "heading": "Elevate Your  Every Day",
-        "heading_size_mobile": 48,
-        "heading_size_desktop": 96,
-        "subheading": "Premium essentials for the modern lifestyle.",
-        "subheading_size_mobile": 16,
-        "subheading_size_desktop": 20,
-        "button_label": "Shop Collection",
-        "button_link": "shopify://collections/all"
-      }
-    },
     "cinematic_carousel_section": {
       "type": "carousel-cinematic",
       "settings": {
@@ -309,76 +293,17 @@
         "background_color": "#7d6953",
         "text_color": "#ede4d9"
       }
-    },
-    "brand_story_cinematic": {
-      "type": "brand-story-cinematic",
-      "blocks": {
-        "story_panel_1": {
-          "type": "story_panel",
-          "settings": {
-            "image": "shopify://shop_images/akunpalsu29_Editorial_fashion_photography_of_a_high-end_silk_ma_a0d7a747-1269-4492-b081-41d04c939120.png",
-            "subheading": "Chapter 01",
-            "heading": "Our Beginning",
-            "description": "<p>Born from a passion for timeless design and exceptional quality, every piece tells a story of dedication.</p>",
-            "button_label": "",
-            "button_link": "",
-            "image_position": "left",
-            "overlay_opacity": 40
-          }
-        },
-        "story_panel_2": {
-          "type": "story_panel",
-          "settings": {
-            "image": "shopify://shop_images/akunpalsu29_Extreme_macro_close-up_shot_of_hands_working_with_d_010cde0c-6f9b-4903-89fb-4d120252a3c2.png",
-            "subheading": "Chapter 02",
-            "heading": "Craftsmanship",
-            "description": "<p>Every detail meticulously crafted by skilled artisans who pour their heart into each creation.</p>",
-            "button_label": "",
-            "button_link": "",
-            "image_position": "right",
-            "overlay_opacity": 40
-          }
-        },
-        "story_panel_3": {
-          "type": "story_panel",
-          "settings": {
-            "image": "shopify://shop_images/akunpalsu29_A_chic_woman_walking_through_a_sun-drenched_minimal_50e69825-1f41-4382-aff3-92709a84514b.png",
-            "subheading": "Chapter 03",
-            "heading": "Your Story",
-            "description": "<p>Designed to become part of your everyday moments, elevating the ordinary into extraordinary.</p>",
-            "button_label": "Explore Collection",
-            "button_link": "shopify://collections/all",
-            "image_position": "left",
-            "overlay_opacity": 40
-          }
-        }
-      },
-      "block_order": [
-        "story_panel_1",
-        "story_panel_2",
-        "story_panel_3"
-      ],
-      "disabled": true,
-      "settings": {
-        "section_height": 600,
-        "section_spacing": 0,
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
     }
   },
   "order": [
     "hero_carousel_cinematic",
     "marquee_elegant",
-    "hero_cinematic_new",
     "cinematic_carousel_section",
     "cinematic_collection_grid",
     "cinematic_collections",
     "split_hero_cinematic",
     "curated_products_cinematic",
     "shoppable_video_gallery_Y8kc9c",
-    "loyalty_club",
-    "brand_story_cinematic"
+    "loyalty_club"
   ]
 }
