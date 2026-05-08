@@ -4,7 +4,20 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Initialize Lenis Smooth Scroll
+    // Track whether any dialog is open (read by the wheel blocker below)
+    let isDialogOpen = false;
+
+    // Register this BEFORE new Lenis() so it runs first in the window bubble chain.
+    // Lenis listens on window (bubble) and calls preventDefault() even when stopped.
+    // stopImmediatePropagation() prevents Lenis's listener from firing for events
+    // that originate inside an open <dialog>, allowing native overflow-y scroll to work.
+    window.addEventListener('wheel', (e) => {
+        if (isDialogOpen && e.target?.closest?.('dialog[open]')) {
+            e.stopImmediatePropagation();
+        }
+    }, { passive: false });
+
+    // 1. Initialize Lenis Smooth Scroll (registers its wheel listener AFTER ours)
     const lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -24,6 +37,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     gsap.ticker.lagSmoothing(0);
+
+    // Stop/start Lenis on dialog open/close (prevents Lenis from fighting body position:fixed).
+    // DialogOpenEvent/CloseEvent are non-bubbling so we use capture phase.
+    let openDialogCount = 0;
+    document.addEventListener('dialog:open', () => {
+        openDialogCount++;
+        isDialogOpen = true;
+        lenis.stop();
+    }, { capture: true });
+    document.addEventListener('dialog:close', () => {
+        openDialogCount = Math.max(0, openDialogCount - 1);
+        if (openDialogCount === 0) {
+            isDialogOpen = false;
+            lenis.start();
+        }
+    }, { capture: true });
 
     // 2. Register GSAP Plugins
     gsap.registerPlugin(ScrollTrigger);

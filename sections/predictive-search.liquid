@@ -632,6 +632,129 @@
       transform: scale(0.97);
     }
   }
+
+  /* ── AWWWARDS REDESIGN ADDITIONS ─────────────────────────────────── */
+
+  /* Override height: fit-content from inline search context */
+  .search-modal .predictive-search-form__content-wrapper {
+    /* stylelint-disable-next-line declaration-no-important */
+    flex: 1 1 0 !important;
+    /* stylelint-disable-next-line declaration-no-important */
+    min-height: 0 !important;
+    /* stylelint-disable-next-line declaration-no-important */
+    height: auto !important;
+  }
+
+  /* Refined section titles across the modal */
+  .search-modal .predictive-search-results__title {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    font-weight: 400;
+    text-transform: uppercase;
+    opacity: 0.4;
+    margin-block: var(--margin-xl) var(--margin-sm);
+  }
+
+  /* Editorial no-results state */
+  .search-modal .predictive-search-results__no-results {
+    font-family: var(--font-heading--family);
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-weight: 300;
+    opacity: 0.35;
+    text-align: center;
+    padding-block: var(--padding-6xl);
+    letter-spacing: 0.03em;
+    margin: 0;
+  }
+
+  /* Two-column desktop layout: suggestions left, results right */
+  @media screen and (min-width: 990px) {
+    .search-modal .predictive-search-results__inner:has(.predictive-search-results__wrapper-queries) {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      align-items: start;
+    }
+
+    /* Everything except queries goes to right column */
+    .search-modal .predictive-search-results__inner:has(.predictive-search-results__wrapper-queries)
+      > :not(.predictive-search-results__wrapper-queries) {
+      grid-column: 2;
+    }
+
+    /* Queries: left column, vertical list */
+    .search-modal .predictive-search-results__wrapper-queries {
+      grid-column: 1;
+      grid-row: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      gap: 0;
+      padding-block: var(--padding-2xl) var(--padding-2xl);
+      padding-inline: var(--padding-5xl) var(--padding-xl);
+      margin-bottom: 0;
+      border-right: 1px solid rgb(var(--color-border-rgb) / 0.1);
+      animation: search-left-slide-in var(--animation-speed-medium) 80ms var(--animation-timing-bounce) backwards;
+    }
+
+    .search-modal .predictive-search-results__wrapper-queries .predictive-search-results__card--query {
+      width: 100%;
+      transform: none;
+    }
+
+    /* Query pills → clean vertical text links */
+    .search-modal .predictive-search-results__card--query .predictive-search-results__pill {
+      border-radius: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 7px 0;
+      font-size: 0.875rem;
+      letter-spacing: 0.015em;
+      font-weight: 400;
+      opacity: 0.55;
+      width: 100%;
+      display: block;
+      transition: opacity 0.2s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateX(0);
+      white-space: normal;
+    }
+
+    .search-modal .predictive-search-results__card--query .predictive-search-results__pill:hover,
+    .search-modal
+      .predictive-search-results__card--query:is([aria-selected='true'], :focus-within)
+      .predictive-search-results__pill {
+      opacity: 1;
+      transform: translateX(5px);
+      background: transparent;
+      outline: none;
+      box-shadow: none;
+    }
+
+    .search-modal .predictive-search-results__card--query .predictive-search-results__pill mark {
+      background-color: transparent;
+      font-weight: 600;
+      color: inherit;
+    }
+
+    /* Right column: products with proper padding */
+    .search-modal .predictive-search-results__inner:has(.predictive-search-results__wrapper-queries)
+      .predictive-search-results__products {
+      padding-inline: var(--padding-2xl) var(--padding-5xl);
+    }
+  }
+
+  @keyframes search-left-slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
