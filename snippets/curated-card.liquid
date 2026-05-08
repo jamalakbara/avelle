@@ -26,14 +26,14 @@
     {%- endif -%}
   </div>
   <div class="curated-card__info" {% if text_alignment %}style="text-align: {{ text_alignment }};"{% endif %}>
-    <h3 class="curated-card__title">
+    <h3 class="curated-card__title product-info__title">
       {% if product and product != blank %}
         {{ product.title }}
       {% else %}
         Example Product {{ index | default: 1 }}
       {% endif %}
     </h3>
-    <div class="curated-card__price">
+    <div class="curated-card__price product-info__price">
       {% if product and product != blank %}
         {% if product.available == false %}
           <span class="badge-sold-out">Sold Out</span>

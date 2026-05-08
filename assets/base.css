@@ -2685,6 +2685,21 @@ deferred-media[class] :is(.deferred-media__poster-button img, .deferred-media__p
   color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
 }
 
+/* Shared product info typography */
+.product-info__title {
+  font-family: var(--font-paragraph--family);
+  font-size: var(--font-size--product_info);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.product-info__price {
+  font-family: var(--font-paragraph--family);
+  font-size: var(--font-size--product_info);
+  opacity: 0.7;
+}
+
 .tax-note.tax-note.tax-note {
   font-size: min(0.85em, var(--font-paragraph--size));
   font-weight: var(--font-paragraph--weight);
