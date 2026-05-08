@@ -9,7 +9,7 @@
     font-weight: 400;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    text-align: left;
+    text-align: center;
     margin: 0 0 32px;
   }
 
@@ -140,6 +140,7 @@
     max-width: min(90vw, 960px);
     height: min(90dvh, 700px);
     width: 100%;
+    font-family: inherit;
   }
 
   .ugc-modal::backdrop {
@@ -293,8 +294,11 @@
   }
 
   .ugc-product-item__name {
-    font-size: 0.875rem;
+    font-family: var(--font-heading--family);
+    font-size: var(--font-size--product_info);
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -302,9 +306,10 @@
   }
 
   .ugc-product-item__price {
-    font-size: 0.8125rem;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--product_info);
     margin: 0;
-    opacity: 0.72;
+    opacity: 0.7;
   }
 
   /* ── Variant select ── */
