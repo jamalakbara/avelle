@@ -9,7 +9,7 @@
     font-weight: 400;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    text-align: left;
+    text-align: center;
     margin: 0 0 32px;
   }
 
@@ -293,8 +293,6 @@
   }
 
   .ugc-product-item__name {
-    font-size: 0.875rem;
-    font-weight: 500;
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -302,9 +300,7 @@
   }
 
   .ugc-product-item__price {
-    font-size: 0.8125rem;
     margin: 0;
-    opacity: 0.72;
   }
 
   /* ── Variant select ── */
@@ -425,8 +421,8 @@
             {%- endif -%}
           </div>
           <div class="ugc-product-item__info">
-            <p class="ugc-product-item__name">{{ product.title }}</p>
-            <p class="ugc-product-item__price">{{ product.price | money }}</p>
+            <p class="ugc-product-item__name product-info__title">{{ product.title }}</p>
+            <p class="ugc-product-item__price product-info__price">{{ product.price | money }}</p>
             {%- if product.variants.size > 1 -%}
               <select class="ugc-variant-select" aria-label="{{ 'accessibility.variant_for' | t: product_title: product.title | default: product.title }}">
                 {%- for variant in product.variants -%}
