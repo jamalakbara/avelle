@@ -84,7 +84,7 @@
               "type": "text",
               "name": "Support Hours",
               "settings": {
-                "text": "<p>We are here for you daily, <strong>9 AM to 5 PM</strong>, Sunday to Friday (GMT+7)</p><p>Feel free to reach out to<br/><a href=\"#\" title=\"#\">Customer Care</a></p>",
+                "text": "<p>We are here for you daily, <strong>9 AM to 5 PM</strong>, Sunday to Friday (GMT+7)</p><p>Feel free to reach out to<br/><a href=\"/pages/contact\" title=\"Contact\">Customer Care</a></p>",
                 "width": "fill",
                 "max_width": "normal",
                 "alignment": "center",
