@@ -11,7 +11,37 @@
 
 {% stylesheet %}
   .submit-button {
-    min-width: max-content;
+    border-radius: 999px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    font-family: var(--font-body--family) !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    padding-block: 0 !important;
+    width: 100%;
+    min-width: unset;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    color: var(--color-foreground) !important;
+    border: 1px solid currentColor !important;
+    box-shadow: none !important;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    background: transparent !important;
+    color: var(--color-foreground) !important;
+  }
+
+  .submit-button:active {
+    scale: 0.99;
+    translate: 0 1px;
   }
 {% endstylesheet %}
 

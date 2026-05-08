@@ -131,35 +131,58 @@
   .contact-form__form {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-md);
+    gap: var(--gap-xl, 2rem);
   }
 
   .contact-form__form-row {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-md);
+    gap: var(--gap-xl, 2rem);
 
     @media screen and (min-width: 750px) {
       flex-direction: row;
-      align-items: center;
+      align-items: flex-start;
     }
   }
 
   .contact-form__input {
     width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
     color: var(--color-input-text);
-    background-color: var(--color-input-background);
-    padding: var(--padding-lg) var(--padding-xl);
-    border-radius: var(--style-border-radius-inputs);
-    border: var(--style-border-width-inputs) solid var(--color-input-border);
+    background-color: transparent;
+    padding-block: var(--padding-lg);
+    padding-inline: 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid var(--color-input-border);
+    font-family: var(--font-body--family);
+    font-size: 0.9375rem;
     -webkit-font-smoothing: antialiased;
+    transition: border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact-form__input:focus {
+    outline: none;
+    border-bottom-color: var(--color-foreground);
+  }
+
+  .contact-form__input::placeholder {
+    color: var(--color-input-text);
+    opacity: 0.45;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    text-transform: uppercase;
   }
 
   .contact-form__input--textarea {
-    resize: vertical;
-    min-height: var(--input-textarea-min-height);
+    resize: none;
+    min-height: 160px;
+    border: 1px solid var(--color-input-border);
+    padding: var(--padding-lg) var(--padding-xl);
+    transition: border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact-form__input--textarea:focus {
+    border-color: var(--color-foreground);
   }
 
   .contact-form__error,
@@ -167,6 +190,14 @@
     display: flex;
     align-items: center;
     gap: var(--gap-xs);
+  }
+
+  /* Match elegant page content typography */
+  .text-block--content p,
+  .text-block--content li,
+  .text-block--content a {
+    font-size: 1.125rem;
+    line-height: 1.6;
   }
 {% endstylesheet %}
 
