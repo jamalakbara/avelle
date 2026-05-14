@@ -971,8 +971,15 @@
           li.classList.add('is-active');
         }
         li.addEventListener('click', () => {
-          select.value = opt.value;
-          select.dispatchEvent(new Event('change', { bubbles: true }));
+          // Click Nova's own hidden <li> — Nova listens to its own elements, not select change event
+          const novaItem = document.querySelector(`.bacurr-dropdown-choices .currMovers[id="${opt.value}"]`);
+          if (novaItem) {
+            novaItem.click();
+          } else {
+            // Fallback: set select + fire change (mobile/fallback path)
+            select.value = opt.value;
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+          }
           label.textContent = opt.value;
           dropdown.querySelectorAll('li').forEach(el => el.classList.remove('is-active'));
           li.classList.add('is-active');
