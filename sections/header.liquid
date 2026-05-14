@@ -105,6 +105,17 @@
       "id": "scrolled_text_color",
       "label": "Scrolled Text Color",
       "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Currency Switcher"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_custom_currency_ui",
+      "label": "Use custom currency switcher in header",
+      "info": "Replaces Nova app floating widget with a header-integrated dropdown. Uncheck to revert to Nova's default widget.",
+      "default": true
     }
   ],
   "blocks": [
@@ -437,8 +448,187 @@
     .action-account {
       display: none;
     }
+    .action-favorite {
+      display: none;
+    }
+  }
+
+  /* Desktop Nav */
+  .header-desktop-nav {
+    display: none;
+  }
+
+  @media screen and (min-width: 768px) {
+    /* Hide hamburger on desktop */
+    .header-left .btn-header-pill {
+      display: none;
+    }
+
+    .header-desktop-nav {
+      display: flex;
+      align-items: center;
+    }
+
+    .header-desktop-nav > ul {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-desktop-nav > ul > li {
+      position: relative;
+    }
+
+    .header-desktop-nav > ul > li > a {
+      display: flex;
+      align-items: center;
+      height: var(--nav-btn-height);
+      padding: 0 12px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: inherit;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background-color 0.2s ease;
+    }
+
+    .header-desktop-nav > ul > li > a:hover {
+      background-color: rgba(0, 0, 0, 0.06);
+    }
+
+    .is-transparent .header-desktop-nav > ul > li > a:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Dropdown */
+    .header-desktop-nav .nav-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      min-width: 160px;
+      background-color: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 8px;
+      padding: 6px 0;
+      list-style: none;
+      margin: 0;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      z-index: 200;
+    }
+
+    .header-desktop-nav .has-dropdown:hover .nav-dropdown {
+      display: block;
+    }
+
+    .header-desktop-nav .nav-dropdown li a {
+      display: block;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #000;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background-color 0.15s ease;
+    }
+
+    .header-desktop-nav .nav-dropdown li a:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  /* WhatsApp floating button — move to right side */
+  /* TODO: inspect live site for exact selector, then apply:
+     [app-selector] { left: auto !important; right: 20px !important; }
+  */
+
+  /* Custom currency UI */
+  .header-currency {
+    position: relative;
+  }
+
+  .action-currency {
+    gap: 4px;
+  }
+
+  .action-currency .currency-code {
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .action-currency .currency-caret {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid currentColor;
+    flex-shrink: 0;
+    margin-left: 2px;
+  }
+
+  .currency-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 200px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    padding: 6px 0;
+    list-style: none;
+    margin: 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    z-index: 300;
+    color: #333;
+  }
+
+  .currency-dropdown.open {
+    display: block;
+  }
+
+  .currency-dropdown li {
+    padding: 8px 16px;
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.15s ease;
+  }
+
+  .currency-dropdown li:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  .currency-dropdown li.is-active {
+    font-weight: 700;
   }
 {% endstyle %}
+
+{%- if section.settings.enable_custom_currency_ui -%}
+  <style>
+    .bacurr-cur-blocker { display: none !important; }
+  </style>
+{%- endif -%}
 
 <header
   class="header-custom header-wrapper {% if transparent_header %}is-transparent{% endif %}"
@@ -465,6 +655,23 @@
           </span>
           <span class="text">Menu</span>
         </button>
+
+        <nav class="header-desktop-nav" aria-label="Main navigation">
+          <ul>
+            {%- for link in section.settings.menu.links -%}
+              <li class="{% if link.links != blank %}has-dropdown{% endif %}">
+                <a href="{{ link.url }}">{{ link.title | escape }}</a>
+                {%- if link.links != blank -%}
+                  <ul class="nav-dropdown">
+                    {%- for child_link in link.links -%}
+                      <li><a href="{{ child_link.url }}">{{ child_link.title | escape }}</a></li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
       {%- endif -%}
     </div>
 
@@ -490,19 +697,17 @@
 
     <!-- RIGHT -->
     <div class="header-right">
-      <button
-        class="btn-header-pill action-search"
-        onclick="const sm = document.getElementById('search-modal'); if(sm) sm.showDialog()"
-        aria-label="{{ 'content.search' | t }}"
-      >
-        <span class="icon-wrapper">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="6" cy="6" r="4.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12.5 12.5L9.5 9.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <span class="text">Search</span>
-      </button>
+      {%- if section.settings.enable_custom_currency_ui -%}
+        <div class="header-currency" id="header-currency-switcher">
+          <button class="btn-header-pill action-currency" aria-label="Currency" aria-haspopup="listbox" aria-expanded="false">
+            <span class="currency-code">IDR</span>
+            <span class="currency-caret" aria-hidden="true"></span>
+          </button>
+          <ul class="currency-dropdown" role="listbox" aria-label="Select currency">
+            <!-- Populated by JS from Nova's #baCurrSelector -->
+          </ul>
+        </div>
+      {%- endif -%}
 
       {%- if shop.customer_accounts_enabled -%}
         <a
@@ -518,6 +723,29 @@
           <span class="text">Sign In</span>
         </a>
       {%- endif -%}
+
+      <button
+        class="btn-header-pill action-search"
+        onclick="const sm = document.getElementById('search-modal'); if(sm) sm.showDialog()"
+        aria-label="{{ 'content.search' | t }}"
+      >
+        <span class="icon-wrapper">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="6" cy="6" r="4.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12.5 12.5L9.5 9.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="text">Search</span>
+      </button>
+
+      <button class="btn-header-pill action-favorite" aria-label="Favorites">
+        <span class="icon-wrapper">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 12C7 12 1 8.5 1 4.5C1 2.567 2.567 1 4.5 1C5.59 1 6.56 1.48 7 2.25C7.44 1.48 8.41 1 9.5 1C11.433 1 13 2.567 13 4.5C13 8.5 7 12 7 12Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="text">Favorites</span>
+      </button>
 
       {%- if settings.cart_type == 'drawer' and template.name != 'cart' -%}
         <script src="{{ 'cart-drawer.js' | asset_url }}" type="module" fetchpriority="low"></script>
@@ -720,3 +948,76 @@
     updateHeader();
   })();
 </script>
+
+{%- if section.settings.enable_custom_currency_ui -%}
+<script>
+  (() => {
+    const switcher = document.getElementById('header-currency-switcher');
+    if (!switcher) return;
+
+    const btn = switcher.querySelector('.action-currency');
+    const label = switcher.querySelector('.currency-code');
+    const dropdown = switcher.querySelector('.currency-dropdown');
+
+    function buildDropdown(select) {
+      dropdown.innerHTML = '';
+      Array.from(select.options).forEach(opt => {
+        const li = document.createElement('li');
+        li.textContent = opt.text;
+        li.dataset.currency = opt.value;
+        li.setAttribute('role', 'option');
+        if (opt.selected) {
+          label.textContent = opt.value;
+          li.classList.add('is-active');
+        }
+        li.addEventListener('click', () => {
+          select.value = opt.value;
+          select.dispatchEvent(new Event('change', { bubbles: true }));
+          label.textContent = opt.value;
+          dropdown.querySelectorAll('li').forEach(el => el.classList.remove('is-active'));
+          li.classList.add('is-active');
+          closeDropdown();
+        });
+        dropdown.appendChild(li);
+      });
+    }
+
+    function openDropdown() {
+      dropdown.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeDropdown() {
+      dropdown.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      dropdown.classList.contains('open') ? closeDropdown() : openDropdown();
+    });
+
+    document.addEventListener('click', closeDropdown);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDropdown(); });
+
+    function waitForNova(attempts) {
+      const select = document.getElementById('baCurrSelector');
+      if (select) {
+        buildDropdown(select);
+        // Re-sync label if Nova updates the select after page currency change
+        select.addEventListener('change', () => {
+          label.textContent = select.value;
+        });
+        return;
+      }
+      if (attempts > 0) setTimeout(() => waitForNova(attempts - 1), 400);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => waitForNova(20));
+    } else {
+      waitForNova(20);
+    }
+  })();
+</script>
+{%- endif -%}
