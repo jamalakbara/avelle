@@ -593,6 +593,24 @@
           </div>
         </a>
 
+        {%- if section.settings.enable_custom_currency_ui -%}
+          <div id="drawer-currency-switcher" class="drawer-nova-currency">
+            <button class="menu-drawer__menu-item menu-drawer__menu-item--mainlist focus-inset drawer-currency-toggle" aria-expanded="false">
+              <div style="display: flex; align-items: center; gap: 1rem;">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M7 1C7 1 9.5 3.5 9.5 7C9.5 10.5 7 13 7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M7 1C7 1 4.5 3.5 4.5 7C4.5 10.5 7 13 7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M1.5 7H12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <span class="drawer-currency-label">---</span>
+              </div>
+              <span class="svg-wrapper icon-caret icon-caret--forward" style="transition: transform 0.2s ease;"></span>
+            </button>
+            <ul class="drawer-currency-list" role="listbox" aria-label="Select currency" hidden></ul>
+          </div>
+        {%- endif -%}
+
         {% liquid
           assign show_language = section.settings.show_language
           if localization.available_languages.size <= 1
@@ -1429,5 +1447,40 @@
     .menu-drawer__account-link {
       display: none !important;
     }
+  }
+
+  .drawer-currency-toggle {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    text-align: left;
+  }
+
+  .drawer-currency-list {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 2.5rem;
+  }
+
+  .drawer-currency-list li {
+    padding: 0.6rem 0;
+    font-size: 0.9rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+  }
+
+  .drawer-currency-list li:hover,
+  .drawer-currency-list li.is-active {
+    opacity: 1;
+  }
+
+  .drawer-currency-list li.is-active {
+    font-weight: 600;
   }
 {% endstylesheet %}
