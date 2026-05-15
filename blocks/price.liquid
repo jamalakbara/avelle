@@ -84,8 +84,33 @@
   {%- endif -%}
 </product-price>
 
+{%- if request.page_type == 'product' -%}
+  <div
+    id="smartwishlist"
+    data-product="{{ product_resource.id }}"
+    data-variant="{{ product_resource.variants.first.id }}"
+  ></div>
+{%- elsif request.page_type == 'collection' or request.page_type == 'index' -%}
+  <span
+    class="smartwishlist"
+    data-product="{{ product_resource.id }}"
+    data-variant="{{ product_resource.variants.first.id }}"
+  ></span>
+{%- endif -%}
+
 {% # theme-check-disable %}
 {% stylesheet %}
+  #smartwishlist div#bookmarkit,
+  .smartwishlist div#bookmarkit {
+    padding: 0 !important;
+    text-align: left !important;
+  }
+
+  #smartwishlist .fa,
+  .smartwishlist .fa {
+    margin-left: 0 !important;
+  }
+
   .tax-note:empty {
     display: none;
   }

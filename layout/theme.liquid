@@ -37,6 +37,19 @@
     {% endif %}
 
     {{ content_for_header }}
+    <style>
+      #smartwishlist .fa,
+      .smartwishlist .fa,
+      #smartwishlist .fa-heart-o,
+      .smartwishlist .fa-heart-o {
+        margin: 0 !important;
+      }
+      #smartwishlist div#bookmarkit,
+      .smartwishlist div#bookmarkit {
+        padding: 0 !important;
+        text-align: left !important;
+      }
+    </style>
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
@@ -106,6 +119,11 @@
       })();
     </script>
 
+    {%- if request.path contains '/a/wishlist' -%}
+      <style>
+        #MainContent { padding-top: var(--header-group-height, 80px) !important; }
+      </style>
+    {%- endif -%}
     <main
       id="MainContent"
       class="content-for-layout"
