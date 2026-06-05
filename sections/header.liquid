@@ -515,12 +515,27 @@
       background-color: rgba(255, 255, 255, 0.15);
     }
 
+    .header-desktop-nav > ul > li.has-dropdown > a::after {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg) translateY(-2px);
+      margin-left: 5px;
+      opacity: 0.5;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
     /* Dropdown */
     .header-desktop-nav .nav-dropdown {
       display: none;
       position: absolute;
-      top: calc(100% + 4px);
+      top: 100%;
       left: 0;
+      padding-top: 4px;
       min-width: 160px;
       background-color: #fff;
       border: 1px solid rgba(0, 0, 0, 0.08);
