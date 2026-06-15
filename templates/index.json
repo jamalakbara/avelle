@@ -15,8 +15,8 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/banner_1.png",
-            "mobile_image": "shopify://shop_images/13.png",
+            "image": "shopify://shop_images/website.png",
+            "mobile_image": "shopify://shop_images/mobile_website.png",
             "heading": "Elevate Your Every Day",
             "subheading": "Premium essentials for the modern lifestyle.",
             "button_label": "Shop Collection",
@@ -28,8 +28,8 @@
         "slide_2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/banner_2.png",
-            "mobile_image": "shopify://shop_images/banner_2_mobile.png",
+            "image": "shopify://shop_images/website_1.png",
+            "mobile_image": "shopify://shop_images/mobile_website_1.png",
             "heading": "Timeless Elegance",
             "subheading": "Discover our new arrivals.",
             "button_label": "Explore",
@@ -60,7 +60,7 @@
         "text_size": 12,
         "text_size_mobile": 12,
         "speed": 50,
-        "bg_color": "#121212",
+        "bg_color": "#0D0C0C",
         "text_color": "#ffffff",
         "border_color": "rgba(0,0,0,0)",
         "border_thickness": 0,
