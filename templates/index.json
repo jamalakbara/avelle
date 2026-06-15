@@ -12,6 +12,19 @@
     "hero_carousel_cinematic": {
       "type": "hero-carousel-cinematic",
       "blocks": {
+        "slide_b47f9e": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/website_2.png",
+            "mobile_image": "shopify://shop_images/mobile_website_2.png",
+            "heading": "Elevate Your Every Day",
+            "subheading": "Premium essentials for the modern lifestyle.",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "text_color": "light",
+            "overlay_opacity": 30
+          }
+        },
         "slide_1": {
           "type": "slide",
           "settings": {
@@ -40,6 +53,7 @@
         }
       },
       "block_order": [
+        "slide_b47f9e",
         "slide_1",
         "slide_2"
       ],
@@ -60,7 +74,7 @@
         "text_size": 12,
         "text_size_mobile": 12,
         "speed": 50,
-        "bg_color": "#0D0C0C",
+        "bg_color": "#0d0c0c",
         "text_color": "#ffffff",
         "border_color": "rgba(0,0,0,0)",
         "border_thickness": 0,
