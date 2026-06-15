@@ -233,14 +233,11 @@
         "ugc_video_item_BR6dyA": {
           "type": "ugc_video_item",
           "settings": {
-            "thumbnail_image": "shopify://shop_images/Ultra_Realistic_Photo_7.png",
-            "video": "shopify://files/videos/The Soft Wind Moving Hair.mp4",
+            "thumbnail_image": "shopify://shop_images/mobile_website_3.png",
+            "video": "shopify://files/videos/snaptik_7644757212665122069_v3.mp4",
             "handle": "test",
             "product_list": [
-              "abby-dress",
-              "abundance-top",
-              "aliya-top",
-              "allie-vest-top"
+              "layla-satin-pants"
             ]
           }
         },
