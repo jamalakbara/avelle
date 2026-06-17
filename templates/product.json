@@ -51,7 +51,7 @@
             "custom_width_mobile": 100,
             "height": "fit",
             "details_position": "flex-start",
-            "gap": 12,
+            "gap": 5,
             "sticky_details_desktop": true,
             "inherit_color_scheme": true,
             "color_scheme": "",
@@ -122,7 +122,7 @@
                 "variant_style": "buttons",
                 "show_swatches": true,
                 "alignment": "left",
-                "padding-block-start": 12,
+                "padding-block-start": 0,
                 "padding-block-end": 24,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
