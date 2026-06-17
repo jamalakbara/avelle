@@ -12,11 +12,37 @@
     "hero_carousel_cinematic": {
       "type": "hero-carousel-cinematic",
       "blocks": {
+        "slide_gVddDj": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/2.png",
+            "mobile_image": "shopify://shop_images/3_fe8edca5-5c34-48a4-9c25-2e183922a84d.png",
+            "heading": "Elevate Your Every Day",
+            "subheading": "Premium essentials for the modern lifestyle.",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "text_color": "light",
+            "overlay_opacity": 30
+          }
+        },
+        "slide_AgthnV": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/5_1c25ad79-e529-486b-abd0-361ee6a6c5ab.png",
+            "mobile_image": "shopify://shop_images/2_49f7d357-7d8c-4e3d-b524-515462051149.png",
+            "heading": "",
+            "subheading": "",
+            "button_label": "Shop Collection",
+            "button_link": "",
+            "text_color": "light",
+            "overlay_opacity": 30
+          }
+        },
         "slide_b47f9e": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/website_2.png",
-            "mobile_image": "shopify://shop_images/mobile_website_2.png",
+            "image": "shopify://shop_images/4_927635dc-f25b-45ab-8637-189a50e88863.png",
+            "mobile_image": "shopify://shop_images/4_f958fad2-1997-4ba5-9bf2-9ac57ab3aafe.png",
             "heading": "",
             "subheading": "",
             "button_label": "",
@@ -28,8 +54,8 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/website.png",
-            "mobile_image": "shopify://shop_images/mobile_website.png",
+            "image": "shopify://shop_images/1_0116e15c-b651-4e8c-b7dd-4e39696a53e0.png",
+            "mobile_image": "shopify://shop_images/1_26587925-e5df-4e76-98d1-048ac72e7367.png",
             "heading": "",
             "subheading": "",
             "button_label": "",
@@ -41,8 +67,8 @@
         "slide_2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/website_1.png",
-            "mobile_image": "shopify://shop_images/mobile_website_1.png",
+            "image": "shopify://shop_images/3_f4acb8bc-ce97-4d27-8322-5ca082b8a64f.png",
+            "mobile_image": "shopify://shop_images/5_ce82d435-f737-47d1-89a8-e2b9dea4d48d.png",
             "heading": "",
             "subheading": "",
             "button_label": "",
@@ -53,6 +79,8 @@
         }
       },
       "block_order": [
+        "slide_gVddDj",
+        "slide_AgthnV",
         "slide_b47f9e",
         "slide_1",
         "slide_2"
