@@ -18,9 +18,9 @@
             "image": "shopify://shop_images/website_2.png",
             "mobile_image": "shopify://shop_images/mobile_website_2.png",
             "heading": "",
-            "subheading": "Premium essentials for the modern lifestyle.",
-            "button_label": "Shop Collection",
-            "button_link": "",
+            "subheading": "",
+            "button_label": "",
+            "button_link": "shopify://collections/new-arrivals",
             "text_color": "light",
             "overlay_opacity": 30
           }
