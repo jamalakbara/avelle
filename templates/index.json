@@ -217,10 +217,10 @@
         "subheading": "The Selection",
         "heading": "OUR PICKS",
         "product_list": [
-          "aliya-top",
-          "candice-top",
           "blair-skort",
-          "christy-top"
+          "avelle-ray-sheer-layered-top",
+          "yumi-pants",
+          "avelle-athena-top-korean-draped-slim-fit-top-wanita-basic-elegan"
         ],
         "color_scheme": "scheme-1",
         "padding_top": 0,
@@ -296,7 +296,7 @@
     "loyalty_club": {
       "type": "loyalty-cinematic",
       "settings": {
-        "heading": "AVELLE LOYALTY CLUB",
+        "heading": "#AvelleBabes",
         "description": "<p>Join our <strong>Loyalty Club</strong> and enjoy <strong>15% off your first order</strong> with <strong>free shipping</strong>.</p><p>Gain access to <strong>exclusive offers</strong>, <strong>early drops</strong>, and curated perks made just for you.</p><p><strong>Become a member today.</strong></p>",
         "button_label": "LEARN MORE",
         "button_link": "",
