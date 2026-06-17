@@ -17,7 +17,7 @@
         "announcement_qAfEUg": {
           "type": "_announcement",
           "settings": {
-            "text": "Shop our latest arrivals!",
+            "text": "<strong>Shop Direct & Save More</strong>   |   Exclusive Website Prices",
             "link": "",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
@@ -57,7 +57,8 @@
         "enable_transparent_header_search": false,
         "color_scheme": "",
         "scrolled_bg_color": "#ffffff",
-        "scrolled_text_color": "#000000"
+        "scrolled_text_color": "#000000",
+        "enable_custom_currency_ui": true
       }
     }
   },

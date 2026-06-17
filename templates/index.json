@@ -30,10 +30,10 @@
           "settings": {
             "image": "shopify://shop_images/website.png",
             "mobile_image": "shopify://shop_images/mobile_website.png",
-            "heading": "Elevate Your Every Day",
-            "subheading": "Premium essentials for the modern lifestyle.",
-            "button_label": "Shop Collection",
-            "button_link": "shopify://collections/all",
+            "heading": "",
+            "subheading": "",
+            "button_label": "View More",
+            "button_link": "shopify://collections/new-arrivals",
             "text_color": "light",
             "overlay_opacity": 30
           }
@@ -43,8 +43,8 @@
           "settings": {
             "image": "shopify://shop_images/website_1.png",
             "mobile_image": "shopify://shop_images/mobile_website_1.png",
-            "heading": "Timeless Elegance",
-            "subheading": "Discover our new arrivals.",
+            "heading": "",
+            "subheading": "",
             "button_label": "Explore",
             "button_link": "shopify://collections/new-arrivals",
             "text_color": "light",
