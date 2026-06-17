@@ -233,9 +233,9 @@
         "ugc_video_item_BR6dyA": {
           "type": "ugc_video_item",
           "settings": {
-            "thumbnail_image": "shopify://shop_images/mobile_website_3.png",
-            "video": "shopify://files/videos/snaptik_7644757212665122069_v3.mp4",
-            "handle": "test",
+            "thumbnail_image": "shopify://shop_images/IMG_6055.png",
+            "video": "shopify://files/videos/snaptik_7581303110237228306_v3.mp4",
+            "handle": "Lenechels",
             "product_list": [
               "layla-satin-pants"
             ]
@@ -244,9 +244,9 @@
         "ugc_video_item_TPQwBd": {
           "type": "ugc_video_item",
           "settings": {
-            "thumbnail_image": "shopify://shop_images/Ultra_Realistic_Photo_8.png",
-            "video": "shopify://files/videos/Full Body Fashion Editorial.mp4",
-            "handle": "temp",
+            "thumbnail_image": "shopify://shop_images/IMG_6051.png",
+            "video": "shopify://files/videos/stevany leonard.mp4",
+            "handle": "Stevany Leonard",
             "product_list": [
               "faye-pants",
               "emma-top",
@@ -260,9 +260,9 @@
         "ugc_video_item_YUjBX8": {
           "type": "ugc_video_item",
           "settings": {
-            "thumbnail_image": "shopify://shop_images/akunpalsu29_httpss.mj.run9O0ECiokKAQ_ultra_realistic_photo_of_w_71c30ac5-07b3-4c78-ae7e-205b167307d8.png",
-            "video": "shopify://files/videos/Full Body Fashion Editorial.mp4",
-            "handle": "",
+            "thumbnail_image": "shopify://shop_images/IMG_6053.png",
+            "video": "shopify://files/videos/kleonita.mp4",
+            "handle": "Kleonita",
             "product_list": []
           }
         },
