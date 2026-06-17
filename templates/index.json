@@ -72,7 +72,7 @@
         "separator": "✦",
         "outline": false,
         "text_size": 12,
-        "text_size_mobile": 12,
+        "text_size_mobile": 8,
         "speed": 80,
         "bg_color": "#0d0c0c",
         "text_color": "#ffffff",
