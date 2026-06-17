@@ -222,38 +222,9 @@
                     "text_Description"
                   ]
                 },
-                "accordion_row_iJM37V": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Shipping/Returns",
-                    "open_by_default": false,
-                    "icon": "none",
-                    "width": 20
-                  },
-                  "blocks": {
-                    "page_VdG98J": {
-                      "type": "page",
-                      "settings": {
-                        "page": "shipping-returns",
-                        "inherit_color_scheme": true,
-                        "show_title": false,
-                        "color_scheme": "",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "padding-block-start": 12,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "page_VdG98J"
-                  ]
-                },
                 "accordion_row_pLFDcD": {
                   "type": "_accordion-row",
+                  "disabled": true,
                   "settings": {
                     "heading": "Design",
                     "open_by_default": false,
@@ -290,12 +261,42 @@
                   "block_order": [
                     "text_qLGEN9"
                   ]
+                },
+                "accordion_row_iJM37V": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Shipping",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "page_VdG98J": {
+                      "type": "page",
+                      "settings": {
+                        "page": "shipping",
+                        "inherit_color_scheme": true,
+                        "show_title": false,
+                        "color_scheme": "",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "padding-block-start": 12,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "page_VdG98J"
+                  ]
                 }
               },
               "block_order": [
                 "accordion_row_desc",
-                "accordion_row_iJM37V",
-                "accordion_row_pLFDcD"
+                "accordion_row_pLFDcD",
+                "accordion_row_iJM37V"
               ]
             }
           },
