@@ -66,6 +66,8 @@
     "variant_swatch_radius": 0,
     "variant_button_radius": 0,
     "variant_button_width": "default-width-buttons",
+    "variant_label_font_size": 12,
+    "variant_button_font_size": 12,
     "content_for_index": [],
     "blocks": {
       "1804893150726543839": {
