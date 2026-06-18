@@ -114,7 +114,10 @@
       "type": "carousel-cinematic",
       "settings": {
         "collection": "new-arrivals",
-        "heading": "New Arrivals"
+        "heading": "New Arrivals",
+        "heading_preset": "h3",
+        "heading_case": "uppercase",
+        "header_gap": 32
       }
     },
     "cinematic_collection_grid": {
@@ -250,6 +253,11 @@
           "yumi-pants",
           "athena-top"
         ],
+        "subheading_preset": "h3",
+        "subheading_case": "uppercase",
+        "heading_preset": "default",
+        "heading_case": "uppercase",
+        "header_gap": 16,
         "color_scheme": "scheme-1",
         "padding_top": 0,
         "padding_bottom": 0
@@ -264,6 +272,7 @@
             "thumbnail_image": "shopify://shop_images/IMG_6055.png",
             "video": "shopify://files/videos/snaptik_7581303110237228306_v3.mp4",
             "handle": "Lenechels",
+            "handle_url": "",
             "product_list": [
               "layla-satin-pants"
             ]
@@ -275,6 +284,7 @@
             "thumbnail_image": "shopify://shop_images/IMG_6053.png",
             "video": "shopify://files/videos/kleonita.mp4",
             "handle": "Kleonita",
+            "handle_url": "",
             "product_list": [
               "faye-pants",
               "emma-top",
@@ -291,6 +301,7 @@
             "thumbnail_image": "shopify://shop_images/IMG_6051.png",
             "video": "shopify://files/videos/stevany leonard.mp4",
             "handle": "Stevany Leonard",
+            "handle_url": "",
             "product_list": []
           }
         },
@@ -300,6 +311,7 @@
             "thumbnail_image": "shopify://shop_images/banner_2_mobile.png",
             "video": "shopify://files/videos/The Soft Wind Moving Hair.mp4",
             "handle": "",
+            "handle_url": "",
             "product_list": [
               "emma-top",
               "emily-skort"
@@ -316,6 +328,13 @@
       "name": "Shoppable Video Gallery",
       "settings": {
         "heading": "As Seen On",
+        "heading_preset": "h3",
+        "heading_case": "uppercase",
+        "header_gap": 32,
+        "modal_heading_preset": "h3",
+        "show_handle": true,
+        "handle_prefix": "",
+        "open_cart_after_add": true,
         "columns_desktop": "4",
         "padding_top": 0,
         "padding_bottom": 0
@@ -329,6 +348,13 @@
         "button_label": "LEARN MORE",
         "button_link": "",
         "join_label": "Join Now",
+        "heading_font": "heading",
+        "heading_size": 20,
+        "heading_letter_spacing": 0.1,
+        "heading_text_case": "uppercase",
+        "body_font": "body",
+        "description_size": 15,
+        "description_line_height": 1.8,
         "background_color": "#7d6953",
         "text_color": "#ede4d9"
       }
