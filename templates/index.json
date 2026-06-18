@@ -16,9 +16,9 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/2.png",
-            "mobile_image": "shopify://shop_images/3_fe8edca5-5c34-48a4-9c25-2e183922a84d.png",
-            "heading": "Elevate Your Every Day",
-            "subheading": "Premium essentials for the modern lifestyle.",
+            "mobile_image": "shopify://shop_images/mobile_website_8.png",
+            "heading": "",
+            "subheading": "",
             "button_label": "Shop Collection",
             "button_link": "",
             "text_color": "light",
