@@ -11,6 +11,7 @@
   @param {object} [selected_product] - The currently selected product.
   @param {boolean} [first_3d_model] - Indicates if this is the first 3D model.
   @param {boolean} [is_main_product_media] - Indicates if this is the main product image.
+  @param {boolean} [video_loop] - Whether videos should loop (falls back to block.settings.video_loop).
 
   @example
   {% render 'product-media', media: media, preview_image_only: false, loading: 'lazy' %}
@@ -115,7 +116,7 @@
       {% when 'video', 'external_video' %}
         {%- render 'video',
           video: media,
-          video_loop: block.settings.video_loop,
+          video_loop: video_loop | default: block.settings.video_loop,
           widths: widths,
           sizes: sizes,
           loading: loading,

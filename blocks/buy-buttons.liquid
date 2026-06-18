@@ -390,45 +390,54 @@
     flex-basis: 51%;
   }
 
-  /* Force Pill Shape and Typography on ALL buttons in the group */
+  /* Pill shape + strict sizing for ALL buttons in the group.
+     Kept !important to override Shopify's injected payment-button styles and to
+     guarantee pixel-perfect height alignment with the quantity selector.
+     Typography is intentionally NOT set here so the theme button settings
+     (font family + text case via base `.button`) take effect. */
   .product-form-buttons button,
   .product-form-buttons .shopify-payment-button__button,
   .product-form-buttons .shopify-payment-button__button--unbranded,
   .product-form-buttons .add-to-cart-button {
     border-radius: 999px !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.1em !important;
-    font-size: 0.875rem !important;
-    font-weight: 500 !important;
-    font-family: var(--font-body--family) !important;
-    
+
     /* Use exact strict height to guarantee pixel-perfect alignment */
     height: var(--height-buy-buttons, 52px) !important;
     min-height: var(--height-buy-buttons, 52px) !important;
-    padding-block: 0 !important; 
+    padding-block: 0 !important;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
     gap: 12px; /* Ensure space between quantity and add to cart */
-    
+
     /* Flex centering prevents height-pushing from line-height differences */
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
   }
 
-  /* Add to Cart - Cinematic Transparent Style */
-  /* Add to Cart - Cinematic Outline Style */
+  /* Size / weight / letter-spacing kept as the cinematic default (no theme
+     setting maps to these); not !important so they don't fight any setting. */
+  .product-form-buttons button,
   .product-form-buttons .add-to-cart-button {
-    background: transparent !important;
-    color: var(--color-foreground) !important;
-    border: 1px solid currentColor !important;
-    box-shadow: none !important;
+    font-size: var(--font-size--sm);
+    font-weight: 500;
+    letter-spacing: 0.1em;
   }
 
-  .product-form-buttons .add-to-cart-button:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-    background: transparent !important; /* Keep transparent on hover or maybe fill? brand story doesn't specify fill on hover, just lift */
-    color: var(--color-foreground) !important;
+  /* Add to Cart (secondary style) = cinematic transparent outline.
+     Scoped to .button-secondary so the block's Primary/Secondary setting
+     actually switches the look; Primary uses the filled color-scheme button. */
+  .product-form-buttons .add-to-cart-button.button-secondary {
+    background: transparent;
+    color: var(--color-foreground);
+    border: 1px solid currentColor;
+    box-shadow: none;
+  }
+
+  .product-form-buttons .add-to-cart-button.button-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgb(var(--color-foreground-rgb) / 0.15);
+    background: transparent;
+    color: var(--color-foreground);
   }
 
   /* Buy It Now (Dynamic Checkout) - Matching Style */

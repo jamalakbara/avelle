@@ -17,26 +17,26 @@
       ></div>
 
       <div
-        class="page-width"
-        style="position: relative; height: 100%; display: flex; align-items: {% if section.settings.text_alignment == 'center' %}center{% else %}flex-end{% endif %}; justify-content: {% if section.settings.text_alignment == 'center' %}center{% else %}flex-start{% endif %}; padding-bottom: {% if section.settings.text_alignment == 'center' %}0{% else %}4rem{% endif %}; z-index: 2;"
+        class="page-width-content"
+        style="position: relative; height: 100%; padding-inline: var(--page-margin); display: flex; align-items: {% if section.settings.text_alignment == 'center' %}center{% else %}flex-end{% endif %}; justify-content: {% if section.settings.text_alignment == 'center' %}center{% else %}flex-start{% endif %}; padding-bottom: {% if section.settings.text_alignment == 'center' %}0{% else %}4rem{% endif %}; z-index: 2;"
       >
         <h1
-          class="elegant-page-hero__heading has-image"
-          style="margin: 0; font-family: var(--font-heading--family); font-weight: var(--font-heading--weight); font-style: var(--font-heading--style); font-size: clamp(3.5rem, 6vw, 7rem); letter-spacing: -0.02em; line-height: 1.1; color: #fff; text-align: {{ section.settings.text_alignment }};"
+          class="elegant-page-hero__heading has-image h1"
+          style="margin: 0; color: #fff; text-align: {{ section.settings.text_alignment }};"
         >
           {{ page.title | escape }}
         </h1>
       </div>
     </div>
   {% else %}
-    <div class="page-width">
+    <div class="section page-width-content">
       <div
         class="elegant-page-hero text-only"
-        style="text-align: {{ section.settings.text_alignment }}; padding-top: {{ section.settings.padding_top }}px; margin-bottom: 4rem;"
+        style="text-align: {{ section.settings.text_alignment }}; padding-top: {{ section.settings.padding_top }}px; margin-bottom: 2.5rem;"
       >
         <h1
-          class="elegant-page-hero__heading"
-          style="margin: 0; font-family: var(--font-heading--family); font-weight: var(--font-heading--weight); font-style: var(--font-heading--style); font-size: clamp(3rem, 5vw, 5.5rem); letter-spacing: -0.02em; line-height: 1.1;"
+          class="elegant-page-hero__heading h1"
+          style="margin: 0; text-align: {{ section.settings.text_alignment }};"
         >
           {{ page.title | escape }}
         </h1>
@@ -44,47 +44,12 @@
     </div>
   {% endif %}
 
-  <div class="page-width">
-    <div
-      class="elegant-page-content"
-      style="max-width: 75ch; margin: 0 auto; font-family: var(--font-body--family); font-size: 1.125rem; line-height: 1.6; color: rgb(var(--color-foreground-rgb) / 0.9);"
-    >
-      {{ page.content }}
+  <div class="section page-width-content">
+    <div class="rte elegant-page-content">
+      <rte-formatter>{{ page.content }}</rte-formatter>
     </div>
   </div>
 </div>
-
-<style>
-  .elegant-page-content h2,
-  .elegant-page-content h3,
-  .elegant-page-content h4 {
-    font-family: var(--font-heading--family);
-    margin-top: 3rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.2;
-    font-weight: var(--font-heading--weight);
-  }
-
-  .elegant-page-content p {
-    margin-bottom: 1.5rem;
-  }
-
-  .elegant-page-content ul,
-  .elegant-page-content ol {
-    margin-bottom: 2rem;
-    padding-left: 2rem;
-  }
-
-  .elegant-page-content li {
-    margin-bottom: 0.5rem;
-  }
-
-  .elegant-page-content a {
-    color: currentColor;
-    text-decoration: underline;
-    text-underline-offset: 0.3em;
-  }
-</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', (event) => {

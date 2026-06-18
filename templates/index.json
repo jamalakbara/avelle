@@ -258,20 +258,6 @@
     "shoppable_video_gallery_Y8kc9c": {
       "type": "shoppable-video-gallery",
       "blocks": {
-        "ugc_video_item_nCf3kY": {
-          "type": "ugc_video_item",
-          "settings": {
-            "handle": "",
-            "product_list": []
-          }
-        },
-        "ugc_video_item_mzfCpe": {
-          "type": "ugc_video_item",
-          "settings": {
-            "handle": "",
-            "product_list": []
-          }
-        },
         "ugc_video_item_BR6dyA": {
           "type": "ugc_video_item",
           "settings": {
@@ -322,8 +308,6 @@
         }
       },
       "block_order": [
-        "ugc_video_item_nCf3kY",
-        "ugc_video_item_mzfCpe",
         "ugc_video_item_BR6dyA",
         "ugc_video_item_TPQwBd",
         "ugc_video_item_YUjBX8",

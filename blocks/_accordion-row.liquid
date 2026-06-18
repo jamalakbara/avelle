@@ -46,18 +46,13 @@
     margin-inline-end: var(--margin-xs);
   }
 
-  /* Make sure every body of the accordion section uses the same font styles and is not bold */
+  /* Keep accordion body consistent; let size flow from the block's theme typography */
   .details-content .rte,
   .details-content p,
   .details-content .custom-typography {
-    font-family: var(--font-secondary--family) !important;
-    font-size: 1rem !important;
-    line-height: 1.6 !important;
-    font-weight: 300 !important;
-  }
-
-  .details-content * {
-    font-weight: 300 !important;
+    font-family: var(--font-secondary--family);
+    line-height: 1.6;
+    font-weight: 300;
   }
 {% endstylesheet %}
 

@@ -1,5 +1,5 @@
 <div
-  class="section faq-content page-width color-{{ section.settings.color_scheme }}"
+  class="section faq-content page-width-content color-{{ section.settings.color_scheme }}"
   style="padding-block-start: {{ section.settings['padding-block-start'] }}px; padding-block-end: {{ section.settings['padding-block-end'] }}px;"
 >
   <template id="faq-source-{{ section.id }}">{{ page.content }}</template>
@@ -64,7 +64,7 @@
       if (iconsEl) summary.appendChild(iconsEl.content.cloneNode(true));
 
       currentContent = document.createElement('div');
-      currentContent.className = 'details-content';
+      currentContent.className = 'faq-answer rte';
 
       details.appendChild(summary);
       details.appendChild(currentContent);
@@ -122,7 +122,7 @@
     border-block-end: 1px solid var(--color-border);
   }
 
-  .faq-content .accordion--dividers .details-content {
+  .faq-content .accordion--dividers .faq-answer {
     padding-block-end: 0.75rem;
     overflow: visible;
   }
@@ -172,16 +172,6 @@
     flex-shrink: 0;
   }
 
-  .faq-content .details-content p {
-    font-family: var(--font-secondary--family, var(--font-body--family));
-    font-size: 1rem;
-    line-height: 1.6;
-    font-weight: 300;
-  }
-
-  .faq-content .details-content * {
-    font-weight: 300;
-  }
 {% endstylesheet %}
 
 {% schema %}

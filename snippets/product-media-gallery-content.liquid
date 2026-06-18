@@ -90,15 +90,6 @@
 
   assign icons_position = 'center'
 
-  # Put the icons on the opposite side of the pagination controls
-  if block_settings.slideshow_controls_position == 'on_media'
-    if pagination_position == 'left'
-      assign icons_position = 'right'
-    elsif pagination_position == 'right'
-      assign icons_position = 'left'
-    endif
-  endif
-
   assign sorted_media = '' | split: ','
   if selected_variant_media
     assign sorted_media = sorted_media | concat: selected_product.media | where: 'id', selected_variant_media.id
@@ -123,14 +114,16 @@
   assign has_image_drop = sorted_media | has: 'media_type', 'image'
 
   # Determine if we're in single column mode (carousel or grid with one column)
-  assign is_single_column = true
-  # Force single column for cinematic look
-  # if media_presentation == 'carousel' or sorted_media.size == 1 or media_presentation == 'grid' and block_settings.media_columns == 'one'
-  #   assign is_single_column = true
-  # endif
+  assign is_single_column = false
+  if media_presentation == 'carousel' or sorted_media.size == 1 or media_presentation == 'grid' and block_settings.media_columns == 'one'
+    assign is_single_column = true
+  endif
 
   # Check if we need both sizes (for large first image in two-column grid)
   assign needs_both_sizes = false
+  if media_presentation == 'grid' and block_settings.media_columns == 'two' and block_settings.large_first_image
+    assign needs_both_sizes = true
+  endif
 
   # Calculate sizes using utility snippet
   if needs_both_sizes
@@ -338,8 +331,14 @@
     class="
       spacing-style
       sticky-content
-      {% if media_presentation == 'grid' %}
+      {% if media_presentation == 'grid' and block_settings.media_columns == 'one' %}
         media-gallery--one-column
+      {% endif %}
+      {% if media_presentation == 'grid' and block_settings.media_columns == 'two' %}
+        media-gallery--two-column
+      {% endif %}
+      {% if media_presentation == 'grid' and block_settings.media_columns == 'two' and block_settings.large_first_image %}
+        media-gallery--large-first-image
       {% endif %}
       media-gallery--{{ media_presentation }}
       {% if block_settings.slideshow_mobile_controls_style == 'hint' %}
@@ -366,10 +365,10 @@
           {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
             <div
               class="product-media-constraint-wrapper">
-              {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
+              {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first, video_loop: block_settings.video_loop -%}
             </div>
           {% else %}
-            {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
+            {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first, video_loop: block_settings.video_loop -%}
           {% endif %}
         {% endcapture %}
         {% capture class %}
@@ -482,10 +481,10 @@
             -%}
             {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
               <div class="product-media-constraint-wrapper">
-                {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
+                {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first, video_loop: block_settings.video_loop -%}
               </div>
             {% else %}
-              {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
+              {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first, video_loop: block_settings.video_loop -%}
             {% endif %}
           </li>
         {% endfor %}
