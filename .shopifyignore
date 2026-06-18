@@ -1,0 +1,4 @@
+*.tmp
+*.tmp.*
+*.liquid.tmp*
+.DS_Store

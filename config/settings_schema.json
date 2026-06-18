@@ -2322,6 +2322,78 @@
           }
         ],
         "default": "equal-width-buttons"
+      },
+      {
+        "type": "header",
+        "content": "Typography"
+      },
+      {
+        "type": "select",
+        "id": "variant_font_family",
+        "label": "Font",
+        "options": [
+          {
+            "value": "body",
+            "label": "Body"
+          },
+          {
+            "value": "subheading",
+            "label": "Subheading"
+          },
+          {
+            "value": "heading",
+            "label": "Heading"
+          },
+          {
+            "value": "accent",
+            "label": "Accent"
+          }
+        ],
+        "default": "body"
+      },
+      {
+        "type": "range",
+        "id": "variant_label_font_size",
+        "min": 10,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Label font size",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "variant_button_font_size",
+        "min": 10,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Button text size",
+        "default": 14
+      },
+      {
+        "type": "select",
+        "id": "variant_text_case",
+        "label": "Text case",
+        "options": [
+          {
+            "value": "none",
+            "label": "Default"
+          },
+          {
+            "value": "uppercase",
+            "label": "Uppercase"
+          },
+          {
+            "value": "lowercase",
+            "label": "Lowercase"
+          },
+          {
+            "value": "capitalize",
+            "label": "Capitalize"
+          }
+        ],
+        "default": "uppercase"
       }
     ]
   }

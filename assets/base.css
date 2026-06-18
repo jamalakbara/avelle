@@ -2714,6 +2714,8 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6)>*:not(.tax-note) {
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.5rem;
+  /* Respect the Price block's Alignment setting (sets --text-align) */
+  justify-content: var(--text-align, left);
 }
 
 .curated-card__price .compare-at-price {

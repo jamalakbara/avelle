@@ -5,12 +5,14 @@
   }
 
   .ugc-gallery__heading {
+    {%- if section.settings.heading_preset == 'default' -%}
     font-size: 1.25rem;
     font-weight: 400;
     letter-spacing: 0.15em;
     text-transform: uppercase;
+    {%- endif -%}
     text-align: center;
-    margin: 0 0 32px;
+    margin: 0 0 {{ section.settings.header_gap | default: 32 }}px;
   }
 
   /* ── Grid ── */
@@ -131,6 +133,18 @@
     letter-spacing: 0.01em;
   }
 
+  .ugc-card__handle-link {
+    pointer-events: auto;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+
+  @media (hover: hover) {
+    .ugc-card__handle-link:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
   /* ── Modal ── */
   .ugc-modal {
     padding: 0;
@@ -224,15 +238,17 @@
   }
 
   .ugc-modal__heading {
+    {%- if section.settings.modal_heading_preset == 'default' -%}
     font-family: var(--font-body--family, system-ui);
     font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
+    opacity: 0.55;
+    {%- endif -%}
     margin: 0 0 20px;
     padding-bottom: 16px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    opacity: 0.55;
   }
 
   .ugc-modal__products {
@@ -293,13 +309,14 @@
     flex: 1;
   }
 
+  /* Product name + price match the curated-card (product-card) styling. */
   .ugc-product-item__name {
     font-family: var(--font-heading--family);
     font-size: var(--font-size--product_info);
-    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin: 0;
+    font-weight: 500;
+    margin: 0 0 0.25rem 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -308,21 +325,47 @@
   .ugc-product-item__price {
     font-family: var(--font-body--family);
     font-size: var(--font-size--product_info);
-    margin: 0;
     opacity: 0.7;
+  }
+
+  .ugc-product-item__price .compare-at-price {
+    text-decoration: line-through;
+    opacity: 0.6;
+    margin-left: 8px;
   }
 
   /* ── Variant select ── */
   .ugc-variant-select {
-    font-size: 0.72rem;
-    padding: 5px 12px;
-    border: 1px solid rgba(0, 0, 0, 0.18);
-    border-radius: 999px;
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
+    align-self: flex-start;
     max-width: 100%;
-    letter-spacing: 0.02em;
+    margin-top: 8px;
+    font-family: var(--font-body--family);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-foreground, #111);
+    background-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23111' stroke-width='1.25' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 0.55rem 2.6rem 0.55rem 1.1rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .ugc-variant-select:hover {
+    border-color: var(--color-foreground, #111);
+  }
+
+  .ugc-variant-select:focus-visible {
+    outline: none;
+    border-color: var(--color-foreground, #111);
   }
 
   /* ── Add to cart button ── */
@@ -330,15 +373,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-top: 6px;
+    margin-top: 14px;
     padding: 0.65rem 1.6rem;
+    font-family: var(--font-body--family);
     font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     background: transparent;
     color: var(--color-foreground, #111);
-    border: 1.5px solid var(--color-foreground, #111);
+    border: 1px solid var(--color-foreground, #111);
     border-radius: 999px;
     cursor: pointer;
     align-self: flex-start;
@@ -410,7 +454,7 @@
   }
 {%- endstyle -%}
 
-<shoppable-video-gallery-component>
+<shoppable-video-gallery-component{% if section.settings.open_cart_after_add %} data-open-cart{% endif %}>
 
   {%- comment -%} Pre-rendered product panels (hidden); JS swaps into modal on card click {%- endcomment -%}
   {%- for block in section.blocks -%}
@@ -431,7 +475,16 @@
           </div>
           <div class="ugc-product-item__info">
             <p class="ugc-product-item__name">{{ product.title }}</p>
-            <p class="ugc-product-item__price">{{ product.price | money }}</p>
+            <div class="ugc-product-item__price">
+              {%- if product.available == false -%}
+                <span class="badge-sold-out">{{ 'products.product.sold_out' | t | default: 'Sold Out' }}</span>
+              {%- else -%}
+                {{ product.price | money }}
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="compare-at-price">{{ product.compare_at_price | money }}</span>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
             {%- if product.variants.size > 1 -%}
               <select class="ugc-variant-select" aria-label="{{ 'accessibility.variant_for' | t: product_title: product.title | default: product.title }}">
                 {%- for variant in product.variants -%}
@@ -467,7 +520,7 @@
   {%- comment -%} Cards grid {%- endcomment -%}
   <div class="ugc-gallery">
     {%- if section.settings.heading != blank -%}
-      <h2 class="ugc-gallery__heading">{{ section.settings.heading }}</h2>
+      <h2 class="ugc-gallery__heading{% if section.settings.heading_preset != 'default' %} {{ section.settings.heading_preset }}{% endif %}" style="text-transform: {{ section.settings.heading_case }};">{{ section.settings.heading }}</h2>
     {%- endif -%}
 
     <div class="ugc-gallery__grid" style="--columns: {{ section.settings.columns_desktop }}">
@@ -531,8 +584,13 @@
               </svg>
             </div>
 
-            {%- if block.settings.handle != blank -%}
-              <span class="ugc-card__handle">{{ block.settings.handle }}</span>
+            {%- if section.settings.show_handle and block.settings.handle != blank -%}
+              {%- capture handle_text -%}{{ section.settings.handle_prefix }}{{ block.settings.handle }}{%- endcapture -%}
+              {%- if block.settings.handle_url != blank -%}
+                <a class="ugc-card__handle ugc-card__handle-link" href="{{ block.settings.handle_url }}" target="_blank" rel="noopener noreferrer">{{ handle_text }}</a>
+              {%- else -%}
+                <span class="ugc-card__handle">{{ handle_text }}</span>
+              {%- endif -%}
             {%- endif -%}
           </div>
         </div>
@@ -569,7 +627,7 @@
       </div>
 
       <div class="ugc-modal__product-pane">
-        <h2 class="ugc-modal__heading">{{ 'sections.shoppable_video_gallery.shop_the_look' | t | default: 'Shop the look' }}</h2>
+        <h2 class="ugc-modal__heading{% if section.settings.modal_heading_preset != 'default' %} {{ section.settings.modal_heading_preset }}{% endif %}">{{ 'sections.shoppable_video_gallery.shop_the_look' | t | default: 'Shop the look' }}</h2>
         <div ref="productsContainer" class="ugc-modal__products"></div>
       </div>
     </div>
@@ -591,6 +649,91 @@
       "id": "heading",
       "label": "Heading",
       "default": "As Seen On"
+    },
+    {
+      "type": "select",
+      "id": "heading_preset",
+      "label": "Heading preset",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ],
+      "default": "default",
+      "info": "Edit preset styles in Theme settings → Typography."
+    },
+    {
+      "type": "select",
+      "id": "heading_case",
+      "label": "Heading case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "UPPERCASE" },
+        { "value": "lowercase", "label": "lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "header_gap",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap below heading",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Popup typography"
+    },
+    {
+      "type": "select",
+      "id": "modal_heading_preset",
+      "label": "Popup heading preset",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ],
+      "default": "default",
+      "info": "Style for the 'Shop the look' heading. Edit preset styles in Theme settings → Typography."
+    },
+    {
+      "type": "header",
+      "content": "Creator handle"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_handle",
+      "label": "Show creator handle on cards",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "handle_prefix",
+      "label": "Handle prefix",
+      "info": "Shown before each handle, e.g. 'Styled by ' (include trailing space) or '@'. Leave blank for none."
+    },
+    {
+      "type": "header",
+      "content": "Cart behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_cart_after_add",
+      "label": "Open cart drawer after add",
+      "info": "Closes this popup and opens the cart drawer on a successful add.",
+      "default": false
     },
     {
       "type": "select",
@@ -645,6 +788,12 @@
           "id": "handle",
           "label": "Creator handle",
           "placeholder": "@username"
+        },
+        {
+          "type": "url",
+          "id": "handle_url",
+          "label": "Handle link",
+          "info": "Link the handle to the creator's profile (opens in a new tab)."
         },
         {
           "type": "product_list",

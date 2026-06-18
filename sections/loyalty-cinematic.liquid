@@ -42,20 +42,24 @@
   }
 
   .loyalty-cinematic__heading {
-    font-family: var(--font-heading-family, var(--font-body-family));
-    font-size: clamp(1.1rem, 1.4vw, 1.4rem);
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    font-family: var(--font-{{ section.settings.heading_font }}--family);
+    font-weight: var(--font-{{ section.settings.heading_font }}--weight);
+    font-style: var(--font-{{ section.settings.heading_font }}--style);
+    font-size: {{ section.settings.heading_size }}px;
+    letter-spacing: {{ section.settings.heading_letter_spacing }}em;
+    text-transform: {{ section.settings.heading_text_case }};
     color: {{ section.settings.text_color }};
     margin: 0 0 1.2rem;
     line-height: 1.2;
   }
 
   .loyalty-cinematic__description {
-    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    font-family: var(--font-{{ section.settings.body_font }}--family);
+    font-weight: var(--font-{{ section.settings.body_font }}--weight);
+    font-style: var(--font-{{ section.settings.body_font }}--style);
+    font-size: {{ section.settings.description_size }}px;
     color: {{ section.settings.text_color }};
-    line-height: 1.75;
+    line-height: {{ section.settings.description_line_height }};
     margin: 0;
     max-width: 52ch;
   }
@@ -266,6 +270,87 @@
       "id": "join_label",
       "label": "\"Join Now\" label",
       "default": "Join Now"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "info": "Uses theme typography presets",
+      "options": [
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "body", "label": "Body" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Heading letter spacing",
+      "min": 0,
+      "max": 0.5,
+      "step": 0.1,
+      "unit": "em",
+      "default": 0.1
+    },
+    {
+      "type": "select",
+      "id": "heading_text_case",
+      "label": "Heading text case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Description font",
+      "info": "Uses theme typography presets",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "description_line_height",
+      "label": "Description line height",
+      "min": 1,
+      "max": 2.5,
+      "step": 0.1,
+      "default": 1.8
     },
     {
       "type": "header",

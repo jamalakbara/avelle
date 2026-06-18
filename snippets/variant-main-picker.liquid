@@ -257,6 +257,12 @@
     outline-offset: var(--focus-outline-offset);
   }
 
+  .variant-option--dropdowns label {
+    font-family: var(--variant-font-family, var(--font-body--family));
+    text-transform: var(--variant-text-case, uppercase);
+    font-size: var(--variant-label-font-size, 14px);
+  }
+
   .variant-option__select {
     padding-block: var(--padding-md);
     padding-inline: var(--padding-lg) calc(var(--padding-lg) + var(--icon-size-2xs));
@@ -265,6 +271,9 @@
     width: 100%;
     margin: 0;
     cursor: pointer;
+    font-family: var(--variant-font-family, var(--font-body--family));
+    text-transform: var(--variant-text-case, uppercase);
+    font-size: var(--variant-button-font-size, 14px);
   }
 
   .variant-option__select-wrapper .icon {
@@ -306,7 +315,8 @@
   /* Cinematic Variant Picker Styling - Match Add to Cart Button */
   .variant-option__button-label {
     border-radius: 999px !important; /* Pill shape */
-    text-transform: uppercase !important;
+    font-family: var(--variant-font-family, var(--font-body--family)) !important;
+    text-transform: var(--variant-text-case, uppercase) !important;
     letter-spacing: 0.1em !important;
     font-weight: 500 !important;
     background: transparent !important;
@@ -335,7 +345,7 @@
   }
 
   .variant-option__button-label__text {
-    font-size: 0.875rem !important;
+    font-size: var(--variant-button-font-size, 14px) !important;
   }
 
   /* Hover State - Lift and Shadow */
@@ -353,9 +363,10 @@
 
   /* Legend (option name like "Color", "Size") */
   .variant-option legend {
-    text-transform: uppercase;
+    font-family: var(--variant-font-family, var(--font-body--family));
+    text-transform: var(--variant-text-case, uppercase);
     letter-spacing: 0.1em;
-    font-size: 0.875rem;
+    font-size: var(--variant-label-font-size, 14px);
     font-weight: 500;
     margin-bottom: 0.75rem;
   }

@@ -55,6 +55,16 @@
         aria-atomic="true"
         ref="liveRegion"
       ></div>
+      {%- capture typography_vars -%}
+        {%- if block_settings.button_font_family != 'auto' %}--btn-font-family:var(--font-{{ block_settings.button_font_family }}--family);{% endif -%}
+        {%- if block_settings.quantity_font_family != 'auto' %}--qty-font-family:var(--font-{{ block_settings.quantity_font_family }}--family);{% endif -%}
+        {%- if block_settings.button_font_size > 0 %}--btn-font-size:{{ block_settings.button_font_size }}px;{% endif -%}
+        {%- if block_settings.button_font_weight != 'auto' %}--btn-font-weight:{{ block_settings.button_font_weight }};{% endif -%}
+        --btn-letter-spacing:calc({{ block_settings.button_letter_spacing }} * 0.01em);
+        {%- if block_settings.quantity_font_size > 0 %}--qty-font-size:{{ block_settings.quantity_font_size }}px;{% endif -%}
+        {%- if block_settings.quantity_font_weight != 'auto' %}--qty-font-weight:{{ block_settings.quantity_font_weight }};{% endif -%}
+        --qty-letter-spacing:calc({{ block_settings.quantity_letter_spacing }} * 0.01em);
+      {%- endcapture -%}
       {%- form 'product', product, id: product_form_id, data-type: 'add-to-cart-form' -%}
         <input
           type="hidden"
@@ -67,7 +77,7 @@
         {%- endif -%}
         <div
           class="product-form-buttons spacing-style{% if block_settings.stacking %} product-form-buttons--stacked{% endif %}"
-          style="{% render 'spacing-style', settings: block_settings %}"
+          style="{% render 'spacing-style', settings: block_settings %}{{ typography_vars }}"
           ref="productFormButtons"
         >
           {%- liquid
@@ -385,9 +395,16 @@
     min-width: fit-content;
   }
 
-  .product-form-buttons--stacked
-    > *:not(.quantity-selector-wrapper, .quantity-rules, .quantity-label, .volume-pricing) {
-    flex-basis: 51%;
+  /* Stacked mode: every control gets its own full-width row.
+     Needs !important to beat the 100% flex set on the payment / add-to-cart
+     buttons below; quantity wrapper is fit-content by default so widen it too. */
+  .product-form-buttons--stacked > * {
+    flex: 1 1 100% !important;
+  }
+
+  .product-form-buttons--stacked .quantity-selector-wrapper,
+  .product-form-buttons--stacked .quantity-selector {
+    width: 100%;
   }
 
   /* Pill shape + strict sizing for ALL buttons in the group.
@@ -414,13 +431,15 @@
     justify-content: center !important;
   }
 
-  /* Size / weight / letter-spacing kept as the cinematic default (no theme
-     setting maps to these); not !important so they don't fight any setting. */
+  /* Size / weight / letter-spacing driven by block typography settings.
+     Fallbacks preserve the cinematic default when settings are untouched. */
   .product-form-buttons button,
-  .product-form-buttons .add-to-cart-button {
-    font-size: var(--font-size--sm);
-    font-weight: 500;
-    letter-spacing: 0.1em;
+  .product-form-buttons .add-to-cart-button,
+  .product-form-buttons .shopify-payment-button__button {
+    font-family: var(--btn-font-family, inherit);
+    font-size: var(--btn-font-size, var(--font-size--sm));
+    font-weight: var(--btn-font-weight, 500);
+    letter-spacing: var(--btn-letter-spacing, 0.1em);
   }
 
   /* Add to Cart (secondary style) = cinematic transparent outline.
@@ -788,6 +807,110 @@
     {
       "type": "paragraph",
       "content": "t:content.gift_card_form_description"
+    },
+    {
+      "type": "header",
+      "content": "Button typography"
+    },
+    {
+      "type": "select",
+      "id": "button_font_family",
+      "label": "Font family",
+      "options": [
+        { "value": "auto", "label": "Theme default" },
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Font size",
+      "info": "0 = theme default",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "auto", "label": "Theme default" },
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "button_letter_spacing",
+      "label": "Letter spacing",
+      "info": "Units of 0.01em",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Quantity typography"
+    },
+    {
+      "type": "select",
+      "id": "quantity_font_family",
+      "label": "Font family",
+      "options": [
+        { "value": "auto", "label": "Theme default" },
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "range",
+      "id": "quantity_font_size",
+      "label": "Font size",
+      "info": "0 = theme default",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "quantity_font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "auto", "label": "Theme default" },
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "quantity_letter_spacing",
+      "label": "Letter spacing",
+      "info": "Units of 0.01em",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 0
     },
     {
       "type": "header",

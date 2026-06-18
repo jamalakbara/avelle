@@ -8,6 +8,7 @@
      --summary-font-size: var(--font-{{ block_settings.type_preset }}--size);
      --summary-font-line-height: var(--font-{{ block_settings.type_preset }}--line-height);
      --summary-font-case: var(--font-{{ block_settings.type_preset }}--case);
+     --summary-font-letter-spacing: var(--font-{{ block_settings.type_preset }}--letter-spacing);
     {% render 'spacing-style', settings: block_settings %}
     {% render 'border-override', settings: block_settings %}
   "
@@ -58,13 +59,14 @@
 
   /* because we can't pass apply a specific class on a block based on its parent block setting */
   .accordion .details__header {
-    font-family: var(--font-body-family); /* Enforce Body Font (Poppins) */
+    /* Match FAQ page accordion (sections/faq-content.liquid) — drive from theme H6 preset */
+    font-family: var(--summary-font-family);
     font-style: var(--summary-font-style);
-    font-weight: 500; /* Slightly bolder */
-    font-size: 0.875rem;
-    letter-spacing: 0.1em;
+    font-weight: var(--summary-font-weight);
+    font-size: var(--summary-font-size);
     line-height: var(--summary-font-line-height);
-    text-transform: uppercase; /* Uppercase for headers */
+    letter-spacing: var(--summary-font-letter-spacing);
+    text-transform: var(--summary-font-case);
     min-height: var(--minimum-touch-target);
   }
 
@@ -82,7 +84,7 @@
   }
 
   .accordion--dividers accordion-custom .details {
-    border-color: rgba(var(--color-foreground), 0.1) !important; /* Lighter border */
+    border-color: rgb(var(--color-foreground-rgb) / 0.1); /* Lighter border, driven by color scheme */
     padding-bottom: 2px; /* Prevent pixel clipping */
   }
 {% endstylesheet %}

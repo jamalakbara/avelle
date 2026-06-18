@@ -51,8 +51,21 @@
   @media screen and (min-width: 750px) {
     .product-details > .group-block {
       height: min-content;
-      max-width: 42rem; /* Constrain width for readability */
+    }
+
+    /* Width follows the block's Width setting (Fit / Fill / Custom) instead of a
+       fixed cap, so the editor Size > Width control takes effect. */
+    .product-details > .group-block--width-fill {
       width: 100%;
+    }
+
+    .product-details > .group-block--width-fit {
+      width: fit-content;
+    }
+
+    .product-details > .group-block--width-custom {
+      width: var(--size-style-width);
+      max-width: 100%;
     }
 
     .full-height--desktop {

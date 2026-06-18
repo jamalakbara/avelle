@@ -598,6 +598,12 @@
     --button-text-case-primary: {{ settings.button_text_case_primary }};
     --button-text-case-secondary: {{ settings.button_text_case_secondary }};
 
+    /* Variant picker typography */
+    --variant-font-family: var(--font-{{ settings.variant_font_family | default: 'body' }}--family);
+    --variant-label-font-size: {{ settings.variant_label_font_size | default: 14 }}px;
+    --variant-button-font-size: {{ settings.variant_button_font_size | default: 14 }}px;
+    --variant-text-case: {{ settings.variant_text_case | default: 'uppercase' }};
+
     /* Borders */
     --border-color: rgb(var(--color-border-rgb) / var(--opacity-50));
     --border-width-sm: 1px;

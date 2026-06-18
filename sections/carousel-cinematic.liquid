@@ -13,6 +13,48 @@
       "id": "heading",
       "label": "Heading",
       "default": "New Arrivals"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_preset",
+      "label": "Heading preset",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ],
+      "default": "default",
+      "info": "Edit preset styles in Theme settings → Typography."
+    },
+    {
+      "type": "select",
+      "id": "heading_case",
+      "label": "Heading case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "UPPERCASE" },
+        { "value": "lowercase", "label": "lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "header_gap",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap below heading",
+      "default": 32
     }
   ],
   "presets": [
@@ -30,8 +72,11 @@
   class="parallax-carousel-container"
   style="position: relative; padding: 0; background: var(--color-background); display: block;"
 >
-  <div style="padding: 0 var(--util-page-margin-offset, 2rem); margin-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-end;">
-    <h2 style="font-size: 1.25rem; font-weight: 400; letter-spacing: 0.15em; margin: 0; text-transform: uppercase;">
+  <div style="padding: 0 var(--util-page-margin-offset, 2rem); margin-bottom: {{ section.settings.header_gap | default: 32 }}px; display: flex; justify-content: space-between; align-items: flex-end;">
+    <h2
+      class="{% if section.settings.heading_preset != 'default' %}{{ section.settings.heading_preset }}{% endif %}"
+      style="margin: 0; text-transform: {{ section.settings.heading_case }};{% if section.settings.heading_preset == 'default' %} font-size: 1.25rem; font-weight: 400; letter-spacing: 0.15em;{% endif %}"
+    >
       {{ section.settings.heading }}
     </h2>
     {% if collection != blank %}

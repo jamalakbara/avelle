@@ -96,6 +96,15 @@ class ShoppableVideoGallery extends DialogComponent {
         })
       );
 
+      if (this.hasAttribute('data-open-cart')) {
+        // Reset button (hidden), close this popup, hand off to the cart drawer.
+        btn.textContent = originalText;
+        btn.disabled = false;
+        this.closeDialog();
+        this.#openCartDrawer();
+        return;
+      }
+
       btn.textContent = 'Added!';
       btn.classList.add('ugc-atc-btn--added');
 
@@ -120,7 +129,17 @@ class ShoppableVideoGallery extends DialogComponent {
     }
   }
 
+  #openCartDrawer() {
+    const drawer = /** @type {any} */ (document.querySelector('cart-drawer-component'));
+    // No drawer when cart type is "page" — the CartAddEvent already updated the cart.
+    if (!drawer || typeof drawer.open !== 'function') return;
+    drawer.open();
+  }
+
   openModal = async (event) => {
+    // Let creator-handle links navigate instead of opening the modal.
+    if (/** @type {HTMLElement} */ (event.target).closest('.ugc-card__handle-link')) return;
+
     const card = /** @type {HTMLElement} */ (event.target).closest('.ugc-card');
     if (!card) return;
 

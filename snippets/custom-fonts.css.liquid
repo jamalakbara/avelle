@@ -178,28 +178,26 @@ h6,
   }
 }
 
-/* Product Details Typography & Animations */
+/* Product Details Typography & Animations
+   Cinematic reveal only. Font, size, and alignment come from the block's
+   Typography preset + Alignment settings so the editor controls take effect.
+   (Cinematic default = H1 preset on Zodiak heading font, left alignment.) */
 .product-details .text-block h1 {
-  font-family: 'Zodiak', serif !important;
-  font-size: 2.5rem !important;
-  /* Cinematic size, slightly reduced */
-  font-weight: 400;
-  line-height: 1.1;
   opacity: 0;
-  text-align: left !important;
-  /* Editorial Left Align */
   animation: fade-up-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Accordion Titles - elegant serif */
+/* Accordion Titles - elegant serif by default, but driven by the block's
+   Heading preset so the editor control takes effect. Zodiak is only a fallback
+   when the preset vars are unset (e.g. .accordion__title outside the block). */
 .accordion summary,
 .accordion__title,
 .product-details .accordion summary {
-  font-family: 'Zodiak', serif !important;
-  font-weight: 400 !important;
-  letter-spacing: 0.05em;
-  text-transform: capitalize;
-  font-size: 1.25rem;
+  font-family: var(--summary-font-family, 'Zodiak', serif);
+  font-weight: var(--summary-font-weight, 400);
+  font-style: var(--summary-font-style, normal);
+  letter-spacing: var(--summary-font-letter-spacing, 0.05em);
+  text-transform: var(--summary-font-case, capitalize);
 }
 
 /* Variant Labels - soften uppercase */
@@ -212,29 +210,14 @@ variant-picker legend,
   opacity: 0.8;
 }
 
+/* Price: cinematic reveal + tabular figures only. Font, size, and alignment
+   follow the Price block's Typography + Alignment settings. */
 .product-details product-price .price {
-  font-family: var(--font-body--family) !important;
-  font-size: 1.1rem !important;
-  /* Clean modern size */
-  font-weight: 400 !important;
-  /* Balance with text */
-  letter-spacing: 0.05em;
-  /* Premium letter spacing for functional numbers */
   font-variant-numeric: tabular-nums;
-  opacity: 0;
-  text-align: left !important;
   display: block;
-  /* Ensure it takes full width for alignment */
+  opacity: 0;
   animation: fade-up-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   animation-delay: 0.1s;
-}
-
-/* Editorial Layout Refinements */
-.product-details .product-form__buttons,
-.product-details .text-block {
-  text-align: left !important;
-  justify-content: flex-start !important;
-  align-items: flex-start !important;
 }
 
 /* Ensure typography matches across all Buy buttons */

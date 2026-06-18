@@ -25,6 +25,76 @@
     },
     {
       "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "subheading_preset",
+      "label": "Subheading preset",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ],
+      "default": "default",
+      "info": "Edit preset styles in Theme settings → Typography."
+    },
+    {
+      "type": "select",
+      "id": "subheading_case",
+      "label": "Subheading case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "UPPERCASE" },
+        { "value": "lowercase", "label": "lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "select",
+      "id": "heading_preset",
+      "label": "Heading preset",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ],
+      "default": "default",
+      "info": "Edit preset styles in Theme settings → Typography."
+    },
+    {
+      "type": "select",
+      "id": "heading_case",
+      "label": "Heading case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "UPPERCASE" },
+        { "value": "lowercase", "label": "lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "header_gap",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap below heading",
+      "default": 16
+    },
+    {
+      "type": "header",
       "content": "Colors"
     },
     {
@@ -69,6 +139,10 @@
     overflow: hidden; /* Essential for parallax */
   }
 
+  #shopify-section-{{ section.id }} .curated-products__header {
+    margin-bottom: {{ section.settings.header_gap }}px;
+  }
+
   @media screen and (min-width: 750px) {
     .section-curated-products {
       padding-top: {{ section.settings.padding_top }}px;
@@ -81,10 +155,10 @@
 <div class="color-{{ section.settings.color_scheme }} section-curated-products">
   <div class="curated-products__header">
     {% if section.settings.subheading != blank %}
-      <span class="curated-products__subheading reveal-text">{{ section.settings.subheading }}</span>
+      <span class="curated-products__subheading reveal-text{% if section.settings.subheading_preset != 'default' %} {{ section.settings.subheading_preset }}{% endif %}" style="text-transform: {{ section.settings.subheading_case }};">{{ section.settings.subheading }}</span>
     {% endif %}
     {% if section.settings.heading != blank %}
-      <h2 class="curated-products__heading reveal-text">{{ section.settings.heading }}</h2>
+      <h2 class="curated-products__heading reveal-text{% if section.settings.heading_preset != 'default' %} {{ section.settings.heading_preset }}{% endif %}" style="text-transform: {{ section.settings.heading_case }};">{{ section.settings.heading }}</h2>
     {% endif %}
   </div>
 

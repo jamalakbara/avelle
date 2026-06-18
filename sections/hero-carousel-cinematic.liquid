@@ -175,6 +175,15 @@
           style="background: rgba(0,0,0,{{ block.settings.overlay_opacity | divided_by: 100.0 }});"
         ></div>
 
+        {% comment %} Clickable image: link filled but no button label {% endcomment %}
+        {% if block.settings.button_link != blank and block.settings.button_label == blank %}
+          <a
+            href="{{ block.settings.button_link }}"
+            class="hc-slide-link"
+            aria-label="{{ block.settings.heading | default: 'View slide' | escape }}"
+          ></a>
+        {% endif %}
+
         {% comment %} Content {% endcomment %}
         <div class="hc-content hc-theme-{{ block.settings.text_color }}">
           <div class="hc-content-inner">
@@ -190,7 +199,7 @@
               </p>
             </div>
 
-            {% if block.settings.button_link != blank %}
+            {% if block.settings.button_link != blank and block.settings.button_label != blank %}
               <div class="hc-btn-wrapper">
                 <a href="{{ block.settings.button_link }}" class="hc-btn magnetic-btn">
                   {{ block.settings.button_label }}
@@ -301,6 +310,15 @@
     inset: 0;
     z-index: 2;
     pointer-events: none;
+  }
+
+  /* Clickable image (when slide has a link but no button label) */
+  .hc-slide-link {
+    position: absolute;
+    inset: 0;
+    z-index: 4; /* Above overlay/content, below progress UI */
+    pointer-events: auto;
+    cursor: pointer;
   }
 
   /* Content Overlay */
