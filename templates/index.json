@@ -349,11 +349,11 @@
         "button_link": "",
         "join_label": "Join Now",
         "heading_font": "heading",
-        "heading_size": 20,
+        "heading_size": 24,
         "heading_letter_spacing": 0.1,
         "heading_text_case": "uppercase",
         "body_font": "body",
-        "description_size": 15,
+        "description_size": 12,
         "description_line_height": 1.8,
         "background_color": "#7d6953",
         "text_color": "#ede4d9"
