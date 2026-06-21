@@ -142,7 +142,6 @@ function initRevealAnimations() {
 function initCollectionAnimations() {
     initCollectionHeroAnimation();
     initCollectionGridStagger();
-    initMagneticCards();
     initCardParallax();
 }
 
@@ -183,47 +182,6 @@ function initCollectionGridStagger() {
                 },
                 once: true
             }
-        });
-    });
-}
-
-/**
- * Magnetic Cursor Effect for Product Cards
- * Cards subtly follow cursor movement
- */
-function initMagneticCards() {
-    // Only run on devices with hover capability and no motion preference
-    if (!window.matchMedia('(hover: hover)').matches) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const cards = document.querySelectorAll('.collection-product-card[data-magnetic]');
-
-    cards.forEach(card => {
-        const strength = 20; // Maximum movement in pixels
-
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-
-            const moveX = (x / rect.width) * strength;
-            const moveY = (y / rect.height) * strength;
-
-            gsap.to(card, {
-                x: moveX,
-                y: moveY,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-        });
-
-        card.addEventListener('mouseleave', () => {
-            gsap.to(card, {
-                x: 0,
-                y: 0,
-                duration: 0.5,
-                ease: 'elastic.out(1, 0.5)'
-            });
         });
     });
 }

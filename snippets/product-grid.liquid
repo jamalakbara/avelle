@@ -19,7 +19,11 @@
     {% case section.settings.layout_type %}
       {% when 'grid' %}
         .product-grid--{{ section.id }}:is(.product-grid--grid) {
-          --product-grid-columns-desktop: repeat(auto-fill, minmax({{ product_card_size }}, 1fr));
+          {%- if section.settings.desktop_columns != blank -%}
+            --product-grid-columns-desktop: repeat({{ section.settings.desktop_columns }}, 1fr);
+          {%- else -%}
+            --product-grid-columns-desktop: repeat(auto-fill, minmax({{ product_card_size }}, 1fr));
+          {%- endif -%}
         }
 
 
@@ -125,7 +129,7 @@
         role="list"
         data-last-page="{{ paginate.pages }}"
         data-product-card-size="{{ section.settings.product_card_size }}"
-        style="--mobile-columns: {% if section.settings.mobile_product_card_size == 'large' %}1{% else %}2{% endif %};"
+        style="--mobile-columns: {% if section.settings.mobile_columns != blank %}{{ section.settings.mobile_columns }}{% elsif section.settings.mobile_product_card_size == 'large' %}1{% else %}2{% endif %};"
       >
         {% comment %}
           This script is used to set the grid view on the product grid stored in sessionStorage. Keeping it here helps us prevent seeing the default state.
