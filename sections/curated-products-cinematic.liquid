@@ -57,6 +57,40 @@
     },
     {
       "type": "select",
+      "id": "subheading_font_family",
+      "label": "Subheading font family",
+      "options": [
+        { "value": "default", "label": "Default (preset)" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size_desktop",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Subheading size (desktop)",
+      "info": "0 = use preset size.",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size_mobile",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Subheading size (mobile)",
+      "default": 0
+    },
+    {
+      "type": "select",
       "id": "heading_preset",
       "label": "Heading preset",
       "options": [
@@ -82,6 +116,44 @@
         { "value": "capitalize", "label": "Capitalize" }
       ],
       "default": "uppercase"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_family",
+      "label": "Heading font family",
+      "options": [
+        { "value": "default", "label": "Default (preset)" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "min": 0,
+      "max": 96,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading size (desktop)",
+      "info": "0 = use preset size.",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading size (mobile)",
+      "default": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "Product card titles & prices: edit their fonts in Theme settings → product card typography."
     },
     {
       "type": "range",
@@ -148,6 +220,36 @@
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
+  }
+
+  {%- if section.settings.subheading_font_family != 'default' -%}
+    #shopify-section-{{ section.id }} .curated-products__subheading {
+      font-family: var(--font-{{ section.settings.subheading_font_family }}--family);
+    }
+  {%- endif -%}
+  {%- if section.settings.subheading_font_size_desktop > 0 -%}
+    #shopify-section-{{ section.id }} .curated-products__subheading {
+      font-size: {{ section.settings.subheading_font_size_desktop }}px;
+    }
+  {%- endif -%}
+  {%- if section.settings.heading_font_family != 'default' -%}
+    #shopify-section-{{ section.id }} .curated-products__heading {
+      font-family: var(--font-{{ section.settings.heading_font_family }}--family);
+    }
+  {%- endif -%}
+  {%- if section.settings.heading_font_size_desktop > 0 -%}
+    #shopify-section-{{ section.id }} .curated-products__heading {
+      font-size: {{ section.settings.heading_font_size_desktop }}px;
+    }
+  {%- endif -%}
+
+  @media screen and (max-width: 749px) {
+    {%- if section.settings.subheading_font_size_mobile > 0 -%}
+      #shopify-section-{{ section.id }} .curated-products__subheading { font-size: {{ section.settings.subheading_font_size_mobile }}px; }
+    {%- endif -%}
+    {%- if section.settings.heading_font_size_mobile > 0 -%}
+      #shopify-section-{{ section.id }} .curated-products__heading { font-size: {{ section.settings.heading_font_size_mobile }}px; }
+    {%- endif -%}
   }
 
 {%- endstyle -%}
