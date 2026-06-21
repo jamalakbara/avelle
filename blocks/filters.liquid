@@ -166,6 +166,22 @@
 
               {% capture rendered_filters %}
                 {%- for filter in filters -%}
+                  {%- liquid
+                    assign filter_label_down = filter.label | downcase
+                    assign skip_filter = false
+                    if filter.type == 'price_range'
+                      unless block_settings.show_filter_price
+                        assign skip_filter = true
+                      endunless
+                    elsif filter_label_down contains 'size' and block_settings.show_filter_size == false
+                      assign skip_filter = true
+                    elsif filter_label_down contains 'category' and block_settings.show_filter_category == false
+                      assign skip_filter = true
+                    elsif filter_label_down contains 'collection' and block_settings.show_filter_collection == false
+                      assign skip_filter = true
+                    endif
+                  -%}
+                  {%- unless skip_filter -%}
                   {% case filter.type %}
                     {% when 'price_range' %}
                       {%- liquid
@@ -198,6 +214,7 @@
                         render 'list-filter', filter: filter, filter_style: block_settings.filter_style, active_value_count: active_value_count, should_render_clear: should_render_clear, show_swatch_label: block_settings.show_swatch_label, sectionId: section.id
                       %}
                   {% endcase %}
+                  {%- endunless -%}
                 {%- endfor -%}
               {% endcapture %}
 
@@ -1383,6 +1400,38 @@
       "id": "show_filter_label",
       "label": "t:settings.show_filter_label",
       "default": false,
+      "visible_if": "{{ block.settings.enable_filtering == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Filters to show"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filter_price",
+      "label": "Show Price filter",
+      "default": true,
+      "visible_if": "{{ block.settings.enable_filtering == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filter_size",
+      "label": "Show Size filter",
+      "default": true,
+      "visible_if": "{{ block.settings.enable_filtering == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filter_category",
+      "label": "Show Category filter",
+      "default": true,
+      "visible_if": "{{ block.settings.enable_filtering == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filter_collection",
+      "label": "Show Collection filter",
+      "default": true,
       "visible_if": "{{ block.settings.enable_filtering == true }}"
     },
     {
