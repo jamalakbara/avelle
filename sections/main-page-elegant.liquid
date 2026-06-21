@@ -1,3 +1,37 @@
+{%- liquid
+  assign tf = section.settings.title_font_family | default: 'default'
+  assign tsd = section.settings.title_font_size_desktop | default: 0
+  assign tsm = section.settings.title_font_size_mobile | default: 0
+  assign bf = section.settings.body_font_family | default: 'default'
+  assign bsd = section.settings.body_font_size_desktop | default: 0
+  assign bsm = section.settings.body_font_size_mobile | default: 0
+-%}
+{%- if tf != 'default' or tsd > 0 or tsm > 0 or bf != 'default' or bsd > 0 or bsm > 0 -%}
+  {% style %}
+    {%- if tf != 'default' -%}
+      #shopify-section-{{ section.id }} .elegant-page-hero__heading { font-family: var(--font-{{ tf }}--family); }
+    {%- endif -%}
+    {%- if tsd > 0 -%}
+      #shopify-section-{{ section.id }} .elegant-page-hero__heading { font-size: {{ tsd }}px; }
+    {%- endif -%}
+    {%- if bf != 'default' -%}
+      #shopify-section-{{ section.id }} .elegant-page-content,
+      #shopify-section-{{ section.id }} .elegant-page-content > * { font-family: var(--font-{{ bf }}--family); }
+    {%- endif -%}
+    {%- if bsd > 0 -%}
+      #shopify-section-{{ section.id }} .elegant-page-content { font-size: {{ bsd }}px; }
+    {%- endif -%}
+    @media screen and (max-width: 749px) {
+      {%- if tsm > 0 -%}
+        #shopify-section-{{ section.id }} .elegant-page-hero__heading { font-size: {{ tsm }}px; }
+      {%- endif -%}
+      {%- if bsm > 0 -%}
+        #shopify-section-{{ section.id }} .elegant-page-content { font-size: {{ bsm }}px; }
+      {%- endif -%}
+    }
+  {% endstyle %}
+{%- endif -%}
+
 <div
   class="elegant-page color-{{ section.settings.color_scheme }}"
   style="padding-bottom: {{ section.settings.padding_bottom }}px;"
@@ -162,6 +196,82 @@
       "unit": "px",
       "label": "Padding Bottom",
       "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Title Typography"
+    },
+    {
+      "type": "select",
+      "id": "title_font_family",
+      "label": "Title font family",
+      "options": [
+        { "value": "default", "label": "Default (preset)" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_desktop",
+      "min": 0,
+      "max": 96,
+      "step": 1,
+      "unit": "px",
+      "label": "Title size (desktop)",
+      "info": "0 = use preset size.",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "label": "Title size (mobile)",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Body Typography"
+    },
+    {
+      "type": "select",
+      "id": "body_font_family",
+      "label": "Body font family",
+      "options": [
+        { "value": "default", "label": "Default (preset)" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "body_font_size_desktop",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Body size (desktop)",
+      "info": "0 = use preset size.",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "body_font_size_mobile",
+      "min": 0,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "label": "Body size (mobile)",
+      "default": 0
     }
   ],
   "presets": [
