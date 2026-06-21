@@ -1424,6 +1424,45 @@ button.shopify-payment-button__button--unbranded {
   border-radius: var(--style-border-radius-buttons-secondary);
 }
 
+/* Cinematic CTA — shared homepage button style (source: New Arrivals add-to-cart).
+   Recolor/resize per section via the --cbtn-* variables. Default: white outline pill. */
+.cinematic-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  appearance: none;
+  line-height: 1;
+  font-family: inherit;
+  font-size: var(--cbtn-font-size, 0.5625rem);
+  font-weight: var(--cbtn-font-weight, 500);
+  letter-spacing: var(--cbtn-letter-spacing, 0.15em);
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--cbtn-border-radius, 999px);
+  border: var(--cbtn-border-width, 1px) solid var(--cbtn-color, #fff);
+  background: transparent;
+  color: var(--cbtn-color, #fff);
+  padding-block: var(--cbtn-padding-block, 0.75rem);
+  padding-inline: var(--cbtn-padding-inline, 2rem);
+  box-shadow: none;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cinematic-btn:hover {
+  background: var(--cbtn-hover-bg, var(--cbtn-color, #fff));
+  color: var(--cbtn-hover-text, #000);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cinematic-btn:disabled,
+.cinematic-btn[aria-disabled='true'] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
 button.shopify-payment-button__button--unbranded {
   font-family: var(--button-font-family-primary);
   text-transform: var(--button-text-case-primary);

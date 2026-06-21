@@ -368,35 +368,13 @@
     border-color: var(--color-foreground, #111);
   }
 
-  /* ── Add to cart button ── */
+  /* ── Add to cart button ──
+     Style fully inherits the shared .cinematic-btn (assets/base.css), driven by
+     Theme settings → Cinematic buttons. Only layout + success/error feedback here. */
   .ugc-atc-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     margin-top: 14px;
-    padding: 0.65rem 1.6rem;
-    font-family: var(--font-body--family);
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    background: transparent;
-    color: var(--color-foreground, #111);
-    border: 1px solid var(--color-foreground, #111);
-    border-radius: 999px;
-    cursor: pointer;
     align-self: flex-start;
     white-space: nowrap;
-    transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .ugc-atc-btn:hover:not(:disabled) {
-    background-color: var(--color-foreground, #111);
-    color: var(--color-background, #fff);
-    transform: translateY(-2px);
   }
 
   .ugc-atc-btn:active:not(:disabled) {
@@ -409,15 +387,11 @@
   }
 
   .ugc-atc-btn.ugc-atc-btn--added {
-    background: transparent;
-    color: #2a7f3e;
-    border-color: #2a7f3e;
+    --cbtn-color: #2a7f3e;
   }
 
   .ugc-atc-btn.ugc-atc-btn--error {
-    background: transparent;
-    color: #c0392b;
-    border-color: #c0392b;
+    --cbtn-color: #c0392b;
   }
 
   /* ── Mobile: full-screen stacked ── */
@@ -499,7 +473,7 @@
               </select>
             {%- endif -%}
             <button
-              class="ugc-atc-btn"
+              class="ugc-atc-btn cinematic-btn"
               data-variant-id="{{ first_variant.id }}"
               {%- unless first_variant.available %} disabled aria-disabled="true"{%- endunless -%}
             >

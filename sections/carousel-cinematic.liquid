@@ -130,7 +130,7 @@
                     id="{{ product_form_id }}-submit"
                     type="submit"
                     name="add"
-                    class="add-to-cart-button button"
+                    class="add-to-cart-button cinematic-btn"
                     aria-haspopup="dialog"
                     aria-live="polite"
                     {% if product.selected_or_first_available_variant.available == false %}
@@ -275,32 +275,23 @@
     opacity: 1;
   }
 
-  /* Cinematic Add To Cart Button Overrides (Matching PDP styles) */
-  .parallax-carousel-wrapper .parallax-card .quick-add-wrapper.product-form-buttons .add-to-cart-button {
-    border-radius: 999px !important; /* Pill shape */
-    text-transform: uppercase !important;
-    letter-spacing: 0.15em !important;
-    font-size: 0.5625rem !important;
-    font-weight: 500 !important;
-    padding-block: 0.75rem !important;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    background: transparent !important; /* Transparent fill */
-    color: #fff !important; /* White foreground over images */
-    border: 1px solid #fff !important; /* White border */
-    box-shadow: none !important;
+  /* Cinematic add-to-cart inherits .cinematic-btn (assets/base.css). The native
+     <button> + .add-to-cart-button base rules fight font-size/padding, so re-assert
+     them here from the SAME global --cbtn-* vars (single source of truth = DRY). */
+  .parallax-carousel-wrapper .add-to-cart-button.cinematic-btn {
     width: 100% !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* Ensure the cursor-none from the parent is overridden so we can actually click it! */
     cursor: pointer !important;
+    font-size: var(--cbtn-font-size, 0.5625rem);
+    font-weight: var(--cbtn-font-weight, 500);
+    letter-spacing: var(--cbtn-letter-spacing, 0.15em);
+    padding-block: var(--cbtn-padding-block, 0.75rem);
+    padding-inline: var(--cbtn-padding-inline, 2rem);
   }
 
-  .parallax-carousel-wrapper .parallax-card .quick-add-wrapper.product-form-buttons .add-to-cart-button:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-    background: #fff !important; /* Fill white on hover */
-    color: #000 !important; /* Black text on hover */
+  .parallax-carousel-wrapper .add-to-cart-button.cinematic-btn .add-to-cart-text__content {
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
   }
 
   .parallax-carousel-wrapper {

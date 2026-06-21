@@ -598,6 +598,18 @@
     --button-text-case-primary: {{ settings.button_text_case_primary }};
     --button-text-case-secondary: {{ settings.button_text_case_secondary }};
 
+    /* Cinematic CTA buttons (shared homepage button — see .cinematic-btn in base.css) */
+    --cbtn-color: {{ settings.cbtn_color | default: '#ffffff' }};
+    --cbtn-hover-bg: {{ settings.cbtn_hover_bg | default: '#ffffff' }};
+    --cbtn-hover-text: {{ settings.cbtn_hover_text | default: '#000000' }};
+    --cbtn-font-size: {{ settings.cbtn_font_size | default: 9 }}px;
+    --cbtn-font-weight: {{ settings.cbtn_font_weight | default: 500 }};
+    --cbtn-letter-spacing: {{ settings.cbtn_letter_spacing | default: 2.4 }}px;
+    --cbtn-padding-block: {{ settings.cbtn_padding_block | default: 12 }}px;
+    --cbtn-padding-inline: {{ settings.cbtn_padding_inline | default: 32 }}px;
+    --cbtn-border-width: {{ settings.cbtn_border_width | default: 1 }}px;
+    --cbtn-border-radius: {{ settings.cbtn_border_radius | default: 999 }}px;
+
     /* Variant picker typography */
     --variant-font-family: var(--font-{{ settings.variant_font_family | default: 'body' }}--family);
     --variant-label-font-size: {{ settings.variant_label_font_size | default: 14 }}px;

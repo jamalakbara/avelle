@@ -201,7 +201,7 @@
 
             {% if block.settings.button_link != blank and block.settings.button_label != blank %}
               <div class="hc-btn-wrapper">
-                <a href="{{ block.settings.button_link }}" class="hc-btn magnetic-btn">
+                <a href="{{ block.settings.button_link }}" class="hc-btn magnetic-btn cinematic-btn">
                   {{ block.settings.button_label }}
                 </a>
               </div>
@@ -396,46 +396,8 @@
     transform: translateY(50px);
   }
 
-  .hc-btn {
-    display: inline-block;
-    padding: 1.2rem 3rem;
-    border: 1px solid currentColor;
-    border-radius: 999px;
-    color: inherit;
-    text-transform: uppercase;
-    text-decoration: none;
-    letter-spacing: 0.1em;
-    font-size: 0.85rem;
-    font-weight: 500;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    background: transparent;
-    backdrop-filter: blur(10px);
-    cursor: pointer;
-  }
-
-  .hc-theme-light .hc-btn {
-    border-color: rgba(255, 255, 255, 0.4);
-    background: rgba(0, 0, 0, 0.2);
-  }
-
-  .hc-theme-light .hc-btn:hover {
-    background: #fff;
-    color: #000;
-    border-color: #fff;
-    transform: scale(1.05);
-  }
-
-  .hc-theme-dark .hc-btn {
-    border-color: rgba(0, 0, 0, 0.4);
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  .hc-theme-dark .hc-btn:hover {
-    background: #000;
-    color: #fff;
-    border-color: #000;
-    transform: scale(1.05);
-  }
+  /* Hero CTA fully inherits the shared .cinematic-btn style (assets/base.css),
+     driven by Theme settings → Cinematic buttons. No per-section overrides. */
 
   /* Progress Bar UI */
   .hc-ui {
