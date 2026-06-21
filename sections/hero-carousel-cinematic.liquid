@@ -55,6 +55,36 @@
       "unit": "px",
       "label": "Heading Font Size (Desktop)",
       "default": 96
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Subheading Font Size (Mobile)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_desktop",
+      "min": 14,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Subheading Font Size (Desktop)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "min": 7,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Button Font Size",
+      "default": 9
     }
   ],
   "blocks": [
@@ -122,6 +152,41 @@
           "unit": "%",
           "label": "Overlay Opacity",
           "default": 30
+        },
+        {
+          "type": "select",
+          "id": "heading_font",
+          "label": "Heading Font",
+          "options": [
+            { "value": "heading", "label": "Heading" },
+            { "value": "body", "label": "Body" },
+            { "value": "subheading", "label": "Subheading" },
+            { "value": "accent", "label": "Accent" }
+          ],
+          "default": "heading"
+        },
+        {
+          "type": "select",
+          "id": "subheading_font",
+          "label": "Subheading Font",
+          "options": [
+            { "value": "heading", "label": "Heading" },
+            { "value": "body", "label": "Body" },
+            { "value": "subheading", "label": "Subheading" },
+            { "value": "accent", "label": "Accent" }
+          ],
+          "default": "subheading"
+        },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Content Position",
+          "options": [
+            { "value": "top", "label": "Top" },
+            { "value": "center", "label": "Center" },
+            { "value": "bottom", "label": "Bottom" }
+          ],
+          "default": "center"
         }
       ]
     }
@@ -142,10 +207,16 @@
   style="
     --hc-height-desktop: {{ section.settings.section_height_desktop }};
     --hc-height-mobile: {% if section.settings.section_height_mobile == '100vh' %}100svh{% else %}{{ section.settings.section_height_mobile }}{% endif %};
+    --cbtn-font-size: {{ section.settings.button_font_size }}px;
   "
 >
   <div class="hc-slides">
     {% for block in section.blocks %}
+      {%- case block.settings.content_position -%}
+        {%- when 'top' -%}{%- assign align_v = 'flex-start' -%}
+        {%- when 'bottom' -%}{%- assign align_v = 'flex-end' -%}
+        {%- else -%}{%- assign align_v = 'center' -%}
+      {%- endcase -%}
       <div class="hc-slide" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
         {% comment %} Background Media {% endcomment %}
         <div class="hc-bg-wrapper">
@@ -185,7 +256,10 @@
         {% endif %}
 
         {% comment %} Content {% endcomment %}
-        <div class="hc-content hc-theme-{{ block.settings.text_color }}">
+        <div
+          class="hc-content hc-theme-{{ block.settings.text_color }}"
+          style="--hc-align-v: {{ align_v }}; --hc-heading-font: var(--font-{{ block.settings.heading_font }}--family); --hc-subheading-font: var(--font-{{ block.settings.subheading_font }}--family);"
+        >
           <div class="hc-content-inner">
             <h2 class="hc-heading">
               <span class="hc-line-wrapper"
@@ -246,6 +320,8 @@
   :root {
     --hc-heading-mobile: {{ section.settings.heading_size_mobile }}px;
     --hc-heading-desktop: {{ section.settings.heading_size_desktop }}px;
+    --hc-subheading-mobile: {{ section.settings.subheading_size_mobile }}px;
+    --hc-subheading-desktop: {{ section.settings.subheading_size_desktop }}px;
   }
 
   /* Carousel Base */
@@ -327,18 +403,18 @@
     inset: 0;
     z-index: 3; /* Below hit areas (5) */
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: var(--hc-align-v, center);
+    justify-content: var(--hc-align-h, center);
     pointer-events: none; /* Let clicks pass through to hit areas */
-    padding: 0 20px;
+    padding: clamp(2rem, 6vh, 6rem) clamp(20px, 6vw, 6rem);
   }
 
   .hc-content-inner {
-    text-align: center;
+    text-align: var(--hc-text-align, center);
     max-width: 900px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: var(--hc-align-h, center);
     gap: 1.5rem;
   }
 
@@ -352,6 +428,7 @@
 
   /* Typography */
   .hc-heading {
+    font-family: var(--hc-heading-font, inherit);
     font-size: clamp(var(--hc-heading-mobile), 8vw, var(--hc-heading-desktop));
     font-weight: 800;
     line-height: 1.1;
@@ -378,7 +455,8 @@
   }
 
   .hc-subheading {
-    font-size: clamp(16px, 2vw, 20px);
+    font-family: var(--hc-subheading-font, inherit);
+    font-size: clamp(var(--hc-subheading-mobile, 16px), 2.5vw, var(--hc-subheading-desktop, 20px));
     font-weight: 300;
     margin: 0;
     opacity: 0; /* Initial state for GSAP */
