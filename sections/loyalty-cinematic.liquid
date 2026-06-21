@@ -5,6 +5,7 @@
     position: relative;
     overflow: hidden;
     background-color: {{ section.settings.background_color }};
+    --cbtn-font-size: {{ section.settings.button_font_size_desktop }}px;
   }
 
   .loyalty-cinematic__dot-texture {
@@ -102,7 +103,7 @@
   .loyalty-cinematic__btn-secondary {
     display: inline-block;
     font-family: var(--font-body-family);
-    font-size: 0.88rem;
+    font-size: {{ section.settings.link_font_size_desktop }}px;
     color: {{ section.settings.text_color }};
     text-decoration: none;
     position: relative;
@@ -130,6 +131,29 @@
 
   .loyalty-cinematic__btn-secondary:hover {
     opacity: 0.7;
+  }
+
+  @media screen and (max-width: 749px) {
+    {%- if section.settings.heading_size_mobile > 0 -%}
+    .loyalty-cinematic__heading {
+      font-size: {{ section.settings.heading_size_mobile }}px;
+    }
+    {%- endif -%}
+    {%- if section.settings.description_size_mobile > 0 -%}
+    .loyalty-cinematic__description {
+      font-size: {{ section.settings.description_size_mobile }}px;
+    }
+    {%- endif -%}
+    {%- if section.settings.button_font_size_mobile > 0 -%}
+    .loyalty-cinematic {
+      --cbtn-font-size: {{ section.settings.button_font_size_mobile }}px;
+    }
+    {%- endif -%}
+    {%- if section.settings.link_font_size_mobile > 0 -%}
+    .loyalty-cinematic__btn-secondary {
+      font-size: {{ section.settings.link_font_size_mobile }}px;
+    }
+    {%- endif -%}
   }
 
   @media screen and (max-width: 768px) {
@@ -269,12 +293,23 @@
     {
       "type": "range",
       "id": "heading_size",
-      "label": "Heading size",
+      "label": "Heading size (desktop)",
       "min": 12,
       "max": 48,
       "step": 1,
       "unit": "px",
       "default": 20
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size (mobile)",
+      "info": "0 = use desktop size",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "range",
@@ -314,12 +349,23 @@
     {
       "type": "range",
       "id": "description_size",
-      "label": "Description size",
+      "label": "Description size (desktop)",
       "min": 12,
       "max": 28,
       "step": 1,
       "unit": "px",
       "default": 15
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "label": "Description size (mobile)",
+      "info": "0 = use desktop size",
+      "min": 0,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "range",
@@ -329,6 +375,48 @@
       "max": 2.5,
       "step": 0.1,
       "default": 1.8
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_desktop",
+      "label": "Button font size (desktop)",
+      "min": 7,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_mobile",
+      "label": "Button font size (mobile)",
+      "info": "0 = use desktop size",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "link_font_size_desktop",
+      "label": "Link font size (desktop)",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "link_font_size_mobile",
+      "label": "Link font size (mobile)",
+      "info": "0 = use desktop size",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "header",
