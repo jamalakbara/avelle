@@ -47,6 +47,38 @@
       "default": "uppercase"
     },
     {
+      "type": "select",
+      "id": "font_family",
+      "label": "Font Family",
+      "options": [
+        { "value": "heading", "label": "Heading" },
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "range",
+      "id": "font_size_desktop",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (desktop)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (mobile)",
+      "default": 18
+    },
+    {
       "type": "range",
       "id": "header_gap",
       "min": 0,
@@ -74,8 +106,8 @@
 >
   <div style="padding: 0 var(--util-page-margin-offset, 2rem); margin-bottom: {{ section.settings.header_gap | default: 32 }}px; display: flex; justify-content: space-between; align-items: flex-end;">
     <h2
-      class="{% if section.settings.heading_preset != 'default' %}{{ section.settings.heading_preset }}{% endif %}"
-      style="margin: 0; text-transform: {{ section.settings.heading_case }};{% if section.settings.heading_preset == 'default' %} font-size: 1.25rem; font-weight: 400; letter-spacing: 0.15em;{% endif %}"
+      class="cinematic-carousel__heading{% if section.settings.heading_preset != 'default' %} {{ section.settings.heading_preset }}{% endif %}"
+      style="margin: 0; text-transform: {{ section.settings.heading_case }};{% if section.settings.heading_preset == 'default' %} font-weight: 400; letter-spacing: 0.15em;{% endif %}"
     >
       {{ section.settings.heading }}
     </h2>
@@ -187,6 +219,17 @@
 {{ 'curated-card.css' | asset_url | stylesheet_tag }}
 
 <style>
+  #shopify-section-{{ section.id }} .cinematic-carousel__heading {
+    font-family: var(--font-{{ section.settings.font_family | default: 'heading' }}--family);
+    font-size: {{ section.settings.font_size_desktop | default: 20 }}px;
+  }
+
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .cinematic-carousel__heading {
+      font-size: {{ section.settings.font_size_mobile | default: 18 }}px;
+    }
+  }
+
   .parallax-carousel-wrapper::-webkit-scrollbar {
     display: none;
   }
