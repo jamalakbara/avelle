@@ -491,11 +491,11 @@
     }
 
     .header-desktop-nav > ul > li > a {
+      position: relative;
       display: flex;
       align-items: center;
       height: var(--nav-btn-height);
       padding: 0 9px;
-      border-radius: 9999px;
       font-size: 12px;
       font-family: 'Poppins', sans-serif;
       font-weight: 600;
@@ -504,15 +504,27 @@
       color: inherit;
       text-decoration: none;
       white-space: nowrap;
-      transition: background-color 0.2s ease;
+      transition: opacity 0.25s ease;
     }
 
-    .header-desktop-nav > ul > li > a:hover {
-      background-color: rgba(0, 0, 0, 0.06);
+    /* Underline reveal — grows from center */
+    .header-desktop-nav > ul > li > a::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: calc(var(--nav-btn-height) / 2 - 0.7em);
+      width: 0;
+      height: 1px;
+      background-color: currentColor;
+      opacity: 0.85;
+      transform: translateX(-50%);
+      transition: width 0.25s ease;
+      pointer-events: none;
     }
 
-    .is-transparent .header-desktop-nav > ul > li > a:hover {
-      background-color: rgba(255, 255, 255, 0.15);
+    .header-desktop-nav > ul > li > a:hover::before,
+    .header-desktop-nav > ul > li.is-active > a::before {
+      width: calc(100% - 18px);
     }
 
     .header-desktop-nav > ul > li.has-dropdown > a::after {
@@ -688,7 +700,7 @@
         <nav class="header-desktop-nav" aria-label="Main navigation">
           <ul>
             {%- for link in section.settings.menu.links -%}
-              <li class="{% if link.links != blank %}has-dropdown{% endif %}">
+              <li class="{% if link.links != blank %}has-dropdown{% endif %}{% if link.active or link.current %} is-active{% endif %}">
                 <a href="{{ link.url }}">{{ link.title | escape }}</a>
                 {%- if link.links != blank -%}
                   <ul class="nav-dropdown">
