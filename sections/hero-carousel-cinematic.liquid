@@ -474,8 +474,18 @@
     transform: translateY(50px);
   }
 
-  /* Hero CTA fully inherits the shared .cinematic-btn style (assets/base.css),
-     driven by Theme settings → Cinematic buttons. No per-section overrides. */
+  /* Hero CTA: solid white fill (overrides shared transparent .cinematic-btn).
+     Hover keeps white fill — only lifts (transform + shadow inherited from base). */
+  .hc-btn {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+  }
+  .hc-btn:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+  }
 
   /* Progress Bar UI */
   .hc-ui {
