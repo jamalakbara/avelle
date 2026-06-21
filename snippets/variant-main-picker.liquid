@@ -8,6 +8,19 @@
 
 {% assign block_settings = block.settings %}
 
+{%- liquid
+  assign variant_font_family = block_settings.variant_font_family | default: 'default'
+  assign label_size_desktop = block_settings.label_size_desktop | default: 0
+  assign label_size_mobile = block_settings.label_size_mobile | default: 0
+  assign value_size_desktop = block_settings.value_size_desktop | default: 0
+  assign value_size_mobile = block_settings.value_size_mobile | default: 0
+-%}
+{%- capture variant_typography_vars -%}
+  {%- if variant_font_family != 'default' %}--variant-font-family: var(--font-{{ variant_font_family }}--family);{% endif -%}
+  {%- if label_size_desktop > 0 %}--variant-label-font-size: {{ label_size_desktop }}px;{% endif -%}
+  {%- if value_size_desktop > 0 %}--variant-button-font-size: {{ value_size_desktop }}px;{% endif -%}
+{%- endcapture -%}
+
 {% unless product_resource.has_only_default_variant %}
   {% liquid
     assign button_background_brightness = section.settings.color_scheme.settings.foreground | color_brightness
@@ -19,7 +32,7 @@
   %}
   <variant-picker
     class="variant-picker spacing-style variant-picker--{{ block_settings.alignment }} reveal-up"
-    style="--color-strikethrough-mix: {{ strikethrough_color_mix }}; {% render 'spacing-style', settings: block_settings %}"
+    style="--color-strikethrough-mix: {{ strikethrough_color_mix }}; {% render 'spacing-style', settings: block_settings %}{{ variant_typography_vars }}"
     data-section-id="{{ section.id }}"
     data-product-id="{{ product_resource.id }}"
     data-block-id="{{ block.id }}"
@@ -208,6 +221,17 @@
       </script>
     </form>
   </variant-picker>
+
+  {%- if label_size_mobile > 0 or value_size_mobile > 0 -%}
+    {% style %}
+      @media screen and (max-width: 749px) {
+        variant-picker[data-block-id="{{ block.id }}"] {
+          {%- if label_size_mobile > 0 %}--variant-label-font-size: {{ label_size_mobile }}px;{% endif -%}
+          {%- if value_size_mobile > 0 %}--variant-button-font-size: {{ value_size_mobile }}px;{% endif -%}
+        }
+      }
+    {% endstyle %}
+  {%- endif -%}
 {% endunless %}
 
 {% stylesheet %}

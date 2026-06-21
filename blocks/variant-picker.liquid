@@ -52,6 +52,67 @@
     },
     {
       "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "variant_font_family",
+      "label": "Font family",
+      "options": [
+        { "value": "default", "label": "Theme default" },
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "label_size_desktop",
+      "label": "Label size (desktop)",
+      "info": "Option names (e.g. Color, Size). 0 = default",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "label_size_mobile",
+      "label": "Label size (mobile)",
+      "info": "0 = use desktop",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "value_size_desktop",
+      "label": "Value size (desktop)",
+      "info": "Option buttons/values. 0 = default",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "value_size_mobile",
+      "label": "Value size (mobile)",
+      "info": "0 = use desktop",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
       "content": "t:content.padding"
     },
     {
