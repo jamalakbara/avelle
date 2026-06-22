@@ -8,15 +8,6 @@
     --cbtn-font-size: {{ section.settings.button_font_size_desktop }}px;
   }
 
-  .loyalty-cinematic__dot-texture {
-    position: absolute;
-    inset: 0 0 0 50%;
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.13) 1px, transparent 1px);
-    background-size: 22px 22px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
   .loyalty-cinematic__inner {
     position: relative;
     z-index: 1;
@@ -164,10 +155,6 @@
       padding: 2.5rem 2rem;
     }
 
-    .loyalty-cinematic__dot-texture {
-      inset: 50% 0 0 0;
-    }
-
     .loyalty-cinematic__text {
       text-align: center;
     }
@@ -186,8 +173,6 @@
 </style>
 
 <section class="loyalty-cinematic" id="loyalty-cinematic-{{ section.id }}">
-  <div class="loyalty-cinematic__dot-texture" aria-hidden="true"></div>
-
   <div class="loyalty-cinematic__inner">
     <div class="loyalty-cinematic__text" data-loyalty-animate>
       {%- if section.settings.heading != blank -%}
