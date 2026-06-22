@@ -106,20 +106,23 @@
     border-color: rgba(var(--color-foreground-rgb), 0.5);
   }
 
-  /* Reveal on Hover Logic */
-  /* Default state: hidden (opacity 0) on collection page */
+  /* Always visible on collection cards */
   .collection-product-card swatches-variant-picker-component {
-    opacity: 0;
-    transform: translateY(5px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    pointer-events: none; /* Prevent interaction when hidden */
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.3s ease;
+    pointer-events: auto;
   }
 
-  /* Hover state: visible */
-  .collection-product-card:hover swatches-variant-picker-component {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
+  /* Center swatch row under the card. The picker is a full-width flexbox
+     whose justify-content comes from --product-swatches-alignment (set per
+     block). Force center here, overriding that for collection cards. */
+  .collection-product-card swatches-variant-picker-component {
+    justify-content: center !important;
+  }
+
+  .collection-product-card product-swatches {
+    justify-content: center;
   }
 {% endstylesheet %}
 

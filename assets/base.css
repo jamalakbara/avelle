@@ -2740,6 +2740,16 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6)>*:not(.tax-note) {
   text-decoration-thickness: 1.5px;
 }
 
+/* Muted, refined compare-at on collection cards */
+.collection-product-card .compare-at-price {
+  font-size: 0.875em;
+  font-weight: 400;
+  opacity: 0.45;
+  letter-spacing: 0.02em;
+  text-decoration-thickness: 1px;
+  margin-inline-start: 0.25em;
+}
+
 /* Fix visibility on PDP */
 .product-details .compare-at-price {
   opacity: 0.7;
