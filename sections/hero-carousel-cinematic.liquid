@@ -212,9 +212,10 @@
 >
   <div class="hc-slides">
     {% for block in section.blocks %}
+      {%- assign content_pos = '' -%}
       {%- case block.settings.content_position -%}
         {%- when 'top' -%}{%- assign align_v = 'flex-start' -%}
-        {%- when 'bottom' -%}{%- assign align_v = 'flex-end' -%}
+        {%- when 'bottom' -%}{%- assign align_v = 'flex-end' -%}{%- assign content_pos = 'bottom' -%}
         {%- else -%}{%- assign align_v = 'center' -%}
       {%- endcase -%}
       <div class="hc-slide" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
@@ -257,7 +258,7 @@
 
         {% comment %} Content {% endcomment %}
         <div
-          class="hc-content hc-theme-{{ block.settings.text_color }}"
+          class="hc-content hc-theme-{{ block.settings.text_color }}{% if content_pos == 'bottom' %} hc-content--bottom{% endif %}"
           style="--hc-align-v: {{ align_v }}; --hc-heading-font: var(--font-{{ block.settings.heading_font }}--family); --hc-subheading-font: var(--font-{{ block.settings.subheading_font }}--family);"
         >
           <div class="hc-content-inner">
@@ -401,12 +402,17 @@
   .hc-content {
     position: absolute;
     inset: 0;
-    z-index: 3; /* Below hit areas (5) */
+    z-index: 11; /* Above .hc-ui (10) so bottom button never hides behind the pill; pointer-events:none keeps hit areas clickable */
     display: flex;
     align-items: var(--hc-align-v, center);
     justify-content: var(--hc-align-h, center);
     pointer-events: none; /* Let clicks pass through to hit areas */
     padding: clamp(2rem, 6vh, 6rem) clamp(20px, 6vw, 6rem);
+  }
+
+  /* Bottom-position content: lift clear of the bottom-right slider-info cluster */
+  .hc-content--bottom {
+    padding-bottom: clamp(5rem, 9vh, 7rem);
   }
 
   .hc-content-inner {
@@ -491,13 +497,15 @@
   .hc-ui {
     position: absolute;
     bottom: 3rem;
-    left: 0;
-    right: 0;
-    padding: 0 3rem;
+    left: auto;
+    right: 3rem;
+    width: auto;
+    padding: 0;
+    gap: 1rem;
     z-index: 10;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     color: #fff;
     mix-blend-mode: difference;
     pointer-events: none;
@@ -532,14 +540,14 @@
   .hc-progress {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
     font-family: monospace, sans-serif;
     font-size: 14px;
     letter-spacing: 0.05em;
   }
 
   .hc-progress-track {
-    width: 150px;
+    width: 90px;
     height: 2px;
     background: rgba(255, 255, 255, 0.3);
     position: relative;
@@ -574,7 +582,8 @@
   @media (max-width: 768px) {
     .hc-carousel { height: var(--hc-height-mobile); }
     .hc-hit-prev, .hc-hit-next { cursor: auto; }
-    .hc-ui { mix-blend-mode: normal; bottom: 2rem; padding: 0 1.5rem; }
+    .hc-ui { mix-blend-mode: normal; bottom: 2rem; left: auto; right: 1.5rem; padding: 0; }
+    .hc-content--bottom { padding-bottom: clamp(4.5rem, 14vh, 6rem); }
     .hc-progress-track { background: rgba(255,255,255,0.4); }
     .hc-btn-wrapper { pointer-events: auto; }
   }
