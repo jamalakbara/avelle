@@ -125,6 +125,20 @@
 
 {% # theme-check-disable %}
 {% stylesheet %}
+  /* Overlay the wishlist heart on the top-right of the product image */
+  .collection-product-card {
+    position: relative;
+  }
+
+  .collection-product-card .smartwishlist {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 3; /* above .product-card__link full-card anchor */
+    pointer-events: auto; /* keep heart clickable */
+    line-height: 0;
+  }
+
   #smartwishlist div#bookmarkit,
   .smartwishlist div#bookmarkit {
     padding: 0 !important;
