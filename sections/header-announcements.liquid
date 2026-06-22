@@ -11,13 +11,21 @@
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <aside
   class="announcement-bar spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
-  style="{% render 'spacing-padding', settings: section.settings %}; --border-bottom-width: {{ section.settings.divider_width }}px;"
+  style="{% render 'spacing-padding', settings: section.settings %}; --border-bottom-width: {{ section.settings.divider_width }}px; --announcement-fade-duration: {{ section.settings.fade_duration }}ms;"
 >
   {% liquid
-    assign autoplay = false
-    assign show_arrows = false
+    assign has_multiple = false
     if section.blocks.size > 1
+      assign has_multiple = true
+    endif
+
+    assign autoplay = false
+    if section.settings.autoplay and has_multiple
       assign autoplay = true
+    endif
+
+    assign show_arrows = false
+    if section.settings.show_arrows and has_multiple
       assign show_arrows = true
     endif
   %}
@@ -67,7 +75,8 @@
   }
 
   .announcement-bar__slide {
-    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    transition: opacity var(--announcement-fade-duration, 500ms) ease-in-out,
+      visibility var(--announcement-fade-duration, 500ms) ease-in-out;
     content-visibility: visible;
 
     &[aria-hidden='true'] {
@@ -136,6 +145,18 @@
   },
   "settings": [
     {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show navigation arrows",
+      "default": false
+    },
+    {
       "type": "range",
       "id": "speed",
       "label": "t:settings.scroll_speed",
@@ -143,6 +164,16 @@
       "max": 10,
       "default": 5,
       "unit": "sec"
+    },
+    {
+      "type": "range",
+      "id": "fade_duration",
+      "label": "Fade duration",
+      "min": 100,
+      "max": 2000,
+      "step": 100,
+      "default": 500,
+      "unit": "ms"
     },
     {
       "type": "header",
