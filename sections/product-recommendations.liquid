@@ -75,6 +75,150 @@
     },
     {
       "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "subheading_font_family",
+      "label": "Subheading font family",
+      "options": [
+        { "value": "default", "label": "Theme default" },
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_desktop",
+      "label": "Subheading size (desktop)",
+      "info": "0 = default",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "label": "Subheading size (mobile)",
+      "info": "0 = use desktop",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "heading_font_family",
+      "label": "Heading font family",
+      "options": [
+        { "value": "default", "label": "Theme default" },
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size (desktop)",
+      "info": "0 = default",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size (mobile)",
+      "info": "0 = use desktop",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "card_title_font_family",
+      "label": "Card title font family",
+      "options": [
+        { "value": "default", "label": "Theme default" },
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "card_title_size_desktop",
+      "label": "Card title size (desktop)",
+      "info": "0 = default",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_title_size_mobile",
+      "label": "Card title size (mobile)",
+      "info": "0 = use desktop",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "card_price_font_family",
+      "label": "Card price font family",
+      "options": [
+        { "value": "default", "label": "Theme default" },
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "card_price_size_desktop",
+      "label": "Card price size (desktop)",
+      "info": "0 = default",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_price_size_mobile",
+      "label": "Card price size (mobile)",
+      "info": "0 = use desktop",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
       "content": "Colors"
     },
     {
@@ -204,6 +348,46 @@
     .curated-products__grid .curated-card:nth-child(even) {
       margin-top: 15vh; /* Initial structural offset */
     }
+  }
+
+  {%- if section.settings.subheading_font_family != 'default' or section.settings.subheading_size_desktop > 0 -%}
+    #shopify-section-{{ section.id }} .curated-products__subheading {
+      {%- if section.settings.subheading_font_family != 'default' %}font-family: var(--font-{{ section.settings.subheading_font_family }}--family);{% endif -%}
+      {%- if section.settings.subheading_size_desktop > 0 %}font-size: {{ section.settings.subheading_size_desktop }}px;{% endif -%}
+    }
+  {%- endif -%}
+  {%- if section.settings.heading_font_family != 'default' or section.settings.heading_size_desktop > 0 -%}
+    #shopify-section-{{ section.id }} .curated-products__heading {
+      {%- if section.settings.heading_font_family != 'default' %}font-family: var(--font-{{ section.settings.heading_font_family }}--family);{% endif -%}
+      {%- if section.settings.heading_size_desktop > 0 %}font-size: {{ section.settings.heading_size_desktop }}px;{% endif -%}
+    }
+  {%- endif -%}
+  {%- if section.settings.card_title_font_family != 'default' or section.settings.card_title_size_desktop > 0 -%}
+    #shopify-section-{{ section.id }} .curated-card__title {
+      {%- if section.settings.card_title_font_family != 'default' %}font-family: var(--font-{{ section.settings.card_title_font_family }}--family);{% endif -%}
+      {%- if section.settings.card_title_size_desktop > 0 %}font-size: {{ section.settings.card_title_size_desktop }}px;{% endif -%}
+    }
+  {%- endif -%}
+  {%- if section.settings.card_price_font_family != 'default' or section.settings.card_price_size_desktop > 0 -%}
+    #shopify-section-{{ section.id }} .curated-card__price {
+      {%- if section.settings.card_price_font_family != 'default' %}font-family: var(--font-{{ section.settings.card_price_font_family }}--family);{% endif -%}
+      {%- if section.settings.card_price_size_desktop > 0 %}font-size: {{ section.settings.card_price_size_desktop }}px;{% endif -%}
+    }
+  {%- endif -%}
+
+  @media screen and (max-width: 749px) {
+    {%- if section.settings.subheading_size_mobile > 0 -%}
+      #shopify-section-{{ section.id }} .curated-products__subheading { font-size: {{ section.settings.subheading_size_mobile }}px; }
+    {%- endif -%}
+    {%- if section.settings.heading_size_mobile > 0 -%}
+      #shopify-section-{{ section.id }} .curated-products__heading { font-size: {{ section.settings.heading_size_mobile }}px; }
+    {%- endif -%}
+    {%- if section.settings.card_title_size_mobile > 0 -%}
+      #shopify-section-{{ section.id }} .curated-card__title { font-size: {{ section.settings.card_title_size_mobile }}px; }
+    {%- endif -%}
+    {%- if section.settings.card_price_size_mobile > 0 -%}
+      #shopify-section-{{ section.id }} .curated-card__price { font-size: {{ section.settings.card_price_size_mobile }}px; }
+    {%- endif -%}
   }
 {%- endstyle -%}
 

@@ -82,24 +82,9 @@
   font-display: swap;
 }
 
-/* Override Theme Variables - Using html:root for higher specificity (0-2-0) than :root (0-1-0) */
+/* Font families now come from Theme settings > Typography (native picker).
+   Zodiak/Poppins @font-face kept above for accordion + carousel fallbacks. */
 html:root {
-  /* Correct double-dash variables used by theme */
-  --font-heading--family: 'Zodiak', serif !important;
-  --font-body--family: 'Poppins', sans-serif !important;
-  --font-subheading--family: 'Zodiak', serif !important;
-  --font-accent--family: 'Zodiak', serif !important;
-
-  /* Legacy single-dash (just in case) */
-  --font-heading-family: 'Zodiak', serif !important;
-  --font-body-family: 'Poppins', sans-serif !important;
-
-  /* Adjust weights/styles */
-  --font-heading--weight: 400 !important;
-  --font-body--weight: 400 !important;
-  --font-heading-weight: 400 !important;
-  --font-body-weight: 400 !important;
-
   /* Fix blurry/jagged pill borders (sub-pixel rendering issue) */
   --variant-pills-border-width: 1px !important;
   --buttons-border-width: 1px !important;

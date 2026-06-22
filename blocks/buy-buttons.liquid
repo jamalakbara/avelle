@@ -256,6 +256,29 @@
   {%- endif -%}
 </span>
 
+{%- liquid
+  assign button_font_size_mobile = block_settings.button_font_size_mobile | default: 0
+  assign quantity_font_size_mobile = block_settings.quantity_font_size_mobile | default: 0
+-%}
+{%- if button_font_size_mobile > 0 or quantity_font_size_mobile > 0 -%}
+  {% style %}
+    @media screen and (max-width: 749px) {
+      {%- if button_font_size_mobile > 0 %}
+      .buy-buttons-block--{{ block.id }} .product-form-buttons button,
+      .buy-buttons-block--{{ block.id }} .product-form-buttons .add-to-cart-button,
+      .buy-buttons-block--{{ block.id }} .product-form-buttons .shopify-payment-button__button {
+        font-size: {{ button_font_size_mobile }}px !important;
+      }
+      {% endif -%}
+      {%- if quantity_font_size_mobile > 0 %}
+      .buy-buttons-block--{{ block.id }} .quantity-selector input {
+        font-size: {{ quantity_font_size_mobile }}px !important;
+      }
+      {% endif -%}
+    }
+  {% endstyle %}
+{%- endif -%}
+
 {% if block_settings.show_pickup_availability %}
   <script
     src="{{ 'local-pickup.js' | asset_url }}"
@@ -828,8 +851,19 @@
     {
       "type": "range",
       "id": "button_font_size",
-      "label": "Font size",
+      "label": "Font size (desktop)",
       "info": "0 = theme default",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_mobile",
+      "label": "Font size (mobile)",
+      "info": "0 = use desktop",
       "min": 0,
       "max": 24,
       "step": 1,
@@ -880,8 +914,19 @@
     {
       "type": "range",
       "id": "quantity_font_size",
-      "label": "Font size",
+      "label": "Font size (desktop)",
       "info": "0 = theme default",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "quantity_font_size_mobile",
+      "label": "Font size (mobile)",
+      "info": "0 = use desktop",
       "min": 0,
       "max": 24,
       "step": 1,

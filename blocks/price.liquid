@@ -84,6 +84,31 @@
   {%- endif -%}
 </product-price>
 
+{%- liquid
+  assign font_family_override = block_settings.font_family_override | default: 'default'
+  assign font_size_desktop = block_settings.font_size_desktop | default: 0
+  assign font_size_mobile = block_settings.font_size_mobile | default: 0
+-%}
+{%- if font_family_override != 'default' or font_size_desktop > 0 or font_size_mobile > 0 -%}
+  {% style %}
+    product-price[data-block-id="{{ block.id }}"],
+    product-price[data-block-id="{{ block.id }}"] .price,
+    product-price[data-block-id="{{ block.id }}"] .compare-at-price {
+      {%- if font_family_override != 'default' %}font-family: var(--font-{{ font_family_override }}--family) !important;{% endif -%}
+      {%- if font_size_desktop > 0 %}font-size: {{ font_size_desktop }}px !important;{% endif -%}
+    }
+    {%- if font_size_mobile > 0 %}
+    @media screen and (max-width: 749px) {
+      product-price[data-block-id="{{ block.id }}"],
+      product-price[data-block-id="{{ block.id }}"] .price,
+      product-price[data-block-id="{{ block.id }}"] .compare-at-price {
+        font-size: {{ font_size_mobile }}px !important;
+      }
+    }
+    {% endif -%}
+  {% endstyle %}
+{%- endif -%}
+
 {%- if request.page_type == 'product' -%}
   <div
     id="smartwishlist"
@@ -100,6 +125,20 @@
 
 {% # theme-check-disable %}
 {% stylesheet %}
+  /* Overlay the wishlist heart on the top-right of the product image */
+  .collection-product-card {
+    position: relative;
+  }
+
+  .collection-product-card .smartwishlist {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 3; /* above .product-card__link full-card anchor */
+    pointer-events: auto; /* keep heart clickable */
+    line-height: 0;
+  }
+
   #smartwishlist div#bookmarkit,
   .smartwishlist div#bookmarkit {
     padding: 0 !important;
@@ -423,6 +462,45 @@
       ],
       "default": "var(--color-foreground)",
       "visible_if": "{{ block.settings.type_preset != 'rte' }}"
+    },
+    {
+      "type": "header",
+      "content": "Responsive font"
+    },
+    {
+      "type": "select",
+      "id": "font_family_override",
+      "label": "Font family override",
+      "options": [
+        { "value": "default", "label": "Theme default" },
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "font_size_desktop",
+      "label": "Font size (desktop)",
+      "info": "0 = use preset",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "Font size (mobile)",
+      "info": "0 = use desktop",
+      "min": 0,
+      "max": 90,
+      "step": 1,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "header",

@@ -39,6 +39,12 @@
         echo ' custom-color '
       endif
     endif
+    if block_settings.force_bold
+      echo ' text-block--force-bold '
+    endif
+    if block_settings.force_uppercase
+      echo ' text-block--force-uppercase '
+    endif
     if block_settings.background
       echo ' text-block--background '
     endif
@@ -92,6 +98,29 @@
     {{ block.settings.text }}
   </{{ element }}>
 {% endif %}
+
+{%- liquid
+  assign font_family_override = block_settings.font_family_override | default: 'default'
+  assign font_size_desktop = block_settings.font_size_desktop | default: 0
+  assign font_size_mobile = block_settings.font_size_mobile | default: 0
+-%}
+{%- if font_family_override != 'default' or font_size_desktop > 0 or font_size_mobile > 0 -%}
+  {% style %}
+    .text-block--{{ block.id }},
+    .text-block--{{ block.id }} > * {
+      {%- if font_family_override != 'default' %}font-family: var(--font-{{ font_family_override }}--family) !important;{% endif -%}
+      {%- if font_size_desktop > 0 %}font-size: {{ font_size_desktop }}px !important;{% endif -%}
+    }
+    {%- if font_size_mobile > 0 %}
+    @media screen and (max-width: 749px) {
+      .text-block--{{ block.id }},
+      .text-block--{{ block.id }} > * {
+        font-size: {{ font_size_mobile }}px !important;
+      }
+    }
+    {% endif -%}
+  {% endstyle %}
+{%- endif -%}
 
 {% stylesheet %}
   :root {
@@ -216,5 +245,15 @@
   .custom-color,
   .custom-color > :is(h1, h2, h3, h4, h5, h6, p, *) {
     color: var(--color);
+  }
+
+  .text-block--force-bold,
+  .text-block--force-bold > :is(h1, h2, h3, h4, h5, h6, p, *) {
+    font-weight: 700;
+  }
+
+  .text-block--force-uppercase,
+  .text-block--force-uppercase > :is(h1, h2, h3, h4, h5, h6, p, *) {
+    text-transform: uppercase;
   }
 {% endstylesheet %}

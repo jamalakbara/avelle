@@ -61,10 +61,10 @@
 
   /* Minimalist Circle Swatches & Hover Reveal */
   label.variant-option__button-label--has-swatch {
-    width: 24px !important;
-    height: 24px !important;
-    min-width: 24px !important;
-    min-height: 24px !important;
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
     border-radius: 50% !important;
     padding: 0 !important;
     margin: 0 !important;
@@ -106,20 +106,23 @@
     border-color: rgba(var(--color-foreground-rgb), 0.5);
   }
 
-  /* Reveal on Hover Logic */
-  /* Default state: hidden (opacity 0) on collection page */
+  /* Always visible on collection cards */
   .collection-product-card swatches-variant-picker-component {
-    opacity: 0;
-    transform: translateY(5px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    pointer-events: none; /* Prevent interaction when hidden */
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.3s ease;
+    pointer-events: auto;
   }
 
-  /* Hover state: visible */
-  .collection-product-card:hover swatches-variant-picker-component {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
+  /* Center swatch row under the card. The picker is a full-width flexbox
+     whose justify-content comes from --product-swatches-alignment (set per
+     block). Force center here, overriding that for collection cards. */
+  .collection-product-card swatches-variant-picker-component {
+    justify-content: center !important;
+  }
+
+  .collection-product-card product-swatches {
+    justify-content: center;
   }
 {% endstylesheet %}
 

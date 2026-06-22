@@ -108,12 +108,166 @@
     font-weight: 500 !important;
   }
 
+  /* Price must match carousel .curated-card__price: BODY font, plain weight,
+     no letter-spacing. The block uses type_preset h5 → inherits the heading
+     font; override family + spacing here. */
   .main-collection-grid .product-card .product-card__content product-price,
+  .main-collection-grid .product-card .product-card__content product-price .price,
   .main-collection-grid .price,
   .main-collection-grid .product-price {
+    font-family: var(--font-body--family) !important;
     font-size: var(--font-size--product_info) !important;
+    font-weight: 400 !important;
+    letter-spacing: normal !important;
     opacity: 0.7;
     text-transform: none !important;
+  }
+
+  /* Match carousel image aspect ratio (2:3) for 1:1 card parity.
+     Gallery is the positioning context for the pill + hover overlay. */
+  .main-collection-grid .card-gallery {
+    position: relative;
+    --gallery-aspect-ratio: 2 / 3 !important;
+  }
+
+  /* Center ONLY the text groups (title/price/swatches) — do NOT touch
+     .product-card__content itself or the gallery collapses to zero width. */
+  .main-collection-grid .group-block-content {
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  /* Price block ships with .text-left → text-align AND --text-align:left.
+     The money span reads var(--text-align), so override BOTH. */
+  .main-collection-grid .product-card__content .product-title,
+  .main-collection-grid .product-card__content .price,
+  .main-collection-grid .product-card__content product-price,
+  .main-collection-grid .product-card__content product-price [ref='priceContainer'] {
+    --text-align: center !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  /* Tighten info to match carousel .curated-card__info (8px under image, snug rows).
+     Kill the nested-group paddings (incl. the asymmetric 12px left that shifts
+     content off-centre) and collapse gaps. */
+  .main-collection-grid .product-card__content {
+    gap: 8px !important;
+  }
+
+  .main-collection-grid .product-card__content .group-block {
+    padding: 0 !important;
+  }
+
+  .main-collection-grid .product-card__content .group-block-content {
+    gap: 4px !important;
+    row-gap: 4px !important;
+  }
+
+  .main-collection-grid .product-card__content .product-title {
+    margin-bottom: 0 !important;
+  }
+
+  /* Cinematic add-to-cart pill — mirrors sections/carousel-cinematic.liquid,
+     consuming the SAME global --cbtn-* tokens (single source of truth = DRY). */
+  .main-collection-grid .quick-add {
+    inset: auto var(--padding-sm) var(--padding-sm) var(--padding-sm);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .main-collection-grid .product-card:hover .quick-add,
+  .main-collection-grid .product-card:focus-within .quick-add {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s;
+  }
+
+  /* Image darken on hover, like the carousel overlay */
+  .main-collection-grid .card-gallery::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .main-collection-grid .product-card:hover .card-gallery::after {
+    opacity: 1;
+  }
+
+  .main-collection-grid .quick-add__product-form-component,
+  .main-collection-grid .quick-add__product-form-component .shopify-product-form {
+    width: 100%;
+    display: block;
+  }
+
+  /* Always direct-add → the choose-options button is never used. Hide it so
+     our display:inline-flex override below doesn't reveal a second pill. */
+  .main-collection-grid .quick-add__button.quick-add__button--choose {
+    display: none !important;
+  }
+
+  /* Restyle Dawn's circular quick-add button into the cinematic outline pill. */
+  .main-collection-grid .quick-add__button {
+    position: static;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    opacity: 1 !important;
+    border-radius: var(--cbtn-border-radius, 999px);
+    border: var(--cbtn-border-width, 1px) solid var(--cbtn-color, #fff);
+    background: transparent;
+    color: var(--cbtn-color, #fff);
+    backdrop-filter: none;
+    overflow: visible;
+    font-size: var(--cbtn-font-size, 0.5625rem);
+    font-weight: var(--cbtn-font-weight, 500);
+    letter-spacing: var(--cbtn-letter-spacing, 0.15em);
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-block: var(--cbtn-padding-block, 0.75rem);
+    padding-inline: var(--cbtn-padding-inline, 2rem);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .main-collection-grid .quick-add__button:hover {
+    scale: 1;
+    background: var(--cbtn-hover-bg, var(--cbtn-color, #fff));
+    color: var(--cbtn-hover-text, #000);
+    transform: translateY(-2px);
+  }
+
+  /* Strip Dawn's inner pill background + icon so only the label shows */
+  .main-collection-grid .quick-add__button .add-to-cart-text {
+    background: transparent;
+    border-radius: 0;
+    height: auto;
+    color: inherit;
+  }
+
+  .main-collection-grid .quick-add__button .add-to-cart-icon {
+    display: none;
+  }
+
+  .main-collection-grid .quick-add__button .add-to-cart-text__content {
+    grid-template-columns: 1fr;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+  }
+
+  .main-collection-grid .quick-add__button .add-to-cart-text__content span span {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0);
+    padding-right: 0;
   }
 {% endstylesheet %}
 
@@ -180,6 +334,26 @@
         }
       ],
       "default": "small"
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "label": "Columns (desktop)",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "visible_if": "{{ section.settings.layout_type == 'grid' }}"
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Columns (mobile)",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
     },
     {
       "type": "checkbox",

@@ -245,9 +245,8 @@ export class QuickAddComponent extends Component {
   #updateQuickAddButtonState(event) {
     if (!(event.target instanceof HTMLElement)) return;
     if (event.target.closest('product-card') !== this.closest('product-card')) return;
-    const productOptionsCount = this.dataset.productOptionsCount;
-    const quickAddButton = productOptionsCount === '1' ? 'add' : 'choose';
-    this.setAttribute('data-quick-add-button', quickAddButton);
+    // Always direct-add the selected variant (no choose-options modal).
+    this.setAttribute('data-quick-add-button', 'add');
   }
 
   /**

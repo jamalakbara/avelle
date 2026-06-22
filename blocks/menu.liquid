@@ -15,6 +15,7 @@
   <accordion-custom
     class="
       menu
+      menu--{{ block.id }}
       {% if show_as_accordion == true %} menu--accordion menu--{{ block_settings.accordion_icon }}{% endif %}
       {% if dividers_enabled == true %} menu--dividers{% endif %}
     "
@@ -41,7 +42,7 @@
       {% endif %}
       {{ block.shopify_attributes }}
     >
-      <summary class="menu__heading{% if heading == blank %} menu__heading--empty{% endif %} {{ block_settings.heading_preset }}">
+      <summary class="menu__heading{% if heading == blank %} menu__heading--empty{% endif %} {{ block_settings.heading_preset }}{% if block_settings.heading_bold %} menu__heading--bold{% endif %}{% if block_settings.heading_uppercase %} menu__heading--uppercase{% endif %}">
         <span class="menu__heading__default">{{ heading }}</span>
         <span class="menu__heading__accordion">
           {{ heading | default: menu.title }}
@@ -69,6 +70,41 @@
       </div>
     </details>
   </accordion-custom>
+
+  {%- liquid
+    assign heading_font_family = block_settings.heading_font_family | default: 'default'
+    assign heading_size_desktop = block_settings.heading_size_desktop | default: 0
+    assign heading_size_mobile = block_settings.heading_size_mobile | default: 0
+    assign link_font_family = block_settings.link_font_family | default: 'default'
+    assign link_size_desktop = block_settings.link_size_desktop | default: 0
+    assign link_size_mobile = block_settings.link_size_mobile | default: 0
+  -%}
+  {%- if heading_font_family != 'default' or heading_size_desktop > 0 or heading_size_mobile > 0 or link_font_family != 'default' or link_size_desktop > 0 or link_size_mobile > 0 -%}
+    {% style %}
+      {%- if heading_font_family != 'default' or heading_size_desktop > 0 %}
+      .menu--{{ block.id }} .menu__heading {
+        {%- if heading_font_family != 'default' %}font-family: var(--font-{{ heading_font_family }}--family);{% endif -%}
+        {%- if heading_size_desktop > 0 %}font-size: {{ heading_size_desktop }}px;{% endif -%}
+      }
+      {% endif -%}
+      {%- if link_font_family != 'default' or link_size_desktop > 0 %}
+      .menu--{{ block.id }} .menu__item {
+        {%- if link_font_family != 'default' %}font-family: var(--font-{{ link_font_family }}--family);{% endif -%}
+        {%- if link_size_desktop > 0 %}font-size: {{ link_size_desktop }}px;{% endif -%}
+      }
+      {% endif -%}
+      {%- if heading_size_mobile > 0 or link_size_mobile > 0 %}
+      @media screen and (max-width: 749px) {
+        {%- if heading_size_mobile > 0 %}
+        .menu--{{ block.id }} .menu__heading { font-size: {{ heading_size_mobile }}px; }
+        {% endif -%}
+        {%- if link_size_mobile > 0 %}
+        .menu--{{ block.id }} .menu__item { font-size: {{ link_size_mobile }}px; }
+        {% endif -%}
+      }
+      {% endif -%}
+    {% endstyle %}
+  {%- endif -%}
 {% endif %}
 
 {% stylesheet %}
@@ -86,6 +122,16 @@
 
   .menu .menu__heading--empty {
     display: none;
+  }
+
+  .menu .menu__details .menu__heading--bold,
+  .menu .menu__details .menu__heading--bold .menu__heading__default,
+  .menu .menu__details .menu__heading--bold .menu__heading__accordion {
+    font-weight: 700;
+  }
+
+  .menu .menu__details .menu__heading--uppercase {
+    text-transform: uppercase;
   }
 
   .menu__heading__default {
@@ -251,6 +297,18 @@
       "default": "h3"
     },
     {
+      "type": "checkbox",
+      "id": "heading_bold",
+      "label": "t:options.bold",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_uppercase",
+      "label": "t:options.uppercase",
+      "default": false
+    },
+    {
       "type": "select",
       "id": "link_preset",
       "label": "t:settings.link_preset",
@@ -289,6 +347,76 @@
         }
       ],
       "default": "paragraph"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_family",
+      "label": "Heading font family",
+      "options": [
+        { "value": "default", "label": "Theme default" },
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size (desktop)",
+      "info": "0 = use preset",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size (mobile)",
+      "info": "0 = use desktop",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "link_font_family",
+      "label": "Link font family",
+      "options": [
+        { "value": "default", "label": "Theme default" },
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "link_size_desktop",
+      "label": "Link size (desktop)",
+      "info": "0 = use preset",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "link_size_mobile",
+      "label": "Link size (mobile)",
+      "info": "0 = use desktop",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "header",

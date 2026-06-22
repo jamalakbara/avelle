@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isHiddenContainer = false;
     if (e.target && e.target.closest) {
-      isHiddenContainer = e.target.closest('.cursor-none, .parallax-carousel-container, [data-parallax-carousel]');
+      isHiddenContainer = e.target.closest('.cursor-none, .parallax-carousel-container, [data-parallax-carousel], .main-collection-grid');
     }
 
     if (isHiddenContainer) {

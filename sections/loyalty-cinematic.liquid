@@ -5,15 +5,7 @@
     position: relative;
     overflow: hidden;
     background-color: {{ section.settings.background_color }};
-  }
-
-  .loyalty-cinematic__dot-texture {
-    position: absolute;
-    inset: 0 0 0 50%;
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.13) 1px, transparent 1px);
-    background-size: 22px 22px;
-    pointer-events: none;
-    z-index: 0;
+    --cbtn-font-size: {{ section.settings.button_font_size_desktop }}px;
   }
 
   .loyalty-cinematic__inner {
@@ -93,38 +85,16 @@
     transform: translateY(0);
   }
 
+  /* Primary CTA fully inherits the shared .cinematic-btn style (assets/base.css),
+     driven by Theme settings → Cinematic buttons. No per-section overrides. */
   .loyalty-cinematic__btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.9rem 2.8rem;
-    border: 1.5px solid {{ section.settings.text_color }};
-    border-radius: 999px;
-    background: transparent;
-    color: {{ section.settings.text_color }};
-    font-family: var(--font-body-family);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    text-decoration: none;
     white-space: nowrap;
-    cursor: pointer;
-    transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .loyalty-cinematic__btn-primary:hover {
-    background-color: {{ section.settings.text_color }};
-    color: {{ section.settings.background_color }};
-    transform: translateY(-2px);
   }
 
   .loyalty-cinematic__btn-secondary {
     display: inline-block;
     font-family: var(--font-body-family);
-    font-size: 0.88rem;
+    font-size: {{ section.settings.link_font_size_desktop }}px;
     color: {{ section.settings.text_color }};
     text-decoration: none;
     position: relative;
@@ -154,16 +124,35 @@
     opacity: 0.7;
   }
 
+  @media screen and (max-width: 749px) {
+    {%- if section.settings.heading_size_mobile > 0 -%}
+    .loyalty-cinematic__heading {
+      font-size: {{ section.settings.heading_size_mobile }}px;
+    }
+    {%- endif -%}
+    {%- if section.settings.description_size_mobile > 0 -%}
+    .loyalty-cinematic__description {
+      font-size: {{ section.settings.description_size_mobile }}px;
+    }
+    {%- endif -%}
+    {%- if section.settings.button_font_size_mobile > 0 -%}
+    .loyalty-cinematic {
+      --cbtn-font-size: {{ section.settings.button_font_size_mobile }}px;
+    }
+    {%- endif -%}
+    {%- if section.settings.link_font_size_mobile > 0 -%}
+    .loyalty-cinematic__btn-secondary {
+      font-size: {{ section.settings.link_font_size_mobile }}px;
+    }
+    {%- endif -%}
+  }
+
   @media screen and (max-width: 768px) {
     .loyalty-cinematic__inner {
       flex-direction: column;
       align-items: center;
       gap: 2.5rem;
       padding: 2.5rem 2rem;
-    }
-
-    .loyalty-cinematic__dot-texture {
-      inset: 50% 0 0 0;
     }
 
     .loyalty-cinematic__text {
@@ -184,8 +173,6 @@
 </style>
 
 <section class="loyalty-cinematic" id="loyalty-cinematic-{{ section.id }}">
-  <div class="loyalty-cinematic__dot-texture" aria-hidden="true"></div>
-
   <div class="loyalty-cinematic__inner">
     <div class="loyalty-cinematic__text" data-loyalty-animate>
       {%- if section.settings.heading != blank -%}
@@ -200,7 +187,7 @@
       {%- if section.settings.button_label != blank -%}
         <a
           href="{{ section.settings.button_link | default: '#' }}"
-          class="loyalty-cinematic__btn-primary"
+          class="loyalty-cinematic__btn-primary cinematic-btn"
         >
           {{ section.settings.button_label | escape }}
         </a>
@@ -291,12 +278,23 @@
     {
       "type": "range",
       "id": "heading_size",
-      "label": "Heading size",
+      "label": "Heading size (desktop)",
       "min": 12,
       "max": 48,
       "step": 1,
       "unit": "px",
       "default": 20
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size (mobile)",
+      "info": "0 = use desktop size",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "range",
@@ -336,12 +334,23 @@
     {
       "type": "range",
       "id": "description_size",
-      "label": "Description size",
+      "label": "Description size (desktop)",
       "min": 12,
       "max": 28,
       "step": 1,
       "unit": "px",
       "default": 15
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "label": "Description size (mobile)",
+      "info": "0 = use desktop size",
+      "min": 0,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "range",
@@ -351,6 +360,48 @@
       "max": 2.5,
       "step": 0.1,
       "default": 1.8
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_desktop",
+      "label": "Button font size (desktop)",
+      "min": 7,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_mobile",
+      "label": "Button font size (mobile)",
+      "info": "0 = use desktop size",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "link_font_size_desktop",
+      "label": "Link font size (desktop)",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "link_font_size_mobile",
+      "label": "Link font size (mobile)",
+      "info": "0 = use desktop size",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "header",

@@ -237,27 +237,8 @@
     }
   }
 
-  .cinematic-button {
-    display: inline-block;
-    padding: 1.2rem 3rem;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 999px;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    background: rgba(0, 0, 0, 0.2);
-    color: #fff;
-    backdrop-filter: blur(10px);
-  }
-
-  .cinematic-button:hover {
-    background: #fff;
-    color: #000;
-    border-color: #fff;
-    transform: scale(1.05);
-  }
+  /* Explore CTA fully inherits the shared .cinematic-btn style (assets/base.css),
+     driven by Theme settings → Cinematic buttons. No per-section overrides. */
 {%- endstyle -%}
 
 {%- liquid
@@ -335,7 +316,7 @@
         <h2 class="cinematic-title h1">
           {{ custom_title }}
         </h2>
-        <a href="{{ collection.url }}" class="cinematic-button"> Explore Collection </a>
+        <a href="{{ collection.url }}" class="cinematic-button cinematic-btn"> Explore Collection </a>
       </div>
     </div>
   {%- else -%}
@@ -350,7 +331,7 @@
         ></div>
         <div class="cinematic-content">
           <h2 class="cinematic-title h1">Example Collection {{ i }}</h2>
-          <a href="#" class="cinematic-button">Explore</a>
+          <a href="#" class="cinematic-button cinematic-btn">Explore</a>
         </div>
       </div>
     {%- endfor -%}

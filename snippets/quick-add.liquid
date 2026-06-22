@@ -9,8 +9,8 @@
 
 {% liquid
   assign product_form_id = 'QuickAdd-ProductForm-' | append: product.id | append: '-' | append: block.id
-  assign add_to_cart_text = 'actions.add' | t
-  assign choose_options_text = 'actions.choose' | t
+  assign add_to_cart_text = 'products.product.add_to_cart' | t
+  assign choose_options_text = 'products.product.add_to_cart' | t
   assign color_scheme = color_scheme | default: settings.quick_add_color_scheme
 
   # Logic to determine which variant to use (matching swatch selection logic from product-card)
@@ -22,10 +22,9 @@
     assign can_add_to_cart = false
   endif
 
-  assign quick_add_button = 'choose'
-  if product.variants_count == 1 or product.options.size == 1 and product.selected_variant
-    assign quick_add_button = 'add'
-  endif
+  # Always direct-add the selected/first variant (no choose-options modal),
+  # matching the cinematic carousel behaviour.
+  assign quick_add_button = 'add'
 %}
 
 <quick-add-component

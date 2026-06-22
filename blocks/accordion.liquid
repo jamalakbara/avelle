@@ -9,6 +9,8 @@
      --summary-font-line-height: var(--font-{{ block_settings.type_preset }}--line-height);
      --summary-font-case: var(--font-{{ block_settings.type_preset }}--case);
      --summary-font-letter-spacing: var(--font-{{ block_settings.type_preset }}--letter-spacing);
+    {%- if block_settings.heading_font_family != 'default' %} --summary-font-family: var(--font-{{ block_settings.heading_font_family }}--family);{% endif -%}
+    {%- if block_settings.heading_size_desktop > 0 %} --summary-font-size: {{ block_settings.heading_size_desktop }}px;{% endif -%}
     {% render 'spacing-style', settings: block_settings %}
     {% render 'border-override', settings: block_settings %}
   "
@@ -16,6 +18,41 @@
 >
   {% content_for 'blocks' %}
 </div>
+
+{%- liquid
+  assign heading_size_mobile = block_settings.heading_size_mobile | default: 0
+  assign body_font_family = block_settings.body_font_family | default: 'default'
+  assign body_size_desktop = block_settings.body_size_desktop | default: 0
+  assign body_size_mobile = block_settings.body_size_mobile | default: 0
+-%}
+{%- if heading_size_mobile > 0 or body_font_family != 'default' or body_size_desktop > 0 or body_size_mobile > 0 -%}
+  {% style %}
+    {%- if body_font_family != 'default' or body_size_desktop > 0 %}
+    .accordion--{{ block.id }} .details-content .rte,
+    .accordion--{{ block.id }} .details-content p,
+    .accordion--{{ block.id }} .details-content .custom-typography {
+      {%- if body_font_family != 'default' %}font-family: var(--font-{{ body_font_family }}--family);{% endif -%}
+      {%- if body_size_desktop > 0 %}font-size: {{ body_size_desktop }}px;{% endif -%}
+    }
+    {% endif -%}
+    {%- if heading_size_mobile > 0 or body_size_mobile > 0 %}
+    @media screen and (max-width: 749px) {
+      {%- if heading_size_mobile > 0 %}
+      .accordion--{{ block.id }} .details__header {
+        font-size: {{ heading_size_mobile }}px;
+      }
+      {% endif -%}
+      {%- if body_size_mobile > 0 %}
+      .accordion--{{ block.id }} .details-content .rte,
+      .accordion--{{ block.id }} .details-content p,
+      .accordion--{{ block.id }} .details-content .custom-typography {
+        font-size: {{ body_size_mobile }}px;
+      }
+      {% endif -%}
+    }
+    {% endif -%}
+  {% endstyle %}
+{%- endif -%}
 
 {% stylesheet %}
   .accordion {
@@ -162,6 +199,80 @@
       ],
       "default": "paragraph",
       "info": "t:info.edit_presets_in_theme_settings"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_family",
+      "label": "Heading font family",
+      "options": [
+        { "value": "default", "label": "Theme default" },
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size (desktop)",
+      "info": "0 = use preset",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size (mobile)",
+      "info": "0 = use desktop",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "body_font_family",
+      "label": "Body font family",
+      "options": [
+        { "value": "default", "label": "Theme default" },
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "body_size_desktop",
+      "label": "Body size (desktop)",
+      "info": "0 = default",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "body_size_mobile",
+      "label": "Body size (mobile)",
+      "info": "0 = use desktop",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "checkbox",

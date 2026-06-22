@@ -2396,5 +2396,117 @@
         "default": "uppercase"
       }
     ]
+  },
+  {
+    "name": "Cinematic buttons",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Controls the shared cinematic CTA button used across the homepage (New Arrivals add-to-cart, hero, loyalty, shoppable, featured collection). All of these buttons share one identical style driven by the settings below."
+      },
+      {
+        "type": "header",
+        "content": "Colors"
+      },
+      {
+        "type": "color",
+        "id": "cbtn_color",
+        "label": "Border & text color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "cbtn_hover_bg",
+        "label": "Hover fill color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "cbtn_hover_text",
+        "label": "Hover text color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Typography"
+      },
+      {
+        "type": "range",
+        "id": "cbtn_font_size",
+        "label": "Font size",
+        "min": 7,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "default": 9
+      },
+      {
+        "type": "select",
+        "id": "cbtn_font_weight",
+        "label": "Font weight",
+        "options": [
+          { "value": "400", "label": "Regular" },
+          { "value": "500", "label": "Medium" },
+          { "value": "600", "label": "Semibold" },
+          { "value": "700", "label": "Bold" }
+        ],
+        "default": "500"
+      },
+      {
+        "type": "range",
+        "id": "cbtn_letter_spacing",
+        "label": "Letter spacing",
+        "min": 0,
+        "max": 6,
+        "step": 0.1,
+        "unit": "px",
+        "default": 2.4
+      },
+      {
+        "type": "header",
+        "content": "Shape & spacing"
+      },
+      {
+        "type": "range",
+        "id": "cbtn_padding_block",
+        "label": "Vertical padding",
+        "min": 4,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "default": 12
+      },
+      {
+        "type": "range",
+        "id": "cbtn_padding_inline",
+        "label": "Horizontal padding",
+        "min": 8,
+        "max": 60,
+        "step": 1,
+        "unit": "px",
+        "default": 32
+      },
+      {
+        "type": "range",
+        "id": "cbtn_border_width",
+        "label": "Border width",
+        "min": 1,
+        "max": 4,
+        "step": 1,
+        "unit": "px",
+        "default": 1
+      },
+      {
+        "type": "range",
+        "id": "cbtn_border_radius",
+        "label": "Border radius",
+        "info": "50 = full pill",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "default": 50
+      }
+    ]
   }
 ]

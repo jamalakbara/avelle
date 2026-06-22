@@ -270,6 +270,57 @@
       "visible_if": "{{ block.settings.type_preset == 'custom' }}"
     },
     {
+      "type": "header",
+      "content": "Responsive font"
+    },
+    {
+      "type": "select",
+      "id": "font_family_override",
+      "label": "Font family override",
+      "options": [
+        { "value": "default", "label": "Theme default" },
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "font_size_desktop",
+      "label": "Font size (desktop)",
+      "info": "0 = use preset",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "Font size (mobile)",
+      "info": "0 = use desktop",
+      "min": 0,
+      "max": 90,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "force_bold",
+      "label": "t:options.bold",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "force_uppercase",
+      "label": "t:options.uppercase",
+      "default": false
+    },
+    {
       "type": "select",
       "id": "wrap",
       "label": "t:settings.wrap",
