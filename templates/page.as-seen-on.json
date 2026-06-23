@@ -225,6 +225,12 @@
         "heading_font_size_desktop": 0,
         "heading_font_size_mobile": 0,
         "header_gap": 32,
+        "subheading": "Tag @avelle and #AvelleBabes to be featured!",
+        "layout": "grid",
+        "grid_initial_rows": 2,
+        "grid_gap": 16,
+        "card_see_more_label": "",
+        "load_more_label": "See More",
         "see_more_text": "See More",
         "see_more_url": "",
         "modal_heading_preset": "default",
@@ -258,12 +264,75 @@
         "padding_top": 64,
         "padding_bottom": 80
       }
+    },
+    "creator_lookbook": {
+      "type": "creator-tabs",
+      "blocks": {
+        "moments": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Moments that Matter",
+            "hide_panel": true,
+            "name": "",
+            "link_1_label": "",
+            "button_label": "",
+            "product_list": []
+          }
+        },
+        "creator_1": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Creator One",
+            "name": "Creator One",
+            "name_preset": "h2",
+            "description": "<p>A short bio about this creator and how they style their favourite Avelle pieces.</p>",
+            "link_1_label": "Instagram",
+            "link_2_label": "TikTok",
+            "button_label": "Shop Their Favourites",
+            "product_list": []
+          }
+        },
+        "creator_2": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Creator Two",
+            "name": "Creator Two",
+            "name_preset": "h2",
+            "description": "<p>A short bio about this creator and how they style their favourite Avelle pieces.</p>",
+            "link_1_label": "Instagram",
+            "button_label": "Shop Their Favourites",
+            "product_list": []
+          }
+        },
+        "creator_3": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Creator Three",
+            "name": "Creator Three",
+            "name_preset": "h2",
+            "description": "<p>A short bio about this creator and how they style their favourite Avelle pieces.</p>",
+            "link_1_label": "Instagram",
+            "button_label": "Shop Their Favourites",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": ["moments", "creator_1", "creator_2", "creator_3"],
+      "settings": {
+        "heading": "Creator looks",
+        "panel_ratio": 23,
+        "panel_background": "#7D6953",
+        "panel_text_color": "#EDE4D9",
+        "padding_top": 40,
+        "padding_bottom": 56
+      }
     }
   },
   "order": [
     "hero",
     "intro_banner",
     "featured_videos",
+    "creator_lookbook",
     "edit_banner",
     "shop_the_edit",
     "community",

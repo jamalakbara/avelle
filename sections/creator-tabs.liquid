@@ -1,0 +1,502 @@
+{%- comment -%}
+  Creator Tabs
+  A tabbed lookbook. Each tab shows a creator panel (image + name + bio + social
+  links + shop button) and a product grid below. Switching tabs swaps both the
+  panel and the products. Add one block per tab.
+{%- endcomment -%}
+
+{{ 'curated-card.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .creator-tabs {
+    padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+    max-width: 760px;
+    margin: 0 auto 32px;
+    background: var(--color-tabs-track, #ececea);
+    border-radius: 4px;
+    padding: 4px;
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__tab {
+    flex: 1 1 auto;
+    padding: 12px 20px;
+    border: 0;
+    background: transparent;
+    color: var(--color-foreground, #1a1a1a);
+    font: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-radius: 3px;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__tab[aria-selected="true"] {
+    background: var(--color-tabs-active, #3a2e23);
+    color: var(--color-tabs-active-text, #ffffff);
+    font-weight: 600;
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__panel[hidden] { display: none; }
+
+  #shopify-section-{{ section.id }} .creator-tabs__split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    background: {{ section.settings.panel_background }};
+    color: {{ section.settings.panel_text_color }};
+    /* Recolor the shared cinematic button for this panel (DRY: same .cinematic-btn). */
+    --cbtn-color: {{ section.settings.panel_text_color }};
+    --cbtn-hover-bg: {{ section.settings.panel_text_color }};
+    --cbtn-hover-text: {{ section.settings.panel_background }};
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__media {
+    margin: 0;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+  }
+
+  @media screen and (min-width: 750px) {
+    /* Match the reference two-column band proportions (~2.3:1 width to height). */
+    #shopify-section-{{ section.id }} .creator-tabs__split {
+      aspect-ratio: {{ section.settings.panel_ratio }} / 10;
+    }
+    #shopify-section-{{ section.id }} .creator-tabs__media {
+      aspect-ratio: auto;
+      height: 100%;
+    }
+    #shopify-section-{{ section.id }} .creator-tabs__content {
+      overflow-y: auto;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__media img,
+  #shopify-section-{{ section.id }} .creator-tabs__media .placeholder-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: clamp(32px, 5vw, 72px);
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__name {
+    margin: 0;
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__bio {
+    margin: 0;
+    max-width: 52ch;
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__link {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: {{ section.settings.panel_text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__link-sep {
+    opacity: 0.5;
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__button {
+    align-self: flex-start;
+    margin-top: 12px;
+    --cbtn-font-size: 0.75rem;
+    --cbtn-padding-block: 1rem;
+    --cbtn-padding-inline: 2.25rem;
+  }
+
+  /* Products use the shared cinematic curated-products grid (staggered 4-col). */
+  #shopify-section-{{ section.id }} .creator-tabs__panel .curated-products__grid {
+    margin-top: 40px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .creator-tabs__split {
+      grid-template-columns: 1fr;
+    }
+    #shopify-section-{{ section.id }} .creator-tabs__nav {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
+  }
+{%- endstyle -%}
+
+<div class="page-width creator-tabs">
+  {%- if section.blocks.size > 0 -%}
+    <div class="creator-tabs__nav" role="tablist" aria-label="{{ section.settings.heading | default: 'Creator looks' | escape }}">
+      {%- for block in section.blocks -%}
+        <button
+          type="button"
+          class="creator-tabs__tab"
+          role="tab"
+          id="CreatorTab-{{ section.id }}-{{ forloop.index }}"
+          aria-controls="CreatorPanel-{{ section.id }}-{{ forloop.index }}"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+          data-tab-target="{{ forloop.index }}"
+          {{ block.shopify_attributes }}
+        >
+          {{ block.settings.tab_label | default: block.settings.name | default: 'Tab' }}
+        </button>
+      {%- endfor -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- assign bs = block.settings -%}
+      <div
+        class="creator-tabs__panel"
+        role="tabpanel"
+        id="CreatorPanel-{{ section.id }}-{{ forloop.index }}"
+        aria-labelledby="CreatorTab-{{ section.id }}-{{ forloop.index }}"
+        data-panel="{{ forloop.index }}"
+        {% unless forloop.first %}hidden{% endunless %}
+      >
+        {%- unless bs.hide_panel -%}
+          {%- if bs.image != blank or bs.name != blank -%}
+            <div class="creator-tabs__split">
+              <figure class="creator-tabs__media">
+                {%- if bs.image != blank -%}
+                  {{ bs.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '450, 700, 900, 1200' }}
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </figure>
+              <div class="creator-tabs__content">
+                {%- if bs.name != blank -%}
+                  <h2 class="creator-tabs__name{% if bs.name_preset != 'default' %} {{ bs.name_preset }}{% endif %}">{{ bs.name }}</h2>
+                {%- endif -%}
+                {%- if bs.description != blank -%}
+                  <div class="creator-tabs__bio rte">{{ bs.description }}</div>
+                {%- endif -%}
+
+                {%- assign has_links = false -%}
+                {%- if bs.link_1_label != blank or bs.link_2_label != blank or bs.link_3_label != blank -%}{%- assign has_links = true -%}{%- endif -%}
+                {%- if has_links -%}
+                  <div class="creator-tabs__links">
+                    {%- if bs.link_1_label != blank -%}
+                      <a class="creator-tabs__link" href="{{ bs.link_1_url | default: '#' }}"{% if bs.link_1_url != blank %} target="_blank" rel="noopener"{% endif %}>{{ bs.link_1_label }}</a>
+                    {%- endif -%}
+                    {%- if bs.link_2_label != blank -%}
+                      {%- if bs.link_1_label != blank -%}<span class="creator-tabs__link-sep" aria-hidden="true">|</span>{%- endif -%}
+                      <a class="creator-tabs__link" href="{{ bs.link_2_url | default: '#' }}"{% if bs.link_2_url != blank %} target="_blank" rel="noopener"{% endif %}>{{ bs.link_2_label }}</a>
+                    {%- endif -%}
+                    {%- if bs.link_3_label != blank -%}
+                      {%- if bs.link_1_label != blank or bs.link_2_label != blank -%}<span class="creator-tabs__link-sep" aria-hidden="true">|</span>{%- endif -%}
+                      <a class="creator-tabs__link" href="{{ bs.link_3_url | default: '#' }}"{% if bs.link_3_url != blank %} target="_blank" rel="noopener"{% endif %}>{{ bs.link_3_label }}</a>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+
+                {%- if bs.button_label != blank -%}
+                  {%- comment -%} Collect first available variant of each "add to cart" product (separate from the showcase grid). {%- endcomment -%}
+                  {%- capture bundle_ids -%}
+                    {%- for p in bs.cart_product_list -%}
+                      {%- if p.selected_or_first_available_variant -%}{{ p.selected_or_first_available_variant.id }}{%- unless forloop.last %},{% endunless -%}{%- endif -%}
+                    {%- endfor -%}
+                  {%- endcapture -%}
+                  {%- assign bundle_ids = bundle_ids | strip | replace: ' ', '' | replace: '
+', '' -%}
+                  {%- if bs.cart_product_list != blank and bundle_ids != blank -%}
+                    <button type="button" class="creator-tabs__button cinematic-btn" data-bundle-add="{{ bundle_ids }}">{{ bs.button_label }}</button>
+                  {%- else -%}
+                    <a class="creator-tabs__button cinematic-btn" href="{{ bs.button_url | default: '#' }}">{{ bs.button_label }}</a>
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endunless -%}
+
+        {%- if bs.product_list != blank -%}
+          <div class="curated-products__grid">
+            {%- for product in bs.product_list -%}
+              {% render 'curated-card', product: product, index: forloop.index %}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  {%- else -%}
+    <div class="page-width">{{ 'onboarding.product_title' | t | default: 'Add a tab block to get started.' }}</div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('shopify-section-{{ section.id }}');
+    if (!root) return;
+    var tabs = root.querySelectorAll('.creator-tabs__tab');
+    var panels = root.querySelectorAll('.creator-tabs__panel');
+
+    function activate(index) {
+      tabs.forEach(function (tab) {
+        var selected = tab.getAttribute('data-tab-target') === String(index);
+        tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+        tab.setAttribute('tabindex', selected ? '0' : '-1');
+      });
+      panels.forEach(function (panel) {
+        panel.hidden = panel.getAttribute('data-panel') !== String(index);
+      });
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () {
+        activate(tab.getAttribute('data-tab-target'));
+      });
+      tab.addEventListener('keydown', function (e) {
+        var next;
+        if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+        else if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+        if (next) {
+          e.preventDefault();
+          next.focus();
+          activate(next.getAttribute('data-tab-target'));
+        }
+      });
+    });
+  })();
+</script>
+
+<script type="module">
+  import { CartAddEvent } from '@theme/events';
+
+  (function () {
+    var root = document.getElementById('shopify-section-{{ section.id }}');
+    if (!root) return;
+
+    root.querySelectorAll('[data-bundle-add]').forEach(function (btn) {
+      btn.addEventListener('click', async function (e) {
+        e.preventDefault();
+        if (btn.disabled) return;
+
+        var ids = (btn.getAttribute('data-bundle-add') || '')
+          .split(',')
+          .map(function (s) { return s.trim(); })
+          .filter(Boolean);
+        if (!ids.length) return;
+
+        btn.disabled = true;
+        var original = btn.textContent;
+        btn.textContent = 'Adding…';
+
+        try {
+          var res = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+            body: JSON.stringify({ items: ids.map(function (id) { return { id: Number(id), quantity: 1 }; }) }),
+          });
+
+          if (!res.ok) {
+            var err = await res.json().catch(function () { return {}; });
+            throw new Error(err.description || res.statusText);
+          }
+
+          var cartData = await res.json();
+          document.dispatchEvent(
+            new CartAddEvent(cartData, 'creator-tabs-{{ section.id }}', { itemCount: ids.length })
+          );
+
+          btn.textContent = 'Added!';
+
+          var drawer = document.querySelector('cart-drawer-component');
+          if (drawer && typeof drawer.open === 'function') drawer.open();
+
+          setTimeout(function () { btn.textContent = original; btn.disabled = false; }, 2000);
+        } catch (error) {
+          btn.textContent = 'Error — Retry';
+          setTimeout(function () { btn.textContent = original; btn.disabled = false; }, 2500);
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Creator Tabs",
+  "tag": "section",
+  "class": "section-creator-tabs",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Accessible label",
+      "info": "Used as the tab group label for screen readers.",
+      "default": "Creator looks"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "paragraph",
+      "content": "Products use the cinematic curated-products grid (staggered 4 columns on desktop, 2 on mobile)."
+    },
+    {
+      "type": "range",
+      "id": "panel_ratio",
+      "min": 16,
+      "max": 32,
+      "step": 1,
+      "label": "Creator panel width:height ratio (desktop)",
+      "info": "Higher = shorter / wider band. 23 ≈ reference.",
+      "default": 23
+    },
+    {
+      "type": "color",
+      "id": "panel_background",
+      "label": "Creator panel background",
+      "info": "Matches the Loyalty section by default.",
+      "default": "#7D6953"
+    },
+    {
+      "type": "color",
+      "id": "panel_text_color",
+      "label": "Creator panel text & button color",
+      "default": "#EDE4D9"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Creator Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab label",
+          "default": "Creator Name"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_panel",
+          "label": "Hide creator panel (show products only)",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Creator panel"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Portrait image",
+          "info": "Portrait (4:5 recommended)."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Creator Name"
+        },
+        {
+          "type": "select",
+          "id": "name_preset",
+          "label": "Name preset",
+          "options": [
+            { "value": "default", "label": "Default" },
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" }
+          ],
+          "default": "h2"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>A short bio about this creator and how they style their favourite pieces.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Social links"
+        },
+        { "type": "text", "id": "link_1_label", "label": "Link 1 label", "default": "Instagram" },
+        { "type": "url", "id": "link_1_url", "label": "Link 1 URL" },
+        { "type": "text", "id": "link_2_label", "label": "Link 2 label" },
+        { "type": "url", "id": "link_2_url", "label": "Link 2 URL" },
+        { "type": "text", "id": "link_3_label", "label": "Link 3 label" },
+        { "type": "url", "id": "link_3_url", "label": "Link 3 URL" },
+        {
+          "type": "header",
+          "content": "Shop button"
+        },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Favourites" },
+        {
+          "type": "product_list",
+          "id": "cart_product_list",
+          "label": "Add-to-cart products (button click)",
+          "info": "When the button is clicked, these products are added to the cart. Leave empty to use the button link instead.",
+          "limit": 20
+        },
+        { "type": "url", "id": "button_url", "label": "Button link (fallback if no add-to-cart products)" },
+        {
+          "type": "header",
+          "content": "Products showcase"
+        },
+        {
+          "type": "product_list",
+          "id": "product_list",
+          "label": "Showcase products (grid below)",
+          "limit": 50
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Creator Tabs",
+      "blocks": [
+        { "type": "tab", "settings": { "tab_label": "Moments that Matter", "hide_panel": true, "name": "" } },
+        { "type": "tab", "settings": { "tab_label": "Creator One" } },
+        { "type": "tab", "settings": { "tab_label": "Creator Two" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

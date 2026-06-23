@@ -197,6 +197,78 @@
     }
   }
 
+  /* ── Subheading ── */
+  #shopify-section-{{ section.id }} .ugc-gallery__subheading {
+    text-align: center;
+    margin: -16px auto 24px;
+    max-width: 60ch;
+    opacity: 0.7;
+  }
+
+  /* ── Grid layout (multi-row) ── */
+  #shopify-section-{{ section.id }} .ugc-gallery--grid .ugc-gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: {{ section.settings.grid_gap }}px;
+    overflow: visible;
+    cursor: default;
+    scroll-snap-type: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .ugc-gallery--grid .ugc-gallery__grid {
+      grid-template-columns: repeat(var(--columns, 4), 1fr);
+    }
+  }
+
+  #shopify-section-{{ section.id }} .ugc-gallery--grid .ugc-card {
+    width: auto;
+    flex: initial;
+  }
+
+  #shopify-section-{{ section.id }} .ugc-gallery--grid .ugc-gallery__arrow {
+    display: none !important;
+  }
+
+  #shopify-section-{{ section.id }} .ugc-card[data-ugc-extra] {
+    display: none;
+  }
+
+  /* Per-card "See more" cue (grid) */
+  #shopify-section-{{ section.id }} .ugc-card__see-more {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    z-index: 2;
+    color: #fff;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    pointer-events: none;
+  }
+
+  /* Load-more button */
+  #shopify-section-{{ section.id }} .ugc-gallery__more {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+  }
+
+  #shopify-section-{{ section.id }} .ugc-gallery__more[hidden] {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .ugc-gallery__more-btn {
+    --cbtn-color: var(--color-foreground, #1a1a1a);
+    --cbtn-hover-bg: var(--color-foreground, #1a1a1a);
+    --cbtn-hover-text: var(--color-background, #fff);
+    --cbtn-font-size: 0.75rem;
+    --cbtn-padding-block: 1rem;
+    --cbtn-padding-inline: 2.5rem;
+  }
+
   .ugc-card__media {
     position: absolute;
     inset: 0;
@@ -639,12 +711,26 @@
   {%- endfor -%}
 
   {%- comment -%} Cards grid {%- endcomment -%}
-  <div class="ugc-gallery">
+  {%- liquid
+    assign is_grid = false
+    if section.settings.layout == 'grid'
+      assign is_grid = true
+    endif
+    assign cols = section.settings.columns_desktop | plus: 0
+    if cols < 1
+      assign cols = 4
+    endif
+    assign initial_count = section.settings.grid_initial_rows | times: cols
+  -%}
+  <div class="ugc-gallery ugc-gallery--{{ section.settings.layout | default: 'carousel' }}">
     {%- if section.settings.heading != blank -%}
       <h2 class="ugc-gallery__heading{% if section.settings.heading_preset != 'default' %} {{ section.settings.heading_preset }}{% endif %}" style="text-transform: {{ section.settings.heading_case }};">{{ section.settings.heading }}</h2>
     {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="ugc-gallery__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
 
-    <div class="ugc-gallery__carousel" data-ugc-carousel>
+    <div class="ugc-gallery__carousel" data-ugc-carousel data-ugc-layout="{{ section.settings.layout | default: 'carousel' }}">
       <button type="button" class="ugc-gallery__arrow ugc-gallery__arrow--prev" data-ugc-prev aria-label="{{ 'general.pagination.previous' | t | default: 'Previous' }}" hidden>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -677,6 +763,7 @@
           data-block-id="{{ block.id }}"
           data-video-src="{{ video_src }}"
           style="--card-delay: {{ forloop.index0 | times: 0.09 }}s"
+          {% if is_grid and forloop.index0 >= initial_count %}data-ugc-extra{% endif %}
           on:click="/openModal"
           tabindex="0"
           role="button"
@@ -720,11 +807,15 @@
                 <span class="ugc-card__handle">{{ handle_text }}</span>
               {%- endif -%}
             {%- endif -%}
+
+            {%- if is_grid and section.settings.card_see_more_label != blank -%}
+              <span class="ugc-card__see-more">{{ section.settings.card_see_more_label }}</span>
+            {%- endif -%}
           </div>
         </div>
       {%- endfor -%}
 
-      {%- if section.settings.see_more_url != blank -%}
+      {%- if section.settings.see_more_url != blank and is_grid == false -%}
         {%- assign disc_label = section.settings.see_more_text | default: 'See more' -%}
         <a class="ugc-card ugc-card--discover" href="{{ section.settings.see_more_url }}" aria-label="{{ disc_label }}">
           <div class="ugc-card__media">
@@ -746,6 +837,14 @@
         </svg>
       </button>
     </div>
+
+    {%- if is_grid and section.blocks.size > initial_count -%}
+      <div class="ugc-gallery__more" data-ugc-more>
+        <button type="button" class="ugc-gallery__more-btn cinematic-btn" data-ugc-load-more>
+          {{ section.settings.load_more_label | default: 'See More' }}
+        </button>
+      </div>
+    {%- endif -%}
 
   </div>
 
@@ -851,7 +950,24 @@
 
     document.querySelectorAll('[data-ugc-carousel]:not([data-ugc-init])').forEach(function (el) {
       el.setAttribute('data-ugc-init', '');
+      // Grid layout doesn't use the horizontal carousel behavior.
+      if (el.getAttribute('data-ugc-layout') === 'grid') return;
       initCarousel(el);
+    });
+
+    // Grid "See more" — reveal the remaining cards.
+    document.querySelectorAll('[data-ugc-load-more]:not([data-ugc-more-init])').forEach(function (btn) {
+      btn.setAttribute('data-ugc-more-init', '');
+      btn.addEventListener('click', function () {
+        var section = btn.closest('.section-shoppable-video-gallery') || document;
+        section.querySelectorAll('.ugc-card[data-ugc-extra]').forEach(function (card) {
+          card.removeAttribute('data-ugc-extra');
+          // Trigger the reveal animation (cards normally fade in via IntersectionObserver).
+          requestAnimationFrame(function () { card.classList.add('is-visible'); });
+        });
+        var wrap = btn.closest('[data-ugc-more]');
+        if (wrap) wrap.hidden = true;
+      });
     });
   })();
 </script>
@@ -940,6 +1056,58 @@
       "unit": "px",
       "label": "Gap below heading",
       "default": 32
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "info": "Optional line below the heading, e.g. Tag @avelle and #AvelleBabes to be featured!"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "carousel", "label": "Carousel (scrolling row)" },
+        { "value": "grid", "label": "Grid (multiple rows)" }
+      ],
+      "default": "carousel"
+    },
+    {
+      "type": "range",
+      "id": "grid_initial_rows",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "label": "Rows shown before \"See more\" (grid)",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between cards (grid)",
+      "default": 16
+    },
+    {
+      "type": "text",
+      "id": "card_see_more_label",
+      "label": "Per-card label (grid)",
+      "info": "Shown bottom-right on each card, e.g. See more. Leave blank to hide.",
+      "default": "See more"
+    },
+    {
+      "type": "text",
+      "id": "load_more_label",
+      "label": "Load-more button label (grid)",
+      "default": "See More"
     },
     {
       "type": "header",
