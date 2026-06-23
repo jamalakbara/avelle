@@ -1,6 +1,23 @@
 <div
   class="section faq-content page-width-content color-{{ section.settings.color_scheme }}"
-  style="padding-block-start: {{ section.settings['padding-block-start'] }}px; padding-block-end: {{ section.settings['padding-block-end'] }}px;"
+  style="
+    padding-block-start: {{ section.settings['padding-block-start'] }}px;
+    padding-block-end: {{ section.settings['padding-block-end'] }}px;
+    --faq-group-gap: {{ section.settings.group_gap }}px;
+    --faq-heading-font: var(--font-{{ section.settings.heading_font }}--family);
+    --faq-heading-size: {{ section.settings.heading_size }}px;
+    --faq-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --faq-heading-weight: {{ section.settings.heading_weight }};
+    --faq-heading-case: {{ section.settings.heading_case }};
+    --faq-heading-gap: {{ section.settings.heading_margin }}px;
+    --faq-question-font: var(--font-{{ section.settings.question_font }}--family);
+    --faq-question-size: {{ section.settings.question_size }}px;
+    --faq-question-size-mobile: {{ section.settings.question_size_mobile }}px;
+    --faq-question-weight: {{ section.settings.question_weight }};
+    --faq-question-case: {{ section.settings.question_case }};
+    --faq-answer-size: {{ section.settings.answer_size }}px;
+    --faq-answer-size-mobile: {{ section.settings.answer_size_mobile }}px;
+  "
 >
   <template id="faq-source-{{ section.id }}">{{ page.content }}</template>
   <template id="faq-icons-{{ section.id }}">
@@ -14,10 +31,14 @@
 <script>
 (function () {
   const id = '{{ section.id }}';
+
+  function buildFaq() {
   const sourceEl = document.getElementById('faq-source-' + id);
   const iconsEl = document.getElementById('faq-icons-' + id);
   const output = document.getElementById('faq-output-' + id);
   if (!sourceEl || !output) return;
+
+  output.innerHTML = '';
 
   const parser = new DOMParser();
   const doc = parser.parseFromString(sourceEl.innerHTML, 'text/html');
@@ -81,6 +102,18 @@
   } else {
     output.innerHTML = sourceEl.innerHTML;
   }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', buildFaq, { once: true });
+  } else {
+    buildFaq();
+  }
+
+  // Re-render in the theme editor when settings change
+  document.addEventListener('shopify:section:load', function (event) {
+    if (event.detail && event.detail.sectionId === id) buildFaq();
+  });
 })();
 </script>
 
@@ -94,11 +127,12 @@
   }
 
   .faq-group__heading {
-    font-family: var(--font-heading--family);
-    font-size: var(--font-h3--size);
-    font-weight: var(--font-h3--weight);
+    font-family: var(--faq-heading-font, var(--font-heading--family));
+    font-size: var(--faq-heading-size, var(--font-h3--size));
+    font-weight: var(--faq-heading-weight, var(--font-h3--weight));
     line-height: var(--font-h3--line-height);
-    margin-block-end: 1.25rem;
+    text-transform: var(--faq-heading-case, none);
+    margin-block-end: var(--faq-heading-gap, 20px);
   }
 
   .faq-content .accordion {
@@ -125,6 +159,7 @@
   .faq-content .accordion--dividers .faq-answer {
     padding-block-end: 0.75rem;
     overflow: visible;
+    font-size: var(--faq-answer-size, inherit);
   }
 
   /* Plus/minus icon toggle */
@@ -144,25 +179,24 @@
     display: block;
   }
 
-  .faq-content .details__header {
+  .faq-content .accordion .details__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    font-family: var(--font-h6--family);
+    font-family: var(--faq-question-font, var(--font-h6--family));
     font-style: var(--font-h6--style);
-    font-weight: var(--font-h6--weight);
-    font-size: var(--font-h6--size);
+    font-weight: var(--faq-question-weight, var(--font-h6--weight));
+    font-size: var(--faq-question-size, var(--font-h6--size));
     line-height: var(--font-h6--line-height);
-    letter-spacing: var(--font-h6--letter-spacing);
-    text-transform: var(--font-h6--case);
+    text-transform: var(--faq-question-case, var(--font-h6--case));
     min-height: var(--minimum-touch-target, 44px);
     cursor: pointer;
     list-style: none;
     width: 100%;
   }
 
-  .faq-content .details__header::-webkit-details-marker {
+  .faq-content .accordion .details__header::-webkit-details-marker {
     display: none;
   }
 
@@ -170,6 +204,20 @@
     display: inline-flex;
     align-items: center;
     flex-shrink: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .faq-content .faq-group__heading {
+      font-size: var(--faq-heading-size-mobile, var(--faq-heading-size, var(--font-h3--size)));
+    }
+
+    .faq-content .accordion .details__header {
+      font-size: var(--faq-question-size-mobile, var(--faq-question-size, var(--font-h6--size)));
+    }
+
+    .faq-content .accordion--dividers .faq-answer {
+      font-size: var(--faq-answer-size-mobile, var(--faq-answer-size, inherit));
+    }
   }
 
 {% endstylesheet %}
@@ -184,6 +232,168 @@
       "id": "color_scheme",
       "label": "t:settings.color_scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Category heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Font family",
+      "options": [
+        { "value": "heading", "label": "Heading" },
+        { "value": "body", "label": "Body" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Font size (desktop)",
+      "min": 16,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Font size (mobile)",
+      "min": 14,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "heading_weight",
+      "label": "Font weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "select",
+      "id": "heading_case",
+      "label": "Text case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "heading_margin",
+      "label": "Space below heading",
+      "min": 0,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "group_gap",
+      "label": "Space between categories",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "header",
+      "content": "Question"
+    },
+    {
+      "type": "select",
+      "id": "question_font",
+      "label": "Font family",
+      "options": [
+        { "value": "body", "label": "Body" },
+        { "value": "heading", "label": "Heading" },
+        { "value": "subheading", "label": "Subheading" },
+        { "value": "accent", "label": "Accent" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "range",
+      "id": "question_size",
+      "label": "Font size (desktop)",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "question_size_mobile",
+      "label": "Font size (mobile)",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "question_weight",
+      "label": "Font weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "select",
+      "id": "question_case",
+      "label": "Text case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Answer"
+    },
+    {
+      "type": "range",
+      "id": "answer_size",
+      "label": "Font size (desktop)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "answer_size_mobile",
+      "label": "Font size (mobile)",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
     },
     {
       "type": "range",
