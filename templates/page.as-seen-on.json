@@ -1,0 +1,96 @@
+{
+  "sections": {
+    "hero": {
+      "type": "about-hero-cinematic",
+      "settings": {
+        "heading": "As Seen On",
+        "subheading": "Avelle in real life — styled by our community.",
+        "overlay_opacity": 30
+      }
+    },
+    "intro_banner": {
+      "type": "editorial-banner",
+      "settings": {
+        "heading": "The New Kind of Easy",
+        "subtitle": "Live in breezy and easy styles that effortlessly keep up with you from balmy mornings in the city to sunset socials.",
+        "heading_preset": "h3",
+        "color_scheme": "scheme-3",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "featured_videos": {
+      "type": "shoppable-video-gallery",
+      "blocks": {
+        "v1": { "type": "ugc_video_item", "settings": { "handle": "@creator_one" } },
+        "v2": { "type": "ugc_video_item", "settings": { "handle": "@creator_two" } },
+        "v3": { "type": "ugc_video_item", "settings": { "handle": "@creator_three" } },
+        "v4": { "type": "ugc_video_item", "settings": { "handle": "@creator_four" } }
+      },
+      "block_order": ["v1", "v2", "v3", "v4"],
+      "settings": {
+        "heading": "In Real Life",
+        "heading_case": "uppercase",
+        "see_more_text": "See more"
+      }
+    },
+    "edit_banner": {
+      "type": "editorial-banner",
+      "settings": {
+        "heading": "Chasing Sunshine",
+        "subtitle": "Breezy pieces for sun-drenched days — exactly what you need for all your summer stops.",
+        "heading_preset": "h3",
+        "color_scheme": "scheme-3",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "shop_the_edit": {
+      "type": "curated-products-cinematic",
+      "settings": {
+        "subheading": "Shop The Edit",
+        "heading": "Summer Essentials",
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "community": {
+      "type": "shoppable-video-gallery",
+      "blocks": {
+        "c1": { "type": "ugc_video_item", "settings": { "handle": "@member_one" } },
+        "c2": { "type": "ugc_video_item", "settings": { "handle": "@member_two" } },
+        "c3": { "type": "ugc_video_item", "settings": { "handle": "@member_three" } },
+        "c4": { "type": "ugc_video_item", "settings": { "handle": "@member_four" } },
+        "c5": { "type": "ugc_video_item", "settings": { "handle": "@member_five" } },
+        "c6": { "type": "ugc_video_item", "settings": { "handle": "@member_six" } },
+        "c7": { "type": "ugc_video_item", "settings": { "handle": "@member_seven" } },
+        "c8": { "type": "ugc_video_item", "settings": { "handle": "@member_eight" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8"],
+      "settings": {
+        "heading": "Our #AvelleBabes",
+        "heading_case": "none",
+        "see_more_text": "See More"
+      }
+    },
+    "newsletter": {
+      "type": "editorial-email-signup",
+      "settings": {
+        "heading": "Receive 15% Off Your First Purchase & Stay Inspired",
+        "color_scheme": "scheme-1",
+        "padding_top": 64,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "intro_banner",
+    "featured_videos",
+    "edit_banner",
+    "shop_the_edit",
+    "community",
+    "newsletter"
+  ]
+}

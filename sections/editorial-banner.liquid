@@ -1,0 +1,199 @@
+{%- comment -%}
+  Editorial Banner
+  A full-width colored band with a centered heading and optional subtitle.
+  Used for intro / divider statements (e.g. "The New Kind of Easy").
+{%- endcomment -%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .editorial-banner {
+    text-align: center;
+    padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;
+    padding-inline: 24px;
+  }
+
+  #shopify-section-{{ section.id }} .editorial-banner__inner {
+    max-width: {{ section.settings.content_max_width }}px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.text_gap }}px;
+  }
+
+  #shopify-section-{{ section.id }} .editorial-banner__heading {
+    margin: 0;
+    text-transform: {{ section.settings.heading_case }};
+  }
+
+  #shopify-section-{{ section.id }} .editorial-banner__subtitle {
+    margin: 0;
+    max-width: 60ch;
+    margin-inline: auto;
+  }
+
+  {%- if section.settings.heading_font_size_desktop > 0 -%}
+    #shopify-section-{{ section.id }} .editorial-banner__heading { font-size: {{ section.settings.heading_font_size_desktop }}px; }
+  {%- endif -%}
+
+  @media screen and (max-width: 749px) {
+    {%- if section.settings.heading_font_size_mobile > 0 -%}
+      #shopify-section-{{ section.id }} .editorial-banner__heading { font-size: {{ section.settings.heading_font_size_mobile }}px; }
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} editorial-banner">
+  <div class="editorial-banner__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="editorial-banner__heading reveal-text{% if section.settings.heading_preset != 'default' %} {{ section.settings.heading_preset }}{% endif %}">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+    {%- if section.settings.subtitle != blank -%}
+      <p class="editorial-banner__subtitle reveal-text{% if section.settings.subtitle_preset != 'default' %} {{ section.settings.subtitle_preset }}{% endif %}">
+        {{ section.settings.subtitle }}
+      </p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Editorial Banner",
+  "tag": "section",
+  "class": "section-editorial-banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The New Kind of Easy"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Live in breezy and easy styles that effortlessly keep up with you from balmy mornings in the city to sunset socials."
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "heading_preset",
+      "label": "Heading preset",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ],
+      "default": "h3",
+      "info": "Edit preset styles in Theme settings → Typography."
+    },
+    {
+      "type": "select",
+      "id": "heading_case",
+      "label": "Heading case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "UPPERCASE" },
+        { "value": "lowercase", "label": "lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "min": 0,
+      "max": 96,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading size (desktop)",
+      "info": "0 = use preset size.",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "min": 0,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading size (mobile)",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "subtitle_preset",
+      "label": "Subtitle preset",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "rte", "label": "Body" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "text_gap",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between heading and subtitle",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "min": 400,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "label": "Content max width",
+      "default": 900
+    },
+    {
+      "type": "header",
+      "content": "Colors & Spacing"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-3"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 56
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial Banner"
+    }
+  ]
+}
+{% endschema %}

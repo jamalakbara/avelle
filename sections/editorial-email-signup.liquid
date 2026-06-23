@@ -1,0 +1,307 @@
+{%- comment -%}
+  Editorial Email Signup
+  Newsletter capture with heading, supporting copy, first name + email fields,
+  consent line and submit button. Creates a customer profile on submit.
+{%- endcomment -%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .editorial-signup {
+    padding-block: {{ section.settings.padding_top }}px {{ section.settings.padding_bottom }}px;
+    padding-inline: 24px;
+  }
+
+  #shopify-section-{{ section.id }} .editorial-signup__inner {
+    max-width: {{ section.settings.content_max_width }}px;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .editorial-signup__heading {
+    margin: 0 0 16px;
+  }
+
+  #shopify-section-{{ section.id }} .editorial-signup__body {
+    margin: 0 auto 32px;
+    max-width: 60ch;
+  }
+
+  #shopify-section-{{ section.id }} .editorial-signup__body p {
+    margin: 0 0 6px;
+  }
+
+  #shopify-section-{{ section.id }} .editorial-signup__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+    max-width: 480px;
+    margin-inline: auto;
+  }
+
+  #shopify-section-{{ section.id }} .editorial-signup__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #shopify-section-{{ section.id }} .editorial-signup__field label {
+    font-size: 0.875rem;
+  }
+
+  #shopify-section-{{ section.id }} .editorial-signup__field input[type="text"],
+  #shopify-section-{{ section.id }} .editorial-signup__field input[type="email"] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--color-border, rgba(0,0,0,0.2));
+    border-radius: {{ section.settings.input_radius }}px;
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font: inherit;
+  }
+
+  #shopify-section-{{ section.id }} .editorial-signup__consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+  }
+
+  #shopify-section-{{ section.id }} .editorial-signup__consent input {
+    margin-top: 3px;
+    flex: 0 0 auto;
+  }
+
+  #shopify-section-{{ section.id }} .editorial-signup__submit {
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  #shopify-section-{{ section.id }} .editorial-signup__message {
+    margin: 8px 0 0;
+    font-size: 0.875rem;
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} editorial-signup">
+  <div class="editorial-signup__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="editorial-signup__heading reveal-text{% if section.settings.heading_preset != 'default' %} {{ section.settings.heading_preset }}{% endif %}">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.body != blank -%}
+      <div class="editorial-signup__body rte">{{ section.settings.body }}</div>
+    {%- endif -%}
+
+    {%- assign form_id = 'EditorialSignup-' | append: section.id -%}
+    {%- form 'customer', id: form_id, class: 'editorial-signup__form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+
+      {%- if section.settings.show_first_name -%}
+        <div class="editorial-signup__field">
+          <label for="EditorialSignup-FirstName-{{ section.id }}">
+            {{ section.settings.first_name_label }}{% if section.settings.first_name_required %} *{% endif %}
+          </label>
+          <input
+            id="EditorialSignup-FirstName-{{ section.id }}"
+            type="text"
+            name="contact[first_name]"
+            autocomplete="given-name"
+            {% if section.settings.first_name_required %}required{% endif %}
+          >
+        </div>
+      {%- endif -%}
+
+      <div class="editorial-signup__field">
+        <label for="EditorialSignup-Email-{{ section.id }}">
+          {{ section.settings.email_label }} *
+        </label>
+        <input
+          id="EditorialSignup-Email-{{ section.id }}"
+          type="email"
+          name="contact[email]"
+          autocorrect="off"
+          autocapitalize="off"
+          autocomplete="email"
+          required
+          {% if form.errors %}aria-invalid="true"{% endif %}
+        >
+      </div>
+
+      {%- if section.settings.consent_text != blank -%}
+        <label class="editorial-signup__consent">
+          <input type="checkbox" name="contact[accepts_marketing]" value="true" {% if section.settings.consent_required %}required{% endif %}>
+          <span>{{ section.settings.consent_text }}</span>
+        </label>
+      {%- endif -%}
+
+      <button type="submit" class="editorial-signup__submit {{ section.settings.button_style }}">
+        {{ section.settings.button_label }}
+      </button>
+
+      {%- if form.posted_successfully? -%}
+        <p class="editorial-signup__message" tabindex="-1">{{ section.settings.success_text }}</p>
+      {%- elsif form.errors -%}
+        <p class="editorial-signup__message" tabindex="-1">{{ form.errors | default_errors }}</p>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Editorial Email Signup",
+  "tag": "section",
+  "class": "section-editorial-signup",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Receive 15% Off Your First Purchase"
+    },
+    {
+      "type": "select",
+      "id": "heading_preset",
+      "label": "Heading preset",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" }
+      ],
+      "default": "h4"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body copy",
+      "default": "<p><strong>Discover New Styles:</strong> See how our community styles their pieces.</p><p><strong>Find Inspiration:</strong> Get regular updates on their top picks and styling tips.</p><p><strong>Enjoy Exclusive Benefits:</strong> Be the first to know about new arrivals, special offers, and more.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Form fields"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_first_name",
+      "label": "Show first name field",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "first_name_label",
+      "label": "First name label",
+      "default": "First Name"
+    },
+    {
+      "type": "checkbox",
+      "id": "first_name_required",
+      "label": "First name required",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email label",
+      "default": "Email"
+    },
+    {
+      "type": "textarea",
+      "id": "consent_text",
+      "label": "Consent text",
+      "default": "By signing up, you agree to our Terms of Service and Privacy Policy. Plus, enjoy a discount on your first purchase as a welcome gift!"
+    },
+    {
+      "type": "checkbox",
+      "id": "consent_required",
+      "label": "Consent checkbox required",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "success_text",
+      "label": "Success message",
+      "default": "Thanks for subscribing! Check your inbox for your welcome offer."
+    },
+    {
+      "type": "header",
+      "content": "Submit button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Subscribe and Save!"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "button", "label": "Primary" },
+        { "value": "button-secondary", "label": "Secondary" }
+      ],
+      "default": "button"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "input_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Input corner radius",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "min": 400,
+      "max": 1000,
+      "step": 20,
+      "unit": "px",
+      "label": "Content max width",
+      "default": 640
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial Email Signup"
+    }
+  ]
+}
+{% endschema %}
