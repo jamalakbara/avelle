@@ -236,7 +236,7 @@
             "heading_preset": "h5",
             "heading_bold": true,
             "heading_uppercase": true,
-            "link_preset": "paragraph",
+            "link_preset": "",
             "heading_font_family": "default",
             "heading_size_desktop": 16,
             "heading_size_mobile": 14,
