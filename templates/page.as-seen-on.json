@@ -23,6 +23,12 @@
         "heading": "The New Kind of Easy",
         "subtitle": "Live in breezy and easy styles that effortlessly keep up with you from balmy mornings in the city to sunset socials.",
         "heading_preset": "h3",
+        "heading_case": "none",
+        "heading_font_size_desktop": 0,
+        "heading_font_size_mobile": 0,
+        "subtitle_preset": "default",
+        "text_gap": 12,
+        "content_max_width": 900,
         "color_scheme": "scheme-3",
         "padding_top": 56,
         "padding_bottom": 56
@@ -31,16 +37,62 @@
     "featured_videos": {
       "type": "shoppable-video-gallery",
       "blocks": {
-        "v1": { "type": "ugc_video_item", "settings": { "handle": "@creator_one" } },
-        "v2": { "type": "ugc_video_item", "settings": { "handle": "@creator_two" } },
-        "v3": { "type": "ugc_video_item", "settings": { "handle": "@creator_three" } },
-        "v4": { "type": "ugc_video_item", "settings": { "handle": "@creator_four" } }
+        "v1": {
+          "type": "ugc_video_item",
+          "settings": {
+            "handle": "@creator_one",
+            "handle_url": "",
+            "product_list": []
+          }
+        },
+        "v2": {
+          "type": "ugc_video_item",
+          "settings": {
+            "handle": "@creator_two",
+            "handle_url": "",
+            "product_list": []
+          }
+        },
+        "v3": {
+          "type": "ugc_video_item",
+          "settings": {
+            "handle": "@creator_three",
+            "handle_url": "",
+            "product_list": []
+          }
+        },
+        "v4": {
+          "type": "ugc_video_item",
+          "settings": {
+            "handle": "@creator_four",
+            "handle_url": "",
+            "product_list": []
+          }
+        }
       },
-      "block_order": ["v1", "v2", "v3", "v4"],
+      "block_order": [
+        "v1",
+        "v2",
+        "v3",
+        "v4"
+      ],
       "settings": {
         "heading": "In Real Life",
+        "heading_preset": "default",
         "heading_case": "uppercase",
-        "see_more_text": "See more"
+        "heading_font_family": "default",
+        "heading_font_size_desktop": 0,
+        "heading_font_size_mobile": 0,
+        "header_gap": 32,
+        "see_more_text": "See more",
+        "see_more_url": "",
+        "modal_heading_preset": "default",
+        "show_handle": true,
+        "handle_prefix": "",
+        "open_cart_after_add": false,
+        "columns_desktop": "4",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "edit_banner": {
@@ -49,6 +101,12 @@
         "heading": "Chasing Sunshine",
         "subtitle": "Breezy pieces for sun-drenched days — exactly what you need for all your summer stops.",
         "heading_preset": "h3",
+        "heading_case": "none",
+        "heading_font_size_desktop": 0,
+        "heading_font_size_mobile": 0,
+        "subtitle_preset": "default",
+        "text_gap": 12,
+        "content_max_width": 900,
         "color_scheme": "scheme-3",
         "padding_top": 48,
         "padding_bottom": 48
@@ -59,6 +117,23 @@
       "settings": {
         "subheading": "Shop The Edit",
         "heading": "Summer Essentials",
+        "product_list": [
+          "abby-dress",
+          "abundance-top",
+          "aliya-top",
+          "allie-vest-top"
+        ],
+        "subheading_preset": "default",
+        "subheading_case": "uppercase",
+        "subheading_font_family": "default",
+        "subheading_font_size_desktop": 0,
+        "subheading_font_size_mobile": 0,
+        "heading_preset": "default",
+        "heading_case": "uppercase",
+        "heading_font_family": "default",
+        "heading_font_size_desktop": 0,
+        "heading_font_size_mobile": 0,
+        "header_gap": 16,
         "color_scheme": "scheme-1",
         "padding_top": 36,
         "padding_bottom": 36
@@ -67,26 +142,117 @@
     "community": {
       "type": "shoppable-video-gallery",
       "blocks": {
-        "c1": { "type": "ugc_video_item", "settings": { "handle": "@member_one" } },
-        "c2": { "type": "ugc_video_item", "settings": { "handle": "@member_two" } },
-        "c3": { "type": "ugc_video_item", "settings": { "handle": "@member_three" } },
-        "c4": { "type": "ugc_video_item", "settings": { "handle": "@member_four" } },
-        "c5": { "type": "ugc_video_item", "settings": { "handle": "@member_five" } },
-        "c6": { "type": "ugc_video_item", "settings": { "handle": "@member_six" } },
-        "c7": { "type": "ugc_video_item", "settings": { "handle": "@member_seven" } },
-        "c8": { "type": "ugc_video_item", "settings": { "handle": "@member_eight" } }
+        "c1": {
+          "type": "ugc_video_item",
+          "settings": {
+            "handle": "@member_one",
+            "handle_url": "",
+            "product_list": []
+          }
+        },
+        "c2": {
+          "type": "ugc_video_item",
+          "settings": {
+            "handle": "@member_two",
+            "handle_url": "",
+            "product_list": []
+          }
+        },
+        "c3": {
+          "type": "ugc_video_item",
+          "settings": {
+            "handle": "@member_three",
+            "handle_url": "",
+            "product_list": []
+          }
+        },
+        "c4": {
+          "type": "ugc_video_item",
+          "settings": {
+            "handle": "@member_four",
+            "handle_url": "",
+            "product_list": []
+          }
+        },
+        "c5": {
+          "type": "ugc_video_item",
+          "settings": {
+            "handle": "@member_five",
+            "handle_url": "",
+            "product_list": []
+          }
+        },
+        "c6": {
+          "type": "ugc_video_item",
+          "settings": {
+            "handle": "@member_six",
+            "handle_url": "",
+            "product_list": []
+          }
+        },
+        "c7": {
+          "type": "ugc_video_item",
+          "settings": {
+            "handle": "@member_seven",
+            "handle_url": "",
+            "product_list": []
+          }
+        },
+        "c8": {
+          "type": "ugc_video_item",
+          "settings": {
+            "handle": "@member_eight",
+            "handle_url": "",
+            "product_list": []
+          }
+        }
       },
-      "block_order": ["c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8"],
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8"
+      ],
       "settings": {
         "heading": "Our #AvelleBabes",
+        "heading_preset": "default",
         "heading_case": "none",
-        "see_more_text": "See More"
+        "heading_font_family": "default",
+        "heading_font_size_desktop": 0,
+        "heading_font_size_mobile": 0,
+        "header_gap": 32,
+        "see_more_text": "See More",
+        "see_more_url": "",
+        "modal_heading_preset": "default",
+        "show_handle": true,
+        "handle_prefix": "",
+        "open_cart_after_add": false,
+        "columns_desktop": "4",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "newsletter": {
       "type": "editorial-email-signup",
       "settings": {
         "heading": "Receive 15% Off Your First Purchase & Stay Inspired",
+        "heading_preset": "h4",
+        "body": "<p><strong>Discover New Styles:</strong> See how our community styles their pieces.</p><p><strong>Find Inspiration:</strong> Get regular updates on their top picks and styling tips.</p><p><strong>Enjoy Exclusive Benefits:</strong> Be the first to know about new arrivals, special offers, and more.</p>",
+        "show_first_name": true,
+        "first_name_label": "First Name",
+        "first_name_required": true,
+        "email_label": "Email",
+        "consent_text": "By signing up, you agree to our Terms of Service and Privacy Policy. Plus, enjoy a discount on your first purchase as a welcome gift!",
+        "consent_required": false,
+        "success_text": "Thanks for subscribing! Check your inbox for your welcome offer.",
+        "button_label": "Subscribe and Save!",
+        "button_style": "button",
+        "input_radius": 4,
+        "content_max_width": 640,
         "color_scheme": "scheme-1",
         "padding_top": 64,
         "padding_bottom": 80
