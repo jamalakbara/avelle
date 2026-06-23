@@ -198,7 +198,7 @@
                 "heading_size_desktop": 18,
                 "heading_size_mobile": 16,
                 "body_font_family": "default",
-                "body_size_desktop": 0,
+                "body_size_desktop": 16,
                 "body_size_mobile": 14,
                 "inherit_color_scheme": true,
                 "color_scheme": "",
