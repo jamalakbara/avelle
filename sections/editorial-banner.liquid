@@ -34,9 +34,16 @@
     #shopify-section-{{ section.id }} .editorial-banner__heading { font-size: {{ section.settings.heading_font_size_desktop }}px; }
   {%- endif -%}
 
+  {%- if section.settings.subtitle_font_size_desktop > 0 -%}
+    #shopify-section-{{ section.id }} .editorial-banner__subtitle { font-size: {{ section.settings.subtitle_font_size_desktop }}px; }
+  {%- endif -%}
+
   @media screen and (max-width: 749px) {
     {%- if section.settings.heading_font_size_mobile > 0 -%}
       #shopify-section-{{ section.id }} .editorial-banner__heading { font-size: {{ section.settings.heading_font_size_mobile }}px; }
+    {%- endif -%}
+    {%- if section.settings.subtitle_font_size_mobile > 0 -%}
+      #shopify-section-{{ section.id }} .editorial-banner__subtitle { font-size: {{ section.settings.subtitle_font_size_mobile }}px; }
     {%- endif -%}
   }
 {%- endstyle -%}
@@ -138,6 +145,27 @@
         { "value": "h6", "label": "H6" }
       ],
       "default": "default"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_size_desktop",
+      "min": 0,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Subtitle size (desktop)",
+      "info": "0 = use preset size.",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_size_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Subtitle size (mobile)",
+      "default": 0
     },
     {
       "type": "range",

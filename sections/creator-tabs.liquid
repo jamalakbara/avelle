@@ -128,7 +128,14 @@
   #shopify-section-{{ section.id }} .creator-tabs__bio {
     margin: 0;
     max-width: 52ch;
+    {%- if section.settings.bio_font_size_desktop > 0 -%}font-size: {{ section.settings.bio_font_size_desktop }}px;{%- endif -%}
   }
+
+  {%- if section.settings.bio_font_size_mobile > 0 -%}
+    @media screen and (max-width: 749px) {
+      #shopify-section-{{ section.id }} .creator-tabs__bio { font-size: {{ section.settings.bio_font_size_mobile }}px; }
+    }
+  {%- endif -%}
 
   #shopify-section-{{ section.id }} .creator-tabs__links {
     display: flex;
@@ -455,6 +462,27 @@
       "label": "Creator panel width:height ratio (desktop)",
       "info": "Higher = shorter / wider band. 23 ≈ reference.",
       "default": 23
+    },
+    {
+      "type": "range",
+      "id": "bio_font_size_desktop",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Bio text size (desktop)",
+      "info": "0 = use preset size. Applies to all creator bios.",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "bio_font_size_mobile",
+      "min": 0,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Bio text size (mobile)",
+      "default": 0
     },
     {
       "type": "color",
