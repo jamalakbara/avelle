@@ -150,7 +150,7 @@
                 "gift_card_form": true,
                 "button_font_family": "body",
                 "button_font_size": 14,
-                "button_font_size_mobile": 0,
+                "button_font_size_mobile": 12,
                 "button_font_weight": "500",
                 "button_letter_spacing": 10,
                 "quantity_font_family": "body",
