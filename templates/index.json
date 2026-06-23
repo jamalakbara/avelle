@@ -20,7 +20,7 @@
             "heading": "",
             "subheading": "",
             "button_label": "Shop Collection",
-            "button_link": "shopify://collections",
+            "button_link": "",
             "text_color": "light",
             "overlay_opacity": 30,
             "heading_font": "heading",
