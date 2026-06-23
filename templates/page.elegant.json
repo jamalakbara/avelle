@@ -19,8 +19,8 @@
         "padding_top": 60,
         "padding_bottom": 60,
         "title_font_family": "heading",
-        "title_font_size_desktop": 20,
-        "title_font_size_mobile": 18,
+        "title_font_size_desktop": 32,
+        "title_font_size_mobile": 28,
         "body_font_family": "default",
         "body_font_size_desktop": 16,
         "body_font_size_mobile": 14
