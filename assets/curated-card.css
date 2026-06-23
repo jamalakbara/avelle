@@ -108,3 +108,38 @@
     margin-top: 8vh;
   }
 }
+
+/* ── Color swatches on curated cards ── */
+.curated-card__swatches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.curated-card__swatch {
+  display: inline-flex;
+  cursor: pointer;
+  line-height: 0;
+  border-radius: 50%;
+  outline-offset: 2px;
+  transition: transform 0.18s ease;
+}
+
+.curated-card__swatch .swatch {
+  border-radius: 50% !important;
+}
+
+.curated-card__swatch:hover {
+  transform: scale(1.15);
+}
+
+.curated-card__swatch.is-active {
+  box-shadow: 0 0 0 1px var(--color-background, #fff), 0 0 0 2px rgb(var(--color-foreground-rgb, 26 26 26));
+}
+
+.curated-card__swatch:focus-visible {
+  outline: 2px solid rgb(var(--color-foreground-rgb, 26 26 26));
+}

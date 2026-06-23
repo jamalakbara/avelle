@@ -16,32 +16,59 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0;
-    max-width: 760px;
-    margin: 0 auto 32px;
-    background: var(--color-tabs-track, #ececea);
-    border-radius: 4px;
-    padding: 4px;
+    align-items: flex-end;
+    gap: clamp(20px, 4vw, 56px);
+    max-width: 880px;
+    margin: 0 auto 44px;
+    padding: 0 16px;
+    border-bottom: 1px solid rgb(var(--color-foreground-rgb, 26 26 26) / 0.14);
   }
 
   #shopify-section-{{ section.id }} .creator-tabs__tab {
-    flex: 1 1 auto;
-    padding: 12px 20px;
+    position: relative;
+    flex: 0 0 auto;
     border: 0;
     background: transparent;
-    color: var(--color-foreground, #1a1a1a);
-    font: inherit;
-    font-size: 0.95rem;
-    cursor: pointer;
-    border-radius: 3px;
+    padding: 0 2px 18px;
+    font-family: var(--font-body--family);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgb(var(--color-foreground-rgb, 26 26 26) / 0.4);
     white-space: nowrap;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+    transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__tab::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__tab:hover {
+    color: rgb(var(--color-foreground-rgb, 26 26 26) / 0.75);
   }
 
   #shopify-section-{{ section.id }} .creator-tabs__tab[aria-selected="true"] {
-    background: var(--color-tabs-active, #3a2e23);
-    color: var(--color-tabs-active-text, #ffffff);
-    font-weight: 600;
+    color: var(--color-foreground, #1a1a1a);
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__tab[aria-selected="true"]::after {
+    transform: scaleX(1);
+  }
+
+  #shopify-section-{{ section.id }} .creator-tabs__tab:focus-visible {
+    outline: 2px solid rgb(var(--color-foreground-rgb, 26 26 26) / 0.5);
+    outline-offset: 4px;
   }
 
   #shopify-section-{{ section.id }} .creator-tabs__panel[hidden] { display: none; }
@@ -131,6 +158,18 @@
   /* Products use the shared cinematic curated-products grid (staggered 4-col). */
   #shopify-section-{{ section.id }} .creator-tabs__panel .curated-products__grid {
     margin-top: 40px;
+  }
+
+  /* The curated-card snippet emits a <link> before each card, which breaks the
+     shared :nth-child(even) stagger. Re-apply it via :nth-of-type (counts only
+     the <a> cards) so it matches curated-products-cinematic. */
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .creator-tabs__panel .curated-products__grid .curated-card {
+      margin-top: 0;
+    }
+    #shopify-section-{{ section.id }} .creator-tabs__panel .curated-products__grid .curated-card:nth-of-type(even) {
+      margin-top: 8vh;
+    }
   }
 
   @media screen and (max-width: 749px) {
@@ -332,6 +371,57 @@
       });
     });
   })();
+</script>
+
+<script>
+  /* Scroll parallax on the product cards — same effect as curated-products-cinematic.
+     Built only for the visible tab panel and rebuilt on tab switch, because
+     ScrollTrigger can't measure cards in hidden (display:none) panels. */
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    var root = document.getElementById('shopify-section-{{ section.id }}');
+    if (!root) return;
+    if (!window.matchMedia('(min-width: 768px)').matches) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+    var triggers = [];
+
+    function build(panel) {
+      if (!panel) return;
+      triggers.forEach(function (t) { t.kill(); });
+      triggers = [];
+
+      var cards = panel.querySelectorAll('.curated-products__grid .curated-card');
+      gsap.set(cards, { clearProps: 'y' });
+
+      cards.forEach(function (card, i) {
+        var speed = i % 2 !== 0 ? 40 : -25;
+        var tween = gsap.fromTo(
+          card,
+          { y: 0 },
+          {
+            y: speed,
+            ease: 'none',
+            scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true },
+          }
+        );
+        if (tween.scrollTrigger) triggers.push(tween.scrollTrigger);
+      });
+
+      ScrollTrigger.refresh();
+    }
+
+    build(root.querySelector('.creator-tabs__panel:not([hidden])'));
+
+    root.querySelectorAll('.creator-tabs__tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        // Wait for the panel to un-hide, then measure + rebuild.
+        requestAnimationFrame(function () {
+          build(root.querySelector('.creator-tabs__panel:not([hidden])'));
+        });
+      });
+    });
+  });
 </script>
 
 {% schema %}

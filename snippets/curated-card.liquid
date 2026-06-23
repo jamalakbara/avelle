@@ -11,6 +11,7 @@
 {% endcomment %}
 
 {{ 'curated-card.css' | asset_url | stylesheet_tag }}
+{{ 'curated-card-swatches.js' | asset_url | script_tag }}
 
 <a href="{{ product.url }}" class="curated-card" data-curated-card>
   <div class="curated-card__image-wrapper">
@@ -26,6 +27,46 @@
     {%- endif -%}
   </div>
   <div class="curated-card__info" {% if text_alignment %}style="text-align: {{ text_alignment }};"{% endif %}>
+    {%- if product and product != blank -%}
+      {%- assign swatch_option = nil -%}
+      {%- for opt in product.options_with_values -%}
+        {%- assign sc = opt.values | map: 'swatch' | compact | size -%}
+        {%- if sc > 0 -%}
+          {%- assign swatch_option = opt -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if swatch_option -%}
+        {%- assign opt_key = 'option' | append: swatch_option.position -%}
+        {%- assign current_value = product.selected_or_first_available_variant[opt_key] -%}
+        <div class="curated-card__swatches" data-curated-swatches>
+          {%- for val in swatch_option.values -%}
+            {%- if val.swatch == blank -%}{%- continue -%}{%- endif -%}
+            {%- assign vimg = val.variant.featured_media -%}
+            {%- assign vurl = val.variant.url -%}
+            {%- if vimg == blank or vurl == blank -%}
+              {%- for variant in product.variants -%}
+                {%- if variant[opt_key] == val.name -%}
+                  {%- if vimg == blank and variant.featured_media -%}{%- assign vimg = variant.featured_media -%}{%- endif -%}
+                  {%- if vurl == blank -%}{%- assign vurl = variant.url -%}{%- endif -%}
+                  {%- if vimg != blank and vurl != blank -%}{%- break -%}{%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+            <span
+              class="curated-card__swatch{% if val.name == current_value %} is-active{% endif %}"
+              role="button"
+              tabindex="0"
+              aria-label="{{ val.name | escape }}"
+              {% if vimg != blank %}data-img="{{ vimg | image_url: width: 1100 }}"{% endif %}
+              {% if vurl != blank %}data-url="{{ vurl }}"{% endif %}
+            >
+              {% render 'swatch', swatch: val.swatch %}
+            </span>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
     <h3 class="curated-card__title">
       {% if product and product != blank %}
         {{ product.title }}
