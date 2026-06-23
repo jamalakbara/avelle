@@ -22,7 +22,10 @@
             "button_label": "Shop Collection",
             "button_link": "",
             "text_color": "light",
-            "overlay_opacity": 30
+            "overlay_opacity": 30,
+            "heading_font": "heading",
+            "subheading_font": "subheading",
+            "content_position": "center"
           }
         },
         "slide_AgthnV": {
@@ -35,7 +38,10 @@
             "button_label": "Shop Collection",
             "button_link": "",
             "text_color": "light",
-            "overlay_opacity": 30
+            "overlay_opacity": 30,
+            "heading_font": "heading",
+            "subheading_font": "subheading",
+            "content_position": "center"
           }
         },
         "slide_b47f9e": {
@@ -48,7 +54,10 @@
             "button_label": "",
             "button_link": "shopify://collections/new-arrivals",
             "text_color": "light",
-            "overlay_opacity": 30
+            "overlay_opacity": 30,
+            "heading_font": "heading",
+            "subheading_font": "subheading",
+            "content_position": "center"
           }
         },
         "slide_1": {
@@ -61,7 +70,10 @@
             "button_label": "",
             "button_link": "shopify://collections/new-arrivals",
             "text_color": "light",
-            "overlay_opacity": 30
+            "overlay_opacity": 30,
+            "heading_font": "heading",
+            "subheading_font": "subheading",
+            "content_position": "center"
           }
         },
         "slide_2": {
@@ -74,7 +86,10 @@
             "button_label": "",
             "button_link": "shopify://collections/new-arrivals",
             "text_color": "light",
-            "overlay_opacity": 30
+            "overlay_opacity": 30,
+            "heading_font": "heading",
+            "subheading_font": "subheading",
+            "content_position": "center"
           }
         }
       },
@@ -90,7 +105,10 @@
         "section_height_desktop": "85vh",
         "section_height_mobile": "85vh",
         "heading_size_mobile": 32,
-        "heading_size_desktop": 60
+        "heading_size_desktop": 60,
+        "subheading_size_mobile": 18,
+        "subheading_size_desktop": 20,
+        "button_font_size": 9
       }
     },
     "marquee_elegant": {
@@ -99,6 +117,7 @@
         "text": "Available Instant/Same-Day Delivery in Jakarta & Tangerang.",
         "separator": "✦",
         "outline": false,
+        "font_family": "heading",
         "text_size": 12,
         "text_size_mobile": 8,
         "speed": 101,
@@ -117,6 +136,9 @@
         "heading": "New Arrivals",
         "heading_preset": "h3",
         "heading_case": "uppercase",
+        "font_family": "heading",
+        "font_size_desktop": 20,
+        "font_size_mobile": 18,
         "header_gap": 32
       }
     },
@@ -255,8 +277,14 @@
         ],
         "subheading_preset": "h3",
         "subheading_case": "uppercase",
+        "subheading_font_family": "default",
+        "subheading_font_size_desktop": 0,
+        "subheading_font_size_mobile": 0,
         "heading_preset": "default",
         "heading_case": "uppercase",
+        "heading_font_family": "default",
+        "heading_font_size_desktop": 0,
+        "heading_font_size_mobile": 0,
         "header_gap": 16,
         "color_scheme": "scheme-1",
         "padding_top": 0,
@@ -330,7 +358,12 @@
         "heading": "As Seen On",
         "heading_preset": "h3",
         "heading_case": "uppercase",
+        "heading_font_family": "default",
+        "heading_font_size_desktop": 0,
+        "heading_font_size_mobile": 0,
         "header_gap": 32,
+        "see_more_text": "See more",
+        "see_more_url": "shopify://pages/avellebabes",
         "modal_heading_preset": "h3",
         "show_handle": true,
         "handle_prefix": "",
@@ -350,11 +383,17 @@
         "join_label": "Join Now",
         "heading_font": "heading",
         "heading_size": 24,
+        "heading_size_mobile": 0,
         "heading_letter_spacing": 0.1,
         "heading_text_case": "uppercase",
         "body_font": "body",
         "description_size": 12,
+        "description_size_mobile": 0,
         "description_line_height": 1.8,
+        "button_font_size_desktop": 9,
+        "button_font_size_mobile": 0,
+        "link_font_size_desktop": 14,
+        "link_font_size_mobile": 0,
         "background_color": "#7d6953",
         "text_color": "#ede4d9"
       }
