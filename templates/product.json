@@ -370,6 +370,7 @@
         "products_alignment": "left",
         "recommendation_type": "related",
         "max_products": 4,
+        "header_gap": 32,
         "subheading_font_family": "heading",
         "subheading_size_desktop": 18,
         "subheading_size_mobile": 16,
