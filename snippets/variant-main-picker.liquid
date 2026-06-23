@@ -17,8 +17,6 @@
 -%}
 {%- capture variant_typography_vars -%}
   {%- if variant_font_family != 'default' %}--variant-font-family: var(--font-{{ variant_font_family }}--family);{% endif -%}
-  {%- if label_size_desktop > 0 %}--variant-label-font-size: {{ label_size_desktop }}px;{% endif -%}
-  {%- if value_size_desktop > 0 %}--variant-button-font-size: {{ value_size_desktop }}px;{% endif -%}
 {%- endcapture -%}
 
 {% unless product_resource.has_only_default_variant %}
@@ -222,8 +220,12 @@
     </form>
   </variant-picker>
 
-  {%- if label_size_mobile > 0 or value_size_mobile > 0 -%}
+  {%- if label_size_desktop > 0 or value_size_desktop > 0 or label_size_mobile > 0 or value_size_mobile > 0 -%}
     {% style %}
+      variant-picker[data-block-id="{{ block.id }}"] {
+        {%- if label_size_desktop > 0 %}--variant-label-font-size: {{ label_size_desktop }}px;{% endif -%}
+        {%- if value_size_desktop > 0 %}--variant-button-font-size: {{ value_size_desktop }}px;{% endif -%}
+      }
       @media screen and (max-width: 749px) {
         variant-picker[data-block-id="{{ block.id }}"] {
           {%- if label_size_mobile > 0 %}--variant-label-font-size: {{ label_size_mobile }}px;{% endif -%}

@@ -74,6 +74,16 @@
       "default": 4
     },
     {
+      "type": "range",
+      "id": "header_gap",
+      "label": "Heading to content gap",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
       "type": "header",
       "content": "Typography"
     },
@@ -270,9 +280,9 @@
     }
   }
 
-  .curated-products__header {
+  #shopify-section-{{ section.id }} .curated-products__header {
     text-align: {{ section.settings.text_alignment }};
-    margin-bottom: 4rem;
+    margin-bottom: {{ section.settings.header_gap }}px;
     padding: 0 2rem;
   }
 
