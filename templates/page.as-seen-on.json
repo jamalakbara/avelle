@@ -12,6 +12,8 @@
     "hero": {
       "type": "about-hero-cinematic",
       "settings": {
+        "image": "shopify://shop_images/banner_2.png",
+        "mobile_image": "shopify://shop_images/banner_2_mobile.png",
         "heading": "As Seen On",
         "subheading": "Avelle in real life — styled by our community.",
         "overlay_opacity": 30
@@ -23,8 +25,8 @@
         "heading": "The New Kind of Easy",
         "subtitle": "Live in breezy and easy styles that effortlessly keep up with you from balmy mornings in the city to sunset socials.",
         "heading_preset": "h3",
-        "heading_case": "none",
-        "heading_font_size_desktop": 0,
+        "heading_case": "capitalize",
+        "heading_font_size_desktop": 24,
         "heading_font_size_mobile": 0,
         "subtitle_preset": "default",
         "text_gap": 12,
@@ -40,6 +42,7 @@
         "v1": {
           "type": "ugc_video_item",
           "settings": {
+            "video": "shopify://files/videos/snaptik_7581303110237228306_v3.mp4",
             "handle": "@creator_one",
             "handle_url": "",
             "product_list": []
@@ -48,6 +51,7 @@
         "v2": {
           "type": "ugc_video_item",
           "settings": {
+            "video": "shopify://files/videos/stevany leonard.mp4",
             "handle": "@creator_two",
             "handle_url": "",
             "product_list": []
@@ -56,6 +60,7 @@
         "v3": {
           "type": "ugc_video_item",
           "settings": {
+            "video": "shopify://files/videos/kleonita.mp4",
             "handle": "@creator_three",
             "handle_url": "",
             "product_list": []
@@ -64,6 +69,7 @@
         "v4": {
           "type": "ugc_video_item",
           "settings": {
+            "video": "shopify://files/videos/snaptik_7644757212665122069_v3.mp4",
             "handle": "@creator_four",
             "handle_url": "",
             "product_list": []
@@ -78,12 +84,18 @@
       ],
       "settings": {
         "heading": "In Real Life",
-        "heading_preset": "default",
+        "heading_preset": "h3",
         "heading_case": "uppercase",
         "heading_font_family": "default",
-        "heading_font_size_desktop": 0,
+        "heading_font_size_desktop": 24,
         "heading_font_size_mobile": 0,
         "header_gap": 32,
+        "subheading": "",
+        "layout": "carousel",
+        "grid_initial_rows": 2,
+        "grid_gap": 16,
+        "card_see_more_label": "See more",
+        "load_more_label": "See More",
         "see_more_text": "See more",
         "see_more_url": "",
         "modal_heading_preset": "default",
@@ -95,48 +107,98 @@
         "padding_bottom": 0
       }
     },
-    "edit_banner": {
+    "creator_lookbook": {
+      "type": "creator-tabs",
+      "blocks": {
+        "creator_1": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Creator One",
+            "hide_panel": false,
+            "image": "shopify://shop_images/77.png",
+            "name": "Creator One",
+            "name_preset": "h2",
+            "description": "<p>A short bio about this creator and how they style their favourite Avelle pieces.</p>",
+            "link_1_label": "Instagram",
+            "link_1_url": "",
+            "link_2_label": "TikTok",
+            "link_2_url": "",
+            "link_3_label": "",
+            "link_3_url": "",
+            "button_label": "Shop Their Favourites",
+            "cart_product_list": [
+              "aliya-top",
+              "allie-vest-top"
+            ],
+            "button_url": "shopify://products/aliya-top",
+            "product_list": [
+              "aliya-top",
+              "allie-vest-top",
+              "andrea-top",
+              "anne-top",
+              "abundance-top",
+              "abby-dress",
+              "athena-top"
+            ]
+          }
+        },
+        "creator_2": {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Creator Two",
+            "hide_panel": false,
+            "image": "shopify://shop_images/134.png",
+            "name": "Creator Two",
+            "name_preset": "h2",
+            "description": "<p>A short bio about this creator and how they style their favourite Avelle pieces.</p>",
+            "link_1_label": "Instagram",
+            "link_1_url": "",
+            "link_2_label": "",
+            "link_2_url": "",
+            "link_3_label": "",
+            "link_3_url": "",
+            "button_label": "Shop Their Favourites",
+            "cart_product_list": [
+              "avelle-capri-top-sleeveless-linen-blouse-wanita-basic",
+              "avelle-cecile-dress-classic-boat-neck-minimalist-little-black-dress-wanita-backless"
+            ],
+            "button_url": "shopify://products/avelle-capri-top-sleeveless-linen-blouse-wanita-basic",
+            "product_list": [
+              "avelle-capri-top-sleeveless-linen-blouse-wanita-basic",
+              "avelle-cecile-dress-classic-boat-neck-minimalist-little-black-dress-wanita-backless",
+              "christy-top"
+            ]
+          }
+        }
+      },
+      "block_order": [
+        "creator_1",
+        "creator_2"
+      ],
+      "settings": {
+        "heading": "Creator looks",
+        "panel_ratio": 23,
+        "panel_background": "#7d6953",
+        "panel_text_color": "#ede4d9",
+        "padding_top": 40,
+        "padding_bottom": 56
+      }
+    },
+    "editorial_banner_NePbiP": {
       "type": "editorial-banner",
       "settings": {
-        "heading": "Chasing Sunshine",
-        "subtitle": "Breezy pieces for sun-drenched days — exactly what you need for all your summer stops.",
+        "heading": "The New Kind of Easy",
+        "subtitle": "Live in breezy and easy styles that effortlessly keep up with you from balmy mornings in the city to sunset socials.",
         "heading_preset": "h3",
-        "heading_case": "none",
-        "heading_font_size_desktop": 0,
+        "heading_case": "capitalize",
+        "heading_font_size_desktop": 24,
         "heading_font_size_mobile": 0,
         "subtitle_preset": "default",
         "text_gap": 12,
         "content_max_width": 900,
         "color_scheme": "scheme-3",
-        "padding_top": 48,
-        "padding_bottom": 48
-      }
-    },
-    "shop_the_edit": {
-      "type": "curated-products-cinematic",
-      "settings": {
-        "subheading": "Shop The Edit",
-        "heading": "Summer Essentials",
-        "product_list": [
-          "abby-dress",
-          "abundance-top",
-          "aliya-top",
-          "allie-vest-top"
-        ],
-        "subheading_preset": "default",
-        "subheading_case": "uppercase",
-        "subheading_font_family": "default",
-        "subheading_font_size_desktop": 0,
-        "subheading_font_size_mobile": 0,
-        "heading_preset": "default",
-        "heading_case": "uppercase",
-        "heading_font_family": "default",
-        "heading_font_size_desktop": 0,
-        "heading_font_size_mobile": 0,
-        "header_gap": 16,
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 56,
+        "padding_bottom": 56
       }
     },
     "community": {
@@ -145,6 +207,7 @@
         "c1": {
           "type": "ugc_video_item",
           "settings": {
+            "video": "shopify://files/videos/snaptik_7581303110237228306_v3.mp4",
             "handle": "@member_one",
             "handle_url": "",
             "product_list": []
@@ -153,6 +216,7 @@
         "c2": {
           "type": "ugc_video_item",
           "settings": {
+            "video": "shopify://files/videos/stevany leonard.mp4",
             "handle": "@member_two",
             "handle_url": "",
             "product_list": []
@@ -161,6 +225,7 @@
         "c3": {
           "type": "ugc_video_item",
           "settings": {
+            "video": "shopify://files/videos/kleonita.mp4",
             "handle": "@member_three",
             "handle_url": "",
             "product_list": []
@@ -169,6 +234,7 @@
         "c4": {
           "type": "ugc_video_item",
           "settings": {
+            "video": "shopify://files/videos/snaptik_7644757212665122069_v3.mp4",
             "handle": "@member_four",
             "handle_url": "",
             "product_list": []
@@ -177,6 +243,7 @@
         "c5": {
           "type": "ugc_video_item",
           "settings": {
+            "video": "shopify://files/videos/snaptik_7648495357416033554_v3.mp4",
             "handle": "@member_five",
             "handle_url": "",
             "product_list": []
@@ -185,6 +252,7 @@
         "c6": {
           "type": "ugc_video_item",
           "settings": {
+            "video": "shopify://files/videos/The Soft Wind Moving Hair.mp4",
             "handle": "@member_six",
             "handle_url": "",
             "product_list": []
@@ -193,6 +261,7 @@
         "c7": {
           "type": "ugc_video_item",
           "settings": {
+            "video": "shopify://files/videos/Full Body Fashion Editorial.mp4",
             "handle": "@member_seven",
             "handle_url": "",
             "product_list": []
@@ -264,68 +333,6 @@
         "padding_top": 64,
         "padding_bottom": 80
       }
-    },
-    "creator_lookbook": {
-      "type": "creator-tabs",
-      "blocks": {
-        "moments": {
-          "type": "tab",
-          "settings": {
-            "tab_label": "Moments that Matter",
-            "hide_panel": true,
-            "name": "",
-            "link_1_label": "",
-            "button_label": "",
-            "product_list": []
-          }
-        },
-        "creator_1": {
-          "type": "tab",
-          "settings": {
-            "tab_label": "Creator One",
-            "name": "Creator One",
-            "name_preset": "h2",
-            "description": "<p>A short bio about this creator and how they style their favourite Avelle pieces.</p>",
-            "link_1_label": "Instagram",
-            "link_2_label": "TikTok",
-            "button_label": "Shop Their Favourites",
-            "product_list": []
-          }
-        },
-        "creator_2": {
-          "type": "tab",
-          "settings": {
-            "tab_label": "Creator Two",
-            "name": "Creator Two",
-            "name_preset": "h2",
-            "description": "<p>A short bio about this creator and how they style their favourite Avelle pieces.</p>",
-            "link_1_label": "Instagram",
-            "button_label": "Shop Their Favourites",
-            "product_list": []
-          }
-        },
-        "creator_3": {
-          "type": "tab",
-          "settings": {
-            "tab_label": "Creator Three",
-            "name": "Creator Three",
-            "name_preset": "h2",
-            "description": "<p>A short bio about this creator and how they style their favourite Avelle pieces.</p>",
-            "link_1_label": "Instagram",
-            "button_label": "Shop Their Favourites",
-            "product_list": []
-          }
-        }
-      },
-      "block_order": ["moments", "creator_1", "creator_2", "creator_3"],
-      "settings": {
-        "heading": "Creator looks",
-        "panel_ratio": 23,
-        "panel_background": "#7D6953",
-        "panel_text_color": "#EDE4D9",
-        "padding_top": 40,
-        "padding_bottom": 56
-      }
     }
   },
   "order": [
@@ -333,8 +340,7 @@
     "intro_banner",
     "featured_videos",
     "creator_lookbook",
-    "edit_banner",
-    "shop_the_edit",
+    "editorial_banner_NePbiP",
     "community",
     "newsletter"
   ]
