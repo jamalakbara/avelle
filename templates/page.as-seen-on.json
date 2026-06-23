@@ -238,6 +238,7 @@
     },
     "newsletter": {
       "type": "editorial-email-signup",
+      "disabled": true,
       "settings": {
         "heading": "Receive 15% Off Your First Purchase & Stay Inspired",
         "heading_preset": "h4",
