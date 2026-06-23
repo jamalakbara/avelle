@@ -20,12 +20,12 @@
             "heading": "",
             "subheading": "",
             "button_label": "Shop Collection",
-            "button_link": "",
+            "button_link": "shopify://collections",
             "text_color": "light",
             "overlay_opacity": 30,
             "heading_font": "heading",
             "subheading_font": "subheading",
-            "content_position": "center"
+            "content_position": "bottom"
           }
         },
         "slide_AgthnV": {
@@ -362,6 +362,12 @@
         "heading_font_size_desktop": 0,
         "heading_font_size_mobile": 0,
         "header_gap": 32,
+        "subheading": "",
+        "layout": "carousel",
+        "grid_initial_rows": 2,
+        "grid_gap": 16,
+        "card_see_more_label": "See more",
+        "load_more_label": "See More",
         "see_more_text": "See more",
         "see_more_url": "shopify://pages/avellebabes",
         "modal_heading_preset": "h3",
