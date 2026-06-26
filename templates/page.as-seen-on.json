@@ -273,10 +273,15 @@
         "c7": {
           "type": "ugc_video_item",
           "settings": {
-            "video": "shopify://files/videos/Full Body Fashion Editorial.mp4",
-            "handle": "@member_seven",
+            "video": "shopify://files/videos/IMG_0324.MP4",
+            "handle": "@Aileenad",
             "handle_url": "",
-            "product_list": []
+            "product_list": [
+              "ovisa-top",
+              "gemme-top",
+              "kaia-pants",
+              "layla-satin-pants"
+            ]
           }
         },
         "c8": {
