@@ -210,6 +210,18 @@
     "community": {
       "type": "shoppable-video-gallery",
       "blocks": {
+        "ugc_video_item_bfV8LR": {
+          "type": "ugc_video_item",
+          "settings": {
+            "video": "shopify://files/videos/ssstik.io_1782461273508.mp4",
+            "handle": "@Kaila Shabira",
+            "handle_url": "",
+            "product_list": [
+              "daisy-top",
+              "layla-satin-pants"
+            ]
+          }
+        },
         "ugc_video_item_NQx6Lr": {
           "type": "ugc_video_item",
           "settings": {
@@ -477,6 +489,7 @@
         }
       },
       "block_order": [
+        "ugc_video_item_bfV8LR",
         "ugc_video_item_NQx6Lr",
         "ugc_video_item_aa6xYk",
         "ugc_video_item_9tP6ja",
