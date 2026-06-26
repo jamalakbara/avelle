@@ -247,9 +247,12 @@
           "type": "ugc_video_item",
           "settings": {
             "video": "shopify://files/videos/snaptik_7644757212665122069_v3.mp4",
-            "handle": "@member_four",
+            "handle": "@Kesi",
             "handle_url": "",
-            "product_list": []
+            "product_list": [
+              "lisbon-top",
+              "layla-satin-pants"
+            ]
           }
         },
         "c5": {
