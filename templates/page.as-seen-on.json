@@ -287,9 +287,15 @@
         "c8": {
           "type": "ugc_video_item",
           "settings": {
-            "handle": "@member_eight",
+            "video": "shopify://files/videos/IMG_0325.MP4",
+            "handle": "@Nisa Sastra",
             "handle_url": "",
-            "product_list": []
+            "product_list": [
+              "isla-top",
+              "anne-top",
+              "geller-skort",
+              "avelle-dylan-pants-celana-panjang-hw-kulot-wanita-basic-cullotte-highwaist-wide-leg-pants"
+            ]
           }
         }
       },
