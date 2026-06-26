@@ -210,6 +210,21 @@
     "community": {
       "type": "shoppable-video-gallery",
       "blocks": {
+        "ugc_video_item_NQx6Lr": {
+          "type": "ugc_video_item",
+          "settings": {
+            "video": "shopify://files/videos/IMG_0320.MP4",
+            "handle": "@Jacqgracia",
+            "handle_url": "",
+            "product_list": [
+              "candice-top",
+              "layla-satin-pants",
+              "yumi-pants",
+              "avelle-dylan-pants-celana-panjang-hw-kulot-wanita-basic-cullotte-highwaist-wide-leg-pants",
+              "purpose-pants"
+            ]
+          }
+        },
         "ugc_video_item_aa6xYk": {
           "type": "ugc_video_item",
           "settings": {
@@ -462,6 +477,7 @@
         }
       },
       "block_order": [
+        "ugc_video_item_NQx6Lr",
         "ugc_video_item_aa6xYk",
         "ugc_video_item_9tP6ja",
         "ugc_video_item_Pttf8G",
