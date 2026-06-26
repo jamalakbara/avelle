@@ -210,6 +210,17 @@
     "community": {
       "type": "shoppable-video-gallery",
       "blocks": {
+        "ugc_video_item_fXBq6p": {
+          "type": "ugc_video_item",
+          "settings": {
+            "video": "shopify://files/videos/ssstik.io_1782448504349.mp4",
+            "handle": "@Viaanggrain",
+            "handle_url": "",
+            "product_list": [
+              "avelle-cecile-dress-classic-boat-neck-minimalist-little-black-dress-wanita-backless"
+            ]
+          }
+        },
         "ugc_video_item_trNNHn": {
           "type": "ugc_video_item",
           "settings": {
@@ -356,6 +367,7 @@
         }
       },
       "block_order": [
+        "ugc_video_item_fXBq6p",
         "ugc_video_item_trNNHn",
         "ugc_video_item_yEyfXy",
         "ugc_video_item_GbtE6C",
