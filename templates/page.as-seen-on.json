@@ -214,9 +214,15 @@
           "type": "ugc_video_item",
           "settings": {
             "video": "shopify://files/videos/snaptik_7581303110237228306_v3.mp4",
-            "handle": "@member_one",
+            "handle": "@Lenechels",
             "handle_url": "",
-            "product_list": []
+            "product_list": [
+              "manifest-dress",
+              "abundance-top",
+              "avelle-x-lenechels-level-up-halter-top-sleeveless",
+              "purpose-pants",
+              "gratitude-skort"
+            ]
           }
         },
         "c2": {
