@@ -210,6 +210,18 @@
     "community": {
       "type": "shoppable-video-gallery",
       "blocks": {
+        "ugc_video_item_TftjKA": {
+          "type": "ugc_video_item",
+          "settings": {
+            "video": "shopify://files/videos/ssstik.io_1782461077287.mp4",
+            "handle": "@Selinaleea",
+            "handle_url": "",
+            "product_list": [
+              "orin-top",
+              "layla-satin-pants"
+            ]
+          }
+        },
         "ugc_video_item_7MkdCn": {
           "type": "ugc_video_item",
           "settings": {
@@ -415,6 +427,7 @@
         }
       },
       "block_order": [
+        "ugc_video_item_TftjKA",
         "ugc_video_item_7MkdCn",
         "ugc_video_item_t6tMiw",
         "ugc_video_item_ADpDMy",
