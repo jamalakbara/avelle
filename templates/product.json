@@ -222,9 +222,8 @@
                   },
                   "blocks": {
                     "text_Description": {
-                      "type": "text",
+                      "type": "product-description",
                       "settings": {
-                        "text": "{{ closest.product.description }}",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",

@@ -1,14 +1,17 @@
 
 
 {% liquid
-  assign product = block.settings.product
+  assign product = block.settings.product | default: closest.product
   if request.visual_preview_mode and product == blank
     assign product = collections.all.products.first
-    assign text = product.description
   endif
+  # Render product.description as a raw Liquid object via fallback_text so images
+  # (and other rich HTML) survive. Binding it through the richtext `text` setting
+  # would strip <img>, since richtext settings only allow p/a/strong/em/lists/h1-h6.
+  assign description = product.description
 %}
 
-{% render 'text', fallback_text: text, block: block %}
+{% render 'text', fallback_text: description, block: block %}
 
 {% schema %}
 {
@@ -395,9 +398,7 @@
     {
       "name": "t:names.product_description",
       "category": "t:categories.product",
-      "settings": {
-        "text": "{{ closest.product.description }}"
-      }
+      "settings": {}
     }
   ]
 }
