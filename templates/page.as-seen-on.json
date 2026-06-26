@@ -210,6 +210,17 @@
     "community": {
       "type": "shoppable-video-gallery",
       "blocks": {
+        "ugc_video_item_Pttf8G": {
+          "type": "ugc_video_item",
+          "settings": {
+            "video": "shopify://files/videos/ssstik.io_1782460996869.mp4",
+            "handle": "@Foundbyaly",
+            "handle_url": "",
+            "product_list": [
+              "yumi-pants"
+            ]
+          }
+        },
         "ugc_video_item_TftjKA": {
           "type": "ugc_video_item",
           "settings": {
@@ -427,6 +438,7 @@
         }
       },
       "block_order": [
+        "ugc_video_item_Pttf8G",
         "ugc_video_item_TftjKA",
         "ugc_video_item_7MkdCn",
         "ugc_video_item_t6tMiw",
