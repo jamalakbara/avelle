@@ -210,6 +210,18 @@
     "community": {
       "type": "shoppable-video-gallery",
       "blocks": {
+        "ugc_video_item_7MkdCn": {
+          "type": "ugc_video_item",
+          "settings": {
+            "video": "shopify://files/videos/ssstik.io_1782448746651.mp4",
+            "handle": "@Viaanggrainn",
+            "handle_url": "",
+            "product_list": [
+              "joan-top",
+              "jolane-skirt"
+            ]
+          }
+        },
         "ugc_video_item_t6tMiw": {
           "type": "ugc_video_item",
           "settings": {
@@ -250,7 +262,7 @@
           "type": "ugc_video_item",
           "settings": {
             "video": "shopify://files/videos/ssstik.io_1782448504349.mp4",
-            "handle": "@Viaanggrain",
+            "handle": "@Viaanggrainn",
             "handle_url": "",
             "product_list": [
               "avelle-cecile-dress-classic-boat-neck-minimalist-little-black-dress-wanita-backless"
@@ -403,6 +415,7 @@
         }
       },
       "block_order": [
+        "ugc_video_item_7MkdCn",
         "ugc_video_item_t6tMiw",
         "ugc_video_item_ADpDMy",
         "ugc_video_item_3kTCfy",
