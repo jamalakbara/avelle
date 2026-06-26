@@ -210,6 +210,18 @@
     "community": {
       "type": "shoppable-video-gallery",
       "blocks": {
+        "ugc_video_item_9tP6ja": {
+          "type": "ugc_video_item",
+          "settings": {
+            "video": "shopify://files/videos/ssstik.io_1782455582170 (1).mp4",
+            "handle": "@Jsysirapanji_",
+            "handle_url": "",
+            "product_list": [
+              "blair-skort",
+              "avelle-x-lenechels-level-up-halter-top-sleeveless"
+            ]
+          }
+        },
         "ugc_video_item_Pttf8G": {
           "type": "ugc_video_item",
           "settings": {
@@ -438,6 +450,7 @@
         }
       },
       "block_order": [
+        "ugc_video_item_9tP6ja",
         "ugc_video_item_Pttf8G",
         "ugc_video_item_TftjKA",
         "ugc_video_item_7MkdCn",
