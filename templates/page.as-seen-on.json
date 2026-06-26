@@ -210,6 +210,18 @@
     "community": {
       "type": "shoppable-video-gallery",
       "blocks": {
+        "ugc_video_item_ADpDMy": {
+          "type": "ugc_video_item",
+          "settings": {
+            "video": "shopify://files/videos/ssstik.io_1782291754855.mp4",
+            "handle": "@Graciellap",
+            "handle_url": "",
+            "product_list": [
+              "orin-top",
+              "avelle-dylan-pants-celana-panjang-hw-kulot-wanita-basic-cullotte-highwaist-wide-leg-pants"
+            ]
+          }
+        },
         "ugc_video_item_3kTCfy": {
           "type": "ugc_video_item",
           "settings": {
@@ -379,6 +391,7 @@
         }
       },
       "block_order": [
+        "ugc_video_item_ADpDMy",
         "ugc_video_item_3kTCfy",
         "ugc_video_item_fXBq6p",
         "ugc_video_item_trNNHn",
