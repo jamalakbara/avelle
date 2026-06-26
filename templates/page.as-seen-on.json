@@ -210,6 +210,18 @@
     "community": {
       "type": "shoppable-video-gallery",
       "blocks": {
+        "ugc_video_item_GbtE6C": {
+          "type": "ugc_video_item",
+          "settings": {
+            "video": "shopify://files/videos/ssstik.io_1782447935291.mp4",
+            "handle": "@Debora Wenny Tania",
+            "handle_url": "",
+            "product_list": [
+              "helen-top",
+              "layla-satin-pants"
+            ]
+          }
+        },
         "c1": {
           "type": "ugc_video_item",
           "settings": {
@@ -319,6 +331,7 @@
         }
       },
       "block_order": [
+        "ugc_video_item_GbtE6C",
         "c1",
         "c2",
         "c3",
