@@ -261,10 +261,13 @@
         "c6": {
           "type": "ugc_video_item",
           "settings": {
-            "video": "shopify://files/videos/The Soft Wind Moving Hair.mp4",
-            "handle": "@member_six",
+            "video": "shopify://files/videos/IMG_0323.MP4",
+            "handle": "@Jeslyn",
             "handle_url": "",
-            "product_list": []
+            "product_list": [
+              "florence-top",
+              "jenny-skirt"
+            ]
           }
         },
         "c7": {
