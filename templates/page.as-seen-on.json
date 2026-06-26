@@ -29,6 +29,8 @@
         "heading_font_size_desktop": 20,
         "heading_font_size_mobile": 18,
         "subtitle_preset": "default",
+        "subtitle_font_size_desktop": 0,
+        "subtitle_font_size_mobile": 0,
         "text_gap": 12,
         "content_max_width": 900,
         "color_scheme": "scheme-3",
@@ -178,6 +180,8 @@
       "settings": {
         "heading": "Creator looks",
         "panel_ratio": 23,
+        "bio_font_size_desktop": 0,
+        "bio_font_size_mobile": 0,
         "panel_background": "#7d6953",
         "panel_text_color": "#ede4d9",
         "padding_top": 40,
@@ -194,6 +198,8 @@
         "heading_font_size_desktop": 20,
         "heading_font_size_mobile": 18,
         "subtitle_preset": "default",
+        "subtitle_font_size_desktop": 0,
+        "subtitle_font_size_mobile": 0,
         "text_gap": 12,
         "content_max_width": 900,
         "color_scheme": "scheme-3",
@@ -244,9 +250,12 @@
           "type": "ugc_video_item",
           "settings": {
             "video": "shopify://files/videos/snaptik_7648495357416033554_v3.mp4",
-            "handle": "@member_five",
+            "handle": "@Risa",
             "handle_url": "",
-            "product_list": []
+            "product_list": [
+              "lisbon-top",
+              "jolane-skirt"
+            ]
           }
         },
         "c6": {
