@@ -210,6 +210,18 @@
     "community": {
       "type": "shoppable-video-gallery",
       "blocks": {
+        "ugc_video_item_3kTCfy": {
+          "type": "ugc_video_item",
+          "settings": {
+            "video": "shopify://files/videos/ssstik.io_1782448883141.mp4",
+            "handle": "@Imel Meliana",
+            "handle_url": "",
+            "product_list": [
+              "ovisa-top",
+              "layla-satin-pants"
+            ]
+          }
+        },
         "ugc_video_item_fXBq6p": {
           "type": "ugc_video_item",
           "settings": {
@@ -367,6 +379,7 @@
         }
       },
       "block_order": [
+        "ugc_video_item_3kTCfy",
         "ugc_video_item_fXBq6p",
         "ugc_video_item_trNNHn",
         "ugc_video_item_yEyfXy",
