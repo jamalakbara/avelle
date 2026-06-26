@@ -210,6 +210,19 @@
     "community": {
       "type": "shoppable-video-gallery",
       "blocks": {
+        "ugc_video_item_trNNHn": {
+          "type": "ugc_video_item",
+          "settings": {
+            "video": "shopify://files/videos/ssstik.io_1782448182145.mp4",
+            "handle": "@Okky Mega Kurnia",
+            "handle_url": "",
+            "product_list": [
+              "avelle-cecile-dress-classic-boat-neck-minimalist-little-black-dress-wanita-backless",
+              "paris-shirt",
+              "avelle-dylan-pants-celana-panjang-hw-kulot-wanita-basic-cullotte-highwaist-wide-leg-pants"
+            ]
+          }
+        },
         "ugc_video_item_yEyfXy": {
           "type": "ugc_video_item",
           "settings": {
@@ -343,6 +356,7 @@
         }
       },
       "block_order": [
+        "ugc_video_item_trNNHn",
         "ugc_video_item_yEyfXy",
         "ugc_video_item_GbtE6C",
         "c1",
