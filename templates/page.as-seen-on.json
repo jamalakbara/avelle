@@ -229,9 +229,15 @@
           "type": "ugc_video_item",
           "settings": {
             "video": "shopify://files/videos/stevany leonard.mp4",
-            "handle": "@member_two",
+            "handle": "@Stevany Leonard",
             "handle_url": "",
-            "product_list": []
+            "product_list": [
+              "avelle-rally-top-atasan-korean-wanita",
+              "joan-top",
+              "avelle-dylan-pants-celana-panjang-hw-kulot-wanita-basic-cullotte-highwaist-wide-leg-pants",
+              "jolane-skirt",
+              "axel-top"
+            ]
           }
         },
         "c3": {
