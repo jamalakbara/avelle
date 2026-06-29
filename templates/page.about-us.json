@@ -12,7 +12,7 @@
     "about_hero": {
       "type": "about-hero-cinematic",
       "settings": {
-        "image": "shopify://shop_images/akunpalsu29_Editorial_fashion_photography_of_a_high-end_silk_ma_a0d7a747-1269-4492-b081-41d04c939120.png",
+        "image": "shopify://shop_images/DSC09340.jpg",
         "heading": "Our Story",
         "subheading": "Crafting timeless pieces for the modern individual",
         "overlay_opacity": 40
@@ -37,25 +37,25 @@
         "gallery_1": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/Ultra_Realistic_Photo.png"
+            "image": "shopify://shop_images/sku_baru_5.png"
           }
         },
         "gallery_2": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/Ultra_Realistic_Photo_1.png"
+            "image": "shopify://shop_images/id-11134207-822wl-mlvtfarr7if5b6.jpg"
           }
         },
         "gallery_3": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/Ultra_Realistic_Photo_2.png"
+            "image": "shopify://shop_images/24.png"
           }
         },
         "gallery_4": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/Cinematic_Portrait_of_Young_Woman_1.png"
+            "image": "shopify://shop_images/20.png"
           }
         }
       },
@@ -117,7 +117,7 @@
     "about_cta": {
       "type": "about-cta-cinematic",
       "settings": {
-        "image": "shopify://shop_images/akunpalsu29_A_chic_woman_walking_through_a_sun-drenched_minimal_50e69825-1f41-4382-aff3-92709a84514b.png",
+        "image": "shopify://shop_images/119.png",
         "heading": "Discover The Collection",
         "button_label": "Shop Now",
         "button_link": "shopify://collections/all",
