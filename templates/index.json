@@ -114,11 +114,11 @@
     "marquee_elegant": {
       "type": "marquee-elegant",
       "settings": {
-        "text": "Available Instant or Same-Day Delivery in Jakarta & Tangerang.",
+        "text": "Available Instant or Same-Day Delivery in Jakarta & Tangerang",
         "separator": "✦",
         "outline": false,
-        "font_family": "accent",
-        "text_size": 12,
+        "font_family": "body",
+        "text_size": 14,
         "text_size_mobile": 8,
         "speed": 101,
         "bg_color": "#0d0c0c",
@@ -267,15 +267,15 @@
     "curated_products_cinematic": {
       "type": "curated-products-cinematic",
       "settings": {
-        "subheading": "The Selection",
-        "heading": "OUR PICKS",
+        "subheading": "",
+        "heading": "EDITOR'S PICK",
         "product_list": [
           "blair-skort",
           "ray-top",
           "yumi-pants",
           "athena-top"
         ],
-        "subheading_preset": "h4",
+        "subheading_preset": "h2",
         "subheading_case": "uppercase",
         "subheading_font_family": "heading",
         "subheading_font_size_desktop": 18,
@@ -383,7 +383,7 @@
       "type": "loyalty-cinematic",
       "settings": {
         "heading": "#AvelleBabes",
-        "description": "<p>Join our <strong>Loyalty Club</strong> and enjoy <strong>15% off your first order</strong> with <strong>free shipping</strong>.</p><p>Gain access to <strong>exclusive offers</strong>, <strong>early drops</strong>, and curated perks made just for you.</p><p><strong>Become a member today.</strong></p>",
+        "description": "<p>Join our <em>Loyalty Club</em> and enjoy 15% off your first order with free shipping.</p><p>Gain access to exclusive offers, early drops, and curated perks made just for you.</p><p>Become a member today!</p>",
         "button_label": "LEARN MORE",
         "button_link": "",
         "join_label": "Join Now",
@@ -391,7 +391,7 @@
         "heading_size": 24,
         "heading_size_mobile": 18,
         "heading_letter_spacing": 0.1,
-        "heading_text_case": "uppercase",
+        "heading_text_case": "none",
         "body_font": "body",
         "description_size": 14,
         "description_size_mobile": 12,

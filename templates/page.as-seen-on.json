@@ -177,6 +177,7 @@
         "creator_1",
         "creator_2"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Creator looks",
         "panel_ratio": 23,

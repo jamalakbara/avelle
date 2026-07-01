@@ -276,7 +276,7 @@
       },
       "settings": {
         "layout_type": "grid",
-        "product_card_size": "medium",
+        "product_card_size": "small",
         "mobile_product_card_size": "small",
         "desktop_columns": 4,
         "mobile_columns": "2",
