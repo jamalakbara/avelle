@@ -132,11 +132,11 @@
                 "alignment": "left",
                 "variant_font_family": "body",
                 "label_size_desktop": 14,
-                "label_size_mobile": 12,
+                "label_size_mobile": 10,
                 "value_size_desktop": 14,
-                "value_size_mobile": 12,
+                "value_size_mobile": 10,
                 "padding-block-start": 0,
-                "padding-block-end": 24,
+                "padding-block-end": 16,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
@@ -224,6 +224,7 @@
                     "text_Description": {
                       "type": "product-description",
                       "settings": {
+                        "text": "",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
