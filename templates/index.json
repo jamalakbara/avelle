@@ -15,8 +15,8 @@
         "slide_gVddDj": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/2.png",
-            "mobile_image": "shopify://shop_images/mobile_website_8.png",
+            "image": "shopify://shop_images/2_a161a071-85c5-4894-8eff-b6b6d623adb4.png",
+            "mobile_image": "shopify://shop_images/3_579df852-0507-4099-a6d3-a5c33a782472.png",
             "heading": "",
             "subheading": "",
             "button_label": "Shop Collection",
@@ -150,7 +150,7 @@
           "settings": {
             "collection": "new-arrival",
             "title": "",
-            "image": "shopify://shop_images/14.png"
+            "image": "shopify://shop_images/sku_baru_10.png"
           }
         },
         "block_2": {
@@ -158,7 +158,7 @@
           "settings": {
             "collection": "best-seller",
             "title": "",
-            "image": "shopify://shop_images/9_1.png"
+            "image": "shopify://shop_images/id-11134207-81zth-mek3dstegbgi17.jpg"
           }
         },
         "block_3": {
@@ -166,7 +166,7 @@
           "settings": {
             "collection": "top",
             "title": "",
-            "image": "shopify://shop_images/16.png"
+            "image": "shopify://shop_images/101_2bc04b47-5850-4fdc-8e03-8bbfa1c64a95.png"
           }
         }
       },
