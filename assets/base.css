@@ -5142,45 +5142,6 @@ html.lenis body {
   pointer-events: none;
 }
 
-/* Custom Cursor */
-.custom-cursor {
-  width: 10px;
-  height: 10px;
-  background: var(--color-foreground);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.2s ease;
-  mix-blend-mode: difference;
-  top: 0;
-  left: 0;
-}
-
-.cursor-follower {
-  width: 30px;
-  height: 30px;
-  border: 1px solid var(--color-foreground);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9998;
-  transition: transform 0.1s ease, background 0.2s;
-  mix-blend-mode: difference;
-  top: 0;
-  left: 0;
-}
-
-.custom-cursor.active {
-  transform: scale(0);
-}
-
-.cursor-follower.active {
-  transform: scale(2);
-  background: rgba(255, 255, 255, 0.1);
-  border-color: transparent;
-}
-
 /* Utilities */
 .reveal-text {
   overflow: hidden;

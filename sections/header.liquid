@@ -207,7 +207,15 @@
     transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease, top 0.3s ease;
     background-color: var(--header-bg-color);
     color: var(--header-text-color);
-    will-change: transform; /* Hint for smoother animation */
+    /* No will-change here: it creates a containing block that traps the
+       position:fixed menu drawer inside the header, offsetting it below
+       the announcement bar and pushing its bottom past the viewport. */
+  }
+
+  /* While the menu drawer is open, hide the floating WhatsApp button so it
+     doesn't overlap the drawer's bottom links (e.g. the currency switcher). */
+  body:has(.header-custom details.menu-open) #wa-chat-btn-root {
+    display: none;
   }
 
   .header-custom.header-wrapper[data-sticky-type='on-scroll-up'] {

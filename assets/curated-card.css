@@ -11,8 +11,8 @@
 .curated-card__image-wrapper {
   position: relative;
   width: 100%;
-  /* Aspect ratio 2:3 for vertical elegance */
-  padding-bottom: 140%;
+  /* Aspect ratio 3:4 */
+  padding-bottom: 133.33%;
   margin-bottom: 1.5rem;
   overflow: hidden;
   background: #f4f4f4;

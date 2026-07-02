@@ -130,8 +130,18 @@
               href="{{ product.url }}"
               style="display: block; width: 100%; height: 100%; position: absolute; top:0; left:0; z-index: 1;"
             >
+              {%- liquid
+                # Square source files (e.g. marketplace exports) carry baked-in white
+                # side bars around a 2:3 photo — CDN-crop them to 2:3 so the bars
+                # never reach the 3:4 cover box.
+                if product.featured_image.aspect_ratio >= 0.95
+                  assign card_image = product.featured_image | image_url: width: 600, height: 900, crop: 'center'
+                else
+                  assign card_image = product.featured_image | image_url: width: 600
+                endif
+              -%}
               <img
-                src="{{ product.featured_image | image_url: width: 600 }}"
+                src="{{ card_image }}"
                 alt="{{ product.title | escape }}"
                 width="600"
                 height="900"
@@ -250,7 +260,7 @@
   .product-card-gallery {
     position: relative;
     width: 100%;
-    padding-top: 150%; /* exactly 2:3 aspect ratio */
+    padding-top: 133.33%; /* exactly 3:4 aspect ratio */
     overflow: hidden;
     background: #f4f4f4;
   }

@@ -6,7 +6,7 @@
 
 {%- liquid
   assign product = section.settings.product
-  assign gallery_aspect_ratio = product.featured_media.preview_image.aspect_ratio | default: 1
+  assign gallery_aspect_ratio = '3 / 4'
 -%}
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
