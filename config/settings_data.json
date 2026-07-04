@@ -35,7 +35,7 @@
     "type_case_h5": "none",
     "type_font_h6": "heading",
     "type_size_h6": "14",
-    "type_line_height_h6": "display-normal",
+    "type_line_height_h6": "display-loose",
     "type_letter_spacing_h6": "heading-normal",
     "type_case_h6": "none",
     "page_width": "narrow",
