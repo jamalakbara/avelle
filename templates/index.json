@@ -415,6 +415,7 @@
     },
     "divider_iU7Vte": {
       "type": "divider",
+      "disabled": true,
       "name": "t:names.divider_section",
       "settings": {
         "color_scheme": "",
