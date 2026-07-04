@@ -342,16 +342,18 @@
             "product_list": []
           }
         },
-        "ugc_video_item_UqGrXU": {
+        "ugc_video_item_QmEUFh": {
           "type": "ugc_video_item",
+          "name": "aileen",
           "settings": {
-            "thumbnail_image": "shopify://shop_images/banner_2_mobile.png",
-            "video": "shopify://files/videos/The Soft Wind Moving Hair.mp4",
-            "handle": "",
+            "video": "shopify://files/videos/IMG_0324.MP4",
+            "handle": "@Aileenad",
             "handle_url": "",
             "product_list": [
-              "emma-top",
-              "emily-skort"
+              "ovisa-top",
+              "gemme-top",
+              "kaia-pants",
+              "layla-satin-pants"
             ]
           }
         }
@@ -360,7 +362,7 @@
         "ugc_video_item_BR6dyA",
         "ugc_video_item_TPQwBd",
         "ugc_video_item_YUjBX8",
-        "ugc_video_item_UqGrXU"
+        "ugc_video_item_QmEUFh"
       ],
       "name": "Shoppable Video Gallery",
       "settings": {

@@ -11,6 +11,7 @@
   "sections": {
     "hero": {
       "type": "about-hero-cinematic",
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/banner_2.png",
         "mobile_image": "shopify://shop_images/banner_2_mobile.png",
@@ -22,8 +23,8 @@
     "intro_banner": {
       "type": "editorial-banner",
       "settings": {
-        "heading": "The New Kind of Easy",
-        "subtitle": "Live in breezy and easy styles that effortlessly keep up with you from balmy mornings in the city to sunset socials.",
+        "heading": "Your Style, Our Inspiration.",
+        "subtitle": "Every look tells a story, and we're grateful to every AvelleBabe who brings our pieces to life in her own unique way. \n\nThank you for being part of our journey and inspiring women to wear their confidence.",
         "heading_preset": "h3",
         "heading_case": "capitalize",
         "heading_font_size_desktop": 20,
@@ -41,52 +42,70 @@
     "featured_videos": {
       "type": "shoppable-video-gallery",
       "blocks": {
-        "v1": {
+        "ugc_video_item_zekLjf": {
           "type": "ugc_video_item",
           "settings": {
+            "thumbnail_image": "shopify://shop_images/IMG_6055.png",
             "video": "shopify://files/videos/snaptik_7581303110237228306_v3.mp4",
-            "handle": "@creator_one",
+            "handle": "Lenechels",
             "handle_url": "",
-            "product_list": []
+            "product_list": [
+              "layla-satin-pants"
+            ]
           }
         },
-        "v2": {
+        "ugc_video_item_ixX6xe": {
           "type": "ugc_video_item",
           "settings": {
-            "video": "shopify://files/videos/stevany leonard.mp4",
-            "handle": "@creator_two",
-            "handle_url": "",
-            "product_list": []
-          }
-        },
-        "v3": {
-          "type": "ugc_video_item",
-          "settings": {
+            "thumbnail_image": "shopify://shop_images/IMG_6053.png",
             "video": "shopify://files/videos/kleonita.mp4",
-            "handle": "@creator_three",
+            "handle": "Kleonita",
+            "handle_url": "",
+            "product_list": [
+              "faye-pants",
+              "emma-top",
+              "emily-skort",
+              "avelle-dylan-pants-celana-panjang-hw-kulot-wanita-basic-cullotte-highwaist-wide-leg-pants",
+              "christy-top",
+              "candice-top"
+            ]
+          }
+        },
+        "ugc_video_item_BaE9d8": {
+          "type": "ugc_video_item",
+          "settings": {
+            "thumbnail_image": "shopify://shop_images/IMG_6051.png",
+            "video": "shopify://files/videos/stevany leonard.mp4",
+            "handle": "Stevany Leonard",
             "handle_url": "",
             "product_list": []
           }
         },
-        "v4": {
+        "ugc_video_item_D4tNYH": {
           "type": "ugc_video_item",
+          "name": "aileen",
           "settings": {
-            "video": "shopify://files/videos/snaptik_7644757212665122069_v3.mp4",
-            "handle": "@creator_four",
+            "video": "shopify://files/videos/IMG_0324.MP4",
+            "handle": "@Aileenad",
             "handle_url": "",
-            "product_list": []
+            "product_list": [
+              "ovisa-top",
+              "gemme-top",
+              "kaia-pants",
+              "layla-satin-pants"
+            ]
           }
         }
       },
       "block_order": [
-        "v1",
-        "v2",
-        "v3",
-        "v4"
+        "ugc_video_item_zekLjf",
+        "ugc_video_item_ixX6xe",
+        "ugc_video_item_BaE9d8",
+        "ugc_video_item_D4tNYH"
       ],
       "settings": {
-        "heading": "In Real Life",
-        "heading_preset": "h3",
+        "heading": "Our #AvelleBabes",
+        "heading_preset": "default",
         "heading_case": "uppercase",
         "heading_font_family": "default",
         "heading_font_size_desktop": 20,
@@ -191,6 +210,7 @@
     },
     "editorial_banner_NePbiP": {
       "type": "editorial-banner",
+      "disabled": true,
       "settings": {
         "heading": "The New Kind of Easy",
         "subtitle": "Live in breezy and easy styles that effortlessly keep up with you from balmy mornings in the city to sunset socials.",
@@ -211,6 +231,15 @@
     "community": {
       "type": "shoppable-video-gallery",
       "blocks": {
+        "ugc_video_item_dYmbez": {
+          "type": "ugc_video_item",
+          "settings": {
+            "video": "shopify://files/videos/snaptik_7644757212665122069_v3.mp4",
+            "handle": "@creator_four",
+            "handle_url": "",
+            "product_list": []
+          }
+        },
         "ugc_video_item_bfV8LR": {
           "type": "ugc_video_item",
           "settings": {
@@ -396,21 +425,6 @@
             ]
           }
         },
-        "c2": {
-          "type": "ugc_video_item",
-          "settings": {
-            "video": "shopify://files/videos/stevany leonard.mp4",
-            "handle": "@Stevany Leonard",
-            "handle_url": "",
-            "product_list": [
-              "avelle-rally-top-atasan-korean-wanita",
-              "joan-top",
-              "avelle-dylan-pants-celana-panjang-hw-kulot-wanita-basic-cullotte-highwaist-wide-leg-pants",
-              "jolane-skirt",
-              "axel-top"
-            ]
-          }
-        },
         "c3": {
           "type": "ugc_video_item",
           "settings": {
@@ -490,6 +504,7 @@
         }
       },
       "block_order": [
+        "ugc_video_item_dYmbez",
         "ugc_video_item_bfV8LR",
         "ugc_video_item_NQx6Lr",
         "ugc_video_item_aa6xYk",
@@ -505,7 +520,6 @@
         "ugc_video_item_yEyfXy",
         "ugc_video_item_GbtE6C",
         "c1",
-        "c2",
         "c3",
         "c4",
         "c5",
@@ -514,14 +528,14 @@
         "c8"
       ],
       "settings": {
-        "heading": "Our #AvelleBabes",
+        "heading": "IN REAL LIFE",
         "heading_preset": "default",
         "heading_case": "none",
         "heading_font_family": "default",
         "heading_font_size_desktop": 20,
         "heading_font_size_mobile": 18,
         "header_gap": 32,
-        "subheading": "Tag @avelle and #AvelleBabes to be featured!",
+        "subheading": "Tag @withavelle . We can't wait to see your style inspire more women.",
         "layout": "grid",
         "grid_initial_rows": 2,
         "grid_gap": 16,
