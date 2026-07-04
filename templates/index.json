@@ -114,14 +114,14 @@
     "marquee_elegant": {
       "type": "marquee-elegant",
       "settings": {
-        "text": "Available Instant or Same-Day Delivery in Jakarta & Tangerang",
+        "text": "Available Instant/Same-Day Delivery in Jakarta & Tangerang",
         "separator": "✦",
         "outline": false,
         "font_family": "body",
         "text_size": 14,
-        "text_size_mobile": 8,
+        "text_size_mobile": 10,
         "speed": 101,
-        "bg_color": "#3B2123",
+        "bg_color": "#2A1819",
         "text_color": "#ffffff",
         "border_color": "rgba(0,0,0,0)",
         "border_thickness": 0,
