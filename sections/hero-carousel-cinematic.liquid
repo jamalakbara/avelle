@@ -296,12 +296,18 @@
           <polyline points="8,1 1,6 8,11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
         </svg>
       </button>
-      <div class="hc-progress">
-        <span class="hc-current">01</span>
-        <div class="hc-progress-track">
-          <div class="hc-progress-fill"></div>
-        </div>
-        <span class="hc-total">0{{ section.blocks.size }}</span>
+      <div class="hc-dots" role="tablist" aria-label="Slides">
+        {% for block in section.blocks %}
+          <button
+            type="button"
+            class="hc-dot{% if forloop.first %} is-active{% endif %}"
+            data-index="{{ forloop.index0 }}"
+            aria-label="Go to slide {{ forloop.index }}"
+            {% if forloop.first %}aria-current="true"{% endif %}
+          >
+            <span class="hc-dot-fill"></span>
+          </button>
+        {% endfor %}
       </div>
       <button class="hc-nav-btn hc-nav-next" aria-label="Next slide">
         <svg width="40" height="12" viewBox="0 0 40 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -537,31 +543,37 @@
     transform: translateX(4px);
   }
 
-  .hc-progress {
+  .hc-dots {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-family: monospace, sans-serif;
-    font-size: 14px;
-    letter-spacing: 0.05em;
+    gap: 10px;
+    pointer-events: auto;
   }
 
-  .hc-progress-track {
-    width: 90px;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.3);
+  .hc-dot {
     position: relative;
+    flex: none;
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    border: none;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.35);
     overflow: hidden;
+    cursor: pointer;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
   }
 
-  .hc-progress-fill {
-    content: '';
+  .hc-dot.is-active {
+    width: 44px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .hc-dot-fill {
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+    inset: 0;
     background: #fff;
+    border-radius: inherit;
     transform-origin: left;
     transform: scaleX(0);
   }
@@ -584,7 +596,7 @@
     .hc-hit-prev, .hc-hit-next { cursor: auto; }
     .hc-ui { mix-blend-mode: normal; bottom: 2rem; left: 0; right: 0; width: 100%; padding: 0 1.5rem; justify-content: center; }
     .hc-content--bottom { padding-bottom: clamp(4.5rem, 14vh, 6rem); }
-    .hc-progress-track { background: rgba(255,255,255,0.4); }
+    .hc-dot:not(.is-active) { background: rgba(255,255,255,0.5); }
     .hc-btn-wrapper { pointer-events: auto; }
   }
 </style>
@@ -610,8 +622,7 @@
         this.currentIndex = 0;
         this.autoplaySpeed = parseInt(el.dataset.autoplaySpeed) || 5000;
 
-        this.progressFill = el.querySelector('.hc-progress-fill');
-        this.currentText = el.querySelector('.hc-current');
+        this.dots = el.querySelectorAll('.hc-dot');
 
         this.isAnimating = false;
 
@@ -641,6 +652,30 @@
         }
         if (this.navPrev) this.navPrev.addEventListener('click', () => this.navigate('prev'));
         if (this.navNext) this.navNext.addEventListener('click', () => this.navigate('next'));
+
+        // Direct navigation via dots
+        this.dots.forEach((dot) => {
+          dot.addEventListener('click', () => this.goTo(parseInt(dot.dataset.index, 10)));
+        });
+      }
+
+      getFill(index) {
+        const dot = this.dots && this.dots[index];
+        return dot ? dot.querySelector('.hc-dot-fill') : null;
+      }
+
+      updateDots(index) {
+        this.dots.forEach((dot, i) => {
+          const active = i === index;
+          dot.classList.toggle('is-active', active);
+          if (active) {
+            dot.setAttribute('aria-current', 'true');
+          } else {
+            dot.removeAttribute('aria-current');
+            const fill = dot.querySelector('.hc-dot-fill');
+            if (fill) gsap.set(fill, { scaleX: 0 });
+          }
+        });
       }
 
       revealText(index) {
@@ -677,12 +712,13 @@
       }
 
       startAutoplay() {
-        if (!this.progressFill) return;
+        const fill = this.getFill(this.currentIndex);
+        if (!fill) return;
 
-        gsap.killTweensOf(this.progressFill);
-        gsap.set(this.progressFill, { scaleX: 0 });
+        gsap.killTweensOf(fill);
+        gsap.set(fill, { scaleX: 0 });
 
-        gsap.to(this.progressFill, {
+        gsap.to(fill, {
           scaleX: 1,
           duration: this.autoplaySpeed / 1000,
           ease: 'linear',
@@ -691,16 +727,26 @@
       }
 
       navigate(dir) {
+        const nextIndex =
+          dir === 'next' ? (this.currentIndex + 1) % this.total : (this.currentIndex - 1 + this.total) % this.total;
+        this.transitionTo(nextIndex, dir);
+      }
+
+      goTo(index) {
+        if (index === this.currentIndex || Number.isNaN(index)) return;
+        const dir = index > this.currentIndex ? 'next' : 'prev';
+        this.transitionTo(index, dir);
+      }
+
+      transitionTo(nextIndex, dir) {
         if (this.isAnimating) return;
         this.isAnimating = true;
 
-        if (this.progressFill) {
-          gsap.killTweensOf(this.progressFill);
-          gsap.set(this.progressFill, { scaleX: 0 });
+        const activeFill = this.getFill(this.currentIndex);
+        if (activeFill) {
+          gsap.killTweensOf(activeFill);
+          gsap.set(activeFill, { scaleX: 0 });
         }
-
-        const nextIndex =
-          dir === 'next' ? (this.currentIndex + 1) % this.total : (this.currentIndex - 1 + this.total) % this.total;
 
         const currentSlide = this.slides[this.currentIndex];
         const nextSlide = this.slides[nextIndex];
@@ -752,7 +798,7 @@
         // Clean up and restart
         setTimeout(() => {
           this.currentIndex = nextIndex;
-          if (this.currentText) this.currentText.innerText = `0${nextIndex + 1}`;
+          this.updateDots(nextIndex);
 
           // Reset old slide
           gsap.set(currentSlide, { clipPath: 'inset(0 0 0 100%)' });
