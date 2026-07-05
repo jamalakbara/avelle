@@ -552,7 +552,7 @@
 
   .cart-items__media-container {
     display: flex;
-    aspect-ratio: var(--ratio);
+    aspect-ratio: 3 / 4;
     position: relative;
     width: 100%;
     overflow: hidden;
@@ -625,8 +625,9 @@
     .cart-items__table-row {
       --cart-item-price-width: 6rem;
 
-      grid-template-columns: 7.5rem 1fr 1fr minmax(var(--cart-item-price-width), auto);
+      grid-template-columns: 7.5rem minmax(0, 1fr) auto minmax(var(--cart-item-price-width), auto);
       grid-template-rows: min-content 1fr;
+      column-gap: var(--gap-xl);
       grid-template-areas:
         'media details quantity price'
         'media details error error';
@@ -639,6 +640,7 @@
 
     .cart-items__quantity {
       margin-top: 0;
+      align-self: center;
     }
 
     .cart-items__price {
@@ -646,6 +648,7 @@
       display: flex;
       flex-direction: column;
       align-items: flex-end;
+      justify-content: center;
     }
   }
 
