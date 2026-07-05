@@ -198,6 +198,20 @@
   }
 
   /* Sticky & Transparent Logic */
+
+  /* Stick announcement bar + header together as one unit on every page.
+     Both sections live inside #header-group (see layout/theme.liquid), so
+     making the wrapper sticky keeps them locked together in normal flow:
+     no overlap, no content jump. Keep the Header section's own
+     "Sticky header type" = None so it doesn't switch to position:fixed and
+     escape this wrapper. */
+  #header-group {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
   .header-custom.header-wrapper {
     position: relative;
     z-index: 100;
@@ -938,6 +952,10 @@
                 offsetHeight += child.offsetHeight;
             }
             document.documentElement.style.setProperty('--announcement-bar-height', `${offsetHeight}px`);
+            // Total height of the permanently-sticky header stack (announcement + header).
+            // Consumed by sticky page content (e.g. product details column) so it
+            // parks just below the pinned header instead of hiding behind it.
+            document.documentElement.style.setProperty('--header-group-height', `${headerGroup.offsetHeight}px`);
         }
     };
     setHeaderOffset();

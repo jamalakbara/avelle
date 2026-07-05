@@ -301,7 +301,10 @@
 
   .product-details {
     position: sticky;
-    top: 2rem;
+    /* Park below the permanently-sticky header stack (announcement + header),
+       not behind it. --header-group-height is published live by the header
+       script; 2rem fallback preserves the original gap if it's ever unset. */
+    top: calc(var(--header-group-height, 2rem) + 1rem);
     align-self: start;
   }
 

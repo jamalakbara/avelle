@@ -51,6 +51,15 @@
     border-block-end: var(--border-bottom-width) solid var(--color-border);
   }
 
+  /* Announcement bar is permanently sticky (see #header-group in header.liquid),
+     so trim its vertical padding on small screens to reclaim space at the top
+     of the viewport. Desktop keeps the section's configured padding. */
+  @media screen and (max-width: 749px) {
+    .announcement-bar.spacing-style {
+      padding-block: 8px 8px !important;
+    }
+  }
+
   .announcement-bar__slider {
     display: flex;
     flex-direction: row;
