@@ -15,6 +15,12 @@
       "default": 5
     },
     {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show navigation arrows",
+      "default": false
+    },
+    {
       "type": "select",
       "id": "section_height_desktop",
       "label": "Section Height (Desktop)",
@@ -290,12 +296,14 @@
   {% comment %} UI: Progress Indicator & Hit Areas {% endcomment %}
   {% if section.blocks.size > 1 %}
     <div class="hc-ui">
-      <button class="hc-nav-btn hc-nav-prev" aria-label="Previous slide">
-        <svg width="40" height="12" viewBox="0 0 40 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <line x1="40" y1="6" x2="1" y2="6" stroke="currentColor" stroke-width="1.5"/>
-          <polyline points="8,1 1,6 8,11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-        </svg>
-      </button>
+      {% if section.settings.show_arrows %}
+        <button class="hc-nav-btn hc-nav-prev" aria-label="Previous slide">
+          <svg width="40" height="12" viewBox="0 0 40 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <line x1="40" y1="6" x2="1" y2="6" stroke="currentColor" stroke-width="1.5"/>
+            <polyline points="8,1 1,6 8,11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      {% endif %}
       <div class="hc-dots" role="tablist" aria-label="Slides">
         {% for block in section.blocks %}
           <button
@@ -309,12 +317,14 @@
           </button>
         {% endfor %}
       </div>
-      <button class="hc-nav-btn hc-nav-next" aria-label="Next slide">
-        <svg width="40" height="12" viewBox="0 0 40 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <line x1="0" y1="6" x2="39" y2="6" stroke="currentColor" stroke-width="1.5"/>
-          <polyline points="32,1 39,6 32,11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-        </svg>
-      </button>
+      {% if section.settings.show_arrows %}
+        <button class="hc-nav-btn hc-nav-next" aria-label="Next slide">
+          <svg width="40" height="12" viewBox="0 0 40 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <line x1="0" y1="6" x2="39" y2="6" stroke="currentColor" stroke-width="1.5"/>
+            <polyline points="32,1 39,6 32,11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      {% endif %}
     </div>
 
     <!-- Navigation Hit Areas -->
