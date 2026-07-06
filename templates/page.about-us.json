@@ -79,6 +79,7 @@
       "blocks": {
         "value_card_n7RydQ": {
           "type": "value_card",
+          "disabled": true,
           "settings": {
             "icon": "quality",
             "heading": "Our Value",
@@ -351,8 +352,9 @@
     },
     "about_cta": {
       "type": "about-cta-cinematic",
+      "custom_css": [],
       "settings": {
-        "image": "shopify://shop_images/119.png",
+        "image": "shopify://shop_images/rekom_size_banner_web_15.png",
         "heading": "Discover The Collection",
         "button_label": "Shop Now",
         "button_link": "shopify://collections/all",
