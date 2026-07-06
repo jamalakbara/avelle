@@ -153,20 +153,20 @@
             "title": "Satin"
           }
         },
-        "block_1": {
-          "type": "collection",
-          "settings": {
-            "collection": "new-arrival",
-            "title": "",
-            "image": "shopify://shop_images/sku_baru_10.png"
-          }
-        },
         "block_2": {
           "type": "collection",
           "settings": {
             "collection": "best-seller",
             "title": "",
             "image": "shopify://shop_images/id-11134207-81zth-mek3dstegbgi17.jpg"
+          }
+        },
+        "block_1": {
+          "type": "collection",
+          "settings": {
+            "collection": "new-arrival",
+            "title": "",
+            "image": "shopify://shop_images/sku_baru_10.png"
           }
         },
         "block_3": {
@@ -180,8 +180,8 @@
       },
       "block_order": [
         "collection_AqxhKi",
-        "block_1",
         "block_2",
+        "block_1",
         "block_3"
       ],
       "settings": {
