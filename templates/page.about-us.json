@@ -24,7 +24,7 @@
         "content_position": "left",
         "heading": "Simple but Significant",
         "body_text": "<p>Every piece is created to last beyond the season. We bring you the essentials for the modern wardrobe.</p><p>Our commitment to quality and timeless design ensures that each item becomes a cherished part of your collection.</p>",
-        "image": "shopify://shop_images/rekom_size_banner_web_12.png",
+        "image": "shopify://shop_images/rekom_size_banner_web_13.png",
         "color_scheme": "scheme-1",
         "overlay_opacity": 20,
         "padding_top": 0,
@@ -77,6 +77,30 @@
     "about_values": {
       "type": "about-values-cards",
       "blocks": {
+        "value_card_tacYqw": {
+          "type": "value_card",
+          "settings": {
+            "icon": "quality",
+            "heading": "Our Value",
+            "description": "Description of this value and what it means to us."
+          }
+        },
+        "value_card_cdTjKr": {
+          "type": "value_card",
+          "settings": {
+            "icon": "quality",
+            "heading": "Our Value",
+            "description": "Description of this value and what it means to us."
+          }
+        },
+        "value_card_n7RydQ": {
+          "type": "value_card",
+          "settings": {
+            "icon": "quality",
+            "heading": "Our Value",
+            "description": "Description of this value and what it means to us."
+          }
+        },
         "value_1": {
           "type": "value_card",
           "settings": {
@@ -103,6 +127,9 @@
         }
       },
       "block_order": [
+        "value_card_tacYqw",
+        "value_card_cdTjKr",
+        "value_card_n7RydQ",
         "value_1",
         "value_2",
         "value_3"
