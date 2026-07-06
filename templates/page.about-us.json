@@ -354,12 +354,12 @@
       "type": "about-cta-cinematic",
       "custom_css": [],
       "settings": {
-        "image": "shopify://shop_images/rekom_size_banner_web_15.png",
+        "image": "shopify://shop_images/Untitled_design_5.png",
         "heading": "Discover The Collection",
         "button_label": "Shop Now",
         "button_link": "shopify://collections/all",
         "overlay_opacity": 40,
-        "height": "50vh"
+        "height": "75vh"
       }
     }
   },
