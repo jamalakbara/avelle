@@ -11,9 +11,8 @@
   "sections": {
     "about_hero": {
       "type": "about-hero-cinematic",
-      "disabled": true,
       "settings": {
-        "image": "shopify://shop_images/DSC09340.jpg",
+        "image": "shopify://shop_images/rekom_size_banner_web_8.png",
         "heading": "Our Story",
         "subheading": "Crafting timeless pieces for the modern individual",
         "overlay_opacity": 40
