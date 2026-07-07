@@ -102,6 +102,7 @@
       ],
       "settings": {
         "autoplay_speed": 5,
+        "show_arrows": false,
         "section_height_desktop": "85vh",
         "section_height_mobile": "85vh",
         "heading_size_mobile": 32,
@@ -356,13 +357,23 @@
               "layla-satin-pants"
             ]
           }
+        },
+        "ugc_video_item_QXpVwC": {
+          "type": "ugc_video_item",
+          "settings": {
+            "thumbnail_image": "shopify://shop_images/SnapInsta.to_589548953_18135882760475772_7653938979125671199_n.jpg",
+            "handle": "",
+            "handle_url": "",
+            "product_list": []
+          }
         }
       },
       "block_order": [
         "ugc_video_item_BR6dyA",
         "ugc_video_item_TPQwBd",
         "ugc_video_item_YUjBX8",
-        "ugc_video_item_QmEUFh"
+        "ugc_video_item_QmEUFh",
+        "ugc_video_item_QXpVwC"
       ],
       "name": "Shoppable Video Gallery",
       "settings": {
