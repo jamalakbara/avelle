@@ -101,6 +101,33 @@
     }
   }
 
+  /* Standard (image-above-title) collection card: let the image keep its own
+     aspect ratio and the title take its natural height, so the card grows to
+     fit both. Without this the theme's `.resource-image{height:100%}` +
+     `.collection-card__content{height:100%}` make the image and title each
+     claim the full card height and flex-shrink to ~50/50, collapsing the
+     portrait image into a cropped landscape sliver (and, once the image is
+     un-shrunk, clipping the title under the inner's `overflow:hidden`).
+     Excludes overlay/bento/editorial placements which size the image
+     deliberately. */
+  .collection-card:not(.collection-card--image-bg):not(.collection-card--image-height-fixed):not(.collection-card--flexible-aspect-ratio) {
+    .collection-card__inner {
+      height: auto;
+    }
+
+    .collection-card__image {
+      flex: 0 0 auto;
+      height: auto;
+      /* Match product cards: force 3:4 regardless of the section's ratio setting. */
+      aspect-ratio: 3 / 4;
+    }
+
+    .collection-card__content {
+      flex: 0 0 auto;
+      height: auto;
+    }
+  }
+
   /* allow all blocks to be selectable in editor preview */
   .shopify-design-mode .collection-card__content * {
     pointer-events: auto;
