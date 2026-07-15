@@ -1,0 +1,560 @@
+{% capture submit_button %}
+  {% content_for 'block', type: 'contact-form-submit-button', id: 'submit-button' %}
+{% endcapture %}
+
+<div
+  class="
+    payment-confirmation
+    spacing-style size-style
+    {% if block.settings.inherit_color_scheme == false %}color-{{ block.settings.color_scheme }}{% endif %}
+  "
+  style="
+    {% render 'spacing-style', settings: block.settings %}
+    {% render 'size-style', settings: block.settings %}
+  "
+  {{ block.shopify_attributes }}
+>
+  {%- if block.settings.show_bank_details -%}
+    <div class="payment-confirmation__bank">
+      {%- if block.settings.bank_heading != blank -%}
+        <p class="payment-confirmation__bank-heading">{{ block.settings.bank_heading }}</p>
+      {%- endif -%}
+
+      <dl class="payment-confirmation__bank-rows">
+        {%- if block.settings.bank_name != blank -%}
+          <div class="payment-confirmation__bank-row">
+            <dt>{{ block.settings.bank_name_label }}</dt>
+            <dd>{{ block.settings.bank_name }}</dd>
+          </div>
+        {%- endif -%}
+        {%- if block.settings.account_number != blank -%}
+          <div class="payment-confirmation__bank-row">
+            <dt>{{ block.settings.account_number_label }}</dt>
+            <dd>
+              <span data-copy-value="{{ block.settings.account_number }}">{{ block.settings.account_number }}</span>
+              <button type="button" class="payment-confirmation__copy" data-copy-account aria-label="Copy account number">Copy</button>
+            </dd>
+          </div>
+        {%- endif -%}
+        {%- if block.settings.account_holder != blank -%}
+          <div class="payment-confirmation__bank-row">
+            <dt>{{ block.settings.account_holder_label }}</dt>
+            <dd>{{ block.settings.account_holder }}</dd>
+          </div>
+        {%- endif -%}
+      </dl>
+
+      {%- if block.settings.bank_instructions != blank -%}
+        <div class="payment-confirmation__bank-note">{{ block.settings.bank_instructions }}</div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {% assign form_id = block.id | default: section.id | prepend: 'PaymentConfirmation-' %}
+  {%- form 'contact', id: form_id, class: 'payment-confirmation__form' -%}
+    <input name="contact[id]" type="hidden" value="{{ form_id }}">
+    {%- comment -%} Body marker so payment proofs are filterable in the inbox {%- endcomment -%}
+    <input name="contact[Submission Type]" type="hidden" value="Payment Proof">
+
+    {%- if form.errors and form.id == form_id -%}
+      <div class="payment-confirmation__error" tabindex="-1" autofocus>
+        {{- 'icon-error.svg' | inline_asset_content -}}
+        {{- form.errors.translated_fields.email | capitalize }}
+        {{ form.errors.messages.email -}}
+      </div>
+    {%- endif -%}
+
+    {%- if form.posted_successfully? and form.id == form_id -%}
+      <div class="payment-confirmation__success" tabindex="-1" autofocus>
+        {{- 'icon-checkmark.svg' | inline_asset_content -}}
+        {{ block.settings.success_message }}
+      </div>
+    {%- else -%}
+      <div class="payment-confirmation__form-row">
+        <label class="visually-hidden" for="{{ form_id }}-order">Order number</label>
+        <input
+          type="text"
+          id="{{ form_id }}-order"
+          class="payment-confirmation__input"
+          name="contact[Order Number]"
+          data-order-field
+          placeholder="Order number (e.g. #1042)"
+          value="{{ form['Order Number'] }}"
+        >
+
+        <label class="visually-hidden" for="{{ form_id }}-email">Email</label>
+        <input
+          type="email"
+          id="{{ form_id }}-email"
+          class="payment-confirmation__input"
+          autocomplete="email"
+          name="contact[email]"
+          spellcheck="false"
+          autocapitalize="off"
+          aria-required="true"
+          value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+          placeholder="Email *"
+        >
+      </div>
+
+      <div class="payment-confirmation__form-row">
+        <label class="visually-hidden" for="{{ form_id }}-sender">Sender name</label>
+        <input
+          type="text"
+          id="{{ form_id }}-sender"
+          class="payment-confirmation__input"
+          autocomplete="name"
+          name="contact[Sender Name]"
+          value="{% if customer %}{{ customer.name }}{% endif %}"
+          placeholder="Name on bank account"
+        >
+
+        <label class="visually-hidden" for="{{ form_id }}-amount">Amount transferred</label>
+        <input
+          type="text"
+          id="{{ form_id }}-amount"
+          class="payment-confirmation__input"
+          name="contact[Amount]"
+          placeholder="Amount transferred"
+        >
+      </div>
+
+      <label class="visually-hidden" for="{{ form_id }}-bank">Bank sent from</label>
+      <input
+        type="text"
+        id="{{ form_id }}-bank"
+        class="payment-confirmation__input"
+        name="contact[Bank Sent From]"
+        placeholder="Bank you transferred from"
+      >
+
+      {%- if block.settings.enable_file_upload -%}
+        <div class="payment-confirmation__upload">
+          <label class="payment-confirmation__upload-label" for="{{ form_id }}-file">
+            {{ block.settings.upload_label }}
+          </label>
+          <input
+            type="file"
+            id="{{ form_id }}-file"
+            class="payment-confirmation__file"
+            name="contact[Attachment]"
+            accept="image/*,application/pdf"
+          >
+        </div>
+      {%- endif -%}
+
+      {%- if block.settings.enable_link_fallback -%}
+        <label class="visually-hidden" for="{{ form_id }}-link">Proof link</label>
+        <input
+          type="url"
+          id="{{ form_id }}-link"
+          class="payment-confirmation__input"
+          name="contact[Proof Link]"
+          placeholder="{{ block.settings.link_placeholder }}"
+        >
+      {%- endif -%}
+
+      <label class="visually-hidden" for="{{ form_id }}-body">Note</label>
+      <textarea
+        rows="4"
+        id="{{ form_id }}-body"
+        class="payment-confirmation__input payment-confirmation__input--textarea"
+        name="contact[body]"
+        placeholder="Note (optional)"
+      >{{ form.body }}</textarea>
+
+      {{ submit_button }}
+    {%- endif -%}
+  {%- endform -%}
+</div>
+
+<script type="module">
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var order = params.get('order');
+    if (!order) return;
+    document.querySelectorAll('[data-order-field]').forEach(function (el) {
+      if (!el.value) el.value = order;
+    });
+  })();
+
+  document.querySelectorAll('[data-copy-account]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var target = btn.parentElement.querySelector('[data-copy-value]');
+      if (!target || !navigator.clipboard) return;
+      navigator.clipboard.writeText(target.getAttribute('data-copy-value')).then(function () {
+        var prev = btn.textContent;
+        btn.textContent = 'Copied';
+        setTimeout(function () { btn.textContent = prev; }, 1500);
+      });
+    });
+  });
+</script>
+
+{% stylesheet %}
+  .payment-confirmation__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xl, 2rem);
+  }
+
+  .payment-confirmation__form-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xl, 2rem);
+
+    @media screen and (min-width: 750px) {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+
+  .payment-confirmation__form-row > * {
+    flex: 1;
+  }
+
+  .payment-confirmation__input {
+    width: 100%;
+    color: var(--color-input-text);
+    background-color: transparent;
+    padding-block: var(--padding-lg);
+    padding-inline: 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid var(--color-input-border);
+    font-family: var(--font-body--family);
+    font-size: 0.9375rem;
+    -webkit-font-smoothing: antialiased;
+    transition: border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .payment-confirmation__input:focus {
+    outline: none;
+    border-bottom-color: var(--color-foreground);
+  }
+
+  .payment-confirmation__input::placeholder {
+    color: var(--color-input-text);
+    opacity: 0.45;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .payment-confirmation__input--textarea {
+    resize: none;
+    min-height: 120px;
+    border: 1px solid var(--color-input-border);
+    padding: var(--padding-lg) var(--padding-xl);
+  }
+
+  .payment-confirmation__input--textarea:focus {
+    border-color: var(--color-foreground);
+  }
+
+  .payment-confirmation__bank {
+    margin-block-end: var(--gap-xl, 2rem);
+    padding: var(--padding-xl, 2rem);
+    border: 1px solid var(--color-input-border);
+  }
+
+  .payment-confirmation__bank-heading {
+    margin: 0 0 var(--gap-lg, 1.5rem);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+
+  .payment-confirmation__bank-rows {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md, 1rem);
+  }
+
+  .payment-confirmation__bank-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--gap-md, 1rem);
+    border-bottom: 1px solid var(--color-input-border);
+    padding-block-end: var(--gap-md, 1rem);
+  }
+
+  .payment-confirmation__bank-row:last-child {
+    border-bottom: none;
+    padding-block-end: 0;
+  }
+
+  .payment-confirmation__bank-row dt {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.7rem;
+    opacity: 0.6;
+  }
+
+  .payment-confirmation__bank-row dd {
+    margin: 0;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm, 0.5rem);
+  }
+
+  .payment-confirmation__copy {
+    background: transparent;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    color: inherit;
+  }
+
+  .payment-confirmation__bank-note {
+    margin-block-start: var(--gap-lg, 1.5rem);
+    font-size: 0.85rem;
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+
+  .payment-confirmation__upload-label {
+    display: block;
+    margin-block-end: var(--gap-sm, 0.5rem);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+
+  .payment-confirmation__file {
+    width: 100%;
+    font-size: 0.85rem;
+  }
+
+  .payment-confirmation__error,
+  .payment-confirmation__success {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Payment confirmation",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Bank details"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bank_details",
+      "label": "Show bank details",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "bank_heading",
+      "label": "Bank details heading",
+      "default": "Transfer to"
+    },
+    {
+      "type": "text",
+      "id": "bank_name_label",
+      "label": "Bank name label",
+      "default": "Bank"
+    },
+    {
+      "type": "text",
+      "id": "bank_name",
+      "label": "Bank name",
+      "default": "BCA"
+    },
+    {
+      "type": "text",
+      "id": "account_number_label",
+      "label": "Account number label",
+      "default": "Account number"
+    },
+    {
+      "type": "text",
+      "id": "account_number",
+      "label": "Account number",
+      "default": "1234567890"
+    },
+    {
+      "type": "text",
+      "id": "account_holder_label",
+      "label": "Account holder label",
+      "default": "Account holder"
+    },
+    {
+      "type": "text",
+      "id": "account_holder",
+      "label": "Account holder",
+      "default": "PT Avelle"
+    },
+    {
+      "type": "richtext",
+      "id": "bank_instructions",
+      "label": "Instructions",
+      "default": "<p>Transfer the exact order total, then submit your proof below. We verify within 1×24 hours.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Proof upload"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_file_upload",
+      "label": "Enable file upload",
+      "info": "Native attachment. May be capped or disabled on some plans — test on your store.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "upload_label",
+      "label": "Upload label",
+      "default": "Upload transfer receipt (image or PDF)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_link_fallback",
+      "label": "Enable proof link field",
+      "info": "Fallback if upload fails — customer pastes a link to the receipt.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "link_placeholder",
+      "label": "Link field placeholder",
+      "default": "Or paste a link to your receipt"
+    },
+    {
+      "type": "header",
+      "content": "Confirmation"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks — we received your payment proof and will verify your order shortly."
+    },
+    {
+      "type": "header",
+      "content": "t:settings.width_desktop"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:settings.width_desktop",
+      "options": [
+        { "value": "fit-content", "label": "t:options.fit_content" },
+        { "value": "custom", "label": "t:options.custom" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 60,
+      "visible_if": "{{ block.settings.width == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:settings.width_mobile",
+      "options": [
+        { "value": "fit-content", "label": "t:options.fit_content" },
+        { "value": "custom", "label": "t:options.custom" }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "range",
+      "id": "custom_width_mobile",
+      "label": "t:settings.width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Payment confirmation",
+      "category": "t:categories.forms"
+    }
+  ]
+}
+{% endschema %}

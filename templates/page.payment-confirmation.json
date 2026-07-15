@@ -1,0 +1,107 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "title": {
+          "type": "text",
+          "name": "t:names.title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "h2",
+            "font": "var(--font-heading--family)",
+            "line_height": "normal",
+            "letter_spacing": "-0.02em",
+            "case": "none",
+            "font_family_override": "default",
+            "font_size_desktop": 32,
+            "font_size_mobile": 28,
+            "wrap": "pretty"
+          },
+          "blocks": {}
+        },
+        "content": {
+          "type": "text",
+          "name": "t:names.content",
+          "settings": {
+            "text": "{{ closest.page.content }}",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1.125rem",
+            "line_height": "1.6",
+            "letter_spacing": "normal",
+            "case": "none",
+            "font_family_override": "default",
+            "font_size_desktop": 16,
+            "font_size_mobile": 14,
+            "wrap": "pretty"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["title", "content"],
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 0
+      }
+    },
+    "form": {
+      "type": "section",
+      "blocks": {
+        "payment_confirmation": {
+          "type": "payment-confirmation",
+          "settings": {
+            "width": "custom",
+            "custom_width": 60,
+            "width_mobile": "custom",
+            "custom_width_mobile": 100,
+            "inherit_color_scheme": true
+          },
+          "blocks": {
+            "submit-button": {
+              "type": "contact-form-submit-button",
+              "static": true,
+              "settings": {
+                "label": "Submit payment proof",
+                "style_class": "button-secondary",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        }
+      },
+      "block_order": ["payment_confirmation"],
+      "name": "Payment confirmation",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "background_media": "none",
+        "border": "none",
+        "padding-block-start": 32,
+        "padding-block-end": 48
+      }
+    }
+  },
+  "order": ["main", "form"]
+}
