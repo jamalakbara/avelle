@@ -102,11 +102,6 @@
             "account_holder_label": "Account holder",
             "account_holder": "Josslyn Soetjipto or Kevin",
             "bank_instructions": "<p>Transfer the exact order total, then submit your proof below. We verify within 1×24 hours.</p>",
-            "enable_file_upload": false,
-            "upload_label": "Upload transfer receipt (image or PDF)",
-            "enable_link_fallback": true,
-            "link_placeholder": "Paste a link to your receipt (Google Drive, Dropbox, etc.)",
-            "success_message": "Thanks — we received your payment proof and will verify your order shortly.",
             "width": "custom",
             "custom_width": 60,
             "width_mobile": "custom",
@@ -118,21 +113,7 @@
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
-          "blocks": {
-            "submit-button": {
-              "type": "contact-form-submit-button",
-              "static": true,
-              "settings": {
-                "label": "Submit payment proof",
-                "style_class": "button-secondary",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
+          "blocks": {},
           "block_order": []
         }
       },
