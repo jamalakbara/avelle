@@ -429,6 +429,7 @@
         "c3": {
           "type": "ugc_video_item",
           "settings": {
+            "thumbnail_image": "shopify://shop_images/WhatsApp_Image_2026-07-16_at_13.51.49.jpg",
             "video": "shopify://files/videos/kleonita.mp4",
             "handle": "@Kleonita",
             "handle_url": "",
