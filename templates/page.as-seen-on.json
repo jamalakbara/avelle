@@ -341,6 +341,7 @@
         "ugc_video_item_ADpDMy": {
           "type": "ugc_video_item",
           "settings": {
+            "thumbnail_image": "shopify://shop_images/layout_feed_weekly_3.png",
             "video": "shopify://files/videos/ssstik.io_1782291754855.mp4",
             "handle": "@Graciellap",
             "handle_url": "",
