@@ -51,35 +51,33 @@
   {%- endif -%}
 
   {% assign form_id = block.id | default: section.id | prepend: 'PaymentConfirmation-' %}
-  {%- form 'contact', id: form_id, class: 'payment-confirmation__form' -%}
-    <input name="contact[id]" type="hidden" value="{{ form_id }}">
-    {%- comment -%} Body marker so payment proofs are filterable in the inbox {%- endcomment -%}
-    <input name="contact[Submission Type]" type="hidden" value="Payment Proof">
+  <form
+    action="https://api.web3forms.com/submit"
+    method="POST"
+    enctype="multipart/form-data"
+    class="payment-confirmation__form"
+    id="{{ form_id }}"
+    data-payment-form
+  >
+    <input type="hidden" name="access_key" value="{{ block.settings.web3forms_key }}">
+    <input type="hidden" name="subject" value="{{ block.settings.email_subject }}">
+    <input type="hidden" name="from_name" value="{{ shop.name }} — Payment Confirmation">
+    <input type="hidden" name="Submission Type" value="Payment Proof">
+    {%- comment -%} Honeypot: bots fill this, humans can't see it {%- endcomment -%}
+    <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display: none !important;" aria-hidden="true">
 
-    {%- if form.errors and form.id == form_id -%}
-      <div class="payment-confirmation__error" tabindex="-1" autofocus>
-        {{- 'icon-error.svg' | inline_asset_content -}}
-        {{- form.errors.translated_fields.email | capitalize }}
-        {{ form.errors.messages.email -}}
-      </div>
-    {%- endif -%}
+    <div class="payment-confirmation__error" data-form-error tabindex="-1" hidden></div>
 
-    {%- if form.posted_successfully? and form.id == form_id -%}
-      <div class="payment-confirmation__success" tabindex="-1" autofocus>
-        {{- 'icon-checkmark.svg' | inline_asset_content -}}
-        {{ block.settings.success_message }}
-      </div>
-    {%- else -%}
+    <div class="payment-confirmation__fields" data-form-fields>
       <div class="payment-confirmation__form-row">
         <label class="visually-hidden" for="{{ form_id }}-order">Order number</label>
         <input
           type="text"
           id="{{ form_id }}-order"
           class="payment-confirmation__input"
-          name="contact[Order Number]"
+          name="Order Number"
           data-order-field
           placeholder="Order number (e.g. #1042)"
-          value="{{ form['Order Number'] }}"
         >
 
         <label class="visually-hidden" for="{{ form_id }}-email">Email</label>
@@ -88,11 +86,11 @@
           id="{{ form_id }}-email"
           class="payment-confirmation__input"
           autocomplete="email"
-          name="contact[email]"
+          name="email"
           spellcheck="false"
           autocapitalize="off"
-          aria-required="true"
-          value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+          required
+          value="{% if customer %}{{ customer.email }}{% endif %}"
           placeholder="Email *"
         >
       </div>
@@ -104,7 +102,7 @@
           id="{{ form_id }}-sender"
           class="payment-confirmation__input"
           autocomplete="name"
-          name="contact[Sender Name]"
+          name="Sender Name"
           value="{% if customer %}{{ customer.name }}{% endif %}"
           placeholder="Name on bank account"
         >
@@ -114,7 +112,7 @@
           type="text"
           id="{{ form_id }}-amount"
           class="payment-confirmation__input"
-          name="contact[Amount]"
+          name="Amount"
           placeholder="Amount transferred"
         >
       </div>
@@ -124,7 +122,7 @@
         type="text"
         id="{{ form_id }}-bank"
         class="payment-confirmation__input"
-        name="contact[Bank Sent From]"
+        name="Bank Sent From"
         placeholder="Bank you transferred from"
       >
 
@@ -137,7 +135,7 @@
             type="file"
             id="{{ form_id }}-file"
             class="payment-confirmation__file"
-            name="contact[Attachment]"
+            name="Receipt"
             accept="image/*,application/pdf"
           >
         </div>
@@ -149,7 +147,7 @@
           type="url"
           id="{{ form_id }}-link"
           class="payment-confirmation__input"
-          name="contact[Proof Link]"
+          name="Proof Link"
           placeholder="{{ block.settings.link_placeholder }}"
         >
       {%- endif -%}
@@ -159,13 +157,18 @@
         rows="4"
         id="{{ form_id }}-body"
         class="payment-confirmation__input payment-confirmation__input--textarea"
-        name="contact[body]"
+        name="Note"
         placeholder="Note (optional)"
-      >{{ form.body }}</textarea>
+      ></textarea>
 
       {{ submit_button }}
-    {%- endif -%}
-  {%- endform -%}
+    </div>
+
+    <div class="payment-confirmation__success" data-form-success tabindex="-1" hidden>
+      {{- 'icon-checkmark.svg' | inline_asset_content -}}
+      {{ block.settings.success_message }}
+    </div>
+  </form>
 </div>
 
 <script type="module">
@@ -187,6 +190,46 @@
         btn.textContent = 'Copied';
         setTimeout(function () { btn.textContent = prev; }, 1500);
       });
+    });
+  });
+
+  document.querySelectorAll('[data-payment-form]').forEach(function (form) {
+    var fields = form.querySelector('[data-form-fields]');
+    var success = form.querySelector('[data-form-success]');
+    var error = form.querySelector('[data-form-error]');
+    var submit = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      error.hidden = true;
+      error.textContent = '';
+      if (submit) submit.disabled = true;
+
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      })
+        .then(function (response) {
+          return response.json().then(function (data) {
+            return { ok: response.ok, data: data };
+          });
+        })
+        .then(function (result) {
+          if (result.ok && result.data.success) {
+            fields.hidden = true;
+            success.hidden = false;
+            success.focus();
+          } else {
+            throw new Error((result.data && result.data.message) || 'Submission failed. Please try again.');
+          }
+        })
+        .catch(function (err) {
+          error.textContent = err.message || 'Something went wrong. Please try again.';
+          error.hidden = false;
+          error.focus();
+          if (submit) submit.disabled = false;
+        });
     });
   });
 </script>
@@ -435,6 +478,23 @@
       "id": "link_placeholder",
       "label": "Link field placeholder",
       "default": "Or paste a link to your receipt"
+    },
+    {
+      "type": "header",
+      "content": "Email delivery (Web3Forms)"
+    },
+    {
+      "type": "text",
+      "id": "web3forms_key",
+      "label": "Web3Forms access key",
+      "info": "From web3forms.com — determines which inbox receives submissions.",
+      "default": "f6ba5bf5-669d-4962-a340-bd77f64d9627"
+    },
+    {
+      "type": "text",
+      "id": "email_subject",
+      "label": "Email subject",
+      "default": "New payment proof submission"
     },
     {
       "type": "header",
