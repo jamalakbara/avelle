@@ -401,6 +401,7 @@
         "ugc_video_item_GbtE6C": {
           "type": "ugc_video_item",
           "settings": {
+            "thumbnail_image": "shopify://shop_images/WhatsApp_Image_2026-07-16_at_13.44.15.jpg",
             "video": "shopify://files/videos/ssstik.io_1782447935291.mp4",
             "handle": "@Debora Wenny Tania",
             "handle_url": "",
