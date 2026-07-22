@@ -45,6 +45,49 @@
       {%- endif -%}
     </div>
   {%- endif -%}
+
+  {%- if block.settings.show_form -%}
+    <form
+      class="payment-confirmation__form"
+      data-wa-form
+      data-wa-number="{{ block.settings.whatsapp_number | remove: '+' | remove: ' ' | remove: '-' }}"
+    >
+      {%- if block.settings.form_heading != blank -%}
+        <p class="payment-confirmation__form-heading">{{ block.settings.form_heading }}</p>
+      {%- endif -%}
+
+      <div class="payment-confirmation__field">
+        <label for="pc-order">{{ block.settings.label_order }}</label>
+        <input type="text" id="pc-order" name="order" class="payment-confirmation__input" required placeholder="{{ block.settings.label_order | escape }}">
+      </div>
+
+      <div class="payment-confirmation__field">
+        <label for="pc-name">{{ block.settings.label_name }}</label>
+        <input type="text" id="pc-name" name="name" class="payment-confirmation__input" required placeholder="{{ block.settings.label_name | escape }}">
+      </div>
+
+      <div class="payment-confirmation__field">
+        <label for="pc-amount">{{ block.settings.label_amount }}</label>
+        <input type="text" id="pc-amount" name="amount" class="payment-confirmation__input" required inputmode="numeric" placeholder="{{ block.settings.label_amount | escape }}">
+      </div>
+
+      <div class="payment-confirmation__field">
+        <label for="pc-bank">{{ block.settings.label_bank }}</label>
+        <input type="text" id="pc-bank" name="bank" class="payment-confirmation__input" required placeholder="{{ block.settings.label_bank | escape }}">
+      </div>
+
+      <div class="payment-confirmation__field">
+        <label for="pc-note">{{ block.settings.label_note }}</label>
+        <textarea id="pc-note" name="note" rows="3" class="payment-confirmation__input payment-confirmation__input--textarea" placeholder="{{ block.settings.label_note | escape }}"></textarea>
+      </div>
+
+      {%- if block.settings.receipt_note != blank -%}
+        <p class="payment-confirmation__receipt-note">{{ block.settings.receipt_note }}</p>
+      {%- endif -%}
+
+      <button type="submit" class="payment-confirmation__submit button">{{ block.settings.submit_label }}</button>
+    </form>
+  {%- endif -%}
 </div>
 
 <script type="module">
@@ -57,6 +100,35 @@
         btn.textContent = 'Copied';
         setTimeout(function () { btn.textContent = prev; }, 1500);
       });
+    });
+  });
+
+  document.querySelectorAll('[data-wa-form]').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var number = form.getAttribute('data-wa-number') || '';
+      if (!number) {
+        alert('WhatsApp number not set. Please contact the store.');
+        return;
+      }
+      var get = function (n) {
+        var el = form.querySelector('[name="' + n + '"]');
+        return el ? el.value.trim() : '';
+      };
+      var lines = [
+        'Payment Confirmation',
+        '',
+        'Order number: ' + get('order'),
+        'Sender name: ' + get('name'),
+        'Amount: ' + get('amount'),
+        'Bank sent from: ' + get('bank')
+      ];
+      var note = get('note');
+      if (note) lines.push('Note: ' + note);
+      lines.push('');
+      lines.push('(I will attach my transfer receipt below)');
+      var url = 'https://wa.me/' + number + '?text=' + encodeURIComponent(lines.join('\n'));
+      window.open(url, '_blank');
     });
   });
 </script>
@@ -129,6 +201,86 @@
     opacity: 0.8;
     line-height: 1.5;
   }
+
+  .payment-confirmation__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-lg, 1.5rem);
+    margin-block-start: var(--gap-xl, 2rem);
+    text-align: left;
+  }
+
+  .payment-confirmation__form-heading {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+
+  .payment-confirmation__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs, 0.35rem);
+  }
+
+  .payment-confirmation__field label {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.7rem;
+    opacity: 0.6;
+  }
+
+  .payment-confirmation__input {
+    width: 100%;
+    color: var(--color-input-text);
+    background-color: transparent;
+    padding-block: var(--padding-lg, 0.75rem);
+    padding-inline: 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid var(--color-input-border);
+    font-family: var(--font-body--family);
+    font-size: 0.9375rem;
+    -webkit-font-smoothing: antialiased;
+    transition: border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .payment-confirmation__input:focus {
+    outline: none;
+    border-bottom-color: var(--color-foreground);
+  }
+
+  .payment-confirmation__input::placeholder {
+    color: var(--color-input-text);
+    opacity: 0.45;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .payment-confirmation__input--textarea {
+    resize: none;
+    min-height: 90px;
+    border: 1px solid var(--color-input-border);
+    padding: var(--padding-lg, 0.75rem) var(--padding-xl, 1rem);
+  }
+
+  .payment-confirmation__input--textarea:focus {
+    border-color: var(--color-foreground);
+  }
+
+  .payment-confirmation__receipt-note {
+    margin: 0;
+    font-size: 0.8rem;
+    opacity: 0.75;
+    line-height: 1.5;
+  }
+
+  .payment-confirmation__submit {
+    align-self: flex-start;
+    cursor: pointer;
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -193,6 +345,71 @@
       "id": "bank_instructions",
       "label": "Instructions",
       "default": "<p>Transfer the exact order total, then submit your proof below. We verify within 1×24 hours.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Payment proof form (WhatsApp)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_form",
+      "label": "Show proof form",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp number (international, e.g. 6281234567890)",
+      "info": "Country code, no + or spaces. Submissions open a WhatsApp chat to this number.",
+      "default": "6281234567890"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form heading",
+      "default": "Submit your payment proof"
+    },
+    {
+      "type": "text",
+      "id": "label_order",
+      "label": "Order number label",
+      "default": "Order number"
+    },
+    {
+      "type": "text",
+      "id": "label_name",
+      "label": "Sender name label",
+      "default": "Sender name"
+    },
+    {
+      "type": "text",
+      "id": "label_amount",
+      "label": "Amount label",
+      "default": "Amount transferred"
+    },
+    {
+      "type": "text",
+      "id": "label_bank",
+      "label": "Bank sent from label",
+      "default": "Bank sent from"
+    },
+    {
+      "type": "text",
+      "id": "label_note",
+      "label": "Note label",
+      "default": "Note (optional)"
+    },
+    {
+      "type": "richtext",
+      "id": "receipt_note",
+      "label": "Receipt instruction",
+      "default": "<p>After tapping the button, please attach your transfer receipt screenshot in the WhatsApp chat before sending.</p>"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit button label",
+      "default": "Send via WhatsApp"
     },
     {
       "type": "header",
