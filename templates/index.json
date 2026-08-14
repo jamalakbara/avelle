@@ -398,10 +398,9 @@
     },
     "loyalty_club": {
       "type": "loyalty-cinematic",
-      "disabled": true,
       "settings": {
         "heading": "#AvelleBabes",
-        "description": "<p><em>Join the Loyalty Club!</em></p><p><strong>Enjoy 15% Off Your First Order</strong></p><p>Gain access to exclusive offers, early drops, and curated perks made just for you.</p>",
+        "description": "<p><em>Join the Loyalty Club!</em></p><p><strong>Enjoy 5% Off Your First Order</strong></p><p>Gain access to exclusive offers, early drops, and curated perks made just for you.</p>",
         "button_label": "",
         "button_link": "",
         "join_label": "Join Now",
