@@ -304,6 +304,21 @@
     "shoppable_video_gallery_Y8kc9c": {
       "type": "shoppable-video-gallery",
       "blocks": {
+        "ugc_video_item_QmEUFh": {
+          "type": "ugc_video_item",
+          "name": "aileen",
+          "settings": {
+            "video": "shopify://files/videos/IMG_0324.MP4",
+            "handle": "@Aileenad",
+            "handle_url": "",
+            "product_list": [
+              "ovisa-top",
+              "gemme-top",
+              "kaia-pants",
+              "layla-satin-pants"
+            ]
+          }
+        },
         "ugc_video_item_BR6dyA": {
           "type": "ugc_video_item",
           "settings": {
@@ -312,7 +327,11 @@
             "handle": "Lenechels",
             "handle_url": "",
             "product_list": [
-              "layla-satin-pants"
+              "manifest-dress",
+              "abundance-top",
+              "gratitude-skort",
+              "avelle-x-lenechels-level-up-halter-top-sleeveless",
+              "purpose-pants"
             ]
           }
         },
@@ -342,28 +361,13 @@
             "handle_url": "",
             "product_list": []
           }
-        },
-        "ugc_video_item_QmEUFh": {
-          "type": "ugc_video_item",
-          "name": "aileen",
-          "settings": {
-            "video": "shopify://files/videos/IMG_0324.MP4",
-            "handle": "@Aileenad",
-            "handle_url": "",
-            "product_list": [
-              "ovisa-top",
-              "gemme-top",
-              "kaia-pants",
-              "layla-satin-pants"
-            ]
-          }
         }
       },
       "block_order": [
+        "ugc_video_item_QmEUFh",
         "ugc_video_item_BR6dyA",
         "ugc_video_item_TPQwBd",
-        "ugc_video_item_YUjBX8",
-        "ugc_video_item_QmEUFh"
+        "ugc_video_item_YUjBX8"
       ],
       "name": "Shoppable Video Gallery",
       "settings": {
@@ -394,6 +398,7 @@
     },
     "loyalty_club": {
       "type": "loyalty-cinematic",
+      "disabled": true,
       "settings": {
         "heading": "#AvelleBabes",
         "description": "<p><em>Join the Loyalty Club!</em></p><p><strong>Enjoy 15% Off Your First Order</strong></p><p>Gain access to exclusive offers, early drops, and curated perks made just for you.</p>",
