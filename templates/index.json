@@ -12,6 +12,22 @@
     "hero_carousel_cinematic": {
       "type": "hero-carousel-cinematic",
       "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/size_banner_web.png",
+            "mobile_image": "shopify://shop_images/2_85d12766-c715-4933-ae41-39c9f9662082.png",
+            "heading": "",
+            "subheading": "",
+            "button_label": "",
+            "button_link": "shopify://collections/new-arrivals",
+            "text_color": "light",
+            "overlay_opacity": 30,
+            "heading_font": "heading",
+            "subheading_font": "subheading",
+            "content_position": "center"
+          }
+        },
         "slide_gVddDj": {
           "type": "slide",
           "settings": {
@@ -60,22 +76,6 @@
             "content_position": "center"
           }
         },
-        "slide_1": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/size_banner_web.png",
-            "mobile_image": "shopify://shop_images/2_85d12766-c715-4933-ae41-39c9f9662082.png",
-            "heading": "",
-            "subheading": "",
-            "button_label": "",
-            "button_link": "shopify://collections/new-arrivals",
-            "text_color": "light",
-            "overlay_opacity": 30,
-            "heading_font": "heading",
-            "subheading_font": "subheading",
-            "content_position": "center"
-          }
-        },
         "slide_2": {
           "type": "slide",
           "settings": {
@@ -94,10 +94,10 @@
         }
       },
       "block_order": [
+        "slide_1",
         "slide_gVddDj",
         "slide_AgthnV",
         "slide_b47f9e",
-        "slide_1",
         "slide_2"
       ],
       "settings": {
