@@ -9,6 +9,25 @@
  */
 {
   "sections": {
+    "marquee_elegant": {
+      "type": "marquee-elegant",
+      "name": "Running Text",
+      "settings": {
+        "text": "Available Instant/Same-Day Delivery in Jakarta & Tangerang",
+        "separator": "✦",
+        "outline": false,
+        "font_family": "body",
+        "text_size": 14,
+        "text_size_mobile": 10,
+        "speed": 101,
+        "bg_color": "#ffffff",
+        "text_color": "#000000",
+        "border_color": "rgba(0,0,0,0)",
+        "border_thickness": 0,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
     "hero_carousel_cinematic": {
       "type": "hero-carousel-cinematic",
       "blocks": {
@@ -112,27 +131,9 @@
         "button_font_size": 9
       }
     },
-    "marquee_elegant": {
-      "type": "marquee-elegant",
-      "name": "Running Text",
-      "settings": {
-        "text": "Available Instant/Same-Day Delivery in Jakarta & Tangerang",
-        "separator": "✦",
-        "outline": false,
-        "font_family": "body",
-        "text_size": 14,
-        "text_size_mobile": 10,
-        "speed": 101,
-        "bg_color": "#ffffff",
-        "text_color": "#000000",
-        "border_color": "rgba(0,0,0,0)",
-        "border_thickness": 0,
-        "padding_top": 16,
-        "padding_bottom": 16
-      }
-    },
     "marquee_elegant_GymjVL": {
       "type": "marquee-elegant",
+      "disabled": true,
       "name": "Running Text",
       "settings": {
         "text": "Enjoy FREE INTERNATIONAL SHIPPING ON ORDERS OVER SGD 150 / RM 450 / USD 120 – T&Cs APPLY",
@@ -148,6 +149,87 @@
         "border_thickness": 0,
         "padding_top": 16,
         "padding_bottom": 16
+      }
+    },
+    "section_YnYP7p": {
+      "type": "section",
+      "blocks": {
+        "text_diXgqT": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Enjoy Free International Shipping on Orders Over SGD 150 / RM 450 / USD 120 </p><p></p><p></p><p>*tnc apply</p>",
+            "width": "100%",
+            "max_width": "narrow",
+            "alignment": "center",
+            "type_preset": "paragraph",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "font_family_override": "body",
+            "font_size_desktop": 18,
+            "font_size_mobile": 12,
+            "force_bold": false,
+            "force_uppercase": false,
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "button_faQQqm": {
+          "type": "button",
+          "settings": {
+            "label": "Shop now",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "link",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_diXgqT",
+        "button_faQQqm"
+      ],
+      "name": "t:names.pull_quote",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 20,
+        "padding-block-end": 20
       }
     },
     "cinematic_carousel_section": {
@@ -460,6 +542,7 @@
     "marquee_elegant",
     "hero_carousel_cinematic",
     "marquee_elegant_GymjVL",
+    "section_YnYP7p",
     "cinematic_carousel_section",
     "cinematic_collection_grid",
     "cinematic_collections",
