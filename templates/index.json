@@ -9,6 +9,25 @@
  */
 {
   "sections": {
+    "marquee_elegant_GymjVL": {
+      "type": "marquee-elegant",
+      "name": "Running Text",
+      "settings": {
+        "text": "ENJOY FREE INTERNATIONAL SHIPPING ON ORDERS OVER SGD 150 / RM 450 / USD 120 – T&Cs APPLY",
+        "separator": "✦",
+        "outline": false,
+        "font_family": "body",
+        "text_size": 12,
+        "text_size_mobile": 8,
+        "speed": 101,
+        "bg_color": "#ffffff",
+        "text_color": "#000000",
+        "border_color": "rgba(0,0,0,0)",
+        "border_thickness": 0,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
     "hero_carousel_cinematic": {
       "type": "hero-carousel-cinematic",
       "blocks": {
@@ -104,7 +123,7 @@
         "autoplay_speed": 5,
         "show_arrows": false,
         "section_height_desktop": "85vh",
-        "section_height_mobile": "85vh",
+        "section_height_mobile": "50vh",
         "heading_size_mobile": 32,
         "heading_size_desktop": 60,
         "subheading_size_mobile": 18,
@@ -142,25 +161,6 @@
         "font_size_desktop": 20,
         "font_size_mobile": 18,
         "header_gap": 32
-      }
-    },
-    "marquee_elegant_GymjVL": {
-      "type": "marquee-elegant",
-      "name": "Running Text",
-      "settings": {
-        "text": "ENJOY FREE INTERNATIONAL SHIPPING ON ORDERS OVER SGD 150 / RM 450 / USD 120 – T&Cs APPLY",
-        "separator": "✦",
-        "outline": false,
-        "font_family": "body",
-        "text_size": 12,
-        "text_size_mobile": 8,
-        "speed": 101,
-        "bg_color": "#ffffff",
-        "text_color": "#000000",
-        "border_color": "rgba(0,0,0,0)",
-        "border_thickness": 0,
-        "padding_top": 16,
-        "padding_bottom": 16
       }
     },
     "cinematic_collection_grid": {
@@ -457,10 +457,10 @@
     }
   },
   "order": [
+    "marquee_elegant_GymjVL",
     "hero_carousel_cinematic",
     "marquee_elegant",
     "cinematic_carousel_section",
-    "marquee_elegant_GymjVL",
     "cinematic_collection_grid",
     "cinematic_collections",
     "split_hero_cinematic",
