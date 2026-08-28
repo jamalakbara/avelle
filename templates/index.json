@@ -319,6 +319,13 @@
             "image_mobile": "shopify://shop_images/akunpalsu29_httpss.mj.run9O0ECiokKAQ_ultra_realistic_photo_of_w_71c30ac5-07b3-4c78-ae7e-205b167307d8.png"
           }
         },
+        "collection_item_BPTbfC": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "",
+            "title": ""
+          }
+        },
         "collection_item_QaQHDD": {
           "type": "collection_item",
           "settings": {
@@ -332,9 +339,11 @@
       "block_order": [
         "collection_item_Fh6THW",
         "collection_item_xEm3BV",
+        "collection_item_BPTbfC",
         "collection_item_QaQHDD"
       ],
       "disabled": true,
+      "name": "Catergory",
       "settings": {
         "height": "100vh",
         "image_ratio": "full",
@@ -377,14 +386,15 @@
     },
     "curated_products_cinematic": {
       "type": "curated-products-cinematic",
+      "name": "Editor's Pics",
       "settings": {
         "subheading": "",
         "heading": "EDITOR'S PICK",
         "product_list": [
           "ray-top",
           "yumi-pants",
-          "athena-top",
-          "christy-top"
+          "christy-top",
+          "jenny-top"
         ],
         "subheading_preset": "h2",
         "subheading_case": "uppercase",
