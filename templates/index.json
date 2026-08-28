@@ -123,7 +123,7 @@
         "autoplay_speed": 5,
         "show_arrows": false,
         "section_height_desktop": "85vh",
-        "section_height_mobile": "50vh",
+        "section_height_mobile": "85vh",
         "heading_size_mobile": 32,
         "heading_size_desktop": 60,
         "subheading_size_mobile": 18,
