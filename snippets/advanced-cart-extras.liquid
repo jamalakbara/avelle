@@ -17,51 +17,48 @@
 {% assign active_country_code = selected_country_code | default: localization.country.iso_code | upcase %}
 {% assign active_currency_code = selected_currency_code | default: localization.country.currency.iso_code | upcase %}
 
-{% assign market_rule_found = false %}
-{% assign fallback_market_block = blank %}
-{% assign active_market_block = blank %}
+{% case active_country_code %}
+  {% when 'ID' %}
+    {% assign offer_enabled = true %}
+    {% assign offer_text = market_id_offer_text %}
+    {% assign reward_1_amount = market_id_reward_1_amount %}
+    {% assign reward_1_text = market_id_reward_1_text %}
+    {% assign reward_2_amount = market_id_reward_2_amount %}
+    {% assign reward_2_text = market_id_reward_2_text %}
+    {% assign reward_3_amount = market_id_reward_3_amount %}
+    {% assign reward_3_text = market_id_reward_3_text %}
+  {% when 'SG' %}
+    {% assign offer_enabled = true %}
+    {% assign offer_text = market_sg_offer_text %}
+    {% assign reward_1_amount = market_sg_reward_1_amount %}
+    {% assign reward_1_text = market_sg_reward_1_text %}
+    {% assign reward_2_amount = market_sg_reward_2_amount %}
+    {% assign reward_2_text = market_sg_reward_2_text %}
+    {% assign reward_3_amount = market_sg_reward_3_amount %}
+    {% assign reward_3_text = market_sg_reward_3_text %}
+  {% when 'MY' %}
+    {% assign offer_enabled = true %}
+    {% assign offer_text = market_my_offer_text %}
+    {% assign reward_1_amount = market_my_reward_1_amount %}
+    {% assign reward_1_text = market_my_reward_1_text %}
+    {% assign reward_2_amount = market_my_reward_2_amount %}
+    {% assign reward_2_text = market_my_reward_2_text %}
+    {% assign reward_3_amount = market_my_reward_3_amount %}
+    {% assign reward_3_text = market_my_reward_3_text %}
+  {% else %}
+    {% assign offer_enabled = true %}
+    {% assign offer_text = market_int_offer_text %}
+    {% assign reward_1_amount = market_int_reward_1_amount %}
+    {% assign reward_1_text = market_int_reward_1_text %}
+    {% assign reward_2_amount = market_int_reward_2_amount %}
+    {% assign reward_2_text = market_int_reward_2_text %}
+    {% assign reward_3_amount = market_int_reward_3_amount %}
+    {% assign reward_3_text = market_int_reward_3_text %}
+{% endcase %}
 
-{% if reward_market_mode != 'default' and market_reward_blocks != blank %}
-  {% for market_block in market_reward_blocks %}
-    {% if market_block.type == 'cart_market_reward' %}
-      {% assign raw_codes = market_block.settings.country_codes | default: '' | upcase | replace: ' ', '' %}
-      {% if raw_codes == '*' %}
-        {% assign fallback_market_block = market_block %}
-      {% else %}
-        {% assign code_list = raw_codes | split: ',' %}
-        {% if code_list contains active_country_code %}
-          {% assign active_market_block = market_block %}
-          {% assign market_rule_found = true %}
-          {% break %}
-        {% endif %}
-      {% endif %}
-    {% endif %}
-  {% endfor %}
-
-  {% if market_rule_found == false and fallback_market_block != blank %}
-    {% assign active_market_block = fallback_market_block %}
-    {% assign market_rule_found = true %}
-  {% endif %}
-{% endif %}
-
-{% if market_rule_found %}
-  {% assign offer_enabled = true %}
-  {% assign offer_text = active_market_block.settings.offer_text %}
-  {% assign reward_1_amount = active_market_block.settings.reward_1_amount %}
-  {% assign reward_1_text = active_market_block.settings.reward_1_text %}
-  {% assign reward_1_icon = active_market_block.settings.reward_1_icon %}
-  {% assign reward_2_amount = active_market_block.settings.reward_2_amount %}
-  {% assign reward_2_text = active_market_block.settings.reward_2_text %}
-  {% assign reward_2_icon = active_market_block.settings.reward_2_icon %}
-  {% assign reward_3_amount = active_market_block.settings.reward_3_amount %}
-  {% assign reward_3_text = active_market_block.settings.reward_3_text %}
-  {% assign reward_3_icon = active_market_block.settings.reward_3_icon %}
-{% else %}
-  {% assign reward_1_icon = 'tag' %}
-  {% assign reward_2_icon = 'tag' %}
-  {% assign reward_3_icon = 'truck' %}
-{% endif %}
-
+{% assign reward_1_icon = 'tag' %}
+{% assign reward_2_icon = 'tag' %}
+{% assign reward_3_icon = 'truck' %}
 
 {% assign reward_1_value = reward_1_amount | default: 200000 | plus: 0 %}
 {% assign reward_2_value = reward_2_amount | default: 800000 | plus: 0 %}
