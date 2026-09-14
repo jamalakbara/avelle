@@ -90,7 +90,7 @@
           "settings": {
             "cart_offer_enabled": true,
             "cart_offer_text": "Limited-time offer: complete your order today.",
-            "cart_offer_text_size_desktop": 11,
+            "cart_offer_text_size_desktop": 12,
             "cart_offer_text_size_mobile": 10,
             "cart_offer_background": "#111111",
             "cart_offer_text_color": "#ffffff",
