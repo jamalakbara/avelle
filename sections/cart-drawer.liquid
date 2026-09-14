@@ -237,9 +237,13 @@
                   offer_text_color: offer_block.settings.cart_offer_text_color,
                   offer_text_align: offer_block.settings.cart_offer_text_align,
                   offer_padding_y: offer_block.settings.cart_offer_padding_y,
-                  reward_in_progress_message: reward_block.settings.cart_reward_in_progress_message,
+                  reward_enabled: reward_block.settings.cart_reward_enabled,
+                  reward_unlocked_prefix: reward_block.settings.cart_reward_unlocked_prefix,
+                  reward_next_prefix: reward_block.settings.cart_reward_next_prefix,
+                  reward_next_middle: reward_block.settings.cart_reward_next_middle,
                   reward_all_unlocked_message: reward_block.settings.cart_reward_all_unlocked_message,
                   reward_text_align: reward_block.settings.cart_reward_text_align,
+                  reward_spacing: reward_block.settings.cart_reward_spacing,
                   reward_background: reward_block.settings.cart_reward_background,
                   reward_text_color: reward_block.settings.cart_reward_text_color,
                   reward_track_background: reward_block.settings.cart_reward_track_background,
@@ -255,15 +259,9 @@
                   reward_tier_text_size_desktop: reward_block.settings.cart_reward_tier_text_size_desktop,
                   reward_tier_text_size_mobile: reward_block.settings.cart_reward_tier_text_size_mobile,
                   reward_show_thresholds: reward_block.settings.cart_reward_show_thresholds,
-                  reward_1_title: reward_block.settings.cart_reward_1_title,
                   reward_1_icon: reward_block.settings.cart_reward_1_icon,
-                  reward_1_hide_title: reward_block.settings.cart_reward_1_hide_title,
-                  reward_2_title: reward_block.settings.cart_reward_2_title,
                   reward_2_icon: reward_block.settings.cart_reward_2_icon,
-                  reward_2_hide_title: reward_block.settings.cart_reward_2_hide_title,
-                  reward_3_title: reward_block.settings.cart_reward_3_title,
                   reward_3_icon: reward_block.settings.cart_reward_3_icon,
-                  reward_3_hide_title: reward_block.settings.cart_reward_3_hide_title,
                   selected_country_code: localization.country.iso_code,
                   selected_currency_code: localization.country.currency.iso_code,
                   market_id_reward_1_amount: reward_block.settings.market_id_reward_1_amount,
@@ -465,14 +463,31 @@
       "settings": [
         {
           "type": "header",
-          "content": "Message"
+          "content": "Reward bar"
+        },
+        {
+          "type": "checkbox",
+          "id": "cart_reward_enabled",
+          "label": "Show reward bar",
+          "default": true
         },
         {
           "type": "text",
-          "id": "cart_reward_in_progress_message",
-          "label": "In-progress message",
-          "info": "Use [[amount_remaining]] and [[next_tier_title]].",
-          "default": "Add [[amount_remaining]] to unlock [[next_tier_title]]."
+          "id": "cart_reward_unlocked_prefix",
+          "label": "Unlocked message",
+          "default": "You've unlocked"
+        },
+        {
+          "type": "text",
+          "id": "cart_reward_next_prefix",
+          "label": "Next reward message",
+          "default": "Spend"
+        },
+        {
+          "type": "text",
+          "id": "cart_reward_next_middle",
+          "label": "Next reward connector",
+          "default": "more to unlock"
         },
         {
           "type": "text",
@@ -505,15 +520,25 @@
           "content": "Milestones"
         },
         {
-          "type": "text",
-          "id": "cart_reward_1_title",
-          "label": "Tier 1 title",
-          "default": "Order discount"
+          "type": "select",
+          "id": "cart_reward_spacing",
+          "label": "Milestone spacing",
+          "default": "threshold",
+          "options": [
+            {
+              "value": "threshold",
+              "label": "Spaced by threshold"
+            },
+            {
+              "value": "even",
+              "label": "Evenly spaced"
+            }
+          ]
         },
         {
           "type": "select",
           "id": "cart_reward_1_icon",
-          "label": "Tier 1 icon",
+          "label": "Reward 1 icon",
           "default": "tag",
           "options": [
             {
@@ -537,23 +562,11 @@
               "label": "Check"
             }
           ]
-        },
-        {
-          "type": "checkbox",
-          "id": "cart_reward_1_hide_title",
-          "label": "Hide Tier 1 icon and title",
-          "default": false
-        },
-        {
-          "type": "text",
-          "id": "cart_reward_2_title",
-          "label": "Tier 2 title",
-          "default": "Order discount"
         },
         {
           "type": "select",
           "id": "cart_reward_2_icon",
-          "label": "Tier 2 icon",
+          "label": "Reward 2 icon",
           "default": "tag",
           "options": [
             {
@@ -579,21 +592,9 @@
           ]
         },
         {
-          "type": "checkbox",
-          "id": "cart_reward_2_hide_title",
-          "label": "Hide Tier 2 icon and title",
-          "default": false
-        },
-        {
-          "type": "text",
-          "id": "cart_reward_3_title",
-          "label": "Tier 3 title",
-          "default": "Free shipping"
-        },
-        {
           "type": "select",
           "id": "cart_reward_3_icon",
-          "label": "Tier 3 icon",
+          "label": "Reward 3 icon",
           "default": "truck",
           "options": [
             {
@@ -617,12 +618,6 @@
               "label": "Check"
             }
           ]
-        },
-        {
-          "type": "checkbox",
-          "id": "cart_reward_3_hide_title",
-          "label": "Hide Tier 3 icon and title",
-          "default": false
         },
         {
           "type": "header",
@@ -665,12 +660,6 @@
           "default": "FREE shipping"
         },
         {
-          "type": "text",
-          "id": "market_id_offer_text",
-          "label": "Indonesia offer bar",
-          "default": "Limited-time offer: complete your order today."
-        },
-        {
           "type": "header",
           "content": "Singapore"
         },
@@ -709,12 +698,6 @@
           "id": "market_sg_reward_3_text",
           "label": "Singapore reward 3 label",
           "default": "FREE shipping"
-        },
-        {
-          "type": "text",
-          "id": "market_sg_offer_text",
-          "label": "Singapore offer bar",
-          "default": "Limited-time offer: complete your order today."
         },
         {
           "type": "header",
@@ -757,12 +740,6 @@
           "default": "FREE shipping"
         },
         {
-          "type": "text",
-          "id": "market_my_offer_text",
-          "label": "Malaysia offer bar",
-          "default": "Limited-time offer: complete your order today."
-        },
-        {
           "type": "header",
           "content": "International / other countries"
         },
@@ -801,12 +778,6 @@
           "id": "market_int_reward_3_text",
           "label": "International reward 3 label",
           "default": "FREE international shipping"
-        },
-        {
-          "type": "text",
-          "id": "market_int_offer_text",
-          "label": "International offer bar",
-          "default": "Limited-time offer: complete your order today."
         },
         {
           "type": "header",
