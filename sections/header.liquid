@@ -871,6 +871,261 @@
   .currency-dropdown li.is-active {
     font-weight: 700;
   }
+
+  /* =========================================================
+     AVELLE ADVANCED CART DRAWER
+     Fixed: header + checkout only
+     Scrolls naturally: rewards, products, offers, discounts,
+     totals and trust messages
+     ========================================================= */
+
+  .cart-drawer__dialog:not(.cart-drawer--empty) .cart-drawer__inner,
+  .cart-drawer__dialog:not(.cart-drawer--empty) .cart-items-component {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .cart-drawer__dialog:not(.cart-drawer--empty) .cart-items-component {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-fixed-header {
+    flex: 0 0 auto;
+    position: relative !important;
+    top: auto !important;
+    z-index: 4;
+    background: rgb(var(--color-background-rgb));
+  }
+
+  .avelle-cart-header-count {
+    font: inherit;
+  }
+
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-layout {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-scroll {
+    display: block !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-gutter: stable;
+    padding-bottom: 18px;
+  }
+
+  /* Nothing inside the scrolling area is sticky */
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-scroll .cart-drawer__summary,
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-scroll .cart__summary-totals,
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-scroll .cart__ctas,
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-scroll .avelle-cart-extra,
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-scroll .avelle-cart-trust {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+  }
+
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-summary-scroll {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Hide the original checkout button only in the drawer.
+     The cart page keeps its normal checkout button. */
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-summary-scroll .cart__ctas {
+    display: none !important;
+  }
+
+  .avelle-cart-fixed-checkout {
+    position: relative;
+    z-index: 6;
+    flex: 0 0 auto;
+    background: rgb(var(--color-background-rgb));
+    border-top: 1px solid rgb(var(--color-border-rgb) / 0.7);
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    box-shadow: 0 -8px 24px rgb(0 0 0 / 0.05);
+  }
+
+  .avelle-cart-fixed-checkout__button {
+    width: 100%;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-inline: 20px;
+    background: #000;
+    color: #fff;
+    border: 1px solid #000;
+    border-radius: 0;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+
+  .avelle-cart-bottom-spacer {
+    height: 4px;
+  }
+
+  /* Clean quantity: − [1] +   trash */
+  .cart-drawer .cart-items__quantity {
+    width: auto !important;
+    min-width: 0 !important;
+  }
+
+  .cart-drawer .cart-items__quantity-controls {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+    width: auto !important;
+    min-width: 0 !important;
+  }
+
+  .cart-drawer .cart-items__quantity .quantity-selector {
+    display: inline-grid !important;
+    grid-template-columns:
+      {{ section.settings.cart_quantity_size_desktop }}px
+      {{ section.settings.cart_quantity_size_desktop }}px
+      {{ section.settings.cart_quantity_size_desktop }}px;
+    align-items: center;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: {{ section.settings.cart_quantity_size_desktop }}px !important;
+    min-height: {{ section.settings.cart_quantity_size_desktop }}px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+  }
+
+  .cart-drawer .cart-items__quantity .quantity-selector button,
+  .cart-drawer .cart-items__quantity .quantity-selector input {
+    width: {{ section.settings.cart_quantity_size_desktop }}px !important;
+    min-width: {{ section.settings.cart_quantity_size_desktop }}px !important;
+    max-width: {{ section.settings.cart_quantity_size_desktop }}px !important;
+    height: {{ section.settings.cart_quantity_size_desktop }}px !important;
+    min-height: {{ section.settings.cart_quantity_size_desktop }}px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-align: center !important;
+  }
+
+  .cart-drawer .cart-items__quantity .quantity-selector input {
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.28) !important;
+    border-radius: 4px !important;
+    -moz-appearance: textfield;
+  }
+
+  .cart-drawer .cart-items__quantity .quantity-selector input::-webkit-outer-spin-button,
+  .cart-drawer .cart-items__quantity .quantity-selector input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .cart-drawer .cart-items__remove {
+    flex: 0 0 {{ section.settings.cart_quantity_size_desktop }}px !important;
+    width: {{ section.settings.cart_quantity_size_desktop }}px !important;
+    min-width: {{ section.settings.cart_quantity_size_desktop }}px !important;
+    height: {{ section.settings.cart_quantity_size_desktop }}px !important;
+    min-height: {{ section.settings.cart_quantity_size_desktop }}px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Product thumbnails: consistent box, never zoom/crop */
+  .cart-drawer .cart-items__media {
+    width: {{ section.settings.cart_product_image_width_desktop }}px !important;
+  }
+
+  .cart-drawer .cart-items__media-container {
+    width: {{ section.settings.cart_product_image_width_desktop }}px !important;
+    height: calc({{ section.settings.cart_product_image_width_desktop }}px * 1.3333) !important;
+    aspect-ratio: auto !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .cart-drawer .cart-items__media-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    aspect-ratio: auto !important;
+  }
+
+  @media screen and (max-width: 749px) {
+    .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-scroll {
+      scrollbar-gutter: auto;
+      padding-bottom: 14px;
+    }
+
+    .avelle-cart-fixed-checkout {
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    }
+
+    .avelle-cart-fixed-checkout__button {
+      min-height: 50px;
+      padding-inline: 16px;
+      font-size: 11px;
+    }
+
+    .cart-drawer .cart-items__quantity .quantity-selector {
+      grid-template-columns:
+        {{ section.settings.cart_quantity_size_mobile }}px
+        {{ section.settings.cart_quantity_size_mobile }}px
+        {{ section.settings.cart_quantity_size_mobile }}px;
+      height: {{ section.settings.cart_quantity_size_mobile }}px !important;
+      min-height: {{ section.settings.cart_quantity_size_mobile }}px !important;
+    }
+
+    .cart-drawer .cart-items__quantity .quantity-selector button,
+    .cart-drawer .cart-items__quantity .quantity-selector input {
+      width: {{ section.settings.cart_quantity_size_mobile }}px !important;
+      min-width: {{ section.settings.cart_quantity_size_mobile }}px !important;
+      max-width: {{ section.settings.cart_quantity_size_mobile }}px !important;
+      height: {{ section.settings.cart_quantity_size_mobile }}px !important;
+      min-height: {{ section.settings.cart_quantity_size_mobile }}px !important;
+    }
+
+    .cart-drawer .cart-items__remove {
+      flex-basis: {{ section.settings.cart_quantity_size_mobile }}px !important;
+      width: {{ section.settings.cart_quantity_size_mobile }}px !important;
+      min-width: {{ section.settings.cart_quantity_size_mobile }}px !important;
+      height: {{ section.settings.cart_quantity_size_mobile }}px !important;
+      min-height: {{ section.settings.cart_quantity_size_mobile }}px !important;
+    }
+
+    .cart-drawer .cart-items__media {
+      width: {{ section.settings.cart_product_image_width_mobile }}px !important;
+    }
+
+    .cart-drawer .cart-items__media-container {
+      width: {{ section.settings.cart_product_image_width_mobile }}px !important;
+      height: calc({{ section.settings.cart_product_image_width_mobile }}px * 1.3333) !important;
+    }
+  }
+
 {% endstyle %}
 
 {%- if section.settings.enable_custom_currency_ui -%}
@@ -1064,16 +1319,16 @@
             class="cart-drawer__dialog dialog-modal dialog-drawer color-{{ settings.drawer_color_scheme }}{% if cart.empty? %} cart-drawer--empty{%endif%}"
             aria-labelledby="cart-drawer-heading"
             scroll-lock
-            cart-summary-sticky="true"
+            cart-summary-sticky="false"
           >
             <div class="cart-drawer__inner" data-hydration-key="cart-drawer-inner">
               <cart-items-component class="cart-items-component" data-drawer data-section-id="{{ section.id }}">
                 {%- if cart.empty? -%}
                   {{ empty_cart_drawer_content }}
                 {%- else -%}
-                  <div class="cart-drawer__header" id="cart-drawer-header">
+                  <div class="cart-drawer__header avelle-cart-fixed-header" id="cart-drawer-header">
                     <h2 class="cart-drawer__heading h4" id="cart-drawer-heading">
-                      {{ 'content.cart_title' | t }}
+                      {{ 'content.cart_title' | t }} <span class="avelle-cart-header-count">{{ cart.item_count }}</span>
                     </h2>
                     <button
                       ref="closeButton"
@@ -1087,76 +1342,73 @@
                     </button>
                   </div>
 
-                  <scroll-hint
-  class="cart-drawer__content"
-  aria-label="{{ 'content.cart_title' | t }}"
-  style="--header-height: 60px;"
->
+                  <div class="avelle-cart-layout">
+                    <scroll-hint
+                      class="cart-drawer__content avelle-cart-scroll"
+                      aria-label="{{ 'content.cart_title' | t }}"
+                      style="--header-height: 60px;"
+                    >
+                      {% render 'advanced-cart-extras',
+                        position: 'top',
+                        offer_enabled: section.settings.cart_offer_enabled,
+                        offer_text: section.settings.cart_offer_text,
+                        reward_1_amount: section.settings.cart_reward_1_amount,
+                        reward_1_text: section.settings.cart_reward_1_text,
+                        reward_2_amount: section.settings.cart_reward_2_amount,
+                        reward_2_text: section.settings.cart_reward_2_text,
+                        reward_3_amount: section.settings.cart_reward_3_amount,
+                        reward_3_text: section.settings.cart_reward_3_text,
+                        quantity_size_desktop: section.settings.cart_quantity_size_desktop,
+                        quantity_size_mobile: section.settings.cart_quantity_size_mobile,
+                        product_image_width_desktop: section.settings.cart_product_image_width_desktop,
+                        product_image_width_mobile: section.settings.cart_product_image_width_mobile
+                      %}
 
-  {% render 'advanced-cart-extras',
-    position: 'top',
+                      <div class="cart-drawer__items">
+                        {% render 'cart-products' %}
+                      </div>
 
-    offer_enabled: section.settings.cart_offer_enabled,
-    offer_text: section.settings.cart_offer_text,
+                      {% render 'advanced-cart-extras',
+                        position: 'offers',
+                        show_available_codes: section.settings.cart_show_available_codes,
+                        discount_heading: section.settings.cart_discount_heading,
+                        discount_code_1: section.settings.cart_discount_code_1,
+                        discount_code_1_text: section.settings.cart_discount_code_1_text,
+                        discount_code_2: section.settings.cart_discount_code_2,
+                        discount_code_2_text: section.settings.cart_discount_code_2_text,
+                        discount_code_3: section.settings.cart_discount_code_3,
+                        discount_code_3_text: section.settings.cart_discount_code_3_text
+                      %}
 
-    reward_1_amount: section.settings.cart_reward_1_amount,
-    reward_1_text: section.settings.cart_reward_1_text,
+                      <div class="cart-drawer__summary avelle-cart-summary-scroll">
+                        {% render 'cart-summary', section_id: section.id %}
+                      </div>
 
-    reward_2_amount: section.settings.cart_reward_2_amount,
-    reward_2_text: section.settings.cart_reward_2_text,
+                      {% render 'advanced-cart-extras',
+                        position: 'bottom',
+                        trust_1_title: section.settings.cart_trust_1_title,
+                        trust_1_text: section.settings.cart_trust_1_text,
+                        trust_2_title: section.settings.cart_trust_2_title,
+                        trust_2_text: section.settings.cart_trust_2_text,
+                        trust_3_title: section.settings.cart_trust_3_title,
+                        trust_3_text: section.settings.cart_trust_3_text
+                      %}
 
-    reward_3_amount: section.settings.cart_reward_3_amount,
-    reward_3_text: section.settings.cart_reward_3_text,
+                      <div class="avelle-cart-bottom-spacer" aria-hidden="true"></div>
+                    </scroll-hint>
 
-    quantity_size_desktop: section.settings.cart_quantity_size_desktop,
-    quantity_size_mobile: section.settings.cart_quantity_size_mobile,
-
-    product_image_width_desktop: section.settings.cart_product_image_width_desktop,
-    product_image_width_mobile: section.settings.cart_product_image_width_mobile
-  %}
-
-
-  <div class="cart-drawer__items">
-    {% render 'cart-products' %}
-  </div>
-
-
-  {% render 'advanced-cart-extras',
-    position: 'offers',
-
-    show_available_codes: section.settings.cart_show_available_codes,
-    discount_heading: section.settings.cart_discount_heading,
-
-    discount_code_1: section.settings.cart_discount_code_1,
-    discount_code_1_text: section.settings.cart_discount_code_1_text,
-
-    discount_code_2: section.settings.cart_discount_code_2,
-    discount_code_2_text: section.settings.cart_discount_code_2_text,
-
-    discount_code_3: section.settings.cart_discount_code_3,
-    discount_code_3_text: section.settings.cart_discount_code_3_text
-  %}
-
-
-  <div class="cart-drawer__summary">
-    {% render 'cart-summary', section_id: section.id %}
-  </div>
-
-
-  {% render 'advanced-cart-extras',
-    position: 'bottom',
-
-    trust_1_title: section.settings.cart_trust_1_title,
-    trust_1_text: section.settings.cart_trust_1_text,
-
-    trust_2_title: section.settings.cart_trust_2_title,
-    trust_2_text: section.settings.cart_trust_2_text,
-
-    trust_3_title: section.settings.cart_trust_3_title,
-    trust_3_text: section.settings.cart_trust_3_text
-  %}
-
-</scroll-hint>
+                    <div class="avelle-cart-fixed-checkout">
+                      <button
+                        type="submit"
+                        form="cart-form"
+                        name="checkout"
+                        class="button avelle-cart-fixed-checkout__button"
+                      >
+                        <span>CHECK OUT</span>
+                        <span>{{ cart.total_price | money }}</span>
+                      </button>
+                    </div>
+                  </div>
                 {%- endif -%}
               </cart-items-component>
             </div>
