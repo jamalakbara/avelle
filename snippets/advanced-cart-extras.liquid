@@ -14,6 +14,55 @@
 
 {% assign cart_subtotal = cart.original_total_price | default: cart.total_price %}
 
+{% assign active_country_code = selected_country_code | default: localization.country.iso_code | upcase %}
+{% assign active_currency_code = selected_currency_code | default: localization.country.currency.iso_code | upcase %}
+
+{% assign market_rule_found = false %}
+{% assign fallback_market_block = blank %}
+{% assign active_market_block = blank %}
+
+{% if reward_market_mode != 'default' and market_reward_blocks != blank %}
+  {% for market_block in market_reward_blocks %}
+    {% if market_block.type == 'cart_market_reward' %}
+      {% assign raw_codes = market_block.settings.country_codes | default: '' | upcase | replace: ' ', '' %}
+      {% if raw_codes == '*' %}
+        {% assign fallback_market_block = market_block %}
+      {% else %}
+        {% assign code_list = raw_codes | split: ',' %}
+        {% if code_list contains active_country_code %}
+          {% assign active_market_block = market_block %}
+          {% assign market_rule_found = true %}
+          {% break %}
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% if market_rule_found == false and fallback_market_block != blank %}
+    {% assign active_market_block = fallback_market_block %}
+    {% assign market_rule_found = true %}
+  {% endif %}
+{% endif %}
+
+{% if market_rule_found %}
+  {% assign offer_enabled = true %}
+  {% assign offer_text = active_market_block.settings.offer_text %}
+  {% assign reward_1_amount = active_market_block.settings.reward_1_amount %}
+  {% assign reward_1_text = active_market_block.settings.reward_1_text %}
+  {% assign reward_1_icon = active_market_block.settings.reward_1_icon %}
+  {% assign reward_2_amount = active_market_block.settings.reward_2_amount %}
+  {% assign reward_2_text = active_market_block.settings.reward_2_text %}
+  {% assign reward_2_icon = active_market_block.settings.reward_2_icon %}
+  {% assign reward_3_amount = active_market_block.settings.reward_3_amount %}
+  {% assign reward_3_text = active_market_block.settings.reward_3_text %}
+  {% assign reward_3_icon = active_market_block.settings.reward_3_icon %}
+{% else %}
+  {% assign reward_1_icon = 'tag' %}
+  {% assign reward_2_icon = 'tag' %}
+  {% assign reward_3_icon = 'truck' %}
+{% endif %}
+
+
 {% assign reward_1_value = reward_1_amount | default: 200000 | plus: 0 %}
 {% assign reward_2_value = reward_2_amount | default: 800000 | plus: 0 %}
 {% assign reward_3_value = reward_3_amount | default: 2000000 | plus: 0 %}
@@ -49,6 +98,17 @@
   {% assign progress = 100 %}
 {% endif %}
 
+
+
+{% capture reward_icon_tag %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13l-7 7-9-9V4h7l9 9z"/><circle cx="8.5" cy="8.5" r="1.2"/></svg>{% endcapture %}
+{% capture reward_icon_truck %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h11v10H3z"/><path d="M14 9h4l3 3v4h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>{% endcapture %}
+{% capture reward_icon_gift %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16v10H4z"/><path d="M3 6h18v4H3z"/><path d="M12 6v14"/><path d="M12 6c-2.7 0-4.5-.8-4.5-2.2C7.5 2.7 8.4 2 9.5 2 11.2 2 12 4 12 6z"/><path d="M12 6c2.7 0 4.5-.8 4.5-2.2 0-1.1-.9-1.8-2-1.8C12.8 2 12 4 12 6z"/></svg>{% endcapture %}
+{% capture reward_icon_star %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3z"/></svg>{% endcapture %}
+{% capture reward_icon_check %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>{% endcapture %}
+
+{% capture reward_1_icon_markup %}{% case reward_1_icon %}{% when 'truck' %}{{ reward_icon_truck }}{% when 'gift' %}{{ reward_icon_gift }}{% when 'star' %}{{ reward_icon_star }}{% when 'check' %}{{ reward_icon_check }}{% else %}{{ reward_icon_tag }}{% endcase %}{% endcapture %}
+{% capture reward_2_icon_markup %}{% case reward_2_icon %}{% when 'truck' %}{{ reward_icon_truck }}{% when 'gift' %}{{ reward_icon_gift }}{% when 'star' %}{{ reward_icon_star }}{% when 'check' %}{{ reward_icon_check }}{% else %}{{ reward_icon_tag }}{% endcase %}{% endcapture %}
+{% capture reward_3_icon_markup %}{% case reward_3_icon %}{% when 'tag' %}{{ reward_icon_tag }}{% when 'gift' %}{{ reward_icon_gift }}{% when 'star' %}{{ reward_icon_star }}{% when 'check' %}{{ reward_icon_check }}{% else %}{{ reward_icon_truck }}{% endcase %}{% endcapture %}
 
 {% if position == 'top' %}
   <div class="avelle-cart-extra avelle-cart-extra--top">
@@ -97,20 +157,23 @@
         <div class="avelle-progress-bar" style="width: {{ progress }}%;"></div>
       </div>
 
-      <div class="avelle-reward-tiers">
-        <div class="avelle-reward-tier{% if cart_subtotal >= reward_1_threshold %} is-unlocked{% endif %}">
-          <strong>{{ reward_1_threshold | money_without_trailing_zeros }}</strong>
-          <span>{{ reward_1_text | default: 'Rp15.000 discount' }}</span>
+      <div class="avelle-reward-milestones">
+        <div class="avelle-reward-milestone{% if cart_subtotal >= reward_1_threshold %} is-unlocked{% endif %}" style="left: 0%;">
+          <span class="avelle-reward-milestone__icon">{{ reward_1_icon_markup }}</span>
+          <span class="avelle-reward-milestone__amount">{{ reward_1_threshold | money_without_trailing_zeros }}</span>
+          <span class="avelle-reward-milestone__label">{{ reward_1_text | default: 'Discount' }}</span>
         </div>
 
-        <div class="avelle-reward-tier{% if cart_subtotal >= reward_2_threshold %} is-unlocked{% endif %}">
-          <strong>{{ reward_2_threshold | money_without_trailing_zeros }}</strong>
-          <span>{{ reward_2_text | default: 'Rp30.000 discount' }}</span>
+        <div class="avelle-reward-milestone{% if cart_subtotal >= reward_2_threshold %} is-unlocked{% endif %}" style="left: 50%;">
+          <span class="avelle-reward-milestone__icon">{{ reward_2_icon_markup }}</span>
+          <span class="avelle-reward-milestone__amount">{{ reward_2_threshold | money_without_trailing_zeros }}</span>
+          <span class="avelle-reward-milestone__label">{{ reward_2_text | default: 'Discount' }}</span>
         </div>
 
-        <div class="avelle-reward-tier{% if cart_subtotal >= reward_3_threshold %} is-unlocked{% endif %}">
-          <strong>{{ reward_3_threshold | money_without_trailing_zeros }}</strong>
-          <span>{{ reward_3_text | default: 'FREE international & national shipping' }}</span>
+        <div class="avelle-reward-milestone{% if cart_subtotal >= reward_3_threshold %} is-unlocked{% endif %}" style="left: 100%;">
+          <span class="avelle-reward-milestone__icon">{{ reward_3_icon_markup }}</span>
+          <span class="avelle-reward-milestone__amount">{{ reward_3_threshold | money_without_trailing_zeros }}</span>
+          <span class="avelle-reward-milestone__label">{{ reward_3_text | default: 'FREE shipping' }}</span>
         </div>
       </div>
 
@@ -164,8 +227,8 @@
 
     .avelle-progress-track {
       width: 100%;
-      height: 4px;
-      margin-top: 13px;
+      height: 5px;
+      margin-top: 18px;
       background: #ececec;
       overflow: hidden;
     }
@@ -176,33 +239,73 @@
       transition: width .35s ease;
     }
 
-    .avelle-reward-tiers {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 12px;
+    .avelle-reward-milestones {
+      position: relative;
+      height: 72px;
+      margin-top: 0;
     }
 
-    .avelle-reward-tier {
+    .avelle-reward-milestone {
+      position: absolute;
+      top: -12px;
+      width: 96px;
+      transform: translateX(-50%);
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 2px;
-      min-width: 0;
-      line-height: 1.3;
-      opacity: .4;
+      text-align: center;
+      opacity: .45;
     }
 
-    .avelle-reward-tier strong {
-      font-size: 9px;
-      font-weight: 600;
+    .avelle-reward-milestone:first-child {
+      transform: translateX(0);
+      align-items: flex-start;
+      text-align: left;
     }
 
-    .avelle-reward-tier span {
-      font-size: 8px;
+    .avelle-reward-milestone:last-child {
+      transform: translateX(-100%);
+      align-items: flex-end;
+      text-align: right;
     }
 
-    .avelle-reward-tier.is-unlocked {
+    .avelle-reward-milestone__icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      border: 2px solid #111;
+      color: #111;
+    }
+
+    .avelle-reward-milestone__icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .avelle-reward-milestone.is-unlocked {
       opacity: 1;
+    }
+
+    .avelle-reward-milestone.is-unlocked .avelle-reward-milestone__icon {
+      background: #111;
+      color: #fff;
+    }
+
+    .avelle-reward-milestone__amount {
+      margin-top: 4px;
+      font-size: 8px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .avelle-reward-milestone__label {
+      max-width: 96px;
+      font-size: 8px;
+      line-height: 1.2;
     }
 
     .avelle-available-discounts {
@@ -506,8 +609,8 @@
     }
 
     .avelle-trust-icon svg {
-      width: {{ trust_icon_size | default: 18 }}px;
-      height: {{ trust_icon_size | default: 18 }}px;
+      width: {{ trust_icon_size_desktop | default: 18 }}px;
+      height: {{ trust_icon_size_desktop | default: 18 }}px;
     }
 
     .avelle-cart-trust__copy {
@@ -518,13 +621,13 @@
     }
 
     .avelle-cart-trust__copy strong {
-      font-size: {{ trust_title_size | default: 9 }}px;
+      font-size: {{ trust_title_size_desktop | default: 9 }}px;
       font-weight: 500;
       line-height: 1.25;
     }
 
     .avelle-cart-trust__copy span {
-      font-size: {{ trust_description_size | default: 8 }}px;
+      font-size: {{ trust_description_size_desktop | default: 8 }}px;
       line-height: 1.3;
       opacity: .6;
     }
@@ -579,15 +682,21 @@
         font-size: 9px;
       }
 
-      .avelle-reward-tiers {
-        gap: 6px;
+      .avelle-reward-milestones {
+        height: 68px;
       }
 
-      .avelle-reward-tier strong {
-        font-size: 8px;
+      .avelle-reward-milestone {
+        width: 82px;
       }
 
-      .avelle-reward-tier span {
+      .avelle-reward-milestone__icon {
+        width: 26px;
+        height: 26px;
+      }
+
+      .avelle-reward-milestone__amount,
+      .avelle-reward-milestone__label {
         font-size: 7px;
       }
 
@@ -654,6 +763,19 @@
       .avelle-cart-trust {
         padding: 18px;
         gap: 8px;
+      }
+
+      .avelle-trust-icon svg {
+        width: {{ trust_icon_size_mobile | default: 18 }}px;
+        height: {{ trust_icon_size_mobile | default: 18 }}px;
+      }
+
+      .avelle-cart-trust__copy strong {
+        font-size: {{ trust_title_size_mobile | default: 8 }}px;
+      }
+
+      .avelle-cart-trust__copy span {
+        font-size: {{ trust_description_size_mobile | default: 7 }}px;
       }
 
     }
