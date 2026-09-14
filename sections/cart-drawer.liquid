@@ -1,0 +1,1360 @@
+{% comment %}
+  AVELLE CART DRAWER
+  Separate editor section so designers can edit cart parts independently.
+{% endcomment %}
+
+<script src="{{ 'cart-drawer.js' | asset_url }}" type="module" fetchpriority="low"></script>
+
+{% liquid
+  assign offer_block = section.blocks | where: 'type', 'offer_bar' | first
+  assign reward_block = section.blocks | where: 'type', 'reward_bar' | first
+  assign products_block = section.blocks | where: 'type', 'products' | first
+  assign discount_block = section.blocks | where: 'type', 'discount' | first
+  assign trust_block = section.blocks | where: 'type', 'trust' | first
+%}
+
+{% style %}
+  @media screen and (min-width: 750px) {
+    .cart-drawer__dialog {
+      width: {{ section.settings.cart_drawer_width_desktop }}px !important;
+      max-width: min({{ section.settings.cart_drawer_width_desktop }}px, 100vw) !important;
+    }
+  }
+
+  .cart-drawer__dialog:not(.cart-drawer--empty) .cart-drawer__inner,
+  .cart-drawer__dialog:not(.cart-drawer--empty) .cart-items-component {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .cart-drawer__dialog:not(.cart-drawer--empty) .cart-items-component {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-fixed-header {
+    flex: 0 0 auto;
+    position: relative !important;
+    z-index: 4;
+    background: rgb(var(--color-background-rgb));
+  }
+
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-layout {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-scroll {
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 18px;
+  }
+
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-scroll .cart-drawer__summary,
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-scroll .cart__summary-totals,
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-scroll .cart__ctas,
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-scroll .avelle-cart-extra,
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-scroll .avelle-cart-trust {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+  }
+
+  .cart-drawer__dialog:not(.cart-drawer--empty) .avelle-cart-summary-scroll .cart__ctas {
+    display: none !important;
+  }
+
+  .avelle-cart-fixed-checkout {
+    position: relative;
+    z-index: 6;
+    flex: 0 0 auto;
+    background: rgb(var(--color-background-rgb));
+    border-top: 1px solid rgb(var(--color-border-rgb) / 0.7);
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    box-shadow: 0 -8px 24px rgb(0 0 0 / 0.05);
+  }
+
+  .avelle-cart-fixed-checkout__button {
+    width: 100%;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-inline: 20px;
+    background: #000;
+    color: #fff;
+    border: 1px solid #000;
+    border-radius: 0;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+
+  .cart-drawer .cart-items__quantity-controls {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+  }
+
+  .cart-drawer .cart-items__quantity .quantity-selector {
+    display: inline-grid !important;
+    grid-template-columns:
+      {{ products_block.settings.cart_quantity_size_desktop | default: 30 }}px
+      {{ products_block.settings.cart_quantity_size_desktop | default: 30 }}px
+      {{ products_block.settings.cart_quantity_size_desktop | default: 30 }}px;
+    height: {{ products_block.settings.cart_quantity_size_desktop | default: 30 }}px !important;
+    min-height: {{ products_block.settings.cart_quantity_size_desktop | default: 30 }}px !important;
+    border: 0 !important;
+    background: transparent !important;
+  }
+
+  .cart-drawer .cart-items__quantity .quantity-selector button,
+  .cart-drawer .cart-items__quantity .quantity-selector input,
+  .cart-drawer .cart-items__remove {
+    width: {{ products_block.settings.cart_quantity_size_desktop | default: 30 }}px !important;
+    min-width: {{ products_block.settings.cart_quantity_size_desktop | default: 30 }}px !important;
+    height: {{ products_block.settings.cart_quantity_size_desktop | default: 30 }}px !important;
+    min-height: {{ products_block.settings.cart_quantity_size_desktop | default: 30 }}px !important;
+    padding: 0 !important;
+  }
+
+  .cart-drawer .cart-items__media {
+    width: {{ products_block.settings.cart_product_image_width_desktop | default: 82 }}px !important;
+  }
+
+  .cart-drawer .cart-items__media-container {
+    width: {{ products_block.settings.cart_product_image_width_desktop | default: 82 }}px !important;
+    height: calc({{ products_block.settings.cart_product_image_width_desktop | default: 82 }}px * 1.3333) !important;
+  }
+
+  @media screen and (max-width: 749px) {
+    .cart-drawer .cart-items__quantity .quantity-selector {
+      grid-template-columns:
+        {{ products_block.settings.cart_quantity_size_mobile | default: 28 }}px
+        {{ products_block.settings.cart_quantity_size_mobile | default: 28 }}px
+        {{ products_block.settings.cart_quantity_size_mobile | default: 28 }}px;
+      height: {{ products_block.settings.cart_quantity_size_mobile | default: 28 }}px !important;
+      min-height: {{ products_block.settings.cart_quantity_size_mobile | default: 28 }}px !important;
+    }
+
+    .cart-drawer .cart-items__quantity .quantity-selector button,
+    .cart-drawer .cart-items__quantity .quantity-selector input,
+    .cart-drawer .cart-items__remove {
+      width: {{ products_block.settings.cart_quantity_size_mobile | default: 28 }}px !important;
+      min-width: {{ products_block.settings.cart_quantity_size_mobile | default: 28 }}px !important;
+      height: {{ products_block.settings.cart_quantity_size_mobile | default: 28 }}px !important;
+      min-height: {{ products_block.settings.cart_quantity_size_mobile | default: 28 }}px !important;
+    }
+
+    .cart-drawer .cart-items__media {
+      width: {{ products_block.settings.cart_product_image_width_mobile | default: 74 }}px !important;
+    }
+
+    .cart-drawer .cart-items__media-container {
+      width: {{ products_block.settings.cart_product_image_width_mobile | default: 74 }}px !important;
+      height: calc({{ products_block.settings.cart_product_image_width_mobile | default: 74 }}px * 1.3333) !important;
+    }
+  }
+{% endstyle %}
+
+{% capture empty_cart_drawer_content %}
+  <div class="cart-drawer__header">
+    <button
+      ref="closeButton"
+      on:click="cart-drawer-component/close"
+      class="button close-button cart-drawer__close-button button-unstyled"
+      aria-label="{{ 'actions.close' | t }}"
+    >
+      <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+    </button>
+  </div>
+  <div class="cart-drawer__content" aria-label="{{ 'content.cart_title' | t }}">
+    <h2 class="cart-drawer__heading h4 cart-drawer__heading--empty">{{ 'content.your_cart_is_empty' | t }}</h2>
+    <div class="cart-drawer__items">{% render 'cart-products', force_empty: true %}</div>
+  </div>
+{% endcapture %}
+
+<cart-drawer-component
+  class="cart-drawer"
+  {% if settings.auto_open_cart_drawer %}auto-open{% endif %}
+>
+  <button
+    type="button"
+    hidden
+    data-avelle-cart-drawer-internal-open
+    on:click="/open"
+    aria-hidden="true"
+    tabindex="-1"
+  ></button>
+
+  <template id="empty-cart-template">{{ empty_cart_drawer_content }}</template>
+
+  <dialog
+    ref="dialog"
+    class="cart-drawer__dialog dialog-modal dialog-drawer color-{{ settings.drawer_color_scheme }}{% if cart.empty? %} cart-drawer--empty{% endif %}"
+    aria-labelledby="cart-drawer-heading"
+    scroll-lock
+    cart-summary-sticky="false"
+  >
+    <div class="cart-drawer__inner" data-hydration-key="cart-drawer-inner">
+      <cart-items-component class="cart-items-component" data-drawer data-section-id="{{ section.id }}">
+        {% if cart.empty? %}
+          {{ empty_cart_drawer_content }}
+        {% else %}
+          <div class="cart-drawer__header avelle-cart-fixed-header">
+            <h2 class="cart-drawer__heading h4" id="cart-drawer-heading">
+              {{ 'content.cart_title' | t }} <span class="avelle-cart-header-count">{{ cart.item_count }}</span>
+            </h2>
+            <button
+              ref="closeButton"
+              on:click="cart-drawer-component/close"
+              class="button close-button cart-drawer__close-button button-unstyled"
+              aria-label="{{ 'actions.close' | t }}"
+            >
+              <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+            </button>
+          </div>
+
+          <div class="avelle-cart-layout">
+            <scroll-hint class="cart-drawer__content avelle-cart-scroll" aria-label="{{ 'content.cart_title' | t }}">
+              {% if offer_block %}
+                {% render 'advanced-cart-extras',
+                  position: 'top',
+                  offer_enabled: offer_block.settings.cart_offer_enabled,
+                  offer_text: offer_block.settings.cart_offer_text,
+                  offer_text_size_desktop: offer_block.settings.cart_offer_text_size_desktop,
+                  offer_text_size_mobile: offer_block.settings.cart_offer_text_size_mobile,
+                  offer_background: offer_block.settings.cart_offer_background,
+                  offer_text_color: offer_block.settings.cart_offer_text_color,
+                  offer_text_align: offer_block.settings.cart_offer_text_align,
+                  offer_padding_y: offer_block.settings.cart_offer_padding_y,
+                  reward_in_progress_message: reward_block.settings.cart_reward_in_progress_message,
+                  reward_all_unlocked_message: reward_block.settings.cart_reward_all_unlocked_message,
+                  reward_text_align: reward_block.settings.cart_reward_text_align,
+                  reward_background: reward_block.settings.cart_reward_background,
+                  reward_text_color: reward_block.settings.cart_reward_text_color,
+                  reward_track_background: reward_block.settings.cart_reward_track_background,
+                  reward_bar_fill: reward_block.settings.cart_reward_bar_fill,
+                  reward_locked_color: reward_block.settings.cart_reward_locked_color,
+                  reward_unlocked_color: reward_block.settings.cart_reward_unlocked_color,
+                  reward_milestone_background: reward_block.settings.cart_reward_milestone_background,
+                  reward_milestone_border: reward_block.settings.cart_reward_milestone_border,
+                  reward_top_padding: reward_block.settings.cart_reward_top_padding,
+                  reward_bottom_padding: reward_block.settings.cart_reward_bottom_padding,
+                  reward_bar_height: reward_block.settings.cart_reward_bar_height,
+                  reward_milestone_size: reward_block.settings.cart_reward_milestone_size,
+                  reward_tier_text_size_desktop: reward_block.settings.cart_reward_tier_text_size_desktop,
+                  reward_tier_text_size_mobile: reward_block.settings.cart_reward_tier_text_size_mobile,
+                  reward_show_thresholds: reward_block.settings.cart_reward_show_thresholds,
+                  reward_1_title: reward_block.settings.cart_reward_1_title,
+                  reward_1_icon: reward_block.settings.cart_reward_1_icon,
+                  reward_1_hide_title: reward_block.settings.cart_reward_1_hide_title,
+                  reward_2_title: reward_block.settings.cart_reward_2_title,
+                  reward_2_icon: reward_block.settings.cart_reward_2_icon,
+                  reward_2_hide_title: reward_block.settings.cart_reward_2_hide_title,
+                  reward_3_title: reward_block.settings.cart_reward_3_title,
+                  reward_3_icon: reward_block.settings.cart_reward_3_icon,
+                  reward_3_hide_title: reward_block.settings.cart_reward_3_hide_title,
+                  selected_country_code: localization.country.iso_code,
+                  selected_currency_code: localization.country.currency.iso_code,
+                  market_id_reward_1_amount: reward_block.settings.market_id_reward_1_amount,
+                  market_id_reward_1_text: reward_block.settings.market_id_reward_1_text,
+                  market_id_reward_2_amount: reward_block.settings.market_id_reward_2_amount,
+                  market_id_reward_2_text: reward_block.settings.market_id_reward_2_text,
+                  market_id_reward_3_amount: reward_block.settings.market_id_reward_3_amount,
+                  market_id_reward_3_text: reward_block.settings.market_id_reward_3_text,
+                  market_id_offer_text: reward_block.settings.market_id_offer_text,
+                  market_sg_reward_1_amount: reward_block.settings.market_sg_reward_1_amount,
+                  market_sg_reward_1_text: reward_block.settings.market_sg_reward_1_text,
+                  market_sg_reward_2_amount: reward_block.settings.market_sg_reward_2_amount,
+                  market_sg_reward_2_text: reward_block.settings.market_sg_reward_2_text,
+                  market_sg_reward_3_amount: reward_block.settings.market_sg_reward_3_amount,
+                  market_sg_reward_3_text: reward_block.settings.market_sg_reward_3_text,
+                  market_sg_offer_text: reward_block.settings.market_sg_offer_text,
+                  market_my_reward_1_amount: reward_block.settings.market_my_reward_1_amount,
+                  market_my_reward_1_text: reward_block.settings.market_my_reward_1_text,
+                  market_my_reward_2_amount: reward_block.settings.market_my_reward_2_amount,
+                  market_my_reward_2_text: reward_block.settings.market_my_reward_2_text,
+                  market_my_reward_3_amount: reward_block.settings.market_my_reward_3_amount,
+                  market_my_reward_3_text: reward_block.settings.market_my_reward_3_text,
+                  market_my_offer_text: reward_block.settings.market_my_offer_text,
+                  market_int_reward_1_amount: reward_block.settings.market_int_reward_1_amount,
+                  market_int_reward_1_text: reward_block.settings.market_int_reward_1_text,
+                  market_int_reward_2_amount: reward_block.settings.market_int_reward_2_amount,
+                  market_int_reward_2_text: reward_block.settings.market_int_reward_2_text,
+                  market_int_reward_3_amount: reward_block.settings.market_int_reward_3_amount,
+                  market_int_reward_3_text: reward_block.settings.market_int_reward_3_text,
+                  market_int_offer_text: reward_block.settings.market_int_offer_text,
+                  trust_icon_size_desktop: trust_block.settings.cart_trust_icon_size_desktop,
+                  trust_icon_size_mobile: trust_block.settings.cart_trust_icon_size_mobile,
+                  trust_title_size_desktop: trust_block.settings.cart_trust_title_size_desktop,
+                  trust_title_size_mobile: trust_block.settings.cart_trust_title_size_mobile,
+                  trust_description_size_desktop: trust_block.settings.cart_trust_description_size_desktop,
+                  trust_description_size_mobile: trust_block.settings.cart_trust_description_size_mobile,
+                  quantity_size_desktop: products_block.settings.cart_quantity_size_desktop,
+                  quantity_size_mobile: products_block.settings.cart_quantity_size_mobile,
+                  product_image_width_desktop: products_block.settings.cart_product_image_width_desktop,
+                  product_image_width_mobile: products_block.settings.cart_product_image_width_mobile
+                %}
+              {% endif %}
+
+              <div class="cart-drawer__items">{% render 'cart-products' %}</div>
+
+              {% if discount_block %}
+                {% render 'advanced-cart-extras',
+                  position: 'offers',
+                  show_available_codes: discount_block.settings.cart_show_available_codes,
+                  discount_heading: discount_block.settings.cart_discount_heading,
+                  discount_code_1: discount_block.settings.cart_discount_code_1,
+                  discount_code_1_text: discount_block.settings.cart_discount_code_1_text,
+                  discount_code_2: discount_block.settings.cart_discount_code_2,
+                  discount_code_2_text: discount_block.settings.cart_discount_code_2_text,
+                  discount_code_3: discount_block.settings.cart_discount_code_3,
+                  discount_code_3_text: discount_block.settings.cart_discount_code_3_text
+                %}
+              {% endif %}
+
+              <div class="cart-drawer__summary avelle-cart-summary-scroll">
+                {% render 'cart-summary', section_id: section.id %}
+              </div>
+
+              {% if trust_block %}
+                {% render 'advanced-cart-extras',
+                  position: 'bottom',
+                  trust_1_icon: trust_block.settings.cart_trust_1_icon,
+                  trust_2_icon: trust_block.settings.cart_trust_2_icon,
+                  trust_3_icon: trust_block.settings.cart_trust_3_icon,
+                  trust_icon_size_desktop: trust_block.settings.cart_trust_icon_size_desktop,
+                  trust_icon_size_mobile: trust_block.settings.cart_trust_icon_size_mobile,
+                  trust_title_size_desktop: trust_block.settings.cart_trust_title_size_desktop,
+                  trust_title_size_mobile: trust_block.settings.cart_trust_title_size_mobile,
+                  trust_description_size_desktop: trust_block.settings.cart_trust_description_size_desktop,
+                  trust_description_size_mobile: trust_block.settings.cart_trust_description_size_mobile,
+                  trust_1_title: trust_block.settings.cart_trust_1_title,
+                  trust_1_text: trust_block.settings.cart_trust_1_text,
+                  trust_2_title: trust_block.settings.cart_trust_2_title,
+                  trust_2_text: trust_block.settings.cart_trust_2_text,
+                  trust_3_title: trust_block.settings.cart_trust_3_title,
+                  trust_3_text: trust_block.settings.cart_trust_3_text
+                %}
+              {% endif %}
+            </scroll-hint>
+
+            <div class="avelle-cart-fixed-checkout">
+              <button type="submit" form="cart-form" name="checkout" class="button avelle-cart-fixed-checkout__button">
+                <span>CHECK OUT</span>
+                <span>{{ cart.total_price | money }}</span>
+              </button>
+            </div>
+          </div>
+        {% endif %}
+      </cart-items-component>
+    </div>
+  </dialog>
+</cart-drawer-component>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "class": "avelle-cart-drawer-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "cart_drawer_width_desktop",
+      "label": "Cart drawer width - desktop",
+      "min": 400,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 520
+    }
+  ],
+  "blocks": [
+    {
+      "type": "offer_bar",
+      "name": "Offer bar",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "cart_offer_enabled",
+          "label": "Show offer bar",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "cart_offer_text",
+          "label": "Offer bar text",
+          "default": "Limited-time offer: complete your order today."
+        },
+        {
+          "type": "range",
+          "id": "cart_offer_text_size_desktop",
+          "label": "Offer text size - desktop",
+          "min": 7,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "default": 11
+        },
+        {
+          "type": "range",
+          "id": "cart_offer_text_size_mobile",
+          "label": "Offer text size - mobile",
+          "min": 7,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "default": 10
+        },
+        {
+          "type": "color",
+          "id": "cart_offer_background",
+          "label": "Offer background",
+          "default": "#111111"
+        },
+        {
+          "type": "color",
+          "id": "cart_offer_text_color",
+          "label": "Offer text color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "select",
+          "id": "cart_offer_text_align",
+          "label": "Offer text align",
+          "default": "center",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "cart_offer_padding_y",
+          "label": "Offer vertical padding",
+          "min": 4,
+          "max": 30,
+          "step": 1,
+          "unit": "px",
+          "default": 10
+        }
+      ]
+    },
+    {
+      "type": "reward_bar",
+      "name": "Reward bar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "cart_reward_in_progress_message",
+          "label": "In-progress message",
+          "info": "Use [[amount_remaining]] and [[next_tier_title]].",
+          "default": "Add [[amount_remaining]] to unlock [[next_tier_title]]."
+        },
+        {
+          "type": "text",
+          "id": "cart_reward_all_unlocked_message",
+          "label": "All rewards unlocked message",
+          "default": "All rewards unlocked!"
+        },
+        {
+          "type": "select",
+          "id": "cart_reward_text_align",
+          "label": "Reward message align",
+          "default": "left",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "cart_reward_background",
+          "label": "Background",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "cart_reward_text_color",
+          "label": "Text color",
+          "default": "#121212"
+        },
+        {
+          "type": "color",
+          "id": "cart_reward_track_background",
+          "label": "Bar background",
+          "default": "#E2E3E4"
+        },
+        {
+          "type": "color",
+          "id": "cart_reward_bar_fill",
+          "label": "Bar fill",
+          "default": "#121212"
+        },
+        {
+          "type": "color",
+          "id": "cart_reward_locked_color",
+          "label": "Locked tier",
+          "default": "#8A8A8A"
+        },
+        {
+          "type": "color",
+          "id": "cart_reward_unlocked_color",
+          "label": "Unlocked tier",
+          "default": "#121212"
+        },
+        {
+          "type": "color",
+          "id": "cart_reward_milestone_background",
+          "label": "Milestone background",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "cart_reward_milestone_border",
+          "label": "Milestone border",
+          "default": "#121212"
+        },
+        {
+          "type": "range",
+          "id": "cart_reward_top_padding",
+          "label": "Top padding",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "cart_reward_bottom_padding",
+          "label": "Bottom padding",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "cart_reward_bar_height",
+          "label": "Bar height",
+          "min": 2,
+          "max": 12,
+          "step": 1,
+          "unit": "px",
+          "default": 5
+        },
+        {
+          "type": "range",
+          "id": "cart_reward_milestone_size",
+          "label": "Milestone size",
+          "min": 20,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 28
+        },
+        {
+          "type": "range",
+          "id": "cart_reward_tier_text_size_desktop",
+          "label": "Tier text size - desktop",
+          "min": 7,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 8
+        },
+        {
+          "type": "range",
+          "id": "cart_reward_tier_text_size_mobile",
+          "label": "Tier text size - mobile",
+          "min": 7,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "default": 7
+        },
+        {
+          "type": "checkbox",
+          "id": "cart_reward_show_thresholds",
+          "label": "Show tier thresholds under milestones",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "cart_reward_1_type",
+          "label": "Tier 1 type",
+          "default": "order_discount",
+          "options": [
+            {
+              "value": "order_discount",
+              "label": "Order discount"
+            },
+            {
+              "value": "free_shipping",
+              "label": "Free shipping"
+            },
+            {
+              "value": "custom",
+              "label": "Custom reward"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "cart_reward_1_title",
+          "label": "Tier 1 title",
+          "default": "Order discount"
+        },
+        {
+          "type": "select",
+          "id": "cart_reward_1_icon",
+          "label": "Tier 1 icon",
+          "default": "tag",
+          "options": [
+            {
+              "value": "tag",
+              "label": "Discount tag"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "cart_reward_1_hide_title",
+          "label": "Hide Tier 1 icon and title",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "cart_reward_2_type",
+          "label": "Tier 2 type",
+          "default": "order_discount",
+          "options": [
+            {
+              "value": "order_discount",
+              "label": "Order discount"
+            },
+            {
+              "value": "free_shipping",
+              "label": "Free shipping"
+            },
+            {
+              "value": "custom",
+              "label": "Custom reward"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "cart_reward_2_title",
+          "label": "Tier 2 title",
+          "default": "Order discount"
+        },
+        {
+          "type": "select",
+          "id": "cart_reward_2_icon",
+          "label": "Tier 2 icon",
+          "default": "tag",
+          "options": [
+            {
+              "value": "tag",
+              "label": "Discount tag"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "cart_reward_2_hide_title",
+          "label": "Hide Tier 2 icon and title",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "cart_reward_3_type",
+          "label": "Tier 3 type",
+          "default": "free_shipping",
+          "options": [
+            {
+              "value": "order_discount",
+              "label": "Order discount"
+            },
+            {
+              "value": "free_shipping",
+              "label": "Free shipping"
+            },
+            {
+              "value": "custom",
+              "label": "Custom reward"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "cart_reward_3_title",
+          "label": "Tier 3 title",
+          "default": "Free shipping"
+        },
+        {
+          "type": "select",
+          "id": "cart_reward_3_icon",
+          "label": "Tier 3 icon",
+          "default": "truck",
+          "options": [
+            {
+              "value": "tag",
+              "label": "Discount tag"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "cart_reward_3_hide_title",
+          "label": "Hide Tier 3 icon and title",
+          "default": false
+        },
+        {
+          "type": "number",
+          "id": "cart_reward_1_amount",
+          "label": "Reward 1 minimum spend",
+          "default": 200000
+        },
+        {
+          "type": "text",
+          "id": "cart_reward_1_text",
+          "label": "Reward 1",
+          "default": "Rp15.000 discount"
+        },
+        {
+          "type": "number",
+          "id": "cart_reward_2_amount",
+          "label": "Reward 2 minimum spend",
+          "default": 800000
+        },
+        {
+          "type": "text",
+          "id": "cart_reward_2_text",
+          "label": "Reward 2",
+          "default": "Rp30.000 discount"
+        },
+        {
+          "type": "number",
+          "id": "cart_reward_3_amount",
+          "label": "Reward 3 minimum spend",
+          "default": 2000000
+        },
+        {
+          "type": "text",
+          "id": "cart_reward_3_text",
+          "label": "Reward 3",
+          "default": "FREE international & national shipping"
+        },
+        {
+          "type": "number",
+          "id": "market_id_reward_1_amount",
+          "label": "Indonesia reward 1 minimum",
+          "default": 200000
+        },
+        {
+          "type": "text",
+          "id": "market_id_reward_1_text",
+          "label": "Indonesia reward 1 label",
+          "default": "Rp15.000 discount"
+        },
+        {
+          "type": "number",
+          "id": "market_id_reward_2_amount",
+          "label": "Indonesia reward 2 minimum",
+          "default": 800000
+        },
+        {
+          "type": "text",
+          "id": "market_id_reward_2_text",
+          "label": "Indonesia reward 2 label",
+          "default": "Rp30.000 discount"
+        },
+        {
+          "type": "number",
+          "id": "market_id_reward_3_amount",
+          "label": "Indonesia reward 3 minimum",
+          "default": 2000000
+        },
+        {
+          "type": "text",
+          "id": "market_id_reward_3_text",
+          "label": "Indonesia reward 3 label",
+          "default": "FREE shipping"
+        },
+        {
+          "type": "text",
+          "id": "market_id_offer_text",
+          "label": "Indonesia offer bar",
+          "default": "Limited-time offer: complete your order today."
+        },
+        {
+          "type": "number",
+          "id": "market_sg_reward_1_amount",
+          "label": "Singapore reward 1 minimum",
+          "default": 50
+        },
+        {
+          "type": "text",
+          "id": "market_sg_reward_1_text",
+          "label": "Singapore reward 1 label",
+          "default": "SGD 5 discount"
+        },
+        {
+          "type": "number",
+          "id": "market_sg_reward_2_amount",
+          "label": "Singapore reward 2 minimum",
+          "default": 100
+        },
+        {
+          "type": "text",
+          "id": "market_sg_reward_2_text",
+          "label": "Singapore reward 2 label",
+          "default": "SGD 10 discount"
+        },
+        {
+          "type": "number",
+          "id": "market_sg_reward_3_amount",
+          "label": "Singapore reward 3 minimum",
+          "default": 150
+        },
+        {
+          "type": "text",
+          "id": "market_sg_reward_3_text",
+          "label": "Singapore reward 3 label",
+          "default": "FREE shipping"
+        },
+        {
+          "type": "text",
+          "id": "market_sg_offer_text",
+          "label": "Singapore offer bar",
+          "default": "Limited-time offer: complete your order today."
+        },
+        {
+          "type": "number",
+          "id": "market_my_reward_1_amount",
+          "label": "Malaysia reward 1 minimum",
+          "default": 150
+        },
+        {
+          "type": "text",
+          "id": "market_my_reward_1_text",
+          "label": "Malaysia reward 1 label",
+          "default": "RM10 discount"
+        },
+        {
+          "type": "number",
+          "id": "market_my_reward_2_amount",
+          "label": "Malaysia reward 2 minimum",
+          "default": 300
+        },
+        {
+          "type": "text",
+          "id": "market_my_reward_2_text",
+          "label": "Malaysia reward 2 label",
+          "default": "RM20 discount"
+        },
+        {
+          "type": "number",
+          "id": "market_my_reward_3_amount",
+          "label": "Malaysia reward 3 minimum",
+          "default": 450
+        },
+        {
+          "type": "text",
+          "id": "market_my_reward_3_text",
+          "label": "Malaysia reward 3 label",
+          "default": "FREE shipping"
+        },
+        {
+          "type": "text",
+          "id": "market_my_offer_text",
+          "label": "Malaysia offer bar",
+          "default": "Limited-time offer: complete your order today."
+        },
+        {
+          "type": "number",
+          "id": "market_int_reward_1_amount",
+          "label": "International reward 1 minimum",
+          "default": 40
+        },
+        {
+          "type": "text",
+          "id": "market_int_reward_1_text",
+          "label": "International reward 1 label",
+          "default": "First reward"
+        },
+        {
+          "type": "number",
+          "id": "market_int_reward_2_amount",
+          "label": "International reward 2 minimum",
+          "default": 80
+        },
+        {
+          "type": "text",
+          "id": "market_int_reward_2_text",
+          "label": "International reward 2 label",
+          "default": "Second reward"
+        },
+        {
+          "type": "number",
+          "id": "market_int_reward_3_amount",
+          "label": "International reward 3 minimum",
+          "default": 120
+        },
+        {
+          "type": "text",
+          "id": "market_int_reward_3_text",
+          "label": "International reward 3 label",
+          "default": "FREE international shipping"
+        },
+        {
+          "type": "text",
+          "id": "market_int_offer_text",
+          "label": "International offer bar",
+          "default": "Limited-time offer: complete your order today."
+        }
+      ]
+    },
+    {
+      "type": "products",
+      "name": "Cart products",
+      "settings": [
+        {
+          "type": "range",
+          "id": "cart_quantity_size_desktop",
+          "label": "Quantity control size - desktop",
+          "min": 24,
+          "max": 44,
+          "step": 1,
+          "unit": "px",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "cart_quantity_size_mobile",
+          "label": "Quantity control size - mobile",
+          "min": 24,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 28
+        },
+        {
+          "type": "range",
+          "id": "cart_product_image_width_desktop",
+          "label": "Product image width - desktop",
+          "min": 60,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "default": 82
+        },
+        {
+          "type": "range",
+          "id": "cart_product_image_width_mobile",
+          "label": "Product image width - mobile",
+          "min": 60,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "default": 74
+        }
+      ]
+    },
+    {
+      "type": "discount",
+      "name": "Discount & offers",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "cart_show_available_codes",
+          "label": "Show available discount codes",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "cart_discount_heading",
+          "label": "Discount codes heading",
+          "default": "Available offers"
+        },
+        {
+          "type": "text",
+          "id": "cart_discount_code_1",
+          "label": "Discount code 1",
+          "default": "WELCOME10"
+        },
+        {
+          "type": "text",
+          "id": "cart_discount_code_1_text",
+          "label": "Discount code 1 description",
+          "default": "10% off your first order"
+        },
+        {
+          "type": "text",
+          "id": "cart_discount_code_2",
+          "label": "Discount code 2"
+        },
+        {
+          "type": "text",
+          "id": "cart_discount_code_2_text",
+          "label": "Discount code 2 description"
+        },
+        {
+          "type": "text",
+          "id": "cart_discount_code_3",
+          "label": "Discount code 3"
+        },
+        {
+          "type": "text",
+          "id": "cart_discount_code_3_text",
+          "label": "Discount code 3 description"
+        }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Trust messages",
+      "settings": [
+        {
+          "type": "select",
+          "id": "cart_trust_1_icon",
+          "label": "Trust item 1 icon",
+          "default": "lock",
+          "options": [
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "package",
+              "label": "Package"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "exchange",
+              "label": "Exchange"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "cart_trust_2_icon",
+          "label": "Trust item 2 icon",
+          "default": "truck",
+          "options": [
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "package",
+              "label": "Package"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "exchange",
+              "label": "Exchange"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "cart_trust_3_icon",
+          "label": "Trust item 3 icon",
+          "default": "heart",
+          "options": [
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "package",
+              "label": "Package"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "exchange",
+              "label": "Exchange"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "cart_trust_icon_size_desktop",
+          "label": "Trust icon size - desktop",
+          "min": 7,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "cart_trust_icon_size_mobile",
+          "label": "Trust icon size - mobile",
+          "min": 7,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "cart_trust_title_size_desktop",
+          "label": "Trust title text size - desktop",
+          "min": 7,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 9
+        },
+        {
+          "type": "range",
+          "id": "cart_trust_title_size_mobile",
+          "label": "Trust title text size - mobile",
+          "min": 7,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 8
+        },
+        {
+          "type": "range",
+          "id": "cart_trust_description_size_desktop",
+          "label": "Trust description text size - desktop",
+          "min": 7,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 8
+        },
+        {
+          "type": "range",
+          "id": "cart_trust_description_size_mobile",
+          "label": "Trust description text size - mobile",
+          "min": 7,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 7
+        },
+        {
+          "type": "text",
+          "id": "cart_trust_1_title",
+          "label": "Trust item 1 title",
+          "default": "Secure payment"
+        },
+        {
+          "type": "text",
+          "id": "cart_trust_1_text",
+          "label": "Trust item 1 description",
+          "default": "Safe & protected checkout"
+        },
+        {
+          "type": "text",
+          "id": "cart_trust_2_title",
+          "label": "Trust item 2 title",
+          "default": "Fast delivery"
+        },
+        {
+          "type": "text",
+          "id": "cart_trust_2_text",
+          "label": "Trust item 2 description",
+          "default": "Quick nationwide shipping"
+        },
+        {
+          "type": "text",
+          "id": "cart_trust_3_title",
+          "label": "Trust item 3 title",
+          "default": "Easy exchange"
+        },
+        {
+          "type": "text",
+          "id": "cart_trust_3_text",
+          "label": "Trust item 3 description",
+          "default": "Simple exchange process"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "Cart drawer",
+      "blocks": [
+        {
+          "type": "offer_bar"
+        },
+        {
+          "type": "reward_bar"
+        },
+        {
+          "type": "products"
+        },
+        {
+          "type": "discount"
+        },
+        {
+          "type": "trust"
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "groups": [
+      "header"
+    ]
+  },
+  "limit": 1
+}
+{% endschema %}
