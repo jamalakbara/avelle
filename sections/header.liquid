@@ -985,14 +985,14 @@
                     style="--header-height: 60px;"
                   >
                     {% render 'advanced-cart-extras',
-  position: 'top',
-  offer_enabled: section.settings.cart_offer_enabled,
-  offer_text: section.settings.cart_offer_text,
-  free_shipping_amount: section.settings.cart_free_shipping_amount,
-  free_shipping_title: section.settings.cart_free_shipping_title,
-  free_shipping_message: section.settings.cart_free_shipping_message,
-  free_shipping_success: section.settings.cart_free_shipping_success
-%}
+                      position: 'top',
+                      offer_enabled: section.settings.cart_offer_enabled,
+                      offer_text: section.settings.cart_offer_text,
+                      free_shipping_amount: section.settings.cart_free_shipping_amount,
+                      free_shipping_title: section.settings.cart_free_shipping_title,
+                      free_shipping_message: section.settings.cart_free_shipping_message,
+                      free_shipping_success: section.settings.cart_free_shipping_success
+                    %}
 
                     <div class="cart-drawer__items">
                       {% render 'cart-products' %}
@@ -1000,7 +1000,15 @@
                     <div class="cart-drawer__summary">
                       {% render 'cart-summary', section_id: section.id %}
                     </div>
-                    {% render 'advanced-cart-extras', position: 'bottom' %}
+                    {% render 'advanced-cart-extras',
+                      position: 'bottom',
+                      trust_1_title: section.settings.cart_trust_1_title,
+                      trust_1_text: section.settings.cart_trust_1_text,
+                      trust_2_title: section.settings.cart_trust_2_title,
+                      trust_2_text: section.settings.cart_trust_2_text,
+                      trust_3_title: section.settings.cart_trust_3_title,
+                      trust_3_text: section.settings.cart_trust_3_text
+                    %}
                   </scroll-hint>
                 {%- endif -%}
               </cart-items-component>
