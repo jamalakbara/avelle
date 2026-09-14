@@ -13,6 +13,16 @@
       "content": "Advanced cart drawer"
     },
     {
+      "type": "range",
+      "id": "cart_drawer_width_desktop",
+      "label": "Cart drawer width - desktop",
+      "min": 400,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "default": 520
+    },
+    {
       "type": "checkbox",
       "id": "cart_offer_enabled",
       "label": "Show offer bar",
@@ -878,6 +888,13 @@
      Scrolls naturally: rewards, products, offers, discounts,
      totals and trust messages
      ========================================================= */
+
+  @media screen and (min-width: 750px) {
+    .cart-drawer__dialog {
+      width: {{ section.settings.cart_drawer_width_desktop }}px !important;
+      max-width: min({{ section.settings.cart_drawer_width_desktop }}px, 100vw) !important;
+    }
+  }
 
   .cart-drawer__dialog:not(.cart-drawer--empty) .cart-drawer__inner,
   .cart-drawer__dialog:not(.cart-drawer--empty) .cart-items-component {
