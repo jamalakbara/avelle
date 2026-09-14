@@ -61,7 +61,7 @@
     "header_section": {
       "type": "header",
       "settings": {
-        "cart_drawer_width_desktop": 700,
+        "cart_drawer_width_desktop": 800,
         "cart_offer_enabled": true,
         "cart_offer_text": "Limited-time offer: complete your order today.",
         "cart_reward_1_amount": 200000,
