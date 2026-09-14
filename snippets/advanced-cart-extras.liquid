@@ -2,18 +2,42 @@
   AVELLE ADVANCED CART EXTRAS
 {% endcomment %}
 
-{% assign shipping_amount = free_shipping_amount | default: 500000 | plus: 0 %}
-{% assign free_shipping_threshold = shipping_amount | times: 100 %}
+{% assign cart_subtotal = cart.original_total_price | default: cart.total_price %}
 
-{% assign cart_total = cart.total_price %}
-{% assign remaining_amount = free_shipping_threshold | minus: cart_total %}
+{% assign reward_1_value = reward_1_amount | default: 200000 | plus: 0 %}
+{% assign reward_2_value = reward_2_amount | default: 800000 | plus: 0 %}
+{% assign reward_3_value = reward_3_amount | default: 2000000 | plus: 0 %}
 
-{% if free_shipping_threshold > 0 %}
-  {% assign progress = cart_total | times: 100 | divided_by: free_shipping_threshold %}
+{% assign reward_1_threshold = reward_1_value | times: 100 %}
+{% assign reward_2_threshold = reward_2_value | times: 100 %}
+{% assign reward_3_threshold = reward_3_value | times: 100 %}
+
+{% assign reward_level = 0 %}
+{% assign next_threshold = reward_1_threshold %}
+
+{% if cart_subtotal >= reward_1_threshold %}
+  {% assign reward_level = 1 %}
+  {% assign next_threshold = reward_2_threshold %}
+{% endif %}
+
+{% if cart_subtotal >= reward_2_threshold %}
+  {% assign reward_level = 2 %}
+  {% assign next_threshold = reward_3_threshold %}
+{% endif %}
+
+{% if cart_subtotal >= reward_3_threshold %}
+  {% assign reward_level = 3 %}
+{% endif %}
+
+{% if reward_level < 3 %}
+  {% assign remaining_amount = next_threshold | minus: cart_subtotal %}
+  {% assign progress = cart_subtotal | times: 100 | divided_by: next_threshold %}
 
   {% if progress > 100 %}
     {% assign progress = 100 %}
   {% endif %}
+{% else %}
+  {% assign progress = 100 %}
 {% endif %}
 
 
@@ -21,43 +45,64 @@
 
   <div class="avelle-cart-extra avelle-cart-extra--top">
 
-    {% if offer_enabled %}
+    {% if offer_enabled and offer_text != blank %}
       <div class="avelle-cart-offer">
         {{ offer_text }}
       </div>
     {% endif %}
 
-    <div class="avelle-shipping-progress">
 
-      {% if cart_total >= free_shipping_threshold %}
+    <div class="avelle-reward-progress">
 
-        <div class="avelle-shipping-progress__text">
+      {% if reward_level == 0 %}
+
+        <div class="avelle-reward-progress__message">
+          Spend
+          <strong>{{ remaining_amount | money }}</strong>
+          more to unlock
+          <strong>{{ reward_1_text | default: 'Rp15.000 discount' }}</strong>
+        </div>
+
+      {% elsif reward_level == 1 %}
+
+        <div class="avelle-reward-progress__message">
           <strong>
-            {{ free_shipping_success | default: "You've unlocked FREE shipping" }}
+            ✓ You've unlocked {{ reward_1_text | default: 'Rp15.000 discount' }}
           </strong>
+        </div>
+
+        <div class="avelle-reward-progress__next">
+          Spend
+          <strong>{{ remaining_amount | money }}</strong>
+          more to unlock
+          {{ reward_2_text | default: 'Rp30.000 discount' }}
+        </div>
+
+      {% elsif reward_level == 2 %}
+
+        <div class="avelle-reward-progress__message">
+          <strong>
+            ✓ You've unlocked {{ reward_2_text | default: 'Rp30.000 discount' }}
+          </strong>
+        </div>
+
+        <div class="avelle-reward-progress__next">
+          Spend
+          <strong>{{ remaining_amount | money }}</strong>
+          more to unlock
+          {{ reward_3_text | default: 'FREE international & national shipping' }}
         </div>
 
       {% else %}
 
-        <div class="avelle-shipping-progress__text">
-
+        <div class="avelle-reward-progress__message">
           <strong>
-            {{ free_shipping_title | default: 'FREE SHIPPING' }}
+            ✓ You've unlocked {{ reward_3_text | default: 'FREE international & national shipping' }}
           </strong>
-
-          {% assign formatted_remaining = remaining_amount | money %}
-
-          <span>
-            {{
-              free_shipping_message
-              | default: "You're [amount] away from free shipping"
-              | replace: '[amount]', formatted_remaining
-            }}
-          </span>
-
         </div>
 
       {% endif %}
+
 
       <div class="avelle-progress-track">
         <div
@@ -66,9 +111,774 @@
         ></div>
       </div>
 
+
+      <div class="avelle-reward-tiers">
+
+        <div
+          class="avelle-reward-tier{% if cart_subtotal >= reward_1_threshold %} is-unlocked{% endif %}"
+        >
+          <strong>
+            {{ reward_1_threshold | money_without_trailing_zeros }}
+          </strong>
+
+          <span>
+            {{ reward_1_text | default: 'Rp15.000 discount' }}
+          </span>
+        </div>
+
+
+        <div
+          class="avelle-reward-tier{% if cart_subtotal >= reward_2_threshold %} is-unlocked{% endif %}"
+        >
+          <strong>
+            {{ reward_2_threshold | money_without_trailing_zeros }}
+          </strong>
+
+          <span>
+            {{ reward_2_text | default: 'Rp30.000 discount' }}
+          </span>
+        </div>
+
+
+        <div
+          class="avelle-reward-tier{% if cart_subtotal >= reward_3_threshold %} is-unlocked{% endif %}"
+        >
+          <strong>
+            {{ reward_3_threshold | money_without_trailing_zeros }}
+          </strong>
+
+          <span>
+            {{ reward_3_text | default: 'FREE international & national shipping' }}
+          </span>
+        </div>
+
+      </div>
+
     </div>
 
+
+    {% if show_available_codes %}
+
+      {% if discount_code_1 != blank
+        or discount_code_2 != blank
+        or discount_code_3 != blank
+      %}
+
+        <div class="avelle-available-discounts">
+
+          <div class="avelle-available-discounts__heading">
+            {{ discount_heading | default: 'Available offers' }}
+          </div>
+
+
+          {% if discount_code_1 != blank %}
+
+            <button
+              type="button"
+              class="avelle-discount-offer"
+              data-avelle-discount="{{ discount_code_1 | escape }}"
+            >
+
+              <span class="avelle-discount-offer__copy">
+
+                <strong>
+                  {{ discount_code_1 }}
+                </strong>
+
+                {% if discount_code_1_text != blank %}
+                  <small>
+                    {{ discount_code_1_text }}
+                  </small>
+                {% endif %}
+
+              </span>
+
+              <span class="avelle-discount-offer__action">
+                Apply
+              </span>
+
+            </button>
+
+          {% endif %}
+
+
+          {% if discount_code_2 != blank %}
+
+            <button
+              type="button"
+              class="avelle-discount-offer"
+              data-avelle-discount="{{ discount_code_2 | escape }}"
+            >
+
+              <span class="avelle-discount-offer__copy">
+
+                <strong>
+                  {{ discount_code_2 }}
+                </strong>
+
+                {% if discount_code_2_text != blank %}
+                  <small>
+                    {{ discount_code_2_text }}
+                  </small>
+                {% endif %}
+
+              </span>
+
+              <span class="avelle-discount-offer__action">
+                Apply
+              </span>
+
+            </button>
+
+          {% endif %}
+
+
+          {% if discount_code_3 != blank %}
+
+            <button
+              type="button"
+              class="avelle-discount-offer"
+              data-avelle-discount="{{ discount_code_3 | escape }}"
+            >
+
+              <span class="avelle-discount-offer__copy">
+
+                <strong>
+                  {{ discount_code_3 }}
+                </strong>
+
+                {% if discount_code_3_text != blank %}
+                  <small>
+                    {{ discount_code_3_text }}
+                  </small>
+                {% endif %}
+
+              </span>
+
+              <span class="avelle-discount-offer__action">
+                Apply
+              </span>
+
+            </button>
+
+          {% endif %}
+
+        </div>
+
+      {% endif %}
+
+    {% endif %}
+
   </div>
+
+
+  <style>
+
+    /* ==============================
+       AVELLE CART DRAWER
+    ============================== */
+
+    .cart-drawer__dialog {
+      width: min(480px, 100vw) !important;
+      max-width: 480px !important;
+    }
+
+
+    /* HEADER */
+
+    .cart-drawer__header {
+      min-height: 64px;
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, .08);
+    }
+
+    .cart-drawer__heading {
+      font-size: 17px !important;
+      font-weight: 600;
+      letter-spacing: .02em;
+    }
+
+
+    /* OFFER BAR */
+
+    .avelle-cart-offer {
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding: 10px 18px;
+      font-size: 11px;
+      line-height: 1.4;
+      letter-spacing: .02em;
+    }
+
+
+    /* ==============================
+       REWARD PROGRESS
+    ============================== */
+
+    .avelle-reward-progress {
+      padding: 18px 24px 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, .08);
+    }
+
+    .avelle-reward-progress__message {
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .avelle-reward-progress__message strong {
+      font-weight: 600;
+    }
+
+    .avelle-reward-progress__next {
+      margin-top: 4px;
+      font-size: 10px;
+      line-height: 1.5;
+      opacity: .65;
+    }
+
+    .avelle-reward-progress__next strong {
+      font-weight: 600;
+    }
+
+
+    /* PROGRESS BAR */
+
+    .avelle-progress-track {
+      width: 100%;
+      height: 4px;
+      margin-top: 13px;
+      background: #ececec;
+      overflow: hidden;
+    }
+
+    .avelle-progress-bar {
+      height: 100%;
+      background: #111;
+      transition: width .35s ease;
+    }
+
+
+    /* REWARD TIERS */
+
+    .avelle-reward-tiers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .avelle-reward-tier {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 8px;
+      line-height: 1.3;
+      opacity: .4;
+    }
+
+    .avelle-reward-tier strong {
+      font-size: 9px;
+      font-weight: 600;
+    }
+
+    .avelle-reward-tier span {
+      font-size: 8px;
+    }
+
+    .avelle-reward-tier.is-unlocked {
+      opacity: 1;
+    }
+
+
+    /* ==============================
+       AVAILABLE DISCOUNTS
+    ============================== */
+
+    .avelle-available-discounts {
+      padding: 17px 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, .08);
+    }
+
+    .avelle-available-discounts__heading {
+      margin-bottom: 7px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .avelle-discount-offer {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+
+      padding: 11px 0;
+
+      border: 0;
+      border-top: 1px solid rgba(0, 0, 0, .08);
+
+      background: transparent;
+      color: inherit;
+
+      font: inherit;
+      text-align: left;
+
+      cursor: pointer;
+    }
+
+    .avelle-discount-offer:first-of-type {
+      border-top: 0;
+    }
+
+    .avelle-discount-offer__copy {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .avelle-discount-offer__copy strong {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .04em;
+    }
+
+    .avelle-discount-offer__copy small {
+      font-size: 9px;
+      line-height: 1.4;
+      opacity: .6;
+    }
+
+    .avelle-discount-offer__action {
+      flex-shrink: 0;
+
+      font-size: 10px;
+      font-weight: 600;
+
+      text-transform: uppercase;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+
+    /* ==============================
+       CART ITEMS
+    ============================== */
+
+    .cart-drawer__items {
+      padding: 6px 24px 0;
+    }
+
+    .cart-items__table-row {
+      padding: 18px 0 !important;
+      margin: 0 !important;
+
+      grid-template-columns:
+        82px minmax(0, 1fr) auto !important;
+
+      grid-template-areas:
+        "media details price"
+        "media quantity price"
+        "media error error" !important;
+
+      column-gap: 15px !important;
+
+      border-bottom: 1px solid rgba(0, 0, 0, .08);
+    }
+
+
+    /* PRODUCT IMAGE */
+
+    .cart-items__media-container {
+      width: 82px !important;
+      aspect-ratio: 3 / 4 !important;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .cart-items__media-image {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+    }
+
+
+    /* PRODUCT INFO */
+
+    .cart-items__title {
+      font-size: 13px !important;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    .cart-items__details {
+      font-size: 12px;
+    }
+
+    .cart-items__details * {
+      font-size: 12px !important;
+    }
+
+    .cart-items__variants {
+      margin-top: 5px !important;
+      opacity: .65;
+    }
+
+
+    /* PRICE */
+
+    .cart-items__price {
+      font-size: 12px !important;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+
+    /* QUANTITY */
+
+    .cart-items__quantity {
+      margin-top: 12px !important;
+    }
+
+    .cart-items__quantity-controls {
+      gap: 4px !important;
+    }
+
+    .cart-items__quantity .quantity-selector {
+      min-height: 34px;
+    }
+
+
+    /* REMOVE */
+
+    .cart-items__remove {
+      width: 34px !important;
+      height: 34px !important;
+      opacity: .6;
+    }
+
+    .cart-items__remove:hover {
+      opacity: 1;
+    }
+
+
+    /* ==============================
+       CART SUMMARY
+    ============================== */
+
+    .cart-drawer__summary {
+      padding: 10px 24px 22px;
+    }
+
+    .cart__summary-totals {
+      gap: 18px !important;
+    }
+
+
+    /* DISCOUNT ACCORDION */
+
+    .cart-actions {
+      border-color: rgba(0, 0, 0, .08) !important;
+    }
+
+    .cart-discount__summary {
+      min-height: 48px;
+    }
+
+    .cart-discount__label {
+      font-size: 12px !important;
+      font-weight: 500;
+    }
+
+
+    /* DISCOUNT INPUT */
+
+    .cart-discount__input {
+      min-width: 0;
+      border: 1px solid rgba(0, 0, 0, .18) !important;
+      border-radius: 8px !important;
+      padding: 11px 14px !important;
+      font-size: 12px !important;
+    }
+
+    .cart-discount__button {
+      min-width: 78px;
+      border-radius: 8px !important;
+      padding-inline: 16px !important;
+
+      font-size: 11px !important;
+      font-weight: 600;
+
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .cart-discount__form {
+      gap: 8px !important;
+    }
+
+
+    /* APPLIED DISCOUNT CODE */
+
+    .cart-discount__codes {
+      margin-top: 8px !important;
+    }
+
+    .cart-discount__pill {
+      padding: 7px 10px !important;
+      border: 1px solid rgba(0, 0, 0, .12);
+      border-radius: 8px !important;
+      background: #f6f6f6 !important;
+    }
+
+    .cart-discount__pill-code {
+      font-size: 11px;
+      line-height: 1;
+    }
+
+
+    /* ==============================
+       TOTAL
+    ============================== */
+
+    .cart__total {
+      padding-top: 5px;
+    }
+
+    .cart__total-label {
+      font-size: 13px !important;
+      font-weight: 400 !important;
+    }
+
+    .cart__total-value {
+      font-size: 15px !important;
+      font-weight: 600;
+    }
+
+    .tax-note {
+      opacity: .65;
+    }
+
+
+    /* ==============================
+       CHECKOUT
+    ============================== */
+
+    .cart__ctas {
+      margin-top: 5px;
+    }
+
+    .cart__checkout-button {
+      width: 100% !important;
+      min-height: 52px !important;
+
+      background: #111 !important;
+      color: #fff !important;
+
+      border-radius: 0 !important;
+      border: 1px solid #111 !important;
+
+      text-transform: uppercase;
+      letter-spacing: .06em;
+
+      font-size: 12px !important;
+      font-weight: 500;
+    }
+
+    .cart__checkout-button:hover {
+      opacity: .88;
+    }
+
+
+    /* ==============================
+       TRUST MESSAGES
+    ============================== */
+
+    .avelle-cart-trust {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+
+      border-top: 1px solid rgba(0, 0, 0, .08);
+
+      padding: 18px 24px 20px;
+    }
+
+    .avelle-cart-trust__item {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 7px;
+
+      min-width: 0;
+      text-align: left;
+    }
+
+    .avelle-trust-icon {
+      display: flex;
+      flex-shrink: 0;
+    }
+
+    .avelle-trust-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .avelle-cart-trust__copy {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .avelle-cart-trust__copy strong {
+      font-size: 9px;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+
+    .avelle-cart-trust__copy span {
+      font-size: 8px;
+      line-height: 1.3;
+      opacity: .6;
+    }
+
+
+    /* ==============================
+       MOBILE
+    ============================== */
+
+    @media screen and (max-width: 749px) {
+
+      .cart-drawer__dialog {
+        width: 100vw !important;
+        max-width: 100vw !important;
+      }
+
+      .cart-drawer__header {
+        padding: 18px;
+      }
+
+      .avelle-reward-progress {
+        padding: 16px 18px 18px;
+      }
+
+      .avelle-available-discounts {
+        padding-inline: 18px;
+      }
+
+      .cart-drawer__items {
+        padding-inline: 18px;
+      }
+
+      .cart-drawer__summary {
+        padding-inline: 18px;
+      }
+
+      .avelle-cart-trust {
+        padding-inline: 18px;
+        gap: 8px;
+      }
+
+      .cart-items__table-row {
+        grid-template-columns:
+          74px minmax(0, 1fr) auto !important;
+
+        column-gap: 12px !important;
+      }
+
+      .cart-items__media-container {
+        width: 74px !important;
+      }
+
+      .avelle-reward-tiers {
+        gap: 6px;
+      }
+
+      .avelle-reward-tier strong {
+        font-size: 8px;
+      }
+
+      .avelle-reward-tier span {
+        font-size: 7px;
+      }
+
+      .avelle-cart-trust__copy strong {
+        font-size: 8px;
+      }
+
+      .avelle-cart-trust__copy span {
+        font-size: 7px;
+      }
+
+    }
+
+  </style>
+
+
+  <script>
+    (() => {
+      if (window.avelleCartDiscountInit) return;
+
+      window.avelleCartDiscountInit = true;
+
+      document.addEventListener('click', function(event) {
+        const button = event.target.closest('[data-avelle-discount]');
+
+        if (!button) return;
+
+        const drawer = button.closest('.cart-drawer');
+
+        if (!drawer) return;
+
+        const code = button.dataset.avelleDiscount;
+
+        if (!code) return;
+
+        const input = drawer.querySelector('#cart-discount');
+
+        if (!input) {
+          return;
+        }
+
+        const details = input.closest('details');
+
+        if (details && !details.open) {
+          details.open = true;
+        }
+
+        input.value = code;
+
+        input.dispatchEvent(
+          new Event('input', {
+            bubbles: true
+          })
+        );
+
+        input.dispatchEvent(
+          new Event('change', {
+            bubbles: true
+          })
+        );
+
+        const form = input.closest('form');
+
+        if (form) {
+          if (typeof form.requestSubmit === 'function') {
+            form.requestSubmit();
+          } else {
+            const submitButton = form.querySelector('[type="submit"]');
+
+            if (submitButton) {
+              submitButton.click();
+            }
+          }
+        }
+      });
+    })();
+  </script>
 
 {% endif %}
 
@@ -81,12 +891,12 @@
 
       <span class="avelle-trust-icon">
         <svg
-          width="20"
-          height="20"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
           <rect x="5" y="10" width="14" height="10" rx="2"/>
           <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
@@ -94,10 +904,14 @@
       </span>
 
       <div class="avelle-cart-trust__copy">
-        <strong>{{ trust_1_title | default: 'Secure payment' }}</strong>
+        <strong>
+          {{ trust_1_title | default: 'Secure payment' }}
+        </strong>
 
         {% if trust_1_text != blank %}
-          <span>{{ trust_1_text }}</span>
+          <span>
+            {{ trust_1_text }}
+          </span>
         {% endif %}
       </div>
 
@@ -108,12 +922,12 @@
 
       <span class="avelle-trust-icon">
         <svg
-          width="20"
-          height="20"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
           <path d="M3 6h11v10H3z"/>
           <path d="M14 9h4l3 3v4h-7z"/>
@@ -123,10 +937,14 @@
       </span>
 
       <div class="avelle-cart-trust__copy">
-        <strong>{{ trust_2_title | default: 'Fast delivery' }}</strong>
+        <strong>
+          {{ trust_2_title | default: 'Fast delivery' }}
+        </strong>
 
         {% if trust_2_text != blank %}
-          <span>{{ trust_2_text }}</span>
+          <span>
+            {{ trust_2_text }}
+          </span>
         {% endif %}
       </div>
 
@@ -137,22 +955,26 @@
 
       <span class="avelle-trust-icon">
         <svg
-          width="20"
-          height="20"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
           <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
         </svg>
       </span>
 
       <div class="avelle-cart-trust__copy">
-        <strong>{{ trust_3_title | default: 'Easy exchange' }}</strong>
+        <strong>
+          {{ trust_3_title | default: 'Easy exchange' }}
+        </strong>
 
         {% if trust_3_text != blank %}
-          <span>{{ trust_3_text }}</span>
+          <span>
+            {{ trust_3_text }}
+          </span>
         {% endif %}
       </div>
 
@@ -161,323 +983,3 @@
   </div>
 
 {% endif %}
-
-
-<style>
-
-  /* ==============================
-     AVELLE CART DRAWER
-  ============================== */
-
-  .cart-drawer__dialog {
-    width: min(480px, 100vw) !important;
-    max-width: 480px !important;
-  }
-
-  /* HEADER */
-
-  .cart-drawer__header {
-    min-height: 64px;
-    padding: 20px 24px;
-    border-bottom: 1px solid rgba(0,0,0,.08);
-  }
-
-  .cart-drawer__heading {
-    font-size: 17px !important;
-    letter-spacing: .02em;
-    font-weight: 600;
-  }
-
-  /* OFFER BAR */
-
-  .avelle-cart-offer {
-    background: #111;
-    color: #fff;
-    text-align: center;
-    padding: 10px 18px;
-    font-size: 11px;
-    letter-spacing: .02em;
-  }
-
-  /* SHIPPING */
-
-  .avelle-shipping-progress {
-    padding: 18px 24px 20px;
-    border-bottom: 1px solid rgba(0,0,0,.08);
-  }
-
-  .avelle-shipping-progress__text {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    font-size: 12px;
-  }
-
-  .avelle-shipping-progress__text > strong {
-    font-size: 11px;
-    letter-spacing: .08em;
-  }
-
-  .avelle-progress-track {
-    margin-top: 13px;
-    width: 100%;
-    height: 4px;
-    background: #ececec;
-    overflow: hidden;
-  }
-
-  .avelle-progress-bar {
-    height: 100%;
-    background: #111;
-    transition: width .35s ease;
-  }
-
-  /* CART ITEM AREA */
-
-  .cart-drawer__items {
-    padding: 6px 24px 0;
-  }
-
-  .cart-items__table-row {
-    padding: 18px 0 !important;
-    margin: 0 !important;
-
-    grid-template-columns:
-      82px minmax(0,1fr) auto !important;
-
-    grid-template-areas:
-      "media details price"
-      "media quantity price"
-      "media error error" !important;
-
-    column-gap: 15px !important;
-
-    border-bottom:
-      1px solid rgba(0,0,0,.08);
-  }
-
-  /* PRODUCT IMAGE */
-
-  .cart-items__media-container {
-    width: 82px !important;
-    aspect-ratio: 3 / 4 !important;
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .cart-items__media-image {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-  }
-
-  /* PRODUCT TITLE */
-
-  .cart-items__title {
-    font-size: 13px !important;
-    font-weight: 500;
-    line-height: 1.35;
-  }
-
-  .cart-items__details {
-    font-size: 12px;
-  }
-
-  .cart-items__details * {
-    font-size: 12px !important;
-  }
-
-  .cart-items__variants {
-    margin-top: 5px !important;
-    opacity: .65;
-  }
-
-  /* PRODUCT PRICE */
-
-  .cart-items__price {
-    font-size: 12px !important;
-    font-weight: 500;
-    white-space: nowrap;
-  }
-
-  /* QUANTITY */
-
-  .cart-items__quantity {
-    margin-top: 12px !important;
-  }
-
-  .cart-items__quantity-controls {
-    gap: 4px !important;
-  }
-
-  .cart-items__quantity .quantity-selector {
-    min-height: 34px;
-  }
-
-  /* DELETE */
-
-  .cart-items__remove {
-    width: 34px !important;
-    height: 34px !important;
-    opacity: .6;
-  }
-
-  .cart-items__remove:hover {
-    opacity: 1;
-  }
-
-  /* SUMMARY */
-
-  .cart-drawer__summary {
-    padding: 10px 24px 22px;
-  }
-
-  .cart__summary-totals {
-    gap: 18px !important;
-  }
-
-  /* DISCOUNT */
-
-  .cart-actions {
-    border-color: rgba(0,0,0,.08) !important;
-  }
-
-  .cart-discount__summary {
-    min-height: 48px;
-  }
-
-  .cart-discount__label {
-    font-size: 12px !important;
-  }
-
-  .cart-discount__input {
-    border: 1px solid rgba(0,0,0,.18) !important;
-    border-radius: 0 !important;
-    font-size: 12px !important;
-  }
-
-  .cart-discount__button {
-    border-radius: 0 !important;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: .05em;
-  }
-
-  /* TOTAL */
-
-  .cart__total {
-    padding-top: 5px;
-  }
-
-  .cart__total-label {
-    font-size: 13px !important;
-  }
-
-  .cart__total-value {
-    font-size: 15px !important;
-    font-weight: 600;
-  }
-
-  /* CHECKOUT */
-
-  .cart__ctas {
-    margin-top: 5px;
-  }
-
-  .cart__checkout-button {
-    min-height: 52px !important;
-    background: #111 !important;
-    color: #fff !important;
-    border-radius: 0 !important;
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    font-size: 12px !important;
-    font-weight: 500;
-  }
-
-  .cart__checkout-button:hover {
-    opacity: .88;
-  }
-
-  /* TRUST */
-
-  .avelle-cart-trust {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    border-top: 1px solid rgba(0,0,0,.08);
-    padding: 18px 24px 20px;
-    gap: 10px;
-  }
-
-  .avelle-cart-trust__item {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 7px;
-    text-align: left;
-  }
-
-  .avelle-trust-icon {
-    display: flex;
-    flex-shrink: 0;
-  }
-
-  .avelle-cart-trust__copy {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .avelle-cart-trust__copy strong {
-    font-size: 10px;
-    font-weight: 500;
-    line-height: 1.25;
-  }
-
-  .avelle-cart-trust__copy span {
-    font-size: 8px;
-    opacity: 0.6;
-    line-height: 1.25;
-  }
-
-  /* MOBILE */
-
-  @media screen and (max-width: 749px) {
-
-    .cart-drawer__dialog {
-      width: 100vw !important;
-      max-width: 100vw !important;
-    }
-
-    .cart-drawer__header {
-      padding: 18px;
-    }
-
-    .avelle-shipping-progress {
-      padding: 16px 18px 18px;
-    }
-
-    .cart-drawer__items {
-      padding-inline: 18px;
-    }
-
-    .cart-drawer__summary {
-      padding-inline: 18px;
-    }
-
-    .avelle-cart-trust {
-      padding-inline: 18px;
-    }
-
-    .cart-items__table-row {
-      grid-template-columns:
-        74px minmax(0,1fr) auto !important;
-    }
-
-    .cart-items__media-container {
-      width: 74px !important;
-    }
-
-  }
-
-</style>
