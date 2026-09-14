@@ -1,9 +1,14 @@
 {% comment %}
   AVELLE ADVANCED CART EXTRAS
 
-  IMPORTANT:
-  Shopify storefront Liquid cannot enumerate all active Admin discount codes.
-  The "Available offers" below are controlled from Theme Editor.
+  Positions used:
+  - top     = offer bar + reward progress
+  - offers  = public voucher / offer cards near cart summary
+  - bottom  = trust messages
+
+  Note:
+  Shopify storefront Liquid cannot automatically list every active Admin discount code.
+  Public offers shown here are controlled from Theme Editor.
   The normal Shopify discount input remains available for customer-specific codes.
 {% endcomment %}
 
@@ -44,16 +49,10 @@
   {% assign progress = 100 %}
 {% endif %}
 
+
 {% if position == 'top' %}
-  <div
-    class="avelle-cart-extra avelle-cart-extra--top"
-    style="
-      --avelle-qty-desktop: {{ quantity_size_desktop | default: 30 }}px;
-      --avelle-qty-mobile: {{ quantity_size_mobile | default: 28 }}px;
-      --avelle-image-desktop: {{ product_image_width_desktop | default: 82 }}px;
-      --avelle-image-mobile: {{ product_image_width_mobile | default: 74 }}px;
-    "
-  >
+  <div class="avelle-cart-extra avelle-cart-extra--top">
+
     {% if offer_enabled and offer_text != blank %}
       <div class="avelle-cart-offer">
         {{ offer_text }}
@@ -61,27 +60,33 @@
     {% endif %}
 
     <div class="avelle-reward-progress">
+
       {% if reward_level == 0 %}
         <div class="avelle-reward-progress__message">
           Spend <strong>{{ remaining_amount | money }}</strong> more to unlock
           <strong>{{ reward_1_text | default: 'Rp15.000 discount' }}</strong>
         </div>
+
       {% elsif reward_level == 1 %}
         <div class="avelle-reward-progress__message">
           <strong>✓ You've unlocked {{ reward_1_text | default: 'Rp15.000 discount' }}</strong>
         </div>
+
         <div class="avelle-reward-progress__next">
           Spend <strong>{{ remaining_amount | money }}</strong> more to unlock
           {{ reward_2_text | default: 'Rp30.000 discount' }}
         </div>
+
       {% elsif reward_level == 2 %}
         <div class="avelle-reward-progress__message">
           <strong>✓ You've unlocked {{ reward_2_text | default: 'Rp30.000 discount' }}</strong>
         </div>
+
         <div class="avelle-reward-progress__next">
           Spend <strong>{{ remaining_amount | money }}</strong> more to unlock
           {{ reward_3_text | default: 'FREE international & national shipping' }}
         </div>
+
       {% else %}
         <div class="avelle-reward-progress__message">
           <strong>✓ You've unlocked {{ reward_3_text | default: 'FREE international & national shipping' }}</strong>
@@ -108,65 +113,8 @@
           <span>{{ reward_3_text | default: 'FREE international & national shipping' }}</span>
         </div>
       </div>
+
     </div>
-
-    {% if show_available_codes %}
-      {% if discount_code_1 != blank or discount_code_2 != blank or discount_code_3 != blank %}
-        <div class="avelle-available-discounts">
-          <div class="avelle-available-discounts__heading">
-            {{ discount_heading | default: 'Available offers' }}
-          </div>
-
-          {% if discount_code_1 != blank %}
-            <button
-              type="button"
-              class="avelle-discount-offer"
-              data-avelle-discount="{{ discount_code_1 | escape }}"
-            >
-              <span class="avelle-discount-offer__copy">
-                <strong>{{ discount_code_1 }}</strong>
-                {% if discount_code_1_text != blank %}
-                  <small>{{ discount_code_1_text }}</small>
-                {% endif %}
-              </span>
-              <span class="avelle-discount-offer__action">Apply</span>
-            </button>
-          {% endif %}
-
-          {% if discount_code_2 != blank %}
-            <button
-              type="button"
-              class="avelle-discount-offer"
-              data-avelle-discount="{{ discount_code_2 | escape }}"
-            >
-              <span class="avelle-discount-offer__copy">
-                <strong>{{ discount_code_2 }}</strong>
-                {% if discount_code_2_text != blank %}
-                  <small>{{ discount_code_2_text }}</small>
-                {% endif %}
-              </span>
-              <span class="avelle-discount-offer__action">Apply</span>
-            </button>
-          {% endif %}
-
-          {% if discount_code_3 != blank %}
-            <button
-              type="button"
-              class="avelle-discount-offer"
-              data-avelle-discount="{{ discount_code_3 | escape }}"
-            >
-              <span class="avelle-discount-offer__copy">
-                <strong>{{ discount_code_3 }}</strong>
-                {% if discount_code_3_text != blank %}
-                  <small>{{ discount_code_3_text }}</small>
-                {% endif %}
-              </span>
-              <span class="avelle-discount-offer__action">Apply</span>
-            </button>
-          {% endif %}
-        </div>
-      {% endif %}
-    {% endif %}
   </div>
 
   <style>
@@ -198,7 +146,6 @@
     }
 
     .avelle-reward-progress {
-      position: static !important;
       padding: 18px 24px 20px;
       border-bottom: 1px solid rgba(0, 0, 0, .08);
       background: #fff;
@@ -265,7 +212,9 @@
 
     .avelle-available-discounts {
       padding: 17px 24px;
+      border-top: 1px solid rgba(0, 0, 0, .08);
       border-bottom: 1px solid rgba(0, 0, 0, .08);
+      background: #fff;
     }
 
     .avelle-available-discounts__heading {
@@ -333,7 +282,7 @@
       margin: 0 !important;
       display: grid !important;
       grid-template-columns:
-        var(--avelle-image-desktop, 82px)
+        {{ product_image_width_desktop | default: 82 }}px
         minmax(0, 1fr)
         auto !important;
       grid-template-areas:
@@ -377,7 +326,7 @@
     }
 
     .cart-items__media-container {
-      width: var(--avelle-image-desktop, 82px) !important;
+      width: {{ product_image_width_desktop | default: 82 }}px !important;
       aspect-ratio: 3 / 4 !important;
       display: flex !important;
       align-items: center;
@@ -417,35 +366,27 @@
     }
 
     .cart-items__quantity .quantity-selector {
-      min-height: var(--avelle-qty-desktop, 30px) !important;
-      height: var(--avelle-qty-desktop, 30px) !important;
+      min-height: {{ quantity_size_desktop | default: 30 }}px !important;
+      height: {{ quantity_size_desktop | default: 30 }}px !important;
       font-size: 11px !important;
     }
 
-    .cart-items__quantity .quantity-selector button {
-      width: var(--avelle-qty-desktop, 30px) !important;
-      min-width: var(--avelle-qty-desktop, 30px) !important;
-      height: var(--avelle-qty-desktop, 30px) !important;
-      min-height: var(--avelle-qty-desktop, 30px) !important;
+    .cart-items__quantity .quantity-selector button,
+    .cart-items__quantity .quantity-selector input,
+    .cart-items__remove {
+      width: {{ quantity_size_desktop | default: 30 }}px !important;
+      min-width: {{ quantity_size_desktop | default: 30 }}px !important;
+      height: {{ quantity_size_desktop | default: 30 }}px !important;
+      min-height: {{ quantity_size_desktop | default: 30 }}px !important;
       padding: 0 !important;
     }
 
     .cart-items__quantity .quantity-selector input {
-      width: var(--avelle-qty-desktop, 30px) !important;
-      min-width: var(--avelle-qty-desktop, 30px) !important;
-      height: var(--avelle-qty-desktop, 30px) !important;
-      min-height: var(--avelle-qty-desktop, 30px) !important;
-      padding: 0 !important;
       text-align: center !important;
       font-size: 11px !important;
     }
 
     .cart-items__remove {
-      width: var(--avelle-qty-desktop, 30px) !important;
-      min-width: var(--avelle-qty-desktop, 30px) !important;
-      height: var(--avelle-qty-desktop, 30px) !important;
-      min-height: var(--avelle-qty-desktop, 30px) !important;
-      padding: 0 !important;
       opacity: .6;
     }
 
@@ -603,18 +544,22 @@
         padding: 18px;
       }
 
-      /* Let the whole mobile cart scroll naturally.
-         Nothing in the rewards/summary/checkout is pinned. */
       .cart-drawer__content {
+        display: block !important;
         overflow-y: auto !important;
+        overflow-x: hidden !important;
+        overscroll-behavior: contain;
+        padding-bottom: 30px !important;
       }
 
       .cart-drawer__dialog[cart-summary-sticky='true'] .cart-drawer__summary,
+      .cart-drawer__dialog[cart-summary-sticky='false'] .cart-drawer__summary,
       .cart-drawer__summary,
       .cart__ctas,
       .avelle-cart-extra--top,
-      .avelle-reward-progress,
       .avelle-cart-offer,
+      .avelle-reward-progress,
+      .avelle-available-discounts,
       .avelle-cart-trust {
         position: static !important;
         inset: auto !important;
@@ -624,6 +569,7 @@
         left: auto !important;
         z-index: auto !important;
         transform: none !important;
+        box-shadow: none !important;
       }
 
       .avelle-reward-progress {
@@ -650,17 +596,13 @@
         font-size: 7px;
       }
 
-      .avelle-available-discounts {
-        padding-inline: 18px;
-      }
-
       .cart-drawer__items {
         padding-inline: 18px;
       }
 
       .cart-items__table-row {
         grid-template-columns:
-          var(--avelle-image-mobile, 74px)
+          {{ product_image_width_mobile | default: 74 }}px
           minmax(0, 1fr)
           auto !important;
         grid-template-areas:
@@ -672,21 +614,21 @@
       }
 
       .cart-items__media-container {
-        width: var(--avelle-image-mobile, 74px) !important;
+        width: {{ product_image_width_mobile | default: 74 }}px !important;
       }
 
       .cart-items__quantity .quantity-selector {
-        min-height: var(--avelle-qty-mobile, 28px) !important;
-        height: var(--avelle-qty-mobile, 28px) !important;
+        min-height: {{ quantity_size_mobile | default: 28 }}px !important;
+        height: {{ quantity_size_mobile | default: 28 }}px !important;
       }
 
       .cart-items__quantity .quantity-selector button,
       .cart-items__quantity .quantity-selector input,
       .cart-items__remove {
-        width: var(--avelle-qty-mobile, 28px) !important;
-        min-width: var(--avelle-qty-mobile, 28px) !important;
-        height: var(--avelle-qty-mobile, 28px) !important;
-        min-height: var(--avelle-qty-mobile, 28px) !important;
+        width: {{ quantity_size_mobile | default: 28 }}px !important;
+        min-width: {{ quantity_size_mobile | default: 28 }}px !important;
+        height: {{ quantity_size_mobile | default: 28 }}px !important;
+        min-height: {{ quantity_size_mobile | default: 28 }}px !important;
       }
 
       .cart-items__title {
@@ -698,8 +640,20 @@
         font-size: 11px !important;
       }
 
+      .avelle-available-discounts {
+        margin-top: 10px;
+        padding: 18px;
+      }
+
       .cart-drawer__summary {
-        padding: 20px 18px 22px !important;
+        padding: 18px !important;
+        margin: 0 !important;
+        background: #fff !important;
+        border: 0 !important;
+      }
+
+      .cart__ctas {
+        margin-top: 12px !important;
       }
 
       .avelle-cart-trust {
@@ -758,8 +712,73 @@
   </script>
 {% endif %}
 
+
+{% if position == 'offers' %}
+  {% if show_available_codes %}
+    {% if discount_code_1 != blank or discount_code_2 != blank or discount_code_3 != blank %}
+      <div class="avelle-available-discounts">
+
+        <div class="avelle-available-discounts__heading">
+          {{ discount_heading | default: 'Available offers' }}
+        </div>
+
+        {% if discount_code_1 != blank %}
+          <button
+            type="button"
+            class="avelle-discount-offer"
+            data-avelle-discount="{{ discount_code_1 | escape }}"
+          >
+            <span class="avelle-discount-offer__copy">
+              <strong>{{ discount_code_1 }}</strong>
+              {% if discount_code_1_text != blank %}
+                <small>{{ discount_code_1_text }}</small>
+              {% endif %}
+            </span>
+            <span class="avelle-discount-offer__action">Apply</span>
+          </button>
+        {% endif %}
+
+        {% if discount_code_2 != blank %}
+          <button
+            type="button"
+            class="avelle-discount-offer"
+            data-avelle-discount="{{ discount_code_2 | escape }}"
+          >
+            <span class="avelle-discount-offer__copy">
+              <strong>{{ discount_code_2 }}</strong>
+              {% if discount_code_2_text != blank %}
+                <small>{{ discount_code_2_text }}</small>
+              {% endif %}
+            </span>
+            <span class="avelle-discount-offer__action">Apply</span>
+          </button>
+        {% endif %}
+
+        {% if discount_code_3 != blank %}
+          <button
+            type="button"
+            class="avelle-discount-offer"
+            data-avelle-discount="{{ discount_code_3 | escape }}"
+          >
+            <span class="avelle-discount-offer__copy">
+              <strong>{{ discount_code_3 }}</strong>
+              {% if discount_code_3_text != blank %}
+                <small>{{ discount_code_3_text }}</small>
+              {% endif %}
+            </span>
+            <span class="avelle-discount-offer__action">Apply</span>
+          </button>
+        {% endif %}
+
+      </div>
+    {% endif %}
+  {% endif %}
+{% endif %}
+
+
 {% if position == 'bottom' %}
   <div class="avelle-cart-trust">
+
     <div class="avelle-cart-trust__item">
       <span class="avelle-trust-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -805,5 +824,6 @@
         {% endif %}
       </div>
     </div>
+
   </div>
 {% endif %}
