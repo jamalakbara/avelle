@@ -25,28 +25,80 @@
   "default": "Limited-time offer: complete your order today."
 },
 {
+  "type": "header",
+  "content": "Cart rewards"
+},
+{
   "type": "number",
-  "id": "cart_free_shipping_amount",
-  "label": "Free shipping minimum amount",
-  "default": 500000
+  "id": "cart_reward_1_amount",
+  "label": "Reward 1 minimum spend",
+  "default": 200000
 },
 {
   "type": "text",
-  "id": "cart_free_shipping_title",
-  "label": "Free shipping title",
-  "default": "FREE SHIPPING"
+  "id": "cart_reward_1_text",
+  "label": "Reward 1",
+  "default": "Rp15.000 discount"
+},
+{
+  "type": "number",
+  "id": "cart_reward_2_amount",
+  "label": "Reward 2 minimum spend",
+  "default": 800000
 },
 {
   "type": "text",
-  "id": "cart_free_shipping_message",
-  "label": "Progress message",
-  "default": "You're [amount] away from free shipping"
+  "id": "cart_reward_2_text",
+  "label": "Reward 2",
+  "default": "Rp30.000 discount"
+},
+{
+  "type": "number",
+  "id": "cart_reward_3_amount",
+  "label": "Reward 3 minimum spend",
+  "default": 2000000
 },
 {
   "type": "text",
-  "id": "cart_free_shipping_success",
-  "label": "Free shipping unlocked message",
-  "default": "You've unlocked FREE shipping"
+  "id": "cart_reward_3_text",
+  "label": "Reward 3",
+  "default": "FREE international shipping"
+},
+{
+  "type": "header",
+  "content": "Available discount codes"
+},
+{
+  "type": "text",
+  "id": "cart_discount_code_1",
+  "label": "Discount code 1",
+  "default": "WELCOME10"
+},
+{
+  "type": "text",
+  "id": "cart_discount_code_1_text",
+  "label": "Discount code 1 description",
+  "default": "10% off your first order"
+},
+{
+  "type": "text",
+  "id": "cart_discount_code_2",
+  "label": "Discount code 2"
+},
+{
+  "type": "text",
+  "id": "cart_discount_code_2_text",
+  "label": "Discount code 2 description"
+},
+{
+  "type": "text",
+  "id": "cart_discount_code_3",
+  "label": "Discount code 3"
+},
+{
+  "type": "text",
+  "id": "cart_discount_code_3_text",
+  "label": "Discount code 3 description"
 },
 {
   "type": "header",
@@ -985,14 +1037,24 @@
                     style="--header-height: 60px;"
                   >
                     {% render 'advanced-cart-extras',
-                      position: 'top',
-                      offer_enabled: section.settings.cart_offer_enabled,
-                      offer_text: section.settings.cart_offer_text,
-                      free_shipping_amount: section.settings.cart_free_shipping_amount,
-                      free_shipping_title: section.settings.cart_free_shipping_title,
-                      free_shipping_message: section.settings.cart_free_shipping_message,
-                      free_shipping_success: section.settings.cart_free_shipping_success
-                    %}
+  position: 'top',
+  offer_enabled: section.settings.cart_offer_enabled,
+  offer_text: section.settings.cart_offer_text,
+
+  reward_1_amount: section.settings.cart_reward_1_amount,
+  reward_1_text: section.settings.cart_reward_1_text,
+  reward_2_amount: section.settings.cart_reward_2_amount,
+  reward_2_text: section.settings.cart_reward_2_text,
+  reward_3_amount: section.settings.cart_reward_3_amount,
+  reward_3_text: section.settings.cart_reward_3_text,
+
+  discount_code_1: section.settings.cart_discount_code_1,
+  discount_code_1_text: section.settings.cart_discount_code_1_text,
+  discount_code_2: section.settings.cart_discount_code_2,
+  discount_code_2_text: section.settings.cart_discount_code_2_text,
+  discount_code_3: section.settings.cart_discount_code_3,
+  discount_code_3_text: section.settings.cart_discount_code_3_text
+%}
 
                     <div class="cart-drawer__items">
                       {% render 'cart-products' %}
