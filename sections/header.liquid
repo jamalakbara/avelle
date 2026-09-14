@@ -904,6 +904,8 @@
                     aria-label="{{ 'content.cart_title' | t }}"
                     style="--header-height: 60px;"
                   >
+                    {% render 'advanced-cart-extras', position: 'top' %}
+                    
                     <div class="cart-drawer__items">
                       {% render 'cart-products' %}
                     </div>
