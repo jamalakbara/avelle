@@ -1037,24 +1037,23 @@
                     style="--header-height: 60px;"
                   >
                     {% render 'advanced-cart-extras',
-  position: 'top',
-  offer_enabled: section.settings.cart_offer_enabled,
-  offer_text: section.settings.cart_offer_text,
-
-  reward_1_amount: section.settings.cart_reward_1_amount,
-  reward_1_text: section.settings.cart_reward_1_text,
-  reward_2_amount: section.settings.cart_reward_2_amount,
-  reward_2_text: section.settings.cart_reward_2_text,
-  reward_3_amount: section.settings.cart_reward_3_amount,
-  reward_3_text: section.settings.cart_reward_3_text,
-
-  discount_code_1: section.settings.cart_discount_code_1,
-  discount_code_1_text: section.settings.cart_discount_code_1_text,
-  discount_code_2: section.settings.cart_discount_code_2,
-  discount_code_2_text: section.settings.cart_discount_code_2_text,
-  discount_code_3: section.settings.cart_discount_code_3,
-  discount_code_3_text: section.settings.cart_discount_code_3_text
-%}
+                      position: 'top',
+                      offer_enabled: section.settings.cart_offer_enabled,
+                      offer_text: section.settings.cart_offer_text,
+                      
+                      reward_1_amount: section.settings.cart_reward_1_amount,
+                      reward_1_text: section.settings.cart_reward_1_text,
+                      reward_2_amount: section.settings.cart_reward_2_amount,
+                      reward_2_text: section.settings.cart_reward_2_text,
+                      reward_3_amount: section.settings.cart_reward_3_amount,
+                      reward_3_text: section.settings.cart_reward_3_text,
+                      discount_code_1: section.settings.cart_discount_code_1,
+                      discount_code_1_text: section.settings.cart_discount_code_1_text,
+                      discount_code_2: section.settings.cart_discount_code_2,
+                      discount_code_2_text: section.settings.cart_discount_code_2_text,
+                      discount_code_3: section.settings.cart_discount_code_3,
+                      discount_code_3_text: section.settings.cart_discount_code_3_text
+                    %}
 
                     <div class="cart-drawer__items">
                       {% render 'cart-products' %}
