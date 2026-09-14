@@ -17,7 +17,7 @@
       "id": "cart_drawer_width_desktop",
       "label": "Cart drawer width - desktop",
       "min": 400,
-      "max": 1000,
+      "max": 700,
       "step": 10,
       "unit": "px",
       "default": 520
@@ -169,6 +169,87 @@
     {
       "type": "header",
       "content": "Cart trust messages"
+    },
+    {
+      "type": "select",
+      "id": "cart_trust_1_icon",
+      "label": "Trust item 1 icon",
+      "default": "lock",
+      "options": [
+        { "value": "lock", "label": "Lock" },
+        { "value": "shield", "label": "Shield" },
+        { "value": "check", "label": "Check" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "package", "label": "Package" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "star", "label": "Star" },
+        { "value": "exchange", "label": "Exchange" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "cart_trust_2_icon",
+      "label": "Trust item 2 icon",
+      "default": "truck",
+      "options": [
+        { "value": "lock", "label": "Lock" },
+        { "value": "shield", "label": "Shield" },
+        { "value": "check", "label": "Check" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "package", "label": "Package" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "star", "label": "Star" },
+        { "value": "exchange", "label": "Exchange" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "cart_trust_3_icon",
+      "label": "Trust item 3 icon",
+      "default": "heart",
+      "options": [
+        { "value": "lock", "label": "Lock" },
+        { "value": "shield", "label": "Shield" },
+        { "value": "check", "label": "Check" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "package", "label": "Package" },
+        { "value": "heart", "label": "Heart" },
+        { "value": "star", "label": "Star" },
+        { "value": "exchange", "label": "Exchange" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "cart_trust_icon_size",
+      "label": "Trust icon size",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "cart_trust_title_size",
+      "label": "Trust title text size",
+      "min": 7,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "cart_trust_description_size",
+      "label": "Trust description text size",
+      "min": 6,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 8
     },
     {
       "type": "text",
@@ -1403,6 +1484,12 @@
 
                       {% render 'advanced-cart-extras',
                         position: 'bottom',
+                        trust_1_icon: section.settings.cart_trust_1_icon,
+                        trust_2_icon: section.settings.cart_trust_2_icon,
+                        trust_3_icon: section.settings.cart_trust_3_icon,
+                        trust_icon_size: section.settings.cart_trust_icon_size,
+                        trust_title_size: section.settings.cart_trust_title_size,
+                        trust_description_size: section.settings.cart_trust_description_size,
                         trust_1_title: section.settings.cart_trust_1_title,
                         trust_1_text: section.settings.cart_trust_1_text,
                         trust_2_title: section.settings.cart_trust_2_title,
