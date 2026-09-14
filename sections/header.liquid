@@ -905,13 +905,14 @@
                     style="--header-height: 60px;"
                   >
                     {% render 'advanced-cart-extras', position: 'top' %}
-                    
+
                     <div class="cart-drawer__items">
                       {% render 'cart-products' %}
                     </div>
                     <div class="cart-drawer__summary">
                       {% render 'cart-summary', section_id: section.id %}
                     </div>
+                    {% render 'advanced-cart-extras', position: 'bottom' %}
                   </scroll-hint>
                 {%- endif -%}
               </cart-items-component>
