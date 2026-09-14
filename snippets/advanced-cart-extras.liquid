@@ -119,34 +119,34 @@
     <div class="avelle-reward-progress">
 
       {% if reward_level == 0 %}
-        <div class="avelle-reward-progress__message">
-          Spend <strong>{{ remaining_amount | money }}</strong> more to unlock
-          <strong>{{ reward_1_text | default: 'Rp15.000 discount' }}</strong>
-        </div>
+        {% assign reward_message = reward_in_progress_message | default: 'Add {{amount_remaining}} to unlock {{next_tier_title}}.' %}
+        {% assign reward_message = reward_message | replace: '{{amount_remaining}}', remaining_amount | money %}
+        {% assign reward_message = reward_message | replace: '{{next_tier_title}}', reward_1_text %}
+        <div class="avelle-reward-progress__message">{{ reward_message }}</div>
 
       {% elsif reward_level == 1 %}
         <div class="avelle-reward-progress__message">
           <strong>✓ You've unlocked {{ reward_1_text | default: 'Rp15.000 discount' }}</strong>
         </div>
 
-        <div class="avelle-reward-progress__next">
-          Spend <strong>{{ remaining_amount | money }}</strong> more to unlock
-          {{ reward_2_text | default: 'Rp30.000 discount' }}
-        </div>
+        {% assign reward_message = reward_in_progress_message | default: 'Add {{amount_remaining}} to unlock {{next_tier_title}}.' %}
+        {% assign reward_message = reward_message | replace: '{{amount_remaining}}', remaining_amount | money %}
+        {% assign reward_message = reward_message | replace: '{{next_tier_title}}', reward_2_text %}
+        <div class="avelle-reward-progress__next">{{ reward_message }}</div>
 
       {% elsif reward_level == 2 %}
         <div class="avelle-reward-progress__message">
           <strong>✓ You've unlocked {{ reward_2_text | default: 'Rp30.000 discount' }}</strong>
         </div>
 
-        <div class="avelle-reward-progress__next">
-          Spend <strong>{{ remaining_amount | money }}</strong> more to unlock
-          {{ reward_3_text | default: 'FREE international & national shipping' }}
-        </div>
+        {% assign reward_message = reward_in_progress_message | default: 'Add {{amount_remaining}} to unlock {{next_tier_title}}.' %}
+        {% assign reward_message = reward_message | replace: '{{amount_remaining}}', remaining_amount | money %}
+        {% assign reward_message = reward_message | replace: '{{next_tier_title}}', reward_3_text %}
+        <div class="avelle-reward-progress__next">{{ reward_message }}</div>
 
       {% else %}
         <div class="avelle-reward-progress__message">
-          <strong>✓ You've unlocked {{ reward_3_text | default: 'FREE international & national shipping' }}</strong>
+          <strong>{{ reward_all_unlocked_message | default: 'All rewards unlocked!' }}</strong>
         </div>
       {% endif %}
 
@@ -157,19 +157,19 @@
       <div class="avelle-reward-milestones">
         <div class="avelle-reward-milestone{% if cart_subtotal >= reward_1_threshold %} is-unlocked{% endif %}" style="left: 0%;">
           <span class="avelle-reward-milestone__icon">{{ reward_1_icon_markup }}</span>
-          <span class="avelle-reward-milestone__amount">{{ reward_1_threshold | money_without_trailing_zeros }}</span>
+          {% if reward_show_thresholds %}<span class="avelle-reward-milestone__amount">{{ reward_1_threshold | money_without_trailing_zeros }}</span>{% endif %}
           <span class="avelle-reward-milestone__label">{{ reward_1_text | default: 'Discount' }}</span>
         </div>
 
         <div class="avelle-reward-milestone{% if cart_subtotal >= reward_2_threshold %} is-unlocked{% endif %}" style="left: 50%;">
           <span class="avelle-reward-milestone__icon">{{ reward_2_icon_markup }}</span>
-          <span class="avelle-reward-milestone__amount">{{ reward_2_threshold | money_without_trailing_zeros }}</span>
+          {% if reward_show_thresholds %}<span class="avelle-reward-milestone__amount">{{ reward_2_threshold | money_without_trailing_zeros }}</span>{% endif %}
           <span class="avelle-reward-milestone__label">{{ reward_2_text | default: 'Discount' }}</span>
         </div>
 
         <div class="avelle-reward-milestone{% if cart_subtotal >= reward_3_threshold %} is-unlocked{% endif %}" style="left: 100%;">
           <span class="avelle-reward-milestone__icon">{{ reward_3_icon_markup }}</span>
-          <span class="avelle-reward-milestone__amount">{{ reward_3_threshold | money_without_trailing_zeros }}</span>
+          {% if reward_show_thresholds %}<span class="avelle-reward-milestone__amount">{{ reward_3_threshold | money_without_trailing_zeros }}</span>{% endif %}
           <span class="avelle-reward-milestone__label">{{ reward_3_text | default: 'FREE shipping' }}</span>
         </div>
       </div>
@@ -191,24 +191,26 @@
     }
 
     .avelle-cart-offer {
-      background: #111;
-      color: #fff;
-      text-align: center;
-      padding: 10px 18px;
-      font-size: 11px;
+      background: {{ offer_background | default: '#111111' }};
+      color: {{ offer_text_color | default: '#FFFFFF' }};
+      text-align: {{ offer_text_align | default: 'center' }};
+      padding: {{ offer_padding_y | default: 10 }}px 18px;
+      font-size: {{ offer_text_size_desktop | default: 11 }}px;
       line-height: 1.4;
       letter-spacing: .02em;
     }
 
     .avelle-reward-progress {
-      padding: 18px 24px 20px;
+      padding: {{ reward_top_padding | default: 18 }}px 24px {{ reward_bottom_padding | default: 20 }}px;
       border-bottom: 1px solid rgba(0, 0, 0, .08);
-      background: #fff;
+      background: {{ reward_background | default: '#FFFFFF' }};
+      color: {{ reward_text_color | default: '#121212' }};
     }
 
     .avelle-reward-progress__message {
       font-size: 12px;
       line-height: 1.5;
+      text-align: {{ reward_text_align | default: 'left' }};
     }
 
     .avelle-reward-progress__message strong {
@@ -224,15 +226,15 @@
 
     .avelle-progress-track {
       width: 100%;
-      height: 5px;
+      height: {{ reward_bar_height | default: 5 }}px;
       margin-top: 18px;
-      background: #ececec;
-      overflow: hidden;
+      background: {{ reward_track_background | default: '#E2E3E4' }};
+      overflow: visible;
     }
 
     .avelle-progress-bar {
       height: 100%;
-      background: #111;
+      background: {{ reward_bar_fill | default: '#121212' }};
       transition: width .35s ease;
     }
 
@@ -244,15 +246,16 @@
 
     .avelle-reward-milestone {
       position: absolute;
-      top: -12px;
-      width: 96px;
+      top: calc(({{ reward_milestone_size | default: 28 }}px - {{ reward_bar_height | default: 5 }}px) / -2);
+      width: 110px;
       transform: translateX(-50%);
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 2px;
       text-align: center;
-      opacity: .45;
+      color: {{ reward_locked_color | default: '#8A8A8A' }};
+      opacity: 1;
     }
 
     .avelle-reward-milestone:first-child {
@@ -268,14 +271,14 @@
     }
 
     .avelle-reward-milestone__icon {
-      width: 28px;
-      height: 28px;
+      width: {{ reward_milestone_size | default: 28 }}px;
+      height: {{ reward_milestone_size | default: 28 }}px;
       border-radius: 50%;
       display: grid;
       place-items: center;
-      background: #fff;
-      border: 2px solid #111;
-      color: #111;
+      background: {{ reward_milestone_background | default: '#FFFFFF' }};
+      border: 2px solid {{ reward_milestone_border | default: '#121212' }};
+      color: currentColor;
     }
 
     .avelle-reward-milestone__icon svg {
@@ -284,24 +287,25 @@
     }
 
     .avelle-reward-milestone.is-unlocked {
-      opacity: 1;
+      color: {{ reward_unlocked_color | default: '#121212' }};
     }
 
     .avelle-reward-milestone.is-unlocked .avelle-reward-milestone__icon {
-      background: #111;
+      background: {{ reward_unlocked_color | default: '#121212' }};
+      border-color: {{ reward_unlocked_color | default: '#121212' }};
       color: #fff;
     }
 
     .avelle-reward-milestone__amount {
       margin-top: 4px;
-      font-size: 8px;
+      font-size: {{ reward_tier_text_size_desktop | default: 8 }}px;
       font-weight: 600;
       line-height: 1.2;
     }
 
     .avelle-reward-milestone__label {
-      max-width: 96px;
-      font-size: 8px;
+      max-width: 110px;
+      font-size: {{ reward_tier_text_size_desktop | default: 8 }}px;
       line-height: 1.2;
     }
 
@@ -667,8 +671,12 @@
         box-shadow: none !important;
       }
 
+      .avelle-cart-offer {
+        font-size: {{ offer_text_size_mobile | default: 10 }}px;
+      }
+
       .avelle-reward-progress {
-        padding: 14px 18px 16px;
+        padding: {{ reward_top_padding | default: 18 }}px 18px {{ reward_bottom_padding | default: 20 }}px;
       }
 
       .avelle-reward-progress__message {
@@ -694,7 +702,7 @@
 
       .avelle-reward-milestone__amount,
       .avelle-reward-milestone__label {
-        font-size: 7px;
+        font-size: {{ reward_tier_text_size_mobile | default: 7 }}px;
       }
 
       .cart-drawer__items {
