@@ -56,9 +56,9 @@
     {% assign reward_3_text = market_int_reward_3_text %}
 {% endcase %}
 
-{% assign reward_1_icon = 'tag' %}
-{% assign reward_2_icon = 'tag' %}
-{% assign reward_3_icon = 'truck' %}
+{% assign reward_1_icon = reward_1_icon | default: 'tag' %}
+{% assign reward_2_icon = reward_2_icon | default: 'tag' %}
+{% assign reward_3_icon = reward_3_icon | default: 'truck' %}
 
 {% assign reward_1_value = reward_1_amount | default: 200000 | plus: 0 %}
 {% assign reward_2_value = reward_2_amount | default: 800000 | plus: 0 %}
@@ -119,30 +119,31 @@
     <div class="avelle-reward-progress">
 
       {% if reward_level == 0 %}
-        {% assign reward_message = reward_in_progress_message | default: 'Add {{amount_remaining}} to unlock {{next_tier_title}}.' %}
-        {% assign reward_message = reward_message | replace: '{{amount_remaining}}', remaining_amount | money %}
-        {% assign reward_message = reward_message | replace: '{{next_tier_title}}', reward_1_text %}
+        {% assign reward_message = reward_in_progress_message | default: 'Add [[amount_remaining]] to unlock [[next_tier_title]].' %}
+        {% assign remaining_money = remaining_amount | money %}
+        {% assign reward_message = reward_message | replace: '[[amount_remaining]]', remaining_money %}
+        {% assign reward_message = reward_message | replace: '[[next_tier_title]]', reward_1_text %}
         <div class="avelle-reward-progress__message">{{ reward_message }}</div>
 
       {% elsif reward_level == 1 %}
+        {% assign reward_message = reward_in_progress_message | default: 'Add [[amount_remaining]] to unlock [[next_tier_title]].' %}
+        {% assign remaining_money = remaining_amount | money %}
+        {% assign reward_message = reward_message | replace: '[[amount_remaining]]', remaining_money %}
+        {% assign reward_message = reward_message | replace: '[[next_tier_title]]', reward_2_text %}
         <div class="avelle-reward-progress__message">
-          <strong>✓ You've unlocked {{ reward_1_text | default: 'Rp15.000 discount' }}</strong>
+          <strong>✓ You've unlocked {{ reward_1_text | default: 'Reward 1' }}</strong>
+          <span class="avelle-reward-progress__next-inline"> · {{ reward_message }}</span>
         </div>
-
-        {% assign reward_message = reward_in_progress_message | default: 'Add {{amount_remaining}} to unlock {{next_tier_title}}.' %}
-        {% assign reward_message = reward_message | replace: '{{amount_remaining}}', remaining_amount | money %}
-        {% assign reward_message = reward_message | replace: '{{next_tier_title}}', reward_2_text %}
-        <div class="avelle-reward-progress__next">{{ reward_message }}</div>
 
       {% elsif reward_level == 2 %}
+        {% assign reward_message = reward_in_progress_message | default: 'Add [[amount_remaining]] to unlock [[next_tier_title]].' %}
+        {% assign remaining_money = remaining_amount | money %}
+        {% assign reward_message = reward_message | replace: '[[amount_remaining]]', remaining_money %}
+        {% assign reward_message = reward_message | replace: '[[next_tier_title]]', reward_3_text %}
         <div class="avelle-reward-progress__message">
-          <strong>✓ You've unlocked {{ reward_2_text | default: 'Rp30.000 discount' }}</strong>
+          <strong>✓ You've unlocked {{ reward_2_text | default: 'Reward 2' }}</strong>
+          <span class="avelle-reward-progress__next-inline"> · {{ reward_message }}</span>
         </div>
-
-        {% assign reward_message = reward_in_progress_message | default: 'Add {{amount_remaining}} to unlock {{next_tier_title}}.' %}
-        {% assign reward_message = reward_message | replace: '{{amount_remaining}}', remaining_amount | money %}
-        {% assign reward_message = reward_message | replace: '{{next_tier_title}}', reward_3_text %}
-        <div class="avelle-reward-progress__next">{{ reward_message }}</div>
 
       {% else %}
         <div class="avelle-reward-progress__message">
@@ -156,21 +157,33 @@
 
       <div class="avelle-reward-milestones">
         <div class="avelle-reward-milestone{% if cart_subtotal >= reward_1_threshold %} is-unlocked{% endif %}" style="left: 0%;">
-          <span class="avelle-reward-milestone__icon">{{ reward_1_icon_markup }}</span>
+          {% unless reward_1_hide_title %}
+            <span class="avelle-reward-milestone__icon">{{ reward_1_icon_markup }}</span>
+          {% endunless %}
           {% if reward_show_thresholds %}<span class="avelle-reward-milestone__amount">{{ reward_1_threshold | money_without_trailing_zeros }}</span>{% endif %}
-          <span class="avelle-reward-milestone__label">{{ reward_1_text | default: 'Discount' }}</span>
+          {% unless reward_1_hide_title %}
+            <span class="avelle-reward-milestone__label">{{ reward_1_title | default: reward_1_text | default: 'Reward' }}</span>
+          {% endunless %}
         </div>
 
         <div class="avelle-reward-milestone{% if cart_subtotal >= reward_2_threshold %} is-unlocked{% endif %}" style="left: 50%;">
-          <span class="avelle-reward-milestone__icon">{{ reward_2_icon_markup }}</span>
+          {% unless reward_2_hide_title %}
+            <span class="avelle-reward-milestone__icon">{{ reward_2_icon_markup }}</span>
+          {% endunless %}
           {% if reward_show_thresholds %}<span class="avelle-reward-milestone__amount">{{ reward_2_threshold | money_without_trailing_zeros }}</span>{% endif %}
-          <span class="avelle-reward-milestone__label">{{ reward_2_text | default: 'Discount' }}</span>
+          {% unless reward_2_hide_title %}
+            <span class="avelle-reward-milestone__label">{{ reward_2_title | default: reward_2_text | default: 'Reward' }}</span>
+          {% endunless %}
         </div>
 
         <div class="avelle-reward-milestone{% if cart_subtotal >= reward_3_threshold %} is-unlocked{% endif %}" style="left: 100%;">
-          <span class="avelle-reward-milestone__icon">{{ reward_3_icon_markup }}</span>
+          {% unless reward_3_hide_title %}
+            <span class="avelle-reward-milestone__icon">{{ reward_3_icon_markup }}</span>
+          {% endunless %}
           {% if reward_show_thresholds %}<span class="avelle-reward-milestone__amount">{{ reward_3_threshold | money_without_trailing_zeros }}</span>{% endif %}
-          <span class="avelle-reward-milestone__label">{{ reward_3_text | default: 'FREE shipping' }}</span>
+          {% unless reward_3_hide_title %}
+            <span class="avelle-reward-milestone__label">{{ reward_3_title | default: reward_3_text | default: 'Reward' }}</span>
+          {% endunless %}
         </div>
       </div>
 
@@ -222,6 +235,11 @@
       font-size: 10px;
       line-height: 1.5;
       opacity: .65;
+    }
+
+    .avelle-reward-progress__next-inline {
+      font-weight: 400;
+      opacity: .62;
     }
 
     .avelle-progress-track {

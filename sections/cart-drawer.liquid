@@ -464,6 +464,10 @@
       "name": "Reward bar",
       "settings": [
         {
+          "type": "header",
+          "content": "Message"
+        },
+        {
           "type": "text",
           "id": "cart_reward_in_progress_message",
           "label": "In-progress message",
@@ -495,6 +499,318 @@
               "label": "Right"
             }
           ]
+        },
+        {
+          "type": "header",
+          "content": "Milestones"
+        },
+        {
+          "type": "text",
+          "id": "cart_reward_1_title",
+          "label": "Tier 1 title",
+          "default": "Order discount"
+        },
+        {
+          "type": "select",
+          "id": "cart_reward_1_icon",
+          "label": "Tier 1 icon",
+          "default": "tag",
+          "options": [
+            {
+              "value": "tag",
+              "label": "Discount tag"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "cart_reward_1_hide_title",
+          "label": "Hide Tier 1 icon and title",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "cart_reward_2_title",
+          "label": "Tier 2 title",
+          "default": "Order discount"
+        },
+        {
+          "type": "select",
+          "id": "cart_reward_2_icon",
+          "label": "Tier 2 icon",
+          "default": "tag",
+          "options": [
+            {
+              "value": "tag",
+              "label": "Discount tag"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "cart_reward_2_hide_title",
+          "label": "Hide Tier 2 icon and title",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "cart_reward_3_title",
+          "label": "Tier 3 title",
+          "default": "Free shipping"
+        },
+        {
+          "type": "select",
+          "id": "cart_reward_3_icon",
+          "label": "Tier 3 icon",
+          "default": "truck",
+          "options": [
+            {
+              "value": "tag",
+              "label": "Discount tag"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "cart_reward_3_hide_title",
+          "label": "Hide Tier 3 icon and title",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Indonesia"
+        },
+        {
+          "type": "number",
+          "id": "market_id_reward_1_amount",
+          "label": "Indonesia reward 1 minimum",
+          "default": 200000
+        },
+        {
+          "type": "text",
+          "id": "market_id_reward_1_text",
+          "label": "Indonesia reward 1 label",
+          "default": "Rp15.000 discount"
+        },
+        {
+          "type": "number",
+          "id": "market_id_reward_2_amount",
+          "label": "Indonesia reward 2 minimum",
+          "default": 800000
+        },
+        {
+          "type": "text",
+          "id": "market_id_reward_2_text",
+          "label": "Indonesia reward 2 label",
+          "default": "Rp30.000 discount"
+        },
+        {
+          "type": "number",
+          "id": "market_id_reward_3_amount",
+          "label": "Indonesia reward 3 minimum",
+          "default": 2000000
+        },
+        {
+          "type": "text",
+          "id": "market_id_reward_3_text",
+          "label": "Indonesia reward 3 label",
+          "default": "FREE shipping"
+        },
+        {
+          "type": "text",
+          "id": "market_id_offer_text",
+          "label": "Indonesia offer bar",
+          "default": "Limited-time offer: complete your order today."
+        },
+        {
+          "type": "header",
+          "content": "Singapore"
+        },
+        {
+          "type": "number",
+          "id": "market_sg_reward_1_amount",
+          "label": "Singapore reward 1 minimum",
+          "default": 50
+        },
+        {
+          "type": "text",
+          "id": "market_sg_reward_1_text",
+          "label": "Singapore reward 1 label",
+          "default": "SGD 5 discount"
+        },
+        {
+          "type": "number",
+          "id": "market_sg_reward_2_amount",
+          "label": "Singapore reward 2 minimum",
+          "default": 100
+        },
+        {
+          "type": "text",
+          "id": "market_sg_reward_2_text",
+          "label": "Singapore reward 2 label",
+          "default": "SGD 10 discount"
+        },
+        {
+          "type": "number",
+          "id": "market_sg_reward_3_amount",
+          "label": "Singapore reward 3 minimum",
+          "default": 150
+        },
+        {
+          "type": "text",
+          "id": "market_sg_reward_3_text",
+          "label": "Singapore reward 3 label",
+          "default": "FREE shipping"
+        },
+        {
+          "type": "text",
+          "id": "market_sg_offer_text",
+          "label": "Singapore offer bar",
+          "default": "Limited-time offer: complete your order today."
+        },
+        {
+          "type": "header",
+          "content": "Malaysia"
+        },
+        {
+          "type": "number",
+          "id": "market_my_reward_1_amount",
+          "label": "Malaysia reward 1 minimum",
+          "default": 150
+        },
+        {
+          "type": "text",
+          "id": "market_my_reward_1_text",
+          "label": "Malaysia reward 1 label",
+          "default": "RM10 discount"
+        },
+        {
+          "type": "number",
+          "id": "market_my_reward_2_amount",
+          "label": "Malaysia reward 2 minimum",
+          "default": 300
+        },
+        {
+          "type": "text",
+          "id": "market_my_reward_2_text",
+          "label": "Malaysia reward 2 label",
+          "default": "RM20 discount"
+        },
+        {
+          "type": "number",
+          "id": "market_my_reward_3_amount",
+          "label": "Malaysia reward 3 minimum",
+          "default": 450
+        },
+        {
+          "type": "text",
+          "id": "market_my_reward_3_text",
+          "label": "Malaysia reward 3 label",
+          "default": "FREE shipping"
+        },
+        {
+          "type": "text",
+          "id": "market_my_offer_text",
+          "label": "Malaysia offer bar",
+          "default": "Limited-time offer: complete your order today."
+        },
+        {
+          "type": "header",
+          "content": "International / other countries"
+        },
+        {
+          "type": "number",
+          "id": "market_int_reward_1_amount",
+          "label": "International reward 1 minimum",
+          "default": 40
+        },
+        {
+          "type": "text",
+          "id": "market_int_reward_1_text",
+          "label": "International reward 1 label",
+          "default": "First reward"
+        },
+        {
+          "type": "number",
+          "id": "market_int_reward_2_amount",
+          "label": "International reward 2 minimum",
+          "default": 80
+        },
+        {
+          "type": "text",
+          "id": "market_int_reward_2_text",
+          "label": "International reward 2 label",
+          "default": "Second reward"
+        },
+        {
+          "type": "number",
+          "id": "market_int_reward_3_amount",
+          "label": "International reward 3 minimum",
+          "default": 120
+        },
+        {
+          "type": "text",
+          "id": "market_int_reward_3_text",
+          "label": "International reward 3 label",
+          "default": "FREE international shipping"
+        },
+        {
+          "type": "text",
+          "id": "market_int_offer_text",
+          "label": "International offer bar",
+          "default": "Limited-time offer: complete your order today."
+        },
+        {
+          "type": "header",
+          "content": "Style"
         },
         {
           "type": "color",
@@ -609,390 +925,6 @@
           "id": "cart_reward_show_thresholds",
           "label": "Show tier thresholds under milestones",
           "default": true
-        },
-        {
-          "type": "select",
-          "id": "cart_reward_1_type",
-          "label": "Tier 1 type",
-          "default": "order_discount",
-          "options": [
-            {
-              "value": "order_discount",
-              "label": "Order discount"
-            },
-            {
-              "value": "free_shipping",
-              "label": "Free shipping"
-            },
-            {
-              "value": "custom",
-              "label": "Custom reward"
-            }
-          ]
-        },
-        {
-          "type": "text",
-          "id": "cart_reward_1_title",
-          "label": "Tier 1 title",
-          "default": "Order discount"
-        },
-        {
-          "type": "select",
-          "id": "cart_reward_1_icon",
-          "label": "Tier 1 icon",
-          "default": "tag",
-          "options": [
-            {
-              "value": "tag",
-              "label": "Discount tag"
-            },
-            {
-              "value": "truck",
-              "label": "Truck"
-            },
-            {
-              "value": "gift",
-              "label": "Gift"
-            },
-            {
-              "value": "star",
-              "label": "Star"
-            },
-            {
-              "value": "check",
-              "label": "Check"
-            }
-          ]
-        },
-        {
-          "type": "checkbox",
-          "id": "cart_reward_1_hide_title",
-          "label": "Hide Tier 1 icon and title",
-          "default": false
-        },
-        {
-          "type": "select",
-          "id": "cart_reward_2_type",
-          "label": "Tier 2 type",
-          "default": "order_discount",
-          "options": [
-            {
-              "value": "order_discount",
-              "label": "Order discount"
-            },
-            {
-              "value": "free_shipping",
-              "label": "Free shipping"
-            },
-            {
-              "value": "custom",
-              "label": "Custom reward"
-            }
-          ]
-        },
-        {
-          "type": "text",
-          "id": "cart_reward_2_title",
-          "label": "Tier 2 title",
-          "default": "Order discount"
-        },
-        {
-          "type": "select",
-          "id": "cart_reward_2_icon",
-          "label": "Tier 2 icon",
-          "default": "tag",
-          "options": [
-            {
-              "value": "tag",
-              "label": "Discount tag"
-            },
-            {
-              "value": "truck",
-              "label": "Truck"
-            },
-            {
-              "value": "gift",
-              "label": "Gift"
-            },
-            {
-              "value": "star",
-              "label": "Star"
-            },
-            {
-              "value": "check",
-              "label": "Check"
-            }
-          ]
-        },
-        {
-          "type": "checkbox",
-          "id": "cart_reward_2_hide_title",
-          "label": "Hide Tier 2 icon and title",
-          "default": false
-        },
-        {
-          "type": "select",
-          "id": "cart_reward_3_type",
-          "label": "Tier 3 type",
-          "default": "free_shipping",
-          "options": [
-            {
-              "value": "order_discount",
-              "label": "Order discount"
-            },
-            {
-              "value": "free_shipping",
-              "label": "Free shipping"
-            },
-            {
-              "value": "custom",
-              "label": "Custom reward"
-            }
-          ]
-        },
-        {
-          "type": "text",
-          "id": "cart_reward_3_title",
-          "label": "Tier 3 title",
-          "default": "Free shipping"
-        },
-        {
-          "type": "select",
-          "id": "cart_reward_3_icon",
-          "label": "Tier 3 icon",
-          "default": "truck",
-          "options": [
-            {
-              "value": "tag",
-              "label": "Discount tag"
-            },
-            {
-              "value": "truck",
-              "label": "Truck"
-            },
-            {
-              "value": "gift",
-              "label": "Gift"
-            },
-            {
-              "value": "star",
-              "label": "Star"
-            },
-            {
-              "value": "check",
-              "label": "Check"
-            }
-          ]
-        },
-        {
-          "type": "checkbox",
-          "id": "cart_reward_3_hide_title",
-          "label": "Hide Tier 3 icon and title",
-          "default": false
-        },
-        {
-          "type": "number",
-          "id": "cart_reward_1_amount",
-          "label": "Reward 1 minimum spend",
-          "default": 200000
-        },
-        {
-          "type": "text",
-          "id": "cart_reward_1_text",
-          "label": "Reward 1",
-          "default": "Rp15.000 discount"
-        },
-        {
-          "type": "number",
-          "id": "cart_reward_2_amount",
-          "label": "Reward 2 minimum spend",
-          "default": 800000
-        },
-        {
-          "type": "text",
-          "id": "cart_reward_2_text",
-          "label": "Reward 2",
-          "default": "Rp30.000 discount"
-        },
-        {
-          "type": "number",
-          "id": "cart_reward_3_amount",
-          "label": "Reward 3 minimum spend",
-          "default": 2000000
-        },
-        {
-          "type": "text",
-          "id": "cart_reward_3_text",
-          "label": "Reward 3",
-          "default": "FREE international & national shipping"
-        },
-        {
-          "type": "number",
-          "id": "market_id_reward_1_amount",
-          "label": "Indonesia reward 1 minimum",
-          "default": 200000
-        },
-        {
-          "type": "text",
-          "id": "market_id_reward_1_text",
-          "label": "Indonesia reward 1 label",
-          "default": "Rp15.000 discount"
-        },
-        {
-          "type": "number",
-          "id": "market_id_reward_2_amount",
-          "label": "Indonesia reward 2 minimum",
-          "default": 800000
-        },
-        {
-          "type": "text",
-          "id": "market_id_reward_2_text",
-          "label": "Indonesia reward 2 label",
-          "default": "Rp30.000 discount"
-        },
-        {
-          "type": "number",
-          "id": "market_id_reward_3_amount",
-          "label": "Indonesia reward 3 minimum",
-          "default": 2000000
-        },
-        {
-          "type": "text",
-          "id": "market_id_reward_3_text",
-          "label": "Indonesia reward 3 label",
-          "default": "FREE shipping"
-        },
-        {
-          "type": "text",
-          "id": "market_id_offer_text",
-          "label": "Indonesia offer bar",
-          "default": "Limited-time offer: complete your order today."
-        },
-        {
-          "type": "number",
-          "id": "market_sg_reward_1_amount",
-          "label": "Singapore reward 1 minimum",
-          "default": 50
-        },
-        {
-          "type": "text",
-          "id": "market_sg_reward_1_text",
-          "label": "Singapore reward 1 label",
-          "default": "SGD 5 discount"
-        },
-        {
-          "type": "number",
-          "id": "market_sg_reward_2_amount",
-          "label": "Singapore reward 2 minimum",
-          "default": 100
-        },
-        {
-          "type": "text",
-          "id": "market_sg_reward_2_text",
-          "label": "Singapore reward 2 label",
-          "default": "SGD 10 discount"
-        },
-        {
-          "type": "number",
-          "id": "market_sg_reward_3_amount",
-          "label": "Singapore reward 3 minimum",
-          "default": 150
-        },
-        {
-          "type": "text",
-          "id": "market_sg_reward_3_text",
-          "label": "Singapore reward 3 label",
-          "default": "FREE shipping"
-        },
-        {
-          "type": "text",
-          "id": "market_sg_offer_text",
-          "label": "Singapore offer bar",
-          "default": "Limited-time offer: complete your order today."
-        },
-        {
-          "type": "number",
-          "id": "market_my_reward_1_amount",
-          "label": "Malaysia reward 1 minimum",
-          "default": 150
-        },
-        {
-          "type": "text",
-          "id": "market_my_reward_1_text",
-          "label": "Malaysia reward 1 label",
-          "default": "RM10 discount"
-        },
-        {
-          "type": "number",
-          "id": "market_my_reward_2_amount",
-          "label": "Malaysia reward 2 minimum",
-          "default": 300
-        },
-        {
-          "type": "text",
-          "id": "market_my_reward_2_text",
-          "label": "Malaysia reward 2 label",
-          "default": "RM20 discount"
-        },
-        {
-          "type": "number",
-          "id": "market_my_reward_3_amount",
-          "label": "Malaysia reward 3 minimum",
-          "default": 450
-        },
-        {
-          "type": "text",
-          "id": "market_my_reward_3_text",
-          "label": "Malaysia reward 3 label",
-          "default": "FREE shipping"
-        },
-        {
-          "type": "text",
-          "id": "market_my_offer_text",
-          "label": "Malaysia offer bar",
-          "default": "Limited-time offer: complete your order today."
-        },
-        {
-          "type": "number",
-          "id": "market_int_reward_1_amount",
-          "label": "International reward 1 minimum",
-          "default": 40
-        },
-        {
-          "type": "text",
-          "id": "market_int_reward_1_text",
-          "label": "International reward 1 label",
-          "default": "First reward"
-        },
-        {
-          "type": "number",
-          "id": "market_int_reward_2_amount",
-          "label": "International reward 2 minimum",
-          "default": 80
-        },
-        {
-          "type": "text",
-          "id": "market_int_reward_2_text",
-          "label": "International reward 2 label",
-          "default": "Second reward"
-        },
-        {
-          "type": "number",
-          "id": "market_int_reward_3_amount",
-          "label": "International reward 3 minimum",
-          "default": 120
-        },
-        {
-          "type": "text",
-          "id": "market_int_reward_3_text",
-          "label": "International reward 3 label",
-          "default": "FREE international shipping"
-        },
-        {
-          "type": "text",
-          "id": "market_int_offer_text",
-          "label": "International offer bar",
-          "default": "Limited-time offer: complete your order today."
         }
       ]
     },
