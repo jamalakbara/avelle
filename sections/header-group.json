@@ -93,7 +93,7 @@
             "cart_offer_text_size_desktop": 11,
             "cart_offer_text_size_mobile": 10,
             "cart_offer_background": "#111111",
-            "cart_offer_text_color": "#FFFFFF",
+            "cart_offer_text_color": "#ffffff",
             "cart_offer_text_align": "center",
             "cart_offer_padding_y": 10
           }
@@ -104,13 +104,13 @@
             "cart_reward_in_progress_message": "Add [[amount_remaining]] to unlock [[next_tier_title]].",
             "cart_reward_all_unlocked_message": "All rewards unlocked!",
             "cart_reward_text_align": "left",
-            "cart_reward_background": "#FFFFFF",
+            "cart_reward_background": "#ffffff",
             "cart_reward_text_color": "#121212",
-            "cart_reward_track_background": "#E2E3E4",
+            "cart_reward_track_background": "#e2e3e4",
             "cart_reward_bar_fill": "#121212",
-            "cart_reward_locked_color": "#8A8A8A",
+            "cart_reward_locked_color": "#8a8a8a",
             "cart_reward_unlocked_color": "#121212",
-            "cart_reward_milestone_background": "#FFFFFF",
+            "cart_reward_milestone_background": "#ffffff",
             "cart_reward_milestone_border": "#121212",
             "cart_reward_top_padding": 18,
             "cart_reward_bottom_padding": 20,
@@ -179,7 +179,7 @@
         "discount_4DqCCy": {
           "type": "discount",
           "settings": {
-            "cart_show_available_codes": true,
+            "cart_show_available_codes": false,
             "cart_discount_heading": "Available offers",
             "cart_discount_code_1": "WELCOME10",
             "cart_discount_code_1_text": "10% off your first order",
@@ -205,8 +205,8 @@
             "cart_trust_1_text": "Safe & protected checkout",
             "cart_trust_2_title": "Fast delivery",
             "cart_trust_2_text": "Quick nationwide shipping",
-            "cart_trust_3_title": "Easy exchange",
-            "cart_trust_3_text": "Simple exchange process"
+            "cart_trust_3_title": "Best Price",
+            "cart_trust_3_text": "Sold 10k++"
           }
         }
       },
