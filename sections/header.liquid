@@ -1088,52 +1088,75 @@
                   </div>
 
                   <scroll-hint
-                    class="cart-drawer__content"
-                    aria-label="{{ 'content.cart_title' | t }}"
-                    style="--header-height: 60px;"
-                  >
-                    {% render 'advanced-cart-extras',
-                      position: 'top',
-                      offer_enabled: section.settings.cart_offer_enabled,
-                      offer_text: section.settings.cart_offer_text,
-                      reward_1_amount: section.settings.cart_reward_1_amount,
-                      reward_1_text: section.settings.cart_reward_1_text,
-                      reward_2_amount: section.settings.cart_reward_2_amount,
-                      reward_2_text: section.settings.cart_reward_2_text,
-                      reward_3_amount: section.settings.cart_reward_3_amount,
-                      reward_3_text: section.settings.cart_reward_3_text,
-                      show_available_codes: section.settings.cart_show_available_codes,
-                      discount_heading: section.settings.cart_discount_heading,
-                      discount_code_1: section.settings.cart_discount_code_1,
-                      discount_code_1_text: section.settings.cart_discount_code_1_text,
-                      discount_code_2: section.settings.cart_discount_code_2,
-                      discount_code_2_text: section.settings.cart_discount_code_2_text,
-                      discount_code_3: section.settings.cart_discount_code_3,
-                      discount_code_3_text: section.settings.cart_discount_code_3_text,
-                      quantity_size_desktop: section.settings.cart_quantity_size_desktop,
-                      quantity_size_mobile: section.settings.cart_quantity_size_mobile,
-                      product_image_width_desktop: section.settings.cart_product_image_width_desktop,
-                      product_image_width_mobile: section.settings.cart_product_image_width_mobile
-                    %}
+  class="cart-drawer__content"
+  aria-label="{{ 'content.cart_title' | t }}"
+  style="--header-height: 60px;"
+>
 
-                    <div class="cart-drawer__items">
-                      {% render 'cart-products' %}
-                    </div>
+  {% render 'advanced-cart-extras',
+    position: 'top',
 
-                    <div class="cart-drawer__summary">
-                      {% render 'cart-summary', section_id: section.id %}
-                    </div>
+    offer_enabled: section.settings.cart_offer_enabled,
+    offer_text: section.settings.cart_offer_text,
 
-                    {% render 'advanced-cart-extras',
-                      position: 'bottom',
-                      trust_1_title: section.settings.cart_trust_1_title,
-                      trust_1_text: section.settings.cart_trust_1_text,
-                      trust_2_title: section.settings.cart_trust_2_title,
-                      trust_2_text: section.settings.cart_trust_2_text,
-                      trust_3_title: section.settings.cart_trust_3_title,
-                      trust_3_text: section.settings.cart_trust_3_text
-                    %}
-                  </scroll-hint>
+    reward_1_amount: section.settings.cart_reward_1_amount,
+    reward_1_text: section.settings.cart_reward_1_text,
+
+    reward_2_amount: section.settings.cart_reward_2_amount,
+    reward_2_text: section.settings.cart_reward_2_text,
+
+    reward_3_amount: section.settings.cart_reward_3_amount,
+    reward_3_text: section.settings.cart_reward_3_text,
+
+    quantity_size_desktop: section.settings.cart_quantity_size_desktop,
+    quantity_size_mobile: section.settings.cart_quantity_size_mobile,
+
+    product_image_width_desktop: section.settings.cart_product_image_width_desktop,
+    product_image_width_mobile: section.settings.cart_product_image_width_mobile
+  %}
+
+
+  <div class="cart-drawer__items">
+    {% render 'cart-products' %}
+  </div>
+
+
+  {% render 'advanced-cart-extras',
+    position: 'offers',
+
+    show_available_codes: section.settings.cart_show_available_codes,
+    discount_heading: section.settings.cart_discount_heading,
+
+    discount_code_1: section.settings.cart_discount_code_1,
+    discount_code_1_text: section.settings.cart_discount_code_1_text,
+
+    discount_code_2: section.settings.cart_discount_code_2,
+    discount_code_2_text: section.settings.cart_discount_code_2_text,
+
+    discount_code_3: section.settings.cart_discount_code_3,
+    discount_code_3_text: section.settings.cart_discount_code_3_text
+  %}
+
+
+  <div class="cart-drawer__summary">
+    {% render 'cart-summary', section_id: section.id %}
+  </div>
+
+
+  {% render 'advanced-cart-extras',
+    position: 'bottom',
+
+    trust_1_title: section.settings.cart_trust_1_title,
+    trust_1_text: section.settings.cart_trust_1_text,
+
+    trust_2_title: section.settings.cart_trust_2_title,
+    trust_2_text: section.settings.cart_trust_2_text,
+
+    trust_3_title: section.settings.cart_trust_3_title,
+    trust_3_text: section.settings.cart_trust_3_text
+  %}
+
+</scroll-hint>
                 {%- endif -%}
               </cart-items-component>
             </div>
