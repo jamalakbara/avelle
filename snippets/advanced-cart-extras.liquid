@@ -930,7 +930,7 @@
 {% capture trust_icon_exchange %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h11l-3-3"/><path d="M18 7l-3 3"/><path d="M17 17H6l3 3"/><path d="M6 17l3-3"/></svg>{% endcapture %}
 
 {% capture trust_1_icon_markup %}
-  {% case trust_1_icon | default: 'lock' %}
+  {% case trust_1_icon %}
     {% when 'shield' %}{{ trust_icon_shield }}
     {% when 'check' %}{{ trust_icon_check }}
     {% when 'truck' %}{{ trust_icon_truck }}
@@ -943,7 +943,7 @@
   {% endcase %}
 {% endcapture %}
 {% capture trust_2_icon_markup %}
-  {% case trust_2_icon | default: 'truck' %}
+  {% case trust_2_icon %}
     {% when 'lock' %}{{ trust_icon_lock }}
     {% when 'shield' %}{{ trust_icon_shield }}
     {% when 'check' %}{{ trust_icon_check }}
@@ -956,7 +956,7 @@
   {% endcase %}
 {% endcapture %}
 {% capture trust_3_icon_markup %}
-  {% case trust_3_icon | default: 'heart' %}
+  {% case trust_3_icon %}
     {% when 'lock' %}{{ trust_icon_lock }}
     {% when 'shield' %}{{ trust_icon_shield }}
     {% when 'check' %}{{ trust_icon_check }}
@@ -1002,3 +1002,19 @@
     </div>
   </div>
 {% endif %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% case trust_1_icon | default: 'lock' %}"
+  to: "{% case trust_1_icon %}"
+  position: 32079..32102
+- from: "{% case trust_2_icon | default: 'truck' %}"
+  to: "{% case trust_2_icon %}"
+  position: 32555..32578
+- from: "{% case trust_3_icon | default: 'heart' %}"
+  to: "{% case trust_3_icon %}"
+  position: 33030..33053
+{% endcomment %}

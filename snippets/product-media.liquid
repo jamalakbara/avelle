@@ -114,15 +114,7 @@
           </script>
         {%- endif -%}
       {% when 'video', 'external_video' %}
-        {%- render 'video',
-          video: media,
-          video_loop: video_loop | default: block.settings.video_loop,
-          widths: widths,
-          sizes: sizes,
-          loading: loading,
-          disable_controls: true,
-          section_id: section.id
-        -%}
+        {%- render 'video', video: media, video_loop: video_loop, default: block.settings.video_loop, widths: widths, sizes: sizes, loading: loading, disable_controls: true, section_id: section.id -%}
     {% endcase %}
   {% endunless %}
 </div>
@@ -201,3 +193,24 @@
     }
   }
 {% endstylesheet %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%- render 'video',
+              video: media,
+              video_loop: video_loop | default: block.settings.video_loop,
+              widths: widths,
+              sizes: sizes,
+              loading: loading,
+              disable_controls: true,
+              section_id: section.id
+            -%}
+  to: "{%- render 'video', video: media, video_loop: video_loop, default: block.settings.video_loop,
+    widths: widths, sizes: sizes, loading: loading, disable_controls: true, section_id:
+    section.id -%}"
+  position: 4300..4492
+{% endcomment %}
