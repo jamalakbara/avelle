@@ -245,8 +245,8 @@
         {% endform %}
       </span>
     {% endif %}
-    <div class="cart__summary-item tax-note cart-primary-typography cart-drawer-order-note">
-      <small>Shipping calculated at checkout. Taxes and duties are not included.</small>
+    <div class="cart__summary-item tax-note cart-primary-typography">
+      <small>Shipping is calculated at checkout.</small>
     </div>
   </div>
 </div>
@@ -304,10 +304,6 @@
   }
 
   .cart__summary-item.tax-note small { font-size: var(--font-size--2xs); }
-
-  /* The custom duties/taxes note is drawer-only. */
-  .cart-drawer-order-note { display: none; }
-  .cart-drawer .cart-drawer-order-note { display: flex; }
 
   .cart__discount-label {
     display: flex;
