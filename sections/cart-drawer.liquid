@@ -8,6 +8,34 @@
 {% liquid
   assign offer_block = section.blocks | where: 'type', 'offer_bar' | first
   assign reward_block = section.blocks | where: 'type', 'reward_bar' | first
+  assign reward_all_block = section.blocks | where: 'type', 'reward_all' | first
+  assign reward_id_block = section.blocks | where: 'type', 'reward_id' | first
+  assign reward_sg_block = section.blocks | where: 'type', 'reward_sg' | first
+  assign reward_my_block = section.blocks | where: 'type', 'reward_my' | first
+  assign reward_int_block = section.blocks | where: 'type', 'reward_int' | first
+
+  assign reward_config_block = reward_all_block
+  if reward_block.settings.cart_reward_market_mode == 'regional'
+    case localization.country.iso_code
+      when 'ID'
+        if reward_id_block and reward_id_block.settings.enabled
+          assign reward_config_block = reward_id_block
+        endif
+      when 'SG'
+        if reward_sg_block and reward_sg_block.settings.enabled
+          assign reward_config_block = reward_sg_block
+        endif
+      when 'MY'
+        if reward_my_block and reward_my_block.settings.enabled
+          assign reward_config_block = reward_my_block
+        endif
+      else
+        if reward_int_block and reward_int_block.settings.enabled
+          assign reward_config_block = reward_int_block
+        endif
+    endcase
+  endif
+
   assign products_block = section.blocks | where: 'type', 'products' | first
   assign discount_block = section.blocks | where: 'type', 'discount' | first
   assign trust_block = section.blocks | where: 'type', 'trust' | first
@@ -262,36 +290,13 @@
                   reward_1_icon: reward_block.settings.cart_reward_1_icon,
                   reward_2_icon: reward_block.settings.cart_reward_2_icon,
                   reward_3_icon: reward_block.settings.cart_reward_3_icon,
-                  selected_country_code: localization.country.iso_code,
-                  selected_currency_code: localization.country.currency.iso_code,
-                  market_id_reward_1_amount: reward_block.settings.market_id_reward_1_amount,
-                  market_id_reward_1_text: reward_block.settings.market_id_reward_1_text,
-                  market_id_reward_2_amount: reward_block.settings.market_id_reward_2_amount,
-                  market_id_reward_2_text: reward_block.settings.market_id_reward_2_text,
-                  market_id_reward_3_amount: reward_block.settings.market_id_reward_3_amount,
-                  market_id_reward_3_text: reward_block.settings.market_id_reward_3_text,
-                  market_id_offer_text: reward_block.settings.market_id_offer_text,
-                  market_sg_reward_1_amount: reward_block.settings.market_sg_reward_1_amount,
-                  market_sg_reward_1_text: reward_block.settings.market_sg_reward_1_text,
-                  market_sg_reward_2_amount: reward_block.settings.market_sg_reward_2_amount,
-                  market_sg_reward_2_text: reward_block.settings.market_sg_reward_2_text,
-                  market_sg_reward_3_amount: reward_block.settings.market_sg_reward_3_amount,
-                  market_sg_reward_3_text: reward_block.settings.market_sg_reward_3_text,
-                  market_sg_offer_text: reward_block.settings.market_sg_offer_text,
-                  market_my_reward_1_amount: reward_block.settings.market_my_reward_1_amount,
-                  market_my_reward_1_text: reward_block.settings.market_my_reward_1_text,
-                  market_my_reward_2_amount: reward_block.settings.market_my_reward_2_amount,
-                  market_my_reward_2_text: reward_block.settings.market_my_reward_2_text,
-                  market_my_reward_3_amount: reward_block.settings.market_my_reward_3_amount,
-                  market_my_reward_3_text: reward_block.settings.market_my_reward_3_text,
-                  market_my_offer_text: reward_block.settings.market_my_offer_text,
-                  market_int_reward_1_amount: reward_block.settings.market_int_reward_1_amount,
-                  market_int_reward_1_text: reward_block.settings.market_int_reward_1_text,
-                  market_int_reward_2_amount: reward_block.settings.market_int_reward_2_amount,
-                  market_int_reward_2_text: reward_block.settings.market_int_reward_2_text,
-                  market_int_reward_3_amount: reward_block.settings.market_int_reward_3_amount,
-                  market_int_reward_3_text: reward_block.settings.market_int_reward_3_text,
-                  market_int_offer_text: reward_block.settings.market_int_offer_text,
+                  reward_count: reward_config_block.settings.reward_count,
+                  reward_1_amount: reward_config_block.settings.reward_1_amount,
+                  reward_1_text: reward_config_block.settings.reward_1_text,
+                  reward_2_amount: reward_config_block.settings.reward_2_amount,
+                  reward_2_text: reward_config_block.settings.reward_2_text,
+                  reward_3_amount: reward_config_block.settings.reward_3_amount,
+                  reward_3_text: reward_config_block.settings.reward_3_text,
                   trust_icon_size_desktop: trust_block.settings.cart_trust_icon_size_desktop,
                   trust_icon_size_mobile: trust_block.settings.cart_trust_icon_size_mobile,
                   trust_title_size_desktop: trust_block.settings.cart_trust_title_size_desktop,
@@ -472,6 +477,30 @@
           "default": true
         },
         {
+          "type": "select",
+          "id": "cart_reward_market_mode",
+          "label": "Reward setup",
+          "default": "all",
+          "options": [
+            {
+              "value": "all",
+              "label": "One setup for all countries"
+            },
+            {
+              "value": "regional",
+              "label": "Different setup by region"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": "Keep this block simple. Edit reward amounts and labels in the reward setup blocks below."
+        },
+        {
+          "type": "header",
+          "content": "Messages"
+        },
+        {
           "type": "text",
           "id": "cart_reward_unlocked_prefix",
           "label": "Unlocked message",
@@ -621,166 +650,6 @@
         },
         {
           "type": "header",
-          "content": "Indonesia"
-        },
-        {
-          "type": "number",
-          "id": "market_id_reward_1_amount",
-          "label": "Indonesia reward 1 minimum",
-          "default": 200000
-        },
-        {
-          "type": "text",
-          "id": "market_id_reward_1_text",
-          "label": "Indonesia reward 1 label",
-          "default": "Rp15.000 discount"
-        },
-        {
-          "type": "number",
-          "id": "market_id_reward_2_amount",
-          "label": "Indonesia reward 2 minimum",
-          "default": 800000
-        },
-        {
-          "type": "text",
-          "id": "market_id_reward_2_text",
-          "label": "Indonesia reward 2 label",
-          "default": "Rp30.000 discount"
-        },
-        {
-          "type": "number",
-          "id": "market_id_reward_3_amount",
-          "label": "Indonesia reward 3 minimum",
-          "default": 2000000
-        },
-        {
-          "type": "text",
-          "id": "market_id_reward_3_text",
-          "label": "Indonesia reward 3 label",
-          "default": "FREE shipping"
-        },
-        {
-          "type": "header",
-          "content": "Singapore"
-        },
-        {
-          "type": "number",
-          "id": "market_sg_reward_1_amount",
-          "label": "Singapore reward 1 minimum",
-          "default": 50
-        },
-        {
-          "type": "text",
-          "id": "market_sg_reward_1_text",
-          "label": "Singapore reward 1 label",
-          "default": "SGD 5 discount"
-        },
-        {
-          "type": "number",
-          "id": "market_sg_reward_2_amount",
-          "label": "Singapore reward 2 minimum",
-          "default": 100
-        },
-        {
-          "type": "text",
-          "id": "market_sg_reward_2_text",
-          "label": "Singapore reward 2 label",
-          "default": "SGD 10 discount"
-        },
-        {
-          "type": "number",
-          "id": "market_sg_reward_3_amount",
-          "label": "Singapore reward 3 minimum",
-          "default": 150
-        },
-        {
-          "type": "text",
-          "id": "market_sg_reward_3_text",
-          "label": "Singapore reward 3 label",
-          "default": "FREE shipping"
-        },
-        {
-          "type": "header",
-          "content": "Malaysia"
-        },
-        {
-          "type": "number",
-          "id": "market_my_reward_1_amount",
-          "label": "Malaysia reward 1 minimum",
-          "default": 150
-        },
-        {
-          "type": "text",
-          "id": "market_my_reward_1_text",
-          "label": "Malaysia reward 1 label",
-          "default": "RM10 discount"
-        },
-        {
-          "type": "number",
-          "id": "market_my_reward_2_amount",
-          "label": "Malaysia reward 2 minimum",
-          "default": 300
-        },
-        {
-          "type": "text",
-          "id": "market_my_reward_2_text",
-          "label": "Malaysia reward 2 label",
-          "default": "RM20 discount"
-        },
-        {
-          "type": "number",
-          "id": "market_my_reward_3_amount",
-          "label": "Malaysia reward 3 minimum",
-          "default": 450
-        },
-        {
-          "type": "text",
-          "id": "market_my_reward_3_text",
-          "label": "Malaysia reward 3 label",
-          "default": "FREE shipping"
-        },
-        {
-          "type": "header",
-          "content": "International / other countries"
-        },
-        {
-          "type": "number",
-          "id": "market_int_reward_1_amount",
-          "label": "International reward 1 minimum",
-          "default": 40
-        },
-        {
-          "type": "text",
-          "id": "market_int_reward_1_text",
-          "label": "International reward 1 label",
-          "default": "First reward"
-        },
-        {
-          "type": "number",
-          "id": "market_int_reward_2_amount",
-          "label": "International reward 2 minimum",
-          "default": 80
-        },
-        {
-          "type": "text",
-          "id": "market_int_reward_2_text",
-          "label": "International reward 2 label",
-          "default": "Second reward"
-        },
-        {
-          "type": "number",
-          "id": "market_int_reward_3_amount",
-          "label": "International reward 3 minimum",
-          "default": 120
-        },
-        {
-          "type": "text",
-          "id": "market_int_reward_3_text",
-          "label": "International reward 3 label",
-          "default": "FREE international shipping"
-        },
-        {
-          "type": "header",
           "content": "Style"
         },
         {
@@ -896,6 +765,406 @@
           "id": "cart_reward_show_thresholds",
           "label": "Show tier thresholds under milestones",
           "default": true
+        }
+      ]
+    },
+    {
+      "type": "reward_all",
+      "name": "Rewards — All countries",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enabled",
+          "label": "Use this reward setup",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "reward_count",
+          "label": "Number of rewards",
+          "default": "3",
+          "options": [
+            {
+              "value": "1",
+              "label": "1 reward"
+            },
+            {
+              "value": "2",
+              "label": "2 rewards"
+            },
+            {
+              "value": "3",
+              "label": "3 rewards"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Reward 1"
+        },
+        {
+          "type": "number",
+          "id": "reward_1_amount",
+          "label": "Minimum spend",
+          "default": 200000
+        },
+        {
+          "type": "text",
+          "id": "reward_1_text",
+          "label": "Reward label",
+          "default": "15K OFF DELIVERY"
+        },
+        {
+          "type": "header",
+          "content": "Reward 2"
+        },
+        {
+          "type": "number",
+          "id": "reward_2_amount",
+          "label": "Minimum spend",
+          "default": 800000
+        },
+        {
+          "type": "text",
+          "id": "reward_2_text",
+          "label": "Reward label",
+          "default": "30K OFF DELIVERY"
+        },
+        {
+          "type": "header",
+          "content": "Reward 3"
+        },
+        {
+          "type": "number",
+          "id": "reward_3_amount",
+          "label": "Minimum spend",
+          "default": 2000000
+        },
+        {
+          "type": "text",
+          "id": "reward_3_text",
+          "label": "Reward label",
+          "default": "FREE shipping"
+        }
+      ]
+    },
+    {
+      "type": "reward_id",
+      "name": "Rewards — Indonesia",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enabled",
+          "label": "Use this reward setup",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "reward_count",
+          "label": "Number of rewards",
+          "default": "3",
+          "options": [
+            {
+              "value": "1",
+              "label": "1 reward"
+            },
+            {
+              "value": "2",
+              "label": "2 rewards"
+            },
+            {
+              "value": "3",
+              "label": "3 rewards"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Reward 1"
+        },
+        {
+          "type": "number",
+          "id": "reward_1_amount",
+          "label": "Minimum spend",
+          "default": 200000
+        },
+        {
+          "type": "text",
+          "id": "reward_1_text",
+          "label": "Reward label",
+          "default": "Rp15.000 discount"
+        },
+        {
+          "type": "header",
+          "content": "Reward 2"
+        },
+        {
+          "type": "number",
+          "id": "reward_2_amount",
+          "label": "Minimum spend",
+          "default": 800000
+        },
+        {
+          "type": "text",
+          "id": "reward_2_text",
+          "label": "Reward label",
+          "default": "Rp30.000 discount"
+        },
+        {
+          "type": "header",
+          "content": "Reward 3"
+        },
+        {
+          "type": "number",
+          "id": "reward_3_amount",
+          "label": "Minimum spend",
+          "default": 2000000
+        },
+        {
+          "type": "text",
+          "id": "reward_3_text",
+          "label": "Reward label",
+          "default": "FREE shipping"
+        }
+      ]
+    },
+    {
+      "type": "reward_sg",
+      "name": "Rewards — Singapore",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enabled",
+          "label": "Use this reward setup",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "reward_count",
+          "label": "Number of rewards",
+          "default": "3",
+          "options": [
+            {
+              "value": "1",
+              "label": "1 reward"
+            },
+            {
+              "value": "2",
+              "label": "2 rewards"
+            },
+            {
+              "value": "3",
+              "label": "3 rewards"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Reward 1"
+        },
+        {
+          "type": "number",
+          "id": "reward_1_amount",
+          "label": "Minimum spend",
+          "default": 50
+        },
+        {
+          "type": "text",
+          "id": "reward_1_text",
+          "label": "Reward label",
+          "default": "SGD 5 discount"
+        },
+        {
+          "type": "header",
+          "content": "Reward 2"
+        },
+        {
+          "type": "number",
+          "id": "reward_2_amount",
+          "label": "Minimum spend",
+          "default": 100
+        },
+        {
+          "type": "text",
+          "id": "reward_2_text",
+          "label": "Reward label",
+          "default": "SGD 10 discount"
+        },
+        {
+          "type": "header",
+          "content": "Reward 3"
+        },
+        {
+          "type": "number",
+          "id": "reward_3_amount",
+          "label": "Minimum spend",
+          "default": 150
+        },
+        {
+          "type": "text",
+          "id": "reward_3_text",
+          "label": "Reward label",
+          "default": "FREE shipping"
+        }
+      ]
+    },
+    {
+      "type": "reward_my",
+      "name": "Rewards — Malaysia",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enabled",
+          "label": "Use this reward setup",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "reward_count",
+          "label": "Number of rewards",
+          "default": "3",
+          "options": [
+            {
+              "value": "1",
+              "label": "1 reward"
+            },
+            {
+              "value": "2",
+              "label": "2 rewards"
+            },
+            {
+              "value": "3",
+              "label": "3 rewards"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Reward 1"
+        },
+        {
+          "type": "number",
+          "id": "reward_1_amount",
+          "label": "Minimum spend",
+          "default": 150
+        },
+        {
+          "type": "text",
+          "id": "reward_1_text",
+          "label": "Reward label",
+          "default": "RM10 discount"
+        },
+        {
+          "type": "header",
+          "content": "Reward 2"
+        },
+        {
+          "type": "number",
+          "id": "reward_2_amount",
+          "label": "Minimum spend",
+          "default": 300
+        },
+        {
+          "type": "text",
+          "id": "reward_2_text",
+          "label": "Reward label",
+          "default": "RM20 discount"
+        },
+        {
+          "type": "header",
+          "content": "Reward 3"
+        },
+        {
+          "type": "number",
+          "id": "reward_3_amount",
+          "label": "Minimum spend",
+          "default": 450
+        },
+        {
+          "type": "text",
+          "id": "reward_3_text",
+          "label": "Reward label",
+          "default": "FREE shipping"
+        }
+      ]
+    },
+    {
+      "type": "reward_int",
+      "name": "Rewards — International",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enabled",
+          "label": "Use this reward setup",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "reward_count",
+          "label": "Number of rewards",
+          "default": "3",
+          "options": [
+            {
+              "value": "1",
+              "label": "1 reward"
+            },
+            {
+              "value": "2",
+              "label": "2 rewards"
+            },
+            {
+              "value": "3",
+              "label": "3 rewards"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Reward 1"
+        },
+        {
+          "type": "number",
+          "id": "reward_1_amount",
+          "label": "Minimum spend",
+          "default": 40
+        },
+        {
+          "type": "text",
+          "id": "reward_1_text",
+          "label": "Reward label",
+          "default": "Reward 1"
+        },
+        {
+          "type": "header",
+          "content": "Reward 2"
+        },
+        {
+          "type": "number",
+          "id": "reward_2_amount",
+          "label": "Minimum spend",
+          "default": 80
+        },
+        {
+          "type": "text",
+          "id": "reward_2_text",
+          "label": "Reward label",
+          "default": "Reward 2"
+        },
+        {
+          "type": "header",
+          "content": "Reward 3"
+        },
+        {
+          "type": "number",
+          "id": "reward_3_amount",
+          "label": "Minimum spend",
+          "default": 120
+        },
+        {
+          "type": "text",
+          "id": "reward_3_text",
+          "label": "Reward label",
+          "default": "FREE international shipping"
         }
       ]
     },
@@ -1230,7 +1499,7 @@
       ]
     }
   ],
-  "max_blocks": 5,
+  "max_blocks": 10,
   "presets": [
     {
       "name": "Cart drawer",
@@ -1240,6 +1509,21 @@
         },
         {
           "type": "reward_bar"
+        },
+        {
+          "type": "reward_all"
+        },
+        {
+          "type": "reward_id"
+        },
+        {
+          "type": "reward_sg"
+        },
+        {
+          "type": "reward_my"
+        },
+        {
+          "type": "reward_int"
         },
         {
           "type": "products"
